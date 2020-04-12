@@ -1,0 +1,23 @@
+#ifndef POLYGLOT_VERSION_H
+#define POLYGLOT_VERSION_H
+
+#include <string>
+
+namespace Polyglot::Version
+{
+
+const std::string LIBRARY_NAME = "${PROJECT_NAME}";
+const std::string VERSION = "${POLYGLOT_VERSION_WITH_SUFFIX}";
+const std::string LIBRARY_NAME_WITH_VERSION = "${PROJECT_NAME} ${POLYGLOT_VERSION_WITH_SUFFIX}";
+
+constexpr unsigned VERSION_MAJOR{${POLYGLOT_VERSION_MAJOR}};
+constexpr unsigned VERSION_MINOR{${POLYGLOT_VERSION_MINOR}};
+constexpr unsigned VERSION_PATCH{${POLYGLOT_VERSION_PATCH}};
+
+constexpr unsigned VERSION_NUMBER =   VERSION_MAJOR * 10000
+                                    + VERSION_MINOR * 1000
+                                    + VERSION_PATCH * 100;
+
+} // end namespace Polyglot::Version
+
+#endif // POLYGLOT_VERSION_H
