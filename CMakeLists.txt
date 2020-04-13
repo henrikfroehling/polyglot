@@ -11,3 +11,4 @@ endif()
 set(OUTPUT_DIR ${CMAKE_BINARY_DIR}/output)
 
 add_subdirectory(lib)
+add_subdirectory(driver)
