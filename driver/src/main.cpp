@@ -1,24 +1,17 @@
-#include <iostream>
 #include <string>
-#include <polyglot/CodeAnalysis/Delphi/DelphiParser.hpp>
+#include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
+#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp>
 
 int main()
 {
     using namespace polyglot::CodeAnalysis;
 
-    const std::string code{"procedure Hello(const aName: String);\n"
-                           "var\n"
-                           "  lText: String;\n"
-                           "begin\n"
-                           "  lText := 'Hello, \"' + aName + '\"!';\n"
-                           "  WriteLn(lText);\n"
-                           "end;\n"};
+    const std::string sourceText{"unit Unit1;\n\n"
+                                 "interface\n\n"
+                                 "implementation\n\n"
+                                 "end.\n"};
 
-    DelphiParser parser{code};
-    parser.parse();
-
-    std::cout << "Token Count: " << parser.tokenCount() << "\n";
-    std::cout << "Lexing took " << parser.lexingDuration() << " ms\n";
-
+    SyntaxTree* syntaxTree = Delphi::parseSourceText(sourceText);
+    delete syntaxTree;
     return 0;
 }
