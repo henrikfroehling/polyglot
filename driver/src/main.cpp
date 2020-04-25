@@ -2,9 +2,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <polyglot/CodeAnalysis/Core/SyntaxToken.hpp>
+#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp>
+#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp>
 #include <polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp>
-#include <polyglot/CodeAnalysis/Delphi/DelphiSyntaxFacts.hpp>
+#include <polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp>
 
 int main()
 {

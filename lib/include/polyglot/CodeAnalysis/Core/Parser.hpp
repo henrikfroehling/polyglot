@@ -5,7 +5,7 @@
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis

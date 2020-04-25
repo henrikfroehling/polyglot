@@ -1,9 +1,9 @@
-#ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHISYNTAXFACTS_H
-#define POLYGLOT_CODEANALYSIS_DELPHI_DELPHISYNTAXFACTS_H
+#ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H
+#define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H
 
 #include <string>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
 {
@@ -16,4 +16,4 @@ std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
 
 } // end namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
 
-#endif // POLYGLOT_CODEANALYSIS_DELPHI_DELPHISYNTAXFACTS_H
+#endif // POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H

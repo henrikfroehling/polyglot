@@ -34,14 +34,14 @@ set(SOURCES_CORE
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxToken.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxFacts.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

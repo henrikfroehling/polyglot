@@ -4,7 +4,7 @@
 #include <string>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {

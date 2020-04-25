@@ -1,5 +1,5 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
-#include "polyglot/CodeAnalysis/Delphi/DelphiSyntaxFacts.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::CodeAnalysis
 {
