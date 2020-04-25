@@ -1,11 +1,6 @@
-#include <chrono>
 #include <iostream>
 #include <string>
-#include <vector>
-#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp>
-#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp>
-#include <polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp>
-#include <polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp>
+#include <polyglot/CodeAnalysis/Delphi/DelphiParser.hpp>
 
 int main()
 {
@@ -19,26 +14,11 @@ int main()
                            "  WriteLn(lText);\n"
                            "end;\n"};
 
-    DelphiLexer lexer{code};
-    SyntaxToken token{};
-    std::vector<SyntaxToken> tokens{};
+    DelphiParser parser{code};
+    parser.parse();
 
-    const auto start = std::chrono::steady_clock::now();
-
-    do
-    {
-        token = lexer.nextToken();
-        tokens.push_back(token);
-        std::cout << "Token => "
-                  << "kind = " << DelphiSyntaxFacts::syntaxKindName(token.kind)
-                  << " // position = " << token.position
-                  << " // text = \"" << token.text << "\"\n";
-    }
-    while (token.kind != SyntaxKind::EndOfTileToken);
-
-    const auto end = std::chrono::steady_clock::now();
-    std::cout << "Token Count: " << tokens.size() << "\n";
-    std::cout << "Lexing took " << std::chrono::duration<double, std::milli>(end - start).count() << " ms\n";
+    std::cout << "Token Count: " << parser.tokenCount() << "\n";
+    std::cout << "Lexing took " << parser.lexingDuration() << " ms\n";
 
     return 0;
 }

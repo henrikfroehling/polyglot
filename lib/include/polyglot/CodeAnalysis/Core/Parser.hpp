@@ -20,9 +20,11 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
+    virtual void parse() noexcept = 0;
 
 protected:
     explicit Parser(std::unique_ptr<Lexer> lexer) noexcept;
+    void lex() noexcept;
 
 protected:
     std::unique_ptr<Lexer> _ptrLexer;

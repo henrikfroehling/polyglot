@@ -12,4 +12,18 @@ Parser::Parser(std::unique_ptr<Lexer> lexer) noexcept
 Parser::~Parser() noexcept
 {}
 
+void Parser::lex() noexcept
+{
+    SyntaxToken token{};
+
+    do
+    {
+        token = _ptrLexer->nextToken();
+
+        if (token.kind != SyntaxKind::WhitespaceToken)
+            _tokens.push_back(token);
+    }
+    while (token.kind != SyntaxKind::EndOfTileToken);
+}
+
 } // end namespace polyglot::CodeAnalysis
