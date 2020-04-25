@@ -22,9 +22,26 @@ configure_file(
 
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
-set(SOURCES_CORE
+set(SOURCES
   ${SOURCE_DIR}/Polyglot.cpp
   ${SOURCE_DIR}/Version.cpp
+)
+
+set(SOURCES_CORE
+  ${SOURCE_DIR}/Core/Types.cpp
+)
+
+set(SOURCES_CODEANALYSIS_CORE
+  ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxToken.cpp
+)
+
+set(SOURCES_CODEANALYSIS_DELPHI
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxFacts.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -32,7 +49,10 @@ add_library(${PROJECT_NAME} SHARED)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
+  ${SOURCES}
   ${SOURCES_CORE}
+  ${SOURCES_CODEANALYSIS_CORE}
+  ${SOURCES_CODEANALYSIS_DELPHI}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
