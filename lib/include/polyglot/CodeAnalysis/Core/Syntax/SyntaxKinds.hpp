@@ -1,17 +1,19 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
 
-#include <limits>
-
 namespace polyglot::CodeAnalysis
 {
 
 enum class SyntaxKind : unsigned short
 {
+    // special tokens
     None = 0,
+    BadToken,
+    EndOfTileToken,
+    WhitespaceToken,
 
     // punctuation
-    DotToken = 1, // .
+    DotToken = 50, // .
     CommaToken, // ,
     SemiColonToken, // ;
     ColonToken, // :
@@ -38,7 +40,7 @@ enum class SyntaxKind : unsigned short
     DoubleQuoteToken, // "
 
     // compound punctuation
-    DotDotToken = 1000, // ..
+    DotDotToken = 500, // ..
     CaretDotToken, // ^.
     ColonEqualToken, // :=
     SlashSlashToken, // //
@@ -54,7 +56,7 @@ enum class SyntaxKind : unsigned short
     AtAtToken, // @@
 
     // keywords
-    AndKeyword = 2000, // and
+    AndKeyword = 1000, // and
     ArrayKeyword, // array
     AsKeyword, // as
     AsmKeyword, // asm
@@ -248,13 +250,9 @@ enum class SyntaxKind : unsigned short
     BreakKeyword, // break
     ContinueKeyword, // continue
 
-    StringLiteralToken = 3000,
+    StringLiteralToken = 2000,
     NumberLiteralToken,
-    IdentifierToken,
-
-    WhitespaceToken = std::numeric_limits<unsigned short>::max() - 2,
-    BadToken = std::numeric_limits<unsigned short>::max() - 1,
-    EndOfTileToken = std::numeric_limits<unsigned short>::max()
+    IdentifierToken
 };
 
 } // end namespace polyglot::CodeAnalysis
