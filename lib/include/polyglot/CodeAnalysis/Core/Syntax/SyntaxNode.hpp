@@ -2,6 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXNODE_H
 
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -10,6 +11,14 @@ class POLYGLOT_API SyntaxNode
 {
 public:
     virtual ~SyntaxNode() noexcept = default;
+    inline virtual bool isToken() const noexcept { return false; }
+    inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
+
+protected:
+    explicit SyntaxNode(SyntaxKind syntaxKind) noexcept;
+
+protected:
+    SyntaxKind _syntaxKind;
 };
 
 } // end namespace polyglot::CodeAnalysis
