@@ -1,6 +1,9 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
 
+#include <string>
+#include "polyglot/polyglot_global.hpp"
+
 namespace polyglot::CodeAnalysis
 {
 
@@ -254,6 +257,8 @@ enum class SyntaxKind : unsigned short
     NumberLiteralToken,
     IdentifierToken
 };
+
+std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
 
 } // end namespace polyglot::CodeAnalysis
 
