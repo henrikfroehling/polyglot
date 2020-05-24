@@ -18,7 +18,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
 
     if (_position >= _code.length())
     {
-        token.kind = SyntaxKind::EndOfTileToken;
+        token.setSyntaxKind(SyntaxKind::EndOfTileToken);
         return token;
     }
 
@@ -28,7 +28,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
     {
         case '\0':
             advance();
-            token.kind = SyntaxKind::EndOfTileToken;
+            token.setSyntaxKind(SyntaxKind::EndOfTileToken);
             break;
         case '.':
         {
@@ -39,14 +39,14 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '.':
                     advance();
-                    token.kind = SyntaxKind::DotDotToken;
+                    token.setSyntaxKind(SyntaxKind::DotDotToken);
                     break;
                 case ')':
                     advance();
-                    token.kind = SyntaxKind::DotCloseParenthesisToken;
+                    token.setSyntaxKind(SyntaxKind::DotCloseParenthesisToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::DotToken;
+                    token.setSyntaxKind(SyntaxKind::DotToken);
                     break;
             }
 
@@ -54,11 +54,11 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case ',':
             advance();
-            token.kind = SyntaxKind::CommaToken;
+            token.setSyntaxKind(SyntaxKind::CommaToken);
             break;
         case ';':
             advance();
-            token.kind = SyntaxKind::SemiColonToken;
+            token.setSyntaxKind(SyntaxKind::SemiColonToken);
             break;
         case ':':
         {
@@ -69,10 +69,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '=':
                     advance();
-                    token.kind = SyntaxKind::ColonEqualToken;
+                    token.setSyntaxKind(SyntaxKind::ColonEqualToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::ColonToken;
+                    token.setSyntaxKind(SyntaxKind::ColonToken);
                     break;
             }
 
@@ -80,7 +80,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '=':
             advance();
-            token.kind = SyntaxKind::EqualToken;
+            token.setSyntaxKind(SyntaxKind::EqualToken);
             break;
         case '^':
         {
@@ -91,10 +91,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '.':
                     advance();
-                    token.kind = SyntaxKind::CaretDotToken;
+                    token.setSyntaxKind(SyntaxKind::CaretDotToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::CaretToken;
+                    token.setSyntaxKind(SyntaxKind::CaretToken);
                     break;
             }
 
@@ -109,14 +109,14 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '=':
                     advance();
-                    token.kind = SyntaxKind::LessThanEqualToken;
+                    token.setSyntaxKind(SyntaxKind::LessThanEqualToken);
                     break;
                 case '>':
                     advance();
-                    token.kind = SyntaxKind::LessThanGreaterThanToken;
+                    token.setSyntaxKind(SyntaxKind::LessThanGreaterThanToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::LessThanToken;
+                    token.setSyntaxKind(SyntaxKind::LessThanToken);
                     break;
             }
 
@@ -131,10 +131,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '"':
                     advance();
-                    token.kind = SyntaxKind::GreaterThanEqualToken;
+                    token.setSyntaxKind(SyntaxKind::GreaterThanEqualToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::GreaterThanToken;
+                    token.setSyntaxKind(SyntaxKind::GreaterThanToken);
                     break;
             }
 
@@ -149,14 +149,14 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '*':
                     advance();
-                    token.kind = SyntaxKind::OpenParenthesisAsteriskToken;
+                    token.setSyntaxKind(SyntaxKind::OpenParenthesisAsteriskToken);
                     break;
                 case '.':
                     advance();
-                    token.kind = SyntaxKind::OpenParenthesisDotToken;
+                    token.setSyntaxKind(SyntaxKind::OpenParenthesisDotToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::OpenParenthesisToken;
+                    token.setSyntaxKind(SyntaxKind::OpenParenthesisToken);
                     break;
             }
 
@@ -164,15 +164,15 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case ')':
             advance();
-            token.kind = SyntaxKind::CloseParenthesisToken;
+            token.setSyntaxKind(SyntaxKind::CloseParenthesisToken);
             break;
         case '[':
             advance();
-            token.kind = SyntaxKind::OpenBracketToken;
+            token.setSyntaxKind(SyntaxKind::OpenBracketToken);
             break;
         case ']':
             advance();
-            token.kind = SyntaxKind::CloseBracketToken;
+            token.setSyntaxKind(SyntaxKind::CloseBracketToken);
             break;
         case '{':
         {
@@ -183,10 +183,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '$':
                     advance();
-                    token.kind = SyntaxKind::OpenBraceDollerToken;
+                    token.setSyntaxKind(SyntaxKind::OpenBraceDollerToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::OpenBraceToken;
+                    token.setSyntaxKind(SyntaxKind::OpenBraceToken);
                     break;
             }
 
@@ -194,7 +194,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '}':
             advance();
-            token.kind = SyntaxKind::CloseBraceToken;
+            token.setSyntaxKind(SyntaxKind::CloseBraceToken);
             break;
         case '@':
         {
@@ -205,10 +205,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '@':
                     advance();
-                    token.kind = SyntaxKind::AtAtToken;
+                    token.setSyntaxKind(SyntaxKind::AtAtToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::AtToken;
+                    token.setSyntaxKind(SyntaxKind::AtToken);
                     break;
             }
 
@@ -216,7 +216,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '+':
             advance();
-            token.kind = SyntaxKind::PlusToken;
+            token.setSyntaxKind(SyntaxKind::PlusToken);
             break;
         case '-':
         {
@@ -227,10 +227,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '-':
                     advance();
-                    token.kind = SyntaxKind::MinusMinusToken;
+                    token.setSyntaxKind(SyntaxKind::MinusMinusToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::MinusToken;
+                    token.setSyntaxKind(SyntaxKind::MinusToken);
                     break;
             }
 
@@ -245,10 +245,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case ')':
                     advance();
-                    token.kind = SyntaxKind::AsteriskCloseParenthesisToken;
+                    token.setSyntaxKind(SyntaxKind::AsteriskCloseParenthesisToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::AsteriskToken;
+                    token.setSyntaxKind(SyntaxKind::AsteriskToken);
                     break;
             }
 
@@ -263,10 +263,10 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             {
                 case '/':
                     advance();
-                    token.kind = SyntaxKind::SlashSlashToken;
+                    token.setSyntaxKind(SyntaxKind::SlashSlashToken);
                     break;
                 default:
-                    token.kind = SyntaxKind::SlashToken;
+                    token.setSyntaxKind(SyntaxKind::SlashToken);
                     break;
             }
 
@@ -274,15 +274,15 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '&':
             advance();
-            token.kind = SyntaxKind::AmpersandToken;
+            token.setSyntaxKind(SyntaxKind::AmpersandToken);
             break;
         case '$':
             advance();
-            token.kind = SyntaxKind::DollarToken;
+            token.setSyntaxKind(SyntaxKind::DollarToken);
             break;
         case '#':
             advance();
-            token.kind = SyntaxKind::HashToken;
+            token.setSyntaxKind(SyntaxKind::HashToken);
             break;
         case '\'':
         case '"':
@@ -311,12 +311,14 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
     }
 
-    if (token.kind != SyntaxKind::EndOfTileToken && token.kind != SyntaxKind::NumberLiteralToken
-        && token.kind != SyntaxKind::StringLiteralToken && token.kind != SyntaxKind::IdentifierToken
-        && !DelphiSyntaxFacts::isKeyword(token.kind) && token.kind != SyntaxKind::WhitespaceToken)
+    const SyntaxKind tokenKind = token.syntaxKind();
+
+    if (tokenKind != SyntaxKind::EndOfTileToken && tokenKind != SyntaxKind::NumberLiteralToken
+        && tokenKind != SyntaxKind::StringLiteralToken && tokenKind != SyntaxKind::IdentifierToken
+        && !DelphiSyntaxFacts::isKeyword(tokenKind) && tokenKind != SyntaxKind::WhitespaceToken)
     {
         const pg_size currentLength = _position - _start;
-        token.text = _code.substr(_start, currentLength);
+        token.setText(_code.substr(_start, currentLength));
     }
 
     return token;
@@ -345,11 +347,11 @@ void DelphiLexer::lexStringLiteral(SyntaxToken& token) noexcept
                 advance();
         }
 
-        token.text = text.c_str();
-        token.kind = SyntaxKind::StringLiteralToken;
+        token.setText(text.c_str());
+        token.setSyntaxKind(SyntaxKind::StringLiteralToken);
     }
     else
-        token.kind = SyntaxKind::None;
+        token.setSyntaxKind(SyntaxKind::None);
 }
 
 void DelphiLexer::lexNumberLiteral(SyntaxToken& token) noexcept
@@ -363,8 +365,8 @@ void DelphiLexer::lexNumberLiteral(SyntaxToken& token) noexcept
     }
 
     const pg_size currentLength = _position - _start;
-    token.text = _code.substr(_start, currentLength);
-    token.kind = SyntaxKind::NumberLiteralToken;
+    token.setText(_code.substr(_start, currentLength));
+    token.setSyntaxKind(SyntaxKind::NumberLiteralToken);
 }
 
 void DelphiLexer::lexWhiteSpace(SyntaxToken& token) noexcept
@@ -373,8 +375,8 @@ void DelphiLexer::lexWhiteSpace(SyntaxToken& token) noexcept
         advance();
 
     const pg_size currentLength = _position - _start;
-    token.text = _code.substr(_start, currentLength);
-    token.kind = SyntaxKind::WhitespaceToken;
+    token.setText(_code.substr(_start, currentLength));
+    token.setSyntaxKind(SyntaxKind::WhitespaceToken);
 }
 
 void DelphiLexer::lexIdentifierOrKeyword(SyntaxToken& token) noexcept
@@ -415,18 +417,18 @@ void DelphiLexer::lexIdentifierOrKeyword(SyntaxToken& token) noexcept
     const std::string text = _code.substr(_start, currentLength);
 
     if (text.length() > MAX_KEYWORD_LENGTH)
-        token.kind = SyntaxKind::IdentifierToken;
+        token.setSyntaxKind(SyntaxKind::IdentifierToken);
     else
     {
         const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(text);
 
         if (syntaxKind == SyntaxKind::None)
-            token.kind = SyntaxKind::IdentifierToken;
+            token.setSyntaxKind(SyntaxKind::IdentifierToken);
         else
-            token.kind = syntaxKind;
+            token.setSyntaxKind(syntaxKind);
     }
 
-    token.text = text;
+    token.setText(text);
 }
 
 } // end namespace polyglot::CodeAnalysis

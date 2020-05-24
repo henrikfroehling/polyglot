@@ -15,15 +15,17 @@ Parser::~Parser() noexcept
 void Parser::lex() noexcept
 {
     SyntaxToken token{};
+    SyntaxKind tokenKind = SyntaxKind::EndOfTileToken;
 
     do
     {
         token = _ptrLexer->nextToken();
+        tokenKind = token.syntaxKind();
 
-        if (token.kind != SyntaxKind::WhitespaceToken)
+        if (tokenKind != SyntaxKind::WhitespaceToken)
             _tokens.push_back(token);
     }
-    while (token.kind != SyntaxKind::EndOfTileToken);
+    while (tokenKind != SyntaxKind::EndOfTileToken);
 }
 
 } // end namespace polyglot::CodeAnalysis

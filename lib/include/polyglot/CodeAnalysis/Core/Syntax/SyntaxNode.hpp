@@ -13,6 +13,7 @@ public:
     virtual ~SyntaxNode() noexcept = default;
     inline virtual bool isToken() const noexcept { return false; }
     inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
+    inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
 
 protected:
     explicit SyntaxNode(SyntaxKind syntaxKind) noexcept;

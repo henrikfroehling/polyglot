@@ -4,16 +4,31 @@
 #include <string>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-struct POLYGLOT_API SyntaxToken
+class POLYGLOT_API SyntaxToken : public SyntaxNode
 {
-    SyntaxKind kind;
-    pg_size position;
-    std::string text;
+public:
+    SyntaxToken() noexcept;
+    explicit SyntaxToken(SyntaxKind syntaxKind) noexcept;
+
+    SyntaxToken(SyntaxKind syntaxKind,
+                pg_size position,
+                std::string text = "") noexcept;
+
+    inline bool isToken() const noexcept override { return true; }
+    inline pg_size position() const noexcept { return _position; }
+    inline void setPosition(pg_size position) noexcept { _position = position; }
+    inline std::string text() const noexcept { return _text; }
+    inline void setText(std::string text) noexcept { _text = text; }
+
+private:
+    pg_size _position;
+    std::string _text;
 };
 
 } // end namespace polyglot::CodeAnalysis
