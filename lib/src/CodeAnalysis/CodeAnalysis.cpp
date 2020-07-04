@@ -8,7 +8,7 @@ namespace Delphi
 
 SyntaxTree* parseSourceText(std::string sourceText) noexcept
 {
-    return DelphiSyntaxTree::parseSourceText(sourceText);
+    return DelphiSyntaxTree::parseSourceText(std::move(sourceText));
 }
 
 } // end namespace Delphi
