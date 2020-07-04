@@ -6,8 +6,8 @@
 
 namespace polyglot::CodeAnalysis {
 
-DelphiParser::DelphiParser(std::string code) noexcept
-    : Parser{std::make_unique<DelphiLexer>(code)}
+DelphiParser::DelphiParser(std::string_view code) noexcept
+    : Parser{std::make_unique<DelphiLexer>(std::move(code))}
 {}
 
 void DelphiParser::parse() noexcept

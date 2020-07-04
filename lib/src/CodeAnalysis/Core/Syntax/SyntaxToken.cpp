@@ -17,7 +17,7 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind) noexcept
 
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
                          pg_size position,
-                         std::string text) noexcept
+                         std::string_view text) noexcept
     : SyntaxNode{syntaxKind},
       _position{position},
       _text{text}

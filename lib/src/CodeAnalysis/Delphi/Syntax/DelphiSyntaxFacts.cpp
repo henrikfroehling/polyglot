@@ -464,7 +464,7 @@ bool isKeyword(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-SyntaxKind keywordKind(const std::string& text) noexcept
+SyntaxKind keywordKind(std::string_view text) noexcept
 {
     std::string lowerCaseText{text};
     std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), std::tolower);

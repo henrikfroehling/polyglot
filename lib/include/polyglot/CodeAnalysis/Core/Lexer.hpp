@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 #define POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 
-#include <string>
+#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
@@ -20,12 +20,12 @@ public:
     virtual SyntaxToken nextToken() noexcept = 0;
 
 protected:
-    explicit Lexer(std::string code) noexcept;
+    explicit Lexer(std::string_view code) noexcept;
     char current() const noexcept;
     inline void advance() noexcept { _position++; }
 
 protected:
-    std::string _code;
+    std::string_view _code;
     pg_size _position;
 };
 

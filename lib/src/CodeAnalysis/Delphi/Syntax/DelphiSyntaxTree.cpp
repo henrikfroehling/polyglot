@@ -5,7 +5,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiSyntaxTree::DelphiSyntaxTree(std::string sourceText) noexcept
-    : SyntaxTree{sourceText}
+    : SyntaxTree{std::move(sourceText)}
 {}
 
 DelphiSyntaxTree* DelphiSyntaxTree::parseSourceText(std::string sourceText) noexcept

@@ -6,7 +6,7 @@ namespace polyglot::CodeAnalysis
 
 constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
-DelphiLexer::DelphiLexer(std::string code) noexcept
+DelphiLexer::DelphiLexer(std::string_view code) noexcept
     : Lexer{std::move(code)},
       _start{}
 {}
@@ -414,7 +414,7 @@ void DelphiLexer::lexIdentifierOrKeyword(SyntaxToken& token) noexcept
     }
 
     const pg_size currentLength = _position - _start;
-    const std::string text = _code.substr(_start, currentLength);
+    const std::string_view text = _code.substr(_start, currentLength);
 
     if (text.length() > MAX_KEYWORD_LENGTH)
         token.setSyntaxKind(SyntaxKind::IdentifierToken);

@@ -1,7 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTOKEN_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTOKEN_H
 
-#include <string>
+//#include <string>
+#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
@@ -18,17 +19,17 @@ public:
 
     SyntaxToken(SyntaxKind syntaxKind,
                 pg_size position,
-                std::string text = "") noexcept;
+                std::string_view text = "") noexcept;
 
     inline bool isToken() const noexcept override { return true; }
     inline pg_size position() const noexcept { return _position; }
     inline void setPosition(pg_size position) noexcept { _position = position; }
-    inline std::string text() const noexcept { return _text; }
-    inline void setText(std::string text) noexcept { _text = text; }
+    inline std::string_view text() const noexcept { return _text; }
+    inline void setText(std::string_view text) noexcept { _text = text; }
 
 private:
     pg_size _position;
-    std::string _text;
+    std::string_view _text;
 };
 
 } // end namespace polyglot::CodeAnalysis

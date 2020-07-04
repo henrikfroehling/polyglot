@@ -3,7 +3,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-Lexer::Lexer(std::string code) noexcept
+Lexer::Lexer(std::string_view code) noexcept
     : _code{std::move(code)},
       _position{0}
 {}

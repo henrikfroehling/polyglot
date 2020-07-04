@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXER_H
 
-#include <string>
+#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
@@ -13,7 +13,7 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiLexer final : public Lexer
 {
 public:
-    explicit DelphiLexer(std::string code) noexcept;
+    explicit DelphiLexer(std::string_view code) noexcept;
     SyntaxToken nextToken() noexcept override final;
 
 private:
