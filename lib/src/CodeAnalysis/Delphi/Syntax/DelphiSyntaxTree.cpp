@@ -4,16 +4,15 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiSyntaxTree::DelphiSyntaxTree(std::string sourceText) noexcept
+DelphiSyntaxTree::DelphiSyntaxTree(SourceText sourceText) noexcept
     : SyntaxTree{std::move(sourceText)}
 {}
 
-DelphiSyntaxTree* DelphiSyntaxTree::parseSourceText(std::string sourceText) noexcept
+DelphiSyntaxTree* DelphiSyntaxTree::parseSourceText(SourceText sourceText) noexcept
 {
     DelphiParser parser{sourceText};
     parser.parse();
-
-    return new DelphiSyntaxTree{sourceText};
+    return new DelphiSyntaxTree{std::move(sourceText)};
 }
 
 } // end namespace polyglot::CodeAnalysis

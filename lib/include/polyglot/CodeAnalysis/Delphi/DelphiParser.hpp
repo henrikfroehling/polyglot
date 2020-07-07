@@ -1,18 +1,20 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
-#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/Core/Types.hpp"
 
-namespace polyglot::CodeAnalysis {
+namespace polyglot::CodeAnalysis
+{
+
+class SourceText;
 
 class POLYGLOT_API DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;
-    explicit DelphiParser(std::string_view code) noexcept;
+    explicit DelphiParser(const SourceText& sourceText) noexcept;
     void parse() noexcept override;
 };
 

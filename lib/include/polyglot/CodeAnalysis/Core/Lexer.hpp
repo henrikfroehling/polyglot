@@ -1,13 +1,15 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 #define POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 
-#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class SourceText;
 
 class POLYGLOT_API Lexer
 {
@@ -20,13 +22,11 @@ public:
     virtual SyntaxToken nextToken() noexcept = 0;
 
 protected:
-    explicit Lexer(std::string_view code) noexcept;
-    char current() const noexcept;
-    inline void advance() noexcept { _position++; }
+    explicit Lexer(const SourceText& sourceText) noexcept;
+    void start() noexcept;
 
 protected:
-    std::string_view _code;
-    pg_size _position;
+    SlidingTextWindow _textWindow;
 };
 
 } // end namespace polyglot::CodeAnalysis

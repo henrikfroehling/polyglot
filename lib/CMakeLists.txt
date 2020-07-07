@@ -41,6 +41,7 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SlidingTextWindow.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLine.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLineCollection.cpp

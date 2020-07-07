@@ -10,9 +10,7 @@ namespace polyglot::CodeAnalysis
 SourceText::SourceText(std::string sourceText) noexcept
     : _sourceText{std::move(sourceText)},
       _lineStarts{this}
-{
-    _lineStarts.parseLineStarts();
-}
+{}
 
 SourceText::SourceText(const SourceText& other) noexcept
     : _sourceText{other._sourceText},
@@ -43,6 +41,11 @@ std::string_view SourceText::content() const noexcept
 pg_size SourceText::indexOf(const pg_size position) const noexcept
 {
     return _lineStarts.indexOf(position);
+}
+
+void SourceText::parseLineStarts() noexcept
+{
+    _lineStarts.parseLineStarts();
 }
 
 const char& SourceText::operator[](const pg_size index) const noexcept

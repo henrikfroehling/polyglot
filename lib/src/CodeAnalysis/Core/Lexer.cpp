@@ -3,20 +3,17 @@
 namespace polyglot::CodeAnalysis
 {
 
-Lexer::Lexer(std::string_view code) noexcept
-    : _code{std::move(code)},
-      _position{0}
+Lexer::Lexer(const SourceText& sourceText) noexcept
+    : _textWindow{sourceText}//,
+      //_position{0}
 {}
 
 Lexer::~Lexer()
 {}
 
-char Lexer::current() const noexcept
+void Lexer::start() noexcept
 {
-    if (_position >= _code.length())
-        return '\0';
-
-    return _code[_position];
+    _textWindow.start();
 }
 
 } // end namespace polyglot::CodeAnalysis

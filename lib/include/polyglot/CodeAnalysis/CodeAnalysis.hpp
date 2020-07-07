@@ -10,7 +10,7 @@ namespace polyglot::CodeAnalysis
 namespace Delphi
 {
 
-SyntaxTree* parseSourceText(std::string sourceText) noexcept;
+SyntaxTree* parseSourceText(std::string source) noexcept;
 
 } // end namespace Delphi
 } // end namespace polyglot::CodeAnalysis

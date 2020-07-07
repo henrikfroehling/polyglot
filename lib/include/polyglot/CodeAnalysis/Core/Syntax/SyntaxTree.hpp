@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTREE_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTREE_H
 
-#include <string>
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include "polyglot/polyglot_global.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -14,10 +14,10 @@ public:
     virtual ~SyntaxTree() noexcept = default;
 
 protected:
-    explicit SyntaxTree(std::string sourceText) noexcept;
+    explicit SyntaxTree(SourceText sourceText) noexcept;
 
 protected:
-    std::string _sourceText;
+    SourceText _sourceText;
 };
 
 } // end namespace polyglot::CodeAnalysis

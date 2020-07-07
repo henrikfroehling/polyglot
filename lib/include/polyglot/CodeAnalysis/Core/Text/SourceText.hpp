@@ -25,6 +25,7 @@ public:
     pg_size length() const noexcept;
     std::string_view content() const noexcept;
     pg_size indexOf(const pg_size position) const noexcept;
+    void parseLineStarts() noexcept;
     const char& operator[](const pg_size index) const noexcept;
     std::string_view toString(const TextSpan& textSpan) const noexcept;
 

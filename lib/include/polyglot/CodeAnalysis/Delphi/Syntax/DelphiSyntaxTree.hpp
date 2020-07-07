@@ -3,6 +3,7 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -11,10 +12,10 @@ class POLYGLOT_API DelphiSyntaxTree : public SyntaxTree
 {
 public:
     DelphiSyntaxTree() = delete;
-    static DelphiSyntaxTree* parseSourceText(std::string sourceText) noexcept;
+    static DelphiSyntaxTree* parseSourceText(SourceText sourceText) noexcept;
 
 private:
-    explicit DelphiSyntaxTree(std::string sourceText) noexcept;
+    explicit DelphiSyntaxTree(SourceText sourceText) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

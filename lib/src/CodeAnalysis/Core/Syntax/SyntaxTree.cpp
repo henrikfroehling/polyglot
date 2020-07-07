@@ -3,7 +3,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxTree::SyntaxTree(std::string sourceText) noexcept
+SyntaxTree::SyntaxTree(SourceText sourceText) noexcept
     : _sourceText{std::move(sourceText)}
 {}
 

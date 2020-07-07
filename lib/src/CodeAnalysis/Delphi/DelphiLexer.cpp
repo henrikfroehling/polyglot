@@ -6,43 +6,44 @@ namespace polyglot::CodeAnalysis
 
 constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
-DelphiLexer::DelphiLexer(std::string_view code) noexcept
-    : Lexer{std::move(code)},
-      _start{}
+DelphiLexer::DelphiLexer(const SourceText& sourceText) noexcept
+    : Lexer{sourceText}//,
+      //_start{}
 {}
 
 SyntaxToken DelphiLexer::nextToken() noexcept
 {
-    _start = _position;
-    SyntaxToken token{SyntaxKind::None, _position, ""};
+    start();
+    //_start = _position;
+    SyntaxToken token{SyntaxKind::None, _textWindow.position(), ""};
 
-    if (_position >= _code.length())
+    if (_textWindow.isReallyAtEnd())
     {
         token.setSyntaxKind(SyntaxKind::EndOfTileToken);
         return token;
     }
 
-    char currentCharacter = current();
+    char character = _textWindow.peekCharacter();
 
-    switch (currentCharacter)
+    switch (character)
     {
         case '\0':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::EndOfTileToken);
             break;
         case '.':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '.':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::DotDotToken);
                     break;
                 case ')':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::DotCloseParenthesisToken);
                     break;
                 default:
@@ -53,22 +54,22 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
         }
         case ',':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CommaToken);
             break;
         case ';':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::SemiColonToken);
             break;
         case ':':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '=':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::ColonEqualToken);
                     break;
                 default:
@@ -79,18 +80,18 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
         }
         case '=':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::EqualToken);
             break;
         case '^':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '.':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::CaretDotToken);
                     break;
                 default:
@@ -102,17 +103,17 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '<':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '=':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::LessThanEqualToken);
                     break;
                 case '>':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::LessThanGreaterThanToken);
                     break;
                 default:
@@ -124,13 +125,13 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '>':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '"':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::GreaterThanEqualToken);
                     break;
                 default:
@@ -142,17 +143,17 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '(':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '*':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenParenthesisAsteriskToken);
                     break;
                 case '.':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenParenthesisDotToken);
                     break;
                 default:
@@ -163,26 +164,26 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
         }
         case ')':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseParenthesisToken);
             break;
         case '[':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::OpenBracketToken);
             break;
         case ']':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseBracketToken);
             break;
         case '{':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '$':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenBraceDollerToken);
                     break;
                 default:
@@ -193,18 +194,18 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
         }
         case '}':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseBraceToken);
             break;
         case '@':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '@':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::AtAtToken);
                     break;
                 default:
@@ -215,18 +216,18 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
         }
         case '+':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::PlusToken);
             break;
         case '-':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '-':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::MinusMinusToken);
                     break;
                 default:
@@ -238,13 +239,13 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '*':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case ')':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::AsteriskCloseParenthesisToken);
                     break;
                 default:
@@ -256,13 +257,13 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         }
         case '/':
         {
-            advance();
-            currentCharacter = current();
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
 
-            switch (currentCharacter)
+            switch (character)
             {
                 case '/':
-                    advance();
+                    _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::SlashSlashToken);
                     break;
                 default:
@@ -273,15 +274,15 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             break;
         }
         case '&':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::AmpersandToken);
             break;
         case '$':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::DollarToken);
             break;
         case '#':
-            advance();
+            _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::HashToken);
             break;
         case '\'':
@@ -307,7 +308,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
             lexIdentifierOrKeyword(token);
             break;
         default:
-            advance();
+            _textWindow.advanceCharacter();
             break;
     }
 
@@ -317,8 +318,7 @@ SyntaxToken DelphiLexer::nextToken() noexcept
         && tokenKind != SyntaxKind::StringLiteralToken && tokenKind != SyntaxKind::IdentifierToken
         && !DelphiSyntaxFacts::isKeyword(tokenKind) && tokenKind != SyntaxKind::WhitespaceToken)
     {
-        const pg_size currentLength = _position - _start;
-        token.setText(_code.substr(_start, currentLength));
+        token.setText(_textWindow.text());
     }
 
     return token;
@@ -326,25 +326,25 @@ SyntaxToken DelphiLexer::nextToken() noexcept
 
 void DelphiLexer::lexStringLiteral(SyntaxToken& token) noexcept
 {
-    const char quoteCharacter = current();
+    const char quoteCharacter = _textWindow.peekCharacter();
 
     if (quoteCharacter == '\'' || quoteCharacter == '"')
     {
         std::string text{quoteCharacter};
-        advance();
+        _textWindow.advanceCharacter();
 
         while (true)
         {
-            char character = current();
+            char character = _textWindow.peekCharacter();
             text += character;
 
             if (character == quoteCharacter)
             {
-                advance();
+                _textWindow.advanceCharacter();
                 break;
             }
             else
-                advance();
+                _textWindow.advanceCharacter();
         }
 
         token.setText(text.c_str());
@@ -356,32 +356,30 @@ void DelphiLexer::lexStringLiteral(SyntaxToken& token) noexcept
 
 void DelphiLexer::lexNumberLiteral(SyntaxToken& token) noexcept
 {
-    char character = current();
+    char character = _textWindow.peekCharacter();
 
     while (character >= '0' && character <= '9')
     {
-        advance();
-        character = current();
+        _textWindow.advanceCharacter();
+        character = _textWindow.peekCharacter();
     }
 
-    const pg_size currentLength = _position - _start;
-    token.setText(_code.substr(_start, currentLength));
+    token.setText(_textWindow.text());
     token.setSyntaxKind(SyntaxKind::NumberLiteralToken);
 }
 
 void DelphiLexer::lexWhiteSpace(SyntaxToken& token) noexcept
 {
-    while (std::isspace(current()))
-        advance();
+    while (std::isspace(_textWindow.peekCharacter()))
+        _textWindow.advanceCharacter();
 
-    const pg_size currentLength = _position - _start;
-    token.setText(_code.substr(_start, currentLength));
+    token.setText(_textWindow.text());
     token.setSyntaxKind(SyntaxKind::WhitespaceToken);
 }
 
 void DelphiLexer::lexIdentifierOrKeyword(SyntaxToken& token) noexcept
 {
-    char currentCharacter = current();
+    char currentCharacter = _textWindow.peekCharacter();
 
     while (true)
     {
@@ -401,8 +399,8 @@ void DelphiLexer::lexIdentifierOrKeyword(SyntaxToken& token) noexcept
             case '0': case '1': case '2': case '3': case '4':
             case '5': case '6': case '7': case '8': case '9':
             {
-                advance();
-                currentCharacter = current();
+                _textWindow.advanceCharacter();
+                currentCharacter = _textWindow.peekCharacter();
                 isAlphaNumeric = true;
                 break;
             }
@@ -415,8 +413,7 @@ void DelphiLexer::lexIdentifierOrKeyword(SyntaxToken& token) noexcept
             break;
     }
 
-    const pg_size currentLength = _position - _start;
-    const std::string_view text = _code.substr(_start, currentLength);
+    const std::string_view text = _textWindow.text();
 
     if (text.length() > MAX_KEYWORD_LENGTH)
         token.setSyntaxKind(SyntaxKind::IdentifierToken);
