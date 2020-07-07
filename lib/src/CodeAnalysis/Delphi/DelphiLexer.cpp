@@ -7,14 +7,12 @@ namespace polyglot::CodeAnalysis
 constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
 DelphiLexer::DelphiLexer(const SourceText& sourceText) noexcept
-    : Lexer{sourceText}//,
-      //_start{}
+    : Lexer{sourceText}
 {}
 
 SyntaxToken DelphiLexer::nextToken() noexcept
 {
     start();
-    //_start = _position;
     SyntaxToken token{SyntaxKind::None, _textWindow.position(), ""};
 
     if (_textWindow.isReallyAtEnd())

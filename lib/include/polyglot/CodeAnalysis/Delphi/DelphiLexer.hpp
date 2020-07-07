@@ -22,9 +22,6 @@ private:
     void lexNumberLiteral(SyntaxToken& token) noexcept;
     void lexWhiteSpace(SyntaxToken& token) noexcept;
     void lexIdentifierOrKeyword(SyntaxToken& token) noexcept;
-
-//private:
-    //pg_size _start;
 };
 
 } // end namespace polyglot::CodeAnalysis
