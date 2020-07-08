@@ -240,12 +240,16 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::AssemblyKeyword: return "AssemblyKeyword";
         case SyntaxKind::BreakKeyword: return "BreakKeyword";
         case SyntaxKind::ContinueKeyword: return "ContinueKeyword";
+        case SyntaxKind::WhitespaceTrivia: return "WhitespaceTrivia";
+        case SyntaxKind::SingleLineCommentTrivia: return "SingleLineCommentTrivia";
+        case SyntaxKind::MultiLineCommentTrivia: return "MultiLineCommentTrivia";
+        case SyntaxKind::EndOfLineTrivia: return "EndOfLineTrivia";
         case SyntaxKind::StringLiteralToken: return "StringLiteralToken";
         case SyntaxKind::NumberLiteralToken: return "NumberLiteralToken";
         case SyntaxKind::IdentifierToken: return "IdentifierToken";
         case SyntaxKind::WhitespaceToken: return "WhitespaceToken";
         case SyntaxKind::BadToken: return "BadToken";
-        case SyntaxKind::EndOfTileToken: return "EOF";
+        case SyntaxKind::EndOfFileToken: return "EOF";
     }
 
     return "";

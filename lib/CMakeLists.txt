@@ -39,6 +39,7 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/SlidingTextWindow.cpp

@@ -12,7 +12,7 @@ enum class SyntaxKind : unsigned short
     // special tokens
     None = 0,
     BadToken,
-    EndOfTileToken,
+    EndOfFileToken,
     WhitespaceToken,
 
     // punctuation
@@ -253,7 +253,13 @@ enum class SyntaxKind : unsigned short
     BreakKeyword, // break
     ContinueKeyword, // continue
 
-    StringLiteralToken = 2000,
+    // trivia
+    WhitespaceTrivia = 2000,
+    SingleLineCommentTrivia,
+    MultiLineCommentTrivia,
+    EndOfLineTrivia,
+
+    StringLiteralToken = 2500,
     NumberLiteralToken,
     IdentifierToken
 };

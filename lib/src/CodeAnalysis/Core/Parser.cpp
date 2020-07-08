@@ -15,7 +15,7 @@ Parser::~Parser() noexcept
 void Parser::lex() noexcept
 {
     SyntaxToken token{};
-    SyntaxKind tokenKind = SyntaxKind::EndOfTileToken;
+    SyntaxKind tokenKind = SyntaxKind::EndOfFileToken;
 
     do
     {
@@ -25,7 +25,7 @@ void Parser::lex() noexcept
         if (tokenKind != SyntaxKind::WhitespaceToken)
             _tokens.push_back(token);
     }
-    while (tokenKind != SyntaxKind::EndOfTileToken);
+    while (tokenKind != SyntaxKind::EndOfFileToken);
 }
 
 } // end namespace polyglot::CodeAnalysis

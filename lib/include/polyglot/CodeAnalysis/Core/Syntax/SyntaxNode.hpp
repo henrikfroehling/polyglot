@@ -12,6 +12,7 @@ class POLYGLOT_API SyntaxNode
 public:
     virtual ~SyntaxNode() noexcept = default;
     inline virtual bool isToken() const noexcept { return false; }
+    inline virtual bool isTrivia() const noexcept { return false; }
     inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
     inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
 

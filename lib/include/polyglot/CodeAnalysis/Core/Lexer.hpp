@@ -1,10 +1,12 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 #define POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 
+#include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -27,6 +29,8 @@ protected:
 
 protected:
     SlidingTextWindow _textWindow;
+    std::vector<SyntaxTrivia> _leadingTriviaCache;
+    std::vector<SyntaxTrivia> _trailingTriviaCache;
 };
 
 } // end namespace polyglot::CodeAnalysis
