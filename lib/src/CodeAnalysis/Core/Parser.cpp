@@ -14,16 +14,15 @@ Parser::~Parser() noexcept
 
 void Parser::lex() noexcept
 {
-    SyntaxToken token{};
     SyntaxKind tokenKind = SyntaxKind::EndOfFileToken;
 
     do
     {
-        token = _ptrLexer->nextToken();
-        tokenKind = token.syntaxKind();
+        auto ptrToken = _ptrLexer->nextToken();
+        tokenKind = ptrToken->syntaxKind();
 
         if (tokenKind != SyntaxKind::WhitespaceToken)
-            _tokens.push_back(token);
+            _tokens.push_back(std::move(ptrToken));
     }
     while (tokenKind != SyntaxKind::EndOfFileToken);
 }

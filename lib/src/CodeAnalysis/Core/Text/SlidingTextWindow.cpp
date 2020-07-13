@@ -1,48 +1,23 @@
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include <algorithm>
+#include <limits>
 
 namespace polyglot::CodeAnalysis
 {
 
-constexpr char EOF_CHARACTER{'\0'};
+constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
 constexpr pg_size DEFAULT_WINDOW_LENGTH{2048};
 
-SlidingTextWindow::SlidingTextWindow(const SourceText& sourceText) noexcept
-    : _sourceText{sourceText},
+SlidingTextWindow::SlidingTextWindow(SourceText* sourceText) noexcept
+    : _pSourceText{sourceText},
       _basis{},
       _offset{},
-      _textEnd{sourceText.length()},
+      _textEnd{sourceText->length()},
       _characterWindow(DEFAULT_WINDOW_LENGTH),
       _characterWindowCount{},
       _lexemeStart{}
 {}
-
-SlidingTextWindow::SlidingTextWindow(const SlidingTextWindow& other) noexcept
-    : _sourceText{other._sourceText},
-      _basis{other._basis},
-      _offset{other._offset},
-      _textEnd{other._textEnd},
-      _characterWindow{other._characterWindow},
-      _characterWindowCount{other._characterWindowCount},
-      _lexemeStart{other._lexemeStart}
-{}
-
-SlidingTextWindow::SlidingTextWindow(SlidingTextWindow&& other) noexcept
-    : _sourceText{std::move(other._sourceText)},
-      _basis{std::move(other._basis)},
-      _offset{std::move(other._offset)},
-      _textEnd{std::move(other._textEnd)},
-      _characterWindow{std::move(other._characterWindow)},
-      _characterWindowCount{std::move(other._characterWindowCount)},
-      _lexemeStart{std::move(other._lexemeStart)}
-{}
-
-SlidingTextWindow& SlidingTextWindow::operator=(SlidingTextWindow other) noexcept
-{
-    swap(*this, other);
-    return *this;
-}
 
 void SlidingTextWindow::start() noexcept
 {
@@ -57,11 +32,11 @@ void SlidingTextWindow::reset(const pg_size position) noexcept
         _offset = relativePosition;
     else
     {
-        pg_size amountToRead = std::min(_sourceText.length(), position + _characterWindow.size()) - position;
+        pg_size amountToRead = std::min(_pSourceText->length(), position + _characterWindow.size()) - position;
         amountToRead = std::max(amountToRead, static_cast<pg_size>(0));
 
         if (amountToRead > 0)
-            _sourceText.copyTo(position, _characterWindow, 0, amountToRead);
+            _pSourceText->copyTo(position, _characterWindow, 0, amountToRead);
 
         _lexemeStart = 0;
         _offset = 0;
@@ -79,7 +54,7 @@ char SlidingTextWindow::nextCharacter() noexcept
 {
     const char character = peekCharacter();
 
-    if (character != EOF_CHARACTER)
+    if (character != INVALID_CHARACTER)
         advanceCharacter();
 
     return character;
@@ -88,7 +63,7 @@ char SlidingTextWindow::nextCharacter() noexcept
 char SlidingTextWindow::peekCharacter() noexcept
 {
     if (_offset >= _characterWindowCount && !moreCharacters())
-        return EOF_CHARACTER;
+        return INVALID_CHARACTER;
 
     return _characterWindow[_offset];
 }
@@ -99,11 +74,24 @@ char SlidingTextWindow::peekCharacter(const pg_size offset) noexcept
     char character{};
 
     if (_offset >= _characterWindowCount && !moreCharacters())
-        character = EOF_CHARACTER;
+        character = INVALID_CHARACTER;
     else
         character = _characterWindow[_offset];
 
     reset(position());
+    return character;
+}
+
+char SlidingTextWindow::peekPreviousCharacter(const pg_size offset) noexcept
+{
+    char character{};
+    const pg_size position = _offset - offset;
+
+    if (position >= _characterWindowCount)
+        character = INVALID_CHARACTER;
+    else
+        character = _characterWindow[position];
+
     return character;
 }
 
@@ -168,25 +156,12 @@ bool SlidingTextWindow::moreCharacters() noexcept
             _characterWindow.reserve(_characterWindow.size() * 2);
 
         const pg_size amountToRead = std::min(_textEnd - (_basis + _characterWindowCount), _characterWindow.size() - _characterWindowCount);
-        _sourceText.copyTo(_basis + _characterWindowCount, _characterWindow, _characterWindowCount, amountToRead);
+        _pSourceText->copyTo(_basis + _characterWindowCount, _characterWindow, _characterWindowCount, amountToRead);
         _characterWindowCount += amountToRead;
         return amountToRead > 0;
     }
 
     return true;
-}
-
-void swap(SlidingTextWindow& lhs,
-          SlidingTextWindow& rhs) noexcept
-{
-    using std::swap;
-    swap(const_cast<SourceText&>(lhs._sourceText), const_cast<SourceText&>(rhs._sourceText));
-    swap(lhs._basis, rhs._basis);
-    swap(lhs._offset, rhs._offset);
-    swap(lhs._textEnd, rhs._textEnd);
-    swap(lhs._characterWindow, rhs._characterWindow);
-    swap(lhs._characterWindowCount, rhs._characterWindowCount);
-    swap(lhs._lexemeStart, rhs._lexemeStart);
 }
 
 } // end namespace polyglot::CodeAnalysis

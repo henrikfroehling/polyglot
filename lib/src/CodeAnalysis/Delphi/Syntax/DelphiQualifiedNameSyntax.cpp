@@ -4,13 +4,13 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiQualifiedNameSyntax::DelphiQualifiedNameSyntax(SyntaxKind syntaxKind,
-                                                     DelphiNameSyntax* left,
-                                                     SyntaxToken dotToken,
-                                                     DelphiSimpleNameSyntax* right) noexcept
+                                                     std::unique_ptr<DelphiNameSyntax> left,
+                                                     std::unique_ptr<SyntaxToken> dotToken,
+                                                     std::unique_ptr<DelphiSimpleNameSyntax> right) noexcept
     : DelphiNameSyntax{syntaxKind},
-     _left{left},
-     _dotToken{dotToken},
-     _right{right}
+     _ptrLeft{std::move(left)},
+     _ptrDotToken{std::move(dotToken)},
+     _ptrRight{std::move(right)}
 {}
 
 } // end namespace polyglot::CodeAnalysis

@@ -9,29 +9,11 @@
 namespace polyglot::CodeAnalysis
 {
 
-TextLineCollection::TextLineCollection(const SourceText* sourceText) noexcept
+TextLineCollection::TextLineCollection(SourceText* sourceText) noexcept
     : _lineStarts{},
       _pSourceText{sourceText},
       _lastLineNumber{}
 {}
-
-TextLineCollection::TextLineCollection(const TextLineCollection& other) noexcept
-    : _lineStarts{other._lineStarts},
-      _pSourceText{other._pSourceText},
-      _lastLineNumber{other._lastLineNumber}
-{}
-
-TextLineCollection::TextLineCollection(TextLineCollection&& other) noexcept
-    : _lineStarts{std::move(other._lineStarts)},
-      _pSourceText{std::move(other._pSourceText)},
-      _lastLineNumber{std::move(other._lastLineNumber)}
-{}
-
-TextLineCollection& TextLineCollection::operator=(TextLineCollection other) noexcept
-{
-    swap(*this, other);
-    return *this;
-}
 
 pg_size binarySearch(const std::vector<pg_size>& container,
                      const pg_size value)
@@ -104,9 +86,32 @@ TextLine TextLineCollection::operator[](const pg_size index) const noexcept
     }
 }
 
-TextLine TextLineCollection::lineFromPosition(const pg_size position) const noexcept
+TextLine TextLineCollection::textLineFrom(const pg_size position) const noexcept
 {
     return (*this)[indexOf(position)];
+}
+
+LinePosition TextLineCollection::linePositionFrom(const pg_size position) const noexcept
+{
+    const TextLine textLine = textLineFrom(position);
+    return LinePosition{textLine.lineNumber(), position - textLine.start()};
+}
+
+LinePositionSpan TextLineCollection::linePositionSpanFrom(const TextSpan& textSpan) const noexcept
+{
+    LinePosition start = linePositionFrom(textSpan.start());
+    LinePosition end = linePositionFrom(textSpan.end());
+    return LinePositionSpan{std::move(start), std::move(end)};
+}
+
+pg_size TextLineCollection::positionFrom(const LinePosition& linePosition) const noexcept
+{
+    return textLineFrom(linePosition.line()).start() + linePosition.character();
+}
+
+TextSpan TextLineCollection::textSpanFrom(const LinePositionSpan& linePositionSpan) const noexcept
+{
+    return TextSpan::fromBounds(positionFrom(linePositionSpan.start()), positionFrom(linePositionSpan.end()));
 }
 
 void TextLineCollection::parseLineStarts() noexcept
@@ -143,7 +148,7 @@ void TextLineCollection::parseLineStarts() noexcept
             const char character = (*ptrCharBuffer)[index];
             index++;
 
-            if (character >= 32 && character < 127 && character != '\r')
+            if (character >= 32 && character < 127)
                 continue;
 
             if (character == '\r')
@@ -170,15 +175,6 @@ void TextLineCollection::parseLineStarts() noexcept
         parseContent(contentLength);
         position += contentLength;
     }
-}
-
-void swap(TextLineCollection& lhs,
-          TextLineCollection& rhs) noexcept
-{
-    using std::swap;
-    swap(lhs._lineStarts, rhs._lineStarts);
-    swap(lhs._pSourceText, rhs._pSourceText);
-    swap(lhs._lastLineNumber, rhs._lastLineNumber);
 }
 
 } // end namespace polyglot::CodeAnalysis

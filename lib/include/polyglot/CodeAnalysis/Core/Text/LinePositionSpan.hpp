@@ -15,14 +15,12 @@ public:
     explicit LinePositionSpan(LinePosition start,
                               LinePosition end) noexcept;
 
-    LinePositionSpan(const LinePositionSpan& other) noexcept;
-    LinePositionSpan(LinePositionSpan&& other) noexcept;
-    LinePositionSpan& operator=(LinePositionSpan other) noexcept;
+    LinePositionSpan(const LinePositionSpan&) noexcept = default;
+    LinePositionSpan(LinePositionSpan&&) noexcept = default;
+    LinePositionSpan& operator=(const LinePositionSpan&) noexcept = default;
+    LinePositionSpan& operator=(LinePositionSpan&&) noexcept = default;
     inline const LinePosition& start() const noexcept { return _start; }
     inline const LinePosition& end() const noexcept { return _end; }
-
-    friend void swap(LinePositionSpan& lhs,
-                     LinePositionSpan& rhs) noexcept;
 
     friend bool operator==(const LinePositionSpan& lhs,
                            const LinePositionSpan& rhs) noexcept;

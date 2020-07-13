@@ -13,30 +13,6 @@ LinePositionSpan::LinePositionSpan(LinePosition start,
     assert(start < end);
 }
 
-LinePositionSpan::LinePositionSpan(const LinePositionSpan& other) noexcept
-    : _start{other._start},
-      _end{other._end}
-{}
-
-LinePositionSpan::LinePositionSpan(LinePositionSpan&& other) noexcept
-    : _start{std::move(other._start)},
-      _end{std::move(other._end)}
-{}
-
-LinePositionSpan& LinePositionSpan::operator=(LinePositionSpan other) noexcept
-{
-    swap(*this, other);
-    return *this;
-}
-
-void swap(LinePositionSpan& lhs,
-          LinePositionSpan& rhs) noexcept
-{
-    using std::swap;
-    swap(lhs._start, rhs._start);
-    swap(lhs._end, rhs._end);
-}
-
 bool operator==(const LinePositionSpan& lhs,
                 const LinePositionSpan& rhs) noexcept
 {

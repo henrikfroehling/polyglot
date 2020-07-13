@@ -15,9 +15,10 @@ class POLYGLOT_API TextLine final
 {
 public:
     TextLine() noexcept;
-    TextLine(const TextLine& other) noexcept;
-    TextLine(TextLine&& other) noexcept;
-    TextLine& operator=(TextLine other) noexcept;
+    TextLine(const TextLine&) noexcept = default;
+    TextLine(TextLine&&) noexcept = default;
+    TextLine& operator=(const TextLine&) noexcept = default;
+    TextLine& operator=(TextLine&&) noexcept = default;
     inline const SourceText* text() const noexcept { return _pSourceText; }
     pg_size lineNumber() const noexcept;
     inline pg_size start() const noexcept { return _start; }
@@ -26,11 +27,8 @@ public:
     TextSpan span() const noexcept;
     TextSpan spanIncludingLineBreak() const noexcept;
 
-    static TextLine fromSpan(const SourceText* sourceText,
+    static TextLine fromSpan(SourceText* sourceText,
                              TextSpan& textSpan);
-
-    friend void swap(TextLine& lhs,
-                     TextLine& rhs) noexcept;
 
     friend bool operator==(const TextLine& lhs,
                            const TextLine& rhs) noexcept;
@@ -42,7 +40,7 @@ public:
                                     const TextLine& textLine) noexcept;
 
 private:
-    explicit TextLine(const SourceText* sourceText,
+    explicit TextLine(SourceText* sourceText,
                       const pg_size start,
                       const pg_size endIncludingLineBreak) noexcept;
 
@@ -51,7 +49,7 @@ private:
 private:
     pg_size _start;
     pg_size _endIncludingLineBreak;
-    const SourceText* _pSourceText;
+    SourceText* _pSourceText;
 };
 
 } // end namespace polyglot::CodeAnalyis

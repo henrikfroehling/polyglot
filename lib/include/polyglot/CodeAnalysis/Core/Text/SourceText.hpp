@@ -19,9 +19,10 @@ class POLYGLOT_API SourceText final
 public:
     SourceText() = delete;
     explicit SourceText(std::string sourceText) noexcept;
-    SourceText(const SourceText& other) noexcept;
-    SourceText(SourceText&& other) noexcept;
-    SourceText& operator=(SourceText other) noexcept;
+    SourceText(const SourceText&) noexcept = default;
+    SourceText(SourceText&&) noexcept = default;
+    SourceText& operator=(const SourceText&) noexcept = default;
+    SourceText& operator=(SourceText&&) noexcept = default;
     pg_size length() const noexcept;
     std::string_view content() const noexcept;
     pg_size indexOf(const pg_size position) const noexcept;
@@ -36,9 +37,6 @@ public:
                 std::vector<char>& destination,
                 const pg_size destinationIndex,
                 const pg_size count) const noexcept;
-
-    friend void swap(SourceText& lhs,
-                     SourceText& rhs) noexcept;
 
     friend bool operator==(const SourceText& lhs,
                            const SourceText& rhs) noexcept;

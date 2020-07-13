@@ -8,20 +8,18 @@ namespace polyglot::CodeAnalysis
 constexpr unsigned MAX_KEYWORD_LENGTH{14};
 constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
 
-DelphiLexer::DelphiLexer(const SourceText& sourceText) noexcept
+DelphiLexer::DelphiLexer(SourceText* sourceText) noexcept
     : Lexer{sourceText}
 {}
 
-SyntaxToken DelphiLexer::nextToken() noexcept
+std::unique_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
 {
-    _leadingTriviaCache.clear();
-    lexSyntaxTrivia(false, _leadingTriviaCache);
+    auto ptrToken = std::make_unique<SyntaxToken>();
+    lexSyntaxTrivia(false, *ptrToken);
     start();
-    SyntaxToken token{};
-    scanSyntaxToken(token);
-    _trailingTriviaCache.clear();
-    lexSyntaxTrivia(true, _trailingTriviaCache);
-    return token;
+    scanSyntaxToken(*ptrToken);
+    lexSyntaxTrivia(true, *ptrToken);
+    return std::move(ptrToken);
 }
 
 void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
@@ -33,6 +31,8 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case '\0':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::EndOfFileToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '.':
         {
@@ -44,13 +44,19 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '.':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::DotDotToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 case ')':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::DotCloseParenthesisToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::DotToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -59,10 +65,14 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case ',':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CommaToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case ';':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::SemiColonToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case ':':
         {
@@ -74,9 +84,13 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '=':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::ColonEqualToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::ColonToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -85,6 +99,8 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case '=':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::EqualToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '^':
         {
@@ -96,9 +112,13 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '.':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::CaretDotToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::CaretToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -114,13 +134,19 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '=':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::LessThanEqualToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 case '>':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::LessThanGreaterThanToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::LessThanToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -133,12 +159,16 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
 
             switch (character)
             {
-                case '"':
+                case '=':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::GreaterThanEqualToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::GreaterThanToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -151,16 +181,16 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
 
             switch (character)
             {
-                case '*':
-                    _textWindow.advanceCharacter();
-                    token.setSyntaxKind(SyntaxKind::OpenParenthesisAsteriskToken);
-                    break;
                 case '.':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenParenthesisDotToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::OpenParenthesisToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -169,14 +199,20 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case ')':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseParenthesisToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '[':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::OpenBracketToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case ']':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseBracketToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '{':
         {
@@ -188,9 +224,13 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '$':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenBraceDollerToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::OpenBraceToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -199,6 +239,8 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case '}':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseBraceToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '@':
         {
@@ -210,9 +252,13 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '@':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::AtAtToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::AtToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -221,6 +267,8 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case '+':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::PlusToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '-':
         {
@@ -232,27 +280,13 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '-':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::MinusMinusToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::MinusToken);
-                    break;
-            }
-
-            break;
-        }
-        case '*':
-        {
-            _textWindow.advanceCharacter();
-            character = _textWindow.peekCharacter();
-
-            switch (character)
-            {
-                case ')':
-                    _textWindow.advanceCharacter();
-                    token.setSyntaxKind(SyntaxKind::AsteriskCloseParenthesisToken);
-                    break;
-                default:
-                    token.setSyntaxKind(SyntaxKind::AsteriskToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -268,9 +302,13 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                 case '/':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::SlashSlashToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::SlashToken);
+                    token.setText(_textWindow.text());
+                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -279,14 +317,20 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
         case '&':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::AmpersandToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '$':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::DollarToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '#':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::HashToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         case '\'':
         case '"':
@@ -313,6 +357,8 @@ lettercase:
                 goto defaultcase;
 
             token.setSyntaxKind(SyntaxKind::EndOfFileToken);
+            token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
         default:
 defaultcase:
@@ -321,6 +367,7 @@ defaultcase:
 
             _textWindow.advanceCharacter();
             token.setText(_textWindow.text());
+            token.setPosition(_textWindow.position());
             break;
     }
 }
@@ -359,6 +406,8 @@ void DelphiLexer::scanStringLiteral(SyntaxToken& token) noexcept
     }
     else
         token.setSyntaxKind(SyntaxKind::None);
+
+    token.setPosition(_textWindow.position());
 }
 
 void DelphiLexer::scanIdentifierOrKeyword(SyntaxToken& token) noexcept
@@ -376,6 +425,8 @@ void DelphiLexer::scanIdentifierOrKeyword(SyntaxToken& token) noexcept
             else
                 token.setSyntaxKind(syntaxKind);
         }
+
+        token.setPosition(_textWindow.position());
     }
 }
 
@@ -427,6 +478,7 @@ bool DelphiLexer::scanIdentifier(SyntaxToken& token) noexcept
             {
                 _textWindow.advanceCharacter(currentOffset - startOffset);
                 token.setText(_textWindow.text());
+                token.setPosition(_textWindow.position());
                 return true;
             }
             case '0': case '1': case '2': case '3': case '4':
@@ -467,12 +519,11 @@ void DelphiLexer::scanNumericLiteral(SyntaxToken& token) noexcept
 
     token.setText(_textWindow.text());
     token.setSyntaxKind(SyntaxKind::NumberLiteralToken);
+    token.setPosition(_textWindow.position());
 }
 
-void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& triviaList) noexcept
+void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
 {
-    bool onlyWhitespaceOnLine = !isTrailing;
-
     while (true)
     {
         start();
@@ -480,8 +531,11 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
 
         if (character == ' ')
         {
-            SyntaxTrivia trivia = scanWhitespace();
-            triviaList.push_back(trivia);
+            if (isTrailing)
+                token.addTrailingTrivia(scanWhitespace());
+            else
+                token.addLeadingTrivia(scanWhitespace());
+
             continue;
         }
         else if (character > 127)
@@ -499,8 +553,11 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
             case '\v':
             case '\f':
             {
-                SyntaxTrivia trivia = scanWhitespace();
-                triviaList.push_back(trivia);
+                if (isTrailing)
+                    token.addTrailingTrivia(scanWhitespace());
+                else
+                    token.addLeadingTrivia(scanWhitespace());
+
                 break;
             }
             case '/':
@@ -508,18 +565,14 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
 
                 if (character == '/')
                 {
-                    if (_textWindow.peekCharacter(2) == '/' && _textWindow.peekCharacter(3) != '/')
-                    {
-                        if (isTrailing)
-                            return;
-
-                        // TODO lex documentation comment
-                        break;
-                    }
-
                     scanToEndOfLine();
-                    triviaList.emplace_back(SyntaxKind::SingleLineCommentTrivia, _textWindow.text());
-                    onlyWhitespaceOnLine = false;
+                    auto ptrSyntaxTrivia = std::make_unique<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.text());
+
+                    if (isTrailing)
+                        token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
+                    else
+                        token.addLeadingTrivia(std::move(ptrSyntaxTrivia));
+
                     break;
                 }
 
@@ -537,10 +590,17 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
                         // TODO error handling
                     }
 
-                    triviaList.emplace_back(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
-                    onlyWhitespaceOnLine = false;
+                    auto ptrSyntaxTrivia = std::make_unique<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
+
+                    if (isTrailing)
+                        token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
+                    else
+                        token.addLeadingTrivia(std::move(ptrSyntaxTrivia));
+
                     break;
                 }
+                else
+                    _textWindow.reset(_textWindow.position() - 1);
 
                 return;
             case '(':
@@ -548,15 +608,6 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
 
                 if (character == '*')
                 {
-                    if (_textWindow.peekCharacter(2) == '*')
-                    {
-                        if (isTrailing)
-                            return;
-
-                        // TODO lex documentation comment
-                        break;
-                    }
-
                     bool isTerminated{false};
                     scanMultiLineComment(isTerminated);
 
@@ -565,22 +616,30 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
                         // TODO error handling
                     }
 
-                    triviaList.emplace_back(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
-                    onlyWhitespaceOnLine = false;
+                    auto ptrSyntaxTrivia = std::make_unique<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
+
+                    if (isTrailing)
+                        token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
+                    else
+                        token.addLeadingTrivia(std::move(ptrSyntaxTrivia));
+
                     break;
                 }
+                else
+                    _textWindow.reset(_textWindow.position() - 1);
 
                 return;
             case '\r':
             case '\n':
             {
-                SyntaxTrivia trivia = scanEndOfLine();
-                triviaList.push_back(trivia);
+                if (isTrailing)
+                    token.addTrailingTrivia(scanEndOfLine());
+                else
+                    token.addLeadingTrivia(scanEndOfLine());
 
                 if (isTrailing)
                     return;
 
-                onlyWhitespaceOnLine = true;
                 break;
             }
             default:
@@ -589,7 +648,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& tr
     }
 }
 
-SyntaxTrivia DelphiLexer::scanWhitespace() noexcept
+std::unique_ptr<SyntaxTrivia> DelphiLexer::scanWhitespace() noexcept
 {
 top:
     char character = _textWindow.peekCharacter();
@@ -613,7 +672,7 @@ space:
             break;
     }
 
-    return SyntaxTrivia{SyntaxKind::WhitespaceTrivia, _textWindow.text()};
+    return std::make_unique<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
 }
 
 void DelphiLexer::scanToEndOfLine() noexcept
@@ -621,12 +680,18 @@ void DelphiLexer::scanToEndOfLine() noexcept
     char character = _textWindow.peekCharacter();
 
     while (!(character == '\r' || character == '\n') && (character != INVALID_CHARACTER || !_textWindow.isReallyAtEnd()))
+    {
         _textWindow.advanceCharacter();
+        character = _textWindow.peekCharacter();
+    }
 }
 
 void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
 {
-    if (_textWindow.peekCharacter() == '(' && _textWindow.peekCharacter(1) == '*')
+    const char previousCharacter = _textWindow.peekPreviousCharacter(1);
+    const char currentCharacter = _textWindow.peekCharacter();
+
+    if (previousCharacter == '(' && currentCharacter == '*')
     {
         _textWindow.advanceCharacter();
         char character{};
@@ -642,7 +707,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
             }
             else if (character == '*' && _textWindow.peekCharacter(1) == ')')
             {
-                _textWindow.advanceCharacter(2);
+                _textWindow.advanceCharacter();
                 isTerminated = true;
                 break;
             }
@@ -650,7 +715,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
                 _textWindow.advanceCharacter();
         }
     }
-    else if (_textWindow.peekCharacter() == '{' && _textWindow.peekCharacter(1) != '$')
+    else if (previousCharacter == '{' && currentCharacter != '$')
     {
         _textWindow.advanceCharacter();
         char character{};
@@ -664,9 +729,9 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
                 isTerminated = false;
                 break;
             }
-            else if (_textWindow.peekCharacter(1) == '}')
+            else if (character == '}')
             {
-                _textWindow.advanceCharacter(2);
+                _textWindow.advanceCharacter();
                 isTerminated = true;
                 break;
             }
@@ -678,7 +743,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
         isTerminated = false;
 }
 
-SyntaxTrivia DelphiLexer::scanEndOfLine() noexcept
+std::unique_ptr<SyntaxTrivia> DelphiLexer::scanEndOfLine() noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -690,21 +755,21 @@ SyntaxTrivia DelphiLexer::scanEndOfLine() noexcept
             if (_textWindow.peekCharacter() == '\n')
             {
                 _textWindow.advanceCharacter();
-                return SyntaxTrivia{SyntaxKind::EndOfLineTrivia, "\r\n"};
+                return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\r\n");
             }
 
-            return SyntaxTrivia{SyntaxKind::EndOfLineTrivia, "\r"};
+            return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\r");
         case '\n':
             _textWindow.advanceCharacter();
-            return SyntaxTrivia{SyntaxKind::EndOfLineTrivia, "\n"};
+            return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\n");
         default:
             if (character == '\r' || character == '\n')
             {
                 _textWindow.advanceCharacter();
-                return SyntaxTrivia{SyntaxKind::EndOfLineTrivia, std::string{character}};
+                return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, std::string{character});
             }
 
-        return SyntaxTrivia{SyntaxKind::None, ""};
+        return std::make_unique<SyntaxTrivia>(SyntaxKind::None, "");
     }
 }
 

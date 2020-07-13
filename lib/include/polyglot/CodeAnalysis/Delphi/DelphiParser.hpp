@@ -14,7 +14,7 @@ class POLYGLOT_API DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;
-    explicit DelphiParser(const SourceText& sourceText) noexcept;
+    explicit DelphiParser(SourceText* sourceText) noexcept;
     void parse() noexcept override;
 };
 

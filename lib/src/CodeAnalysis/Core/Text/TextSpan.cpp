@@ -10,22 +10,6 @@ TextSpan::TextSpan(const pg_size start,
       _length{lenght}
 {}
 
-TextSpan::TextSpan(const TextSpan& other) noexcept
-    : _start{other._start},
-      _length{other._length}
-{}
-
-TextSpan::TextSpan(TextSpan&& other) noexcept
-    : _start{std::move(other._start)},
-      _length{std::move(other._length)}
-{}
-
-TextSpan& TextSpan::operator=(TextSpan other) noexcept
-{
-    swap(*this, other);
-    return *this;
-}
-
 bool TextSpan::contains(const pg_size position) const noexcept
 {
     return (position - _start) < _length;
@@ -71,14 +55,6 @@ TextSpan TextSpan::fromBounds(const pg_size start,
                               const pg_size end) noexcept
 {
     return TextSpan{start, end - start};
-}
-
-void swap(TextSpan& lhs,
-          TextSpan& rhs) noexcept
-{
-    using std::swap;
-    swap(lhs._start, rhs._start);
-    swap(lhs._length, rhs._length);
 }
 
 bool operator==(const TextSpan& lhs,

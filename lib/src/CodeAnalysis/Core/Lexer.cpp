@@ -3,10 +3,8 @@
 namespace polyglot::CodeAnalysis
 {
 
-Lexer::Lexer(const SourceText& sourceText) noexcept
-    : _textWindow{sourceText},
-      _leadingTriviaCache{},
-      _trailingTriviaCache{}
+Lexer::Lexer(SourceText* sourceText) noexcept
+    : _textWindow{sourceText}
 {}
 
 Lexer::~Lexer()

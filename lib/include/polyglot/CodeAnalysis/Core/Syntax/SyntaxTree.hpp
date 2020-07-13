@@ -10,7 +10,7 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API SyntaxTree
 {
 public:
-    SyntaxTree() = delete;
+    SyntaxTree() noexcept = default;
     virtual ~SyntaxTree() noexcept = default;
 
 protected:

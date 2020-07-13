@@ -15,10 +15,11 @@ class POLYGLOT_API SlidingTextWindow final
 {
 public:
     SlidingTextWindow() = delete;
-    explicit SlidingTextWindow(const SourceText& sourceText) noexcept;
-    SlidingTextWindow(const SlidingTextWindow& other) noexcept;
-    SlidingTextWindow(SlidingTextWindow&& other) noexcept;
-    SlidingTextWindow& operator=(SlidingTextWindow other) noexcept;
+    explicit SlidingTextWindow(SourceText* sourceText) noexcept;
+    SlidingTextWindow(const SlidingTextWindow&) noexcept = default;
+    SlidingTextWindow(SlidingTextWindow&&) noexcept = default;
+    SlidingTextWindow& operator=(const SlidingTextWindow&) noexcept = default;
+    SlidingTextWindow& operator=(SlidingTextWindow&&) noexcept = default;
     inline pg_size position() const noexcept { return _basis + _offset; }
     inline pg_size offset() const noexcept { return _offset; }
     inline const std::vector<char>& characterWindow() const noexcept { return _characterWindow; }
@@ -33,16 +34,14 @@ public:
     char nextCharacter() noexcept;
     char peekCharacter() noexcept;
     char peekCharacter(const pg_size offset) noexcept;
+    char peekPreviousCharacter(const pg_size offset) noexcept;
     std::string_view text() const noexcept;
-
-    friend void swap(SlidingTextWindow& lhs,
-                     SlidingTextWindow& rhs) noexcept;
 
 private:
     bool moreCharacters() noexcept;
 
 private:
-    const SourceText& _sourceText;
+    SourceText* _pSourceText;
     pg_size _basis;
     pg_size _offset;
     pg_size _textEnd;

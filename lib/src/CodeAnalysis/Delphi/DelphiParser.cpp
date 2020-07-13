@@ -6,7 +6,7 @@
 
 namespace polyglot::CodeAnalysis {
 
-DelphiParser::DelphiParser(const SourceText& sourceText) noexcept
+DelphiParser::DelphiParser(SourceText* sourceText) noexcept
     : Parser{std::make_unique<DelphiLexer>(sourceText)}
 {}
 

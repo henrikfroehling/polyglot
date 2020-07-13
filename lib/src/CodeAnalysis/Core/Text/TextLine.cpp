@@ -13,31 +13,13 @@ TextLine::TextLine() noexcept
       _pSourceText{nullptr}
 {}
 
-TextLine::TextLine(const SourceText* sourceText,
+TextLine::TextLine(SourceText* sourceText,
                    const pg_size start,
                    const pg_size endIncludingLineBreak) noexcept
     : _start{start},
       _endIncludingLineBreak{endIncludingLineBreak},
       _pSourceText{sourceText}
 {}
-
-TextLine::TextLine(const TextLine& other) noexcept
-    : _start{other._start},
-      _endIncludingLineBreak{other._endIncludingLineBreak},
-      _pSourceText{other._pSourceText}
-{}
-
-TextLine::TextLine(TextLine&& other) noexcept
-    : _start{std::move(other._start)},
-      _endIncludingLineBreak{std::move(other._endIncludingLineBreak)},
-      _pSourceText{std::move(other._pSourceText)}
-{}
-
-TextLine& TextLine::operator=(TextLine other) noexcept
-{
-    swap(*this, other);
-    return *this;
-}
 
 pg_size TextLine::lineNumber() const noexcept
 {
@@ -59,7 +41,7 @@ TextSpan TextLine::spanIncludingLineBreak() const noexcept
     return TextSpan::fromBounds(_start, _endIncludingLineBreak);
 }
 
-TextLine TextLine::fromSpan(const SourceText* sourceText,
+TextLine TextLine::fromSpan(SourceText* sourceText,
                             TextSpan& textSpan)
 {
     assert(sourceText != nullptr);
@@ -102,15 +84,6 @@ pg_size TextLine::lineBreakLength() const noexcept
         return 0;
 
     return lengthOfLineBreakEndingAt(*_pSourceText, _endIncludingLineBreak - 1);
-}
-
-void swap(TextLine& lhs,
-          TextLine& rhs) noexcept
-{
-    using std::swap;
-    swap(lhs._start, rhs._start);
-    swap(lhs._endIncludingLineBreak, rhs._endIncludingLineBreak);
-    swap(lhs._pSourceText, rhs._pSourceText);
 }
 
 bool operator==(const TextLine& lhs,

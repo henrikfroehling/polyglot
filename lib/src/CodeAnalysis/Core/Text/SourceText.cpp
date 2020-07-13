@@ -12,22 +12,6 @@ SourceText::SourceText(std::string sourceText) noexcept
       _lineStarts{this}
 {}
 
-SourceText::SourceText(const SourceText& other) noexcept
-    : _sourceText{other._sourceText},
-      _lineStarts{other._lineStarts}
-{}
-
-SourceText::SourceText(SourceText&& other) noexcept
-    : _sourceText{std::move(other._sourceText)},
-      _lineStarts{std::move(other._lineStarts)}
-{}
-
-SourceText& SourceText::operator=(SourceText other) noexcept
-{
-    swap(*this, other);
-    return *this;
-}
-
 pg_size SourceText::length() const noexcept
 {
     return _sourceText.length();
@@ -60,7 +44,7 @@ std::string_view SourceText::toString(const TextSpan& textSpan) const noexcept
     if (textSpan.start() == 0 && textSpan.length() == length())
         return _sourceText;
 
-    return _sourceText.substr(textSpan.start(), textSpan.length());
+    return std::string_view{_sourceText}.substr(textSpan.start(), textSpan.length());
 }
 
 std::string_view SourceText::toString(const pg_size start,
@@ -72,7 +56,7 @@ std::string_view SourceText::toString(const pg_size start,
     if (start == 0 && length == this->length())
         return _sourceText;
 
-    return _sourceText.substr(start, length);
+    return std::string_view{_sourceText}.substr(start, length);
 }
 
 void SourceText::copyTo(const pg_size sourceIndex,
@@ -83,14 +67,6 @@ void SourceText::copyTo(const pg_size sourceIndex,
     std::copy(std::cbegin(_sourceText) + static_cast<std::vector<char>::difference_type>(sourceIndex),
               std::cbegin(_sourceText) + static_cast<std::vector<char>::difference_type>(sourceIndex + count),
               std::begin(destination) + static_cast<std::vector<char>::difference_type>(destinationIndex));
-}
-
-void swap(SourceText& lhs,
-          SourceText& rhs) noexcept
-{
-    using std::swap;
-    swap(lhs._sourceText, rhs._sourceText);
-    swap(lhs._lineStarts, rhs._lineStarts);
 }
 
 bool operator==(const SourceText& lhs,

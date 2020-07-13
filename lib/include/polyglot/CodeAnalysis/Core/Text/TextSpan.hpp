@@ -15,9 +15,10 @@ public:
     explicit TextSpan(const pg_size start,
                       const pg_size lenght) noexcept;
 
-    TextSpan(const TextSpan& other) noexcept;
-    TextSpan(TextSpan&& other) noexcept;
-    TextSpan& operator=(TextSpan other) noexcept;
+    TextSpan(const TextSpan&) noexcept = default;
+    TextSpan(TextSpan&&) noexcept = default;
+    TextSpan& operator=(const TextSpan&) noexcept = default;
+    TextSpan& operator=(TextSpan&&) noexcept = default;
     inline pg_size start() const noexcept { return _start; }
     inline pg_size length() const noexcept { return _length; }
     inline pg_size end() const noexcept { return _start + _length; }
@@ -32,9 +33,6 @@ public:
 
     static TextSpan fromBounds(const pg_size start,
                                const pg_size end) noexcept;
-
-    friend void swap(TextSpan& lhs,
-                     TextSpan& rhs) noexcept;
 
     friend bool operator==(const TextSpan& lhs,
                            const TextSpan& rhs) noexcept;

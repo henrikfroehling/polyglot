@@ -3,6 +3,7 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -10,17 +11,26 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API SyntaxNode
 {
 public:
-    virtual ~SyntaxNode() noexcept = default;
+    SyntaxNode() noexcept;
+    virtual ~SyntaxNode() noexcept;
+    SyntaxNode(SyntaxNode&&) noexcept = default;
+    SyntaxNode& operator=(SyntaxNode&&) noexcept = default;
     inline virtual bool isToken() const noexcept { return false; }
     inline virtual bool isTrivia() const noexcept { return false; }
     inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
     inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
+    inline pg_size position() const noexcept { return _position; }
+    inline void setPosition(pg_size position) noexcept { _position = position; }
 
 protected:
     explicit SyntaxNode(SyntaxKind syntaxKind) noexcept;
 
+    explicit SyntaxNode(SyntaxKind syntaxKind,
+                        pg_size position) noexcept;
+
 protected:
     SyntaxKind _syntaxKind;
+    pg_size _position;
 };
 
 } // end namespace polyglot::CodeAnalysis

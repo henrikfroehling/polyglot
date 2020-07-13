@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXER_H
 
+#include <memory>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
@@ -16,15 +17,15 @@ class SourceText;
 class POLYGLOT_API DelphiLexer final : public Lexer
 {
 public:
-    explicit DelphiLexer(const SourceText& sourceText) noexcept;
-    SyntaxToken nextToken() noexcept override final;
+    explicit DelphiLexer(SourceText* sourceText) noexcept;
+    std::unique_ptr<SyntaxToken> nextToken() noexcept override final;
 
 private:
-    void lexSyntaxTrivia(bool isTrailing, std::vector<SyntaxTrivia>& triviaList) noexcept;
-    SyntaxTrivia scanWhitespace() noexcept;
+    void lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept;
+    std::unique_ptr<SyntaxTrivia> scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
     void scanMultiLineComment(bool& isTerminated) noexcept;
-    SyntaxTrivia scanEndOfLine() noexcept;
+    std::unique_ptr<SyntaxTrivia> scanEndOfLine() noexcept;
     void scanSyntaxToken(SyntaxToken& token) noexcept;
     void scanStringLiteral(SyntaxToken& token) noexcept;
     void scanIdentifierOrKeyword(SyntaxToken& token) noexcept;
