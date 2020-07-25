@@ -14,7 +14,7 @@ class POLYGLOT_API DelphiSyntaxTree : public SyntaxTree
 public:
     DelphiSyntaxTree() noexcept = default;
     explicit DelphiSyntaxTree(SourceText sourceText) noexcept;
-    static std::unique_ptr<DelphiSyntaxTree> parseSourceText(SourceText sourceText) noexcept;
+    static std::shared_ptr<DelphiSyntaxTree> parseSourceText(SourceText sourceText) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

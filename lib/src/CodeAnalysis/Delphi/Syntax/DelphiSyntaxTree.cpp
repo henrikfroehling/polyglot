@@ -8,11 +8,11 @@ DelphiSyntaxTree::DelphiSyntaxTree(SourceText sourceText) noexcept
     : SyntaxTree{std::move(sourceText)}
 {}
 
-std::unique_ptr<DelphiSyntaxTree> DelphiSyntaxTree::parseSourceText(SourceText sourceText) noexcept
+std::shared_ptr<DelphiSyntaxTree> DelphiSyntaxTree::parseSourceText(SourceText sourceText) noexcept
 {
     DelphiParser parser{&sourceText};
     parser.parse();
-    return std::make_unique<DelphiSyntaxTree>(std::move(sourceText));
+    return std::make_shared<DelphiSyntaxTree>(std::move(sourceText));
 }
 
 } // end namespace polyglot::CodeAnalysis

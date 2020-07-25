@@ -4,6 +4,7 @@
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 
@@ -20,7 +21,12 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    virtual std::unique_ptr<SyntaxToken> nextToken() noexcept = 0;
+    virtual std::shared_ptr<SyntaxToken> nextToken() noexcept = 0;
+
+#ifndef NDEBUG
+    inline int cacheMisses() const noexcept { return _lexerCache.cacheMisses(); }
+    inline int cacheHits() const noexcept { return _lexerCache.cacheHits(); }
+#endif
 
 protected:
     explicit Lexer(SourceText* sourceText) noexcept;
@@ -28,6 +34,7 @@ protected:
 
 protected:
     SlidingTextWindow _textWindow;
+    LexerCache _lexerCache;
 };
 
 } // end namespace polyglot::CodeAnalysis

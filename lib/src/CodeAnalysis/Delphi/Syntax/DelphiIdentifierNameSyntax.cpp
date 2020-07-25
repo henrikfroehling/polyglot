@@ -4,7 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiIdentifierNameSyntax::DelphiIdentifierNameSyntax(SyntaxKind syntaxKind,
-                                                       std::unique_ptr<SyntaxToken> identifier) noexcept
+                                                       std::shared_ptr<SyntaxToken> identifier) noexcept
     : DelphiSimpleNameSyntax{syntaxKind, std::move(identifier)}
 {}
 

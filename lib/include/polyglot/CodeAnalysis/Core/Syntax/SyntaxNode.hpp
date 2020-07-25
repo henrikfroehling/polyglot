@@ -13,7 +13,9 @@ class POLYGLOT_API SyntaxNode
 public:
     SyntaxNode() noexcept;
     virtual ~SyntaxNode() noexcept;
+    SyntaxNode(const SyntaxNode&) noexcept = default;
     SyntaxNode(SyntaxNode&&) noexcept = default;
+    SyntaxNode& operator=(const SyntaxNode&) noexcept = default;
     SyntaxNode& operator=(SyntaxNode&&) noexcept = default;
     inline virtual bool isToken() const noexcept { return false; }
     inline virtual bool isTrivia() const noexcept { return false; }

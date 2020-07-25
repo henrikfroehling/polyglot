@@ -28,13 +28,16 @@ set(SOURCES
 )
 
 set(SOURCES_CORE
+  ${SOURCE_DIR}/Core/Hashing.cpp
   ${SOURCE_DIR}/Core/Types.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp

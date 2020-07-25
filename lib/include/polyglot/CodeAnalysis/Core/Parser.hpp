@@ -28,7 +28,7 @@ protected:
 
 protected:
     std::unique_ptr<Lexer> _ptrLexer;
-    std::vector<std::unique_ptr<SyntaxToken>> _tokens;
+    std::vector<std::shared_ptr<SyntaxToken>> _tokens;
     pg_size _position;
 };
 

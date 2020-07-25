@@ -1,5 +1,8 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
+#include "polyglot/Core/Hashing.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include <cassert>
+#include <algorithm>
 #include <limits>
 
 namespace polyglot::CodeAnalysis
@@ -7,14 +10,378 @@ namespace polyglot::CodeAnalysis
 
 constexpr unsigned MAX_KEYWORD_LENGTH{14};
 constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
+constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
+
+enum class QuickScanState : char
+{
+    Initial,
+    FollowingWhite,
+    FollowingCR,
+    Identifier,
+    Number,
+    Punctuation,
+    Dot,
+    CompoundPunctuationStart,
+    DoneAfterNext,
+    Done,
+    Bad = Done + 1
+};
+
+enum class CharFlags : char
+{
+    White,
+    CR,
+    LF,
+    Letter,
+    Digit,
+    Punctuation,
+    Dot,
+    CompoundPunctuationStart,
+    Slash,
+    Complex,
+    EndOfFile
+};
+
+constexpr QuickScanState STATE_TRANSITIONS[9][11]
+{
+    // Initial
+    {
+        QuickScanState::Initial,                     // White
+        QuickScanState::Initial,                     // CR
+        QuickScanState::Initial,                     // LF
+        QuickScanState::Identifier,                  // Letter
+        QuickScanState::Number,                      // Digit
+        QuickScanState::Punctuation,                 // Punctuation
+        QuickScanState::Dot,                         // Dot
+        QuickScanState::CompoundPunctuationStart,    // Compound Punctuation
+        QuickScanState::Bad,                         // Slash
+        QuickScanState::Bad,                         // Complex
+        QuickScanState::Bad                          // EndOfFile
+    },
+
+    // Following White
+    {
+        QuickScanState::FollowingWhite,     // White
+        QuickScanState::FollowingCR,        // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Done,               // Letter
+        QuickScanState::Done,               // Digit
+        QuickScanState::Done,               // Punctuation
+        QuickScanState::Done,               // Dot
+        QuickScanState::Done,               // Compound Punctuation
+        QuickScanState::Bad,                // Slash
+        QuickScanState::Bad,                // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Following CR
+    {
+        QuickScanState::Done,               // White
+        QuickScanState::Done,               // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Done,               // Letter
+        QuickScanState::Done,               // Digit
+        QuickScanState::Done,               // Punctuation
+        QuickScanState::Done,               // Dot
+        QuickScanState::Done,               // Compound Punctuation
+        QuickScanState::Done,               // Slash
+        QuickScanState::Done,               // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Identifier
+    {
+        QuickScanState::FollowingWhite,     // White
+        QuickScanState::FollowingCR,        // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Identifier,         // Letter
+        QuickScanState::Identifier,         // Digit
+        QuickScanState::Done,               // Punctuation
+        QuickScanState::Done,               // Dot
+        QuickScanState::Done,               // Compound Punctuation
+        QuickScanState::Bad,                // Slash
+        QuickScanState::Bad,                // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Number
+    {
+        QuickScanState::FollowingWhite,     // White
+        QuickScanState::FollowingCR,        // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Bad,                // Letter
+        QuickScanState::Number,             // Digit
+        QuickScanState::Done,               // Punctuation
+        QuickScanState::Bad,                // Dot
+        QuickScanState::Done,               // Compound Punctuation
+        QuickScanState::Bad,                // Slash
+        QuickScanState::Bad,                // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Punctuation
+    {
+        QuickScanState::FollowingWhite,     // White
+        QuickScanState::FollowingCR,        // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Done,               // Letter
+        QuickScanState::Done,               // Digit
+        QuickScanState::Done,               // Punctuation
+        QuickScanState::Done,               // Dot
+        QuickScanState::Done,               // Compound Punctuation
+        QuickScanState::Bad,                // Slash
+        QuickScanState::Bad,                // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Dot
+    {
+        QuickScanState::FollowingWhite,     // White
+        QuickScanState::FollowingCR,        // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Done,               // Letter
+        QuickScanState::Number,             // Digit
+        QuickScanState::Done,               // Punctuation
+        QuickScanState::Bad,                // Dot
+        QuickScanState::Done,               // Compound Punctuation
+        QuickScanState::Bad,                // Slash
+        QuickScanState::Bad,                // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Compound Punctuation
+    {
+        QuickScanState::FollowingWhite,     // White
+        QuickScanState::FollowingCR,        // CR
+        QuickScanState::DoneAfterNext,      // LF
+        QuickScanState::Done,               // Letter
+        QuickScanState::Done,               // Digit
+        QuickScanState::Bad,                // Punctuation
+        QuickScanState::Done,               // Dot
+        QuickScanState::Bad,                // Compound Punctuation
+        QuickScanState::Bad,                // Slash
+        QuickScanState::Bad,                // Complex
+        QuickScanState::Done                // EndOfFile
+    },
+
+    // Done after next
+    {
+        QuickScanState::Done,   // White
+        QuickScanState::Done,   // CR
+        QuickScanState::Done,   // LF
+        QuickScanState::Done,   // Letter
+        QuickScanState::Done,   // Digit
+        QuickScanState::Done,   // Punctuation
+        QuickScanState::Done,   // Dot
+        QuickScanState::Done,   // Compound Punctuation
+        QuickScanState::Done,   // Slash
+        QuickScanState::Done,   // Complex
+        QuickScanState::Done    // EndOfFile
+    }
+};
+
+constexpr CharFlags CHAR_PROPERTIES[255]
+{
+    // 0 .. 31
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::White,   // TAB
+    CharFlags::LF,      // LF
+    CharFlags::White,   // VT
+    CharFlags::White,   // FF
+    CharFlags::CR,      // CR
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+
+    // 32 .. 63
+    CharFlags::White,                       // SPC
+    CharFlags::Complex,                     // !
+    CharFlags::Complex,                     // "
+    CharFlags::Punctuation,                 // #
+    CharFlags::Punctuation,                 // $
+    CharFlags::Complex,                     // %
+    CharFlags::Punctuation,                 // &
+    CharFlags::Complex,                     // '
+    CharFlags::Punctuation,                 // (
+    CharFlags::Punctuation,                 // )
+    CharFlags::Punctuation,                 // *
+    CharFlags::Punctuation,                 // +
+    CharFlags::Punctuation,                 // ,
+    CharFlags::CompoundPunctuationStart,    // -
+    CharFlags::Dot,                         // .
+    CharFlags::Slash,                       // /
+    CharFlags::Digit,                       // 0
+    CharFlags::Digit,                       // 1
+    CharFlags::Digit,                       // 2
+    CharFlags::Digit,                       // 3
+    CharFlags::Digit,                       // 4
+    CharFlags::Digit,                       // 5
+    CharFlags::Digit,                       // 6
+    CharFlags::Digit,                       // 7
+    CharFlags::Digit,                       // 8
+    CharFlags::Digit,                       // 9
+    CharFlags::CompoundPunctuationStart,    // :
+    CharFlags::Punctuation,                 // ;
+    CharFlags::CompoundPunctuationStart,    // <
+    CharFlags::Punctuation,                 // =
+    CharFlags::CompoundPunctuationStart,    // >
+    CharFlags::Complex,                     // ?
+
+    // 64 .. 95
+    CharFlags::CompoundPunctuationStart,    // @
+    CharFlags::Letter,                      // A
+    CharFlags::Letter,                      // B
+    CharFlags::Letter,                      // C
+    CharFlags::Letter,                      // D
+    CharFlags::Letter,                      // E
+    CharFlags::Letter,                      // F
+    CharFlags::Letter,                      // G
+    CharFlags::Letter,                      // H
+    CharFlags::Letter,                      // I
+    CharFlags::Letter,                      // J
+    CharFlags::Letter,                      // K
+    CharFlags::Letter,                      // L
+    CharFlags::Letter,                      // M
+    CharFlags::Letter,                      // N
+    CharFlags::Letter,                      // O
+    CharFlags::Letter,                      // P
+    CharFlags::Letter,                      // Q
+    CharFlags::Letter,                      // R
+    CharFlags::Letter,                      // S
+    CharFlags::Letter,                      // T
+    CharFlags::Letter,                      // U
+    CharFlags::Letter,                      // V
+    CharFlags::Letter,                      // W
+    CharFlags::Letter,                      // X
+    CharFlags::Letter,                      // Y
+    CharFlags::Letter,                      // Z
+    CharFlags::Punctuation,                 // [
+    CharFlags::Complex,                     // Backslash
+    CharFlags::Punctuation,                 // ]
+    CharFlags::CompoundPunctuationStart,    // ^
+    CharFlags::Letter,                      // _
+
+    // 96 .. 127
+    CharFlags::Complex,                     // `
+    CharFlags::Letter,                      // a
+    CharFlags::Letter,                      // b
+    CharFlags::Letter,                      // c
+    CharFlags::Letter,                      // d
+    CharFlags::Letter,                      // e
+    CharFlags::Letter,                      // f
+    CharFlags::Letter,                      // g
+    CharFlags::Letter,                      // h
+    CharFlags::Letter,                      // i
+    CharFlags::Letter,                      // j
+    CharFlags::Letter,                      // k
+    CharFlags::Letter,                      // k
+    CharFlags::Letter,                      // m
+    CharFlags::Letter,                      // n
+    CharFlags::Letter,                      // o
+    CharFlags::Letter,                      // p
+    CharFlags::Letter,                      // q
+    CharFlags::Letter,                      // r
+    CharFlags::Letter,                      // s
+    CharFlags::Letter,                      // t
+    CharFlags::Letter,                      // u
+    CharFlags::Letter,                      // v
+    CharFlags::Letter,                      // w
+    CharFlags::Letter,                      // x
+    CharFlags::Letter,                      // y
+    CharFlags::Letter,                      // z
+    CharFlags::Punctuation,                 // {
+    CharFlags::CompoundPunctuationStart,    // |
+    CharFlags::Punctuation,                 // }
+    CharFlags::CompoundPunctuationStart,    // ~
+    CharFlags::Complex,                     // DEL
+
+    // 128 .. 159
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+
+    // 160 .. 191
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+
+    // 192 ..
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex
+};
+
+constexpr auto CHAR_PROPERTIES_LENGTH = sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]);
 
 DelphiLexer::DelphiLexer(SourceText* sourceText) noexcept
     : Lexer{sourceText}
 {}
 
-std::unique_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
+std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
 {
-    auto ptrToken = std::make_unique<SyntaxToken>();
+    auto ptrSyntaxToken = quickScanSyntaxToken();
+
+    if (ptrSyntaxToken == nullptr)
+        return lexSyntaxToken();
+
+    return std::move(ptrSyntaxToken);
+}
+
+std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
+{
+    start();
+    QuickScanState state = QuickScanState::Initial;
+    pg_size offset = _textWindow.offset();
+    pg_size characterWindowCount = _textWindow.characterWindowCount();
+    characterWindowCount = std::min(characterWindowCount, offset + MAX_CACHED_TOKEN_SIZE);
+    int hashCode = Hashing::FNV_OFFSET_BIAS;
+    auto& characterWindow = _textWindow.characterWindow();
+
+    for (; offset < characterWindowCount; offset++)
+    {
+        char currentCharacter = characterWindow[offset];
+        int c = static_cast<int>(currentCharacter);
+
+        CharFlags flags = c < CHAR_PROPERTIES_LENGTH ? CHAR_PROPERTIES[c] : CharFlags::Complex;
+        state = STATE_TRANSITIONS[static_cast<int>(state)][static_cast<int>(flags)];
+
+        if (state >= QuickScanState::Done)
+            goto exitWhile;
+
+        hashCode = (hashCode ^ c) * Hashing::FNV_PRIME;
+    }
+
+    state = QuickScanState::Bad;
+
+exitWhile:
+    _textWindow.advanceCharacter(offset - _textWindow.offset());
+    assert(state == QuickScanState::Bad || state == QuickScanState::Done);
+
+    if (state == QuickScanState::Done)
+    {
+        const pg_size lexemeRelativeStart = _textWindow.lexemeRelativeStart();
+
+        auto ptrSyntaxToken = _lexerCache.lookupToken(std::string_view{characterWindow.data() + lexemeRelativeStart, offset - lexemeRelativeStart}, hashCode,
+            [&]()
+            {
+                _textWindow.reset(_textWindow.lexemeStartPosition());
+                return lexSyntaxToken();
+            });
+
+        return ptrSyntaxToken;
+    }
+    else
+    {
+        _textWindow.reset(_textWindow.lexemeStartPosition());
+        return nullptr;
+    }
+}
+
+std::shared_ptr<SyntaxToken> DelphiLexer::lexSyntaxToken() noexcept
+{
+    auto ptrToken = std::make_shared<SyntaxToken>();
     lexSyntaxTrivia(false, *ptrToken);
     start();
     scanSyntaxToken(*ptrToken);
@@ -566,7 +933,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
                 if (character == '/')
                 {
                     scanToEndOfLine();
-                    auto ptrSyntaxTrivia = std::make_unique<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.text());
+                    auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.text());
 
                     if (isTrailing)
                         token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
@@ -590,7 +957,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
                         // TODO error handling
                     }
 
-                    auto ptrSyntaxTrivia = std::make_unique<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
+                    auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
 
                     if (isTrailing)
                         token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
@@ -616,7 +983,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
                         // TODO error handling
                     }
 
-                    auto ptrSyntaxTrivia = std::make_unique<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
+                    auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
 
                     if (isTrailing)
                         token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
@@ -648,7 +1015,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
     }
 }
 
-std::unique_ptr<SyntaxTrivia> DelphiLexer::scanWhitespace() noexcept
+std::shared_ptr<SyntaxTrivia> DelphiLexer::scanWhitespace() noexcept
 {
 top:
     char character = _textWindow.peekCharacter();
@@ -672,7 +1039,7 @@ space:
             break;
     }
 
-    return std::make_unique<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
+    return std::make_shared<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
 }
 
 void DelphiLexer::scanToEndOfLine() noexcept
@@ -743,7 +1110,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
         isTerminated = false;
 }
 
-std::unique_ptr<SyntaxTrivia> DelphiLexer::scanEndOfLine() noexcept
+std::shared_ptr<SyntaxTrivia> DelphiLexer::scanEndOfLine() noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -755,21 +1122,21 @@ std::unique_ptr<SyntaxTrivia> DelphiLexer::scanEndOfLine() noexcept
             if (_textWindow.peekCharacter() == '\n')
             {
                 _textWindow.advanceCharacter();
-                return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\r\n");
+                return std::make_shared<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\r\n");
             }
 
-            return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\r");
+            return std::make_shared<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\r");
         case '\n':
             _textWindow.advanceCharacter();
-            return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\n");
+            return std::make_shared<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, "\n");
         default:
             if (character == '\r' || character == '\n')
             {
                 _textWindow.advanceCharacter();
-                return std::make_unique<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, std::string{character});
+                return std::make_shared<SyntaxTrivia>(SyntaxKind::EndOfLineTrivia, std::string{character});
             }
 
-        return std::make_unique<SyntaxTrivia>(SyntaxKind::None, "");
+        return std::make_shared<SyntaxTrivia>(SyntaxKind::None, "");
     }
 }
 

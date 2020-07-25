@@ -18,10 +18,10 @@ public:
 
 protected:
     explicit DelphiSimpleNameSyntax(SyntaxKind syntaxKind,
-                                    std::unique_ptr<SyntaxToken> identifier) noexcept;
+                                    std::shared_ptr<SyntaxToken> identifier) noexcept;
 
 protected:
-    std::unique_ptr<SyntaxToken> _ptrIdentifier;
+    std::shared_ptr<SyntaxToken> _ptrIdentifier;
 };
 
 } // end namespace polyglot::CodeAnalysis

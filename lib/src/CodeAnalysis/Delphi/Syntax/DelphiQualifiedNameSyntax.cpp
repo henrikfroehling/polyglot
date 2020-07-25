@@ -4,9 +4,9 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiQualifiedNameSyntax::DelphiQualifiedNameSyntax(SyntaxKind syntaxKind,
-                                                     std::unique_ptr<DelphiNameSyntax> left,
-                                                     std::unique_ptr<SyntaxToken> dotToken,
-                                                     std::unique_ptr<DelphiSimpleNameSyntax> right) noexcept
+                                                     std::shared_ptr<DelphiNameSyntax> left,
+                                                     std::shared_ptr<SyntaxToken> dotToken,
+                                                     std::shared_ptr<DelphiSimpleNameSyntax> right) noexcept
     : DelphiNameSyntax{syntaxKind},
      _ptrLeft{std::move(left)},
      _ptrDotToken{std::move(dotToken)},

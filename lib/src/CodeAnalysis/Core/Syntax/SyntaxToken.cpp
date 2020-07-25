@@ -26,12 +26,12 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
       _trailingTrivia{}
 {}
 
-void SyntaxToken::addLeadingTrivia(std::unique_ptr<SyntaxTrivia> leadingTrivia) noexcept
+void SyntaxToken::addLeadingTrivia(std::shared_ptr<SyntaxTrivia> leadingTrivia) noexcept
 {
     _leadingTrivia.push_back(std::move(leadingTrivia));
 }
 
-void SyntaxToken::addTrailingTrivia(std::unique_ptr<SyntaxTrivia> trailingTrivia) noexcept
+void SyntaxToken::addTrailingTrivia(std::shared_ptr<SyntaxTrivia> trailingTrivia) noexcept
 {
     _trailingTrivia.push_back(std::move(trailingTrivia));
 }

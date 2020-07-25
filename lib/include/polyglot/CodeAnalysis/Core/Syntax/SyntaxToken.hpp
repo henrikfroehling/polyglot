@@ -23,18 +23,20 @@ public:
                 pg_size position,
                 std::string_view text = "") noexcept;
 
+    SyntaxToken(const SyntaxToken&) noexcept = default;
     SyntaxToken(SyntaxToken&&) noexcept = default;
+    SyntaxToken& operator=(const SyntaxToken&) noexcept = default;
     SyntaxToken& operator=(SyntaxToken&&) noexcept = default;
     inline bool isToken() const noexcept override { return true; }
     inline std::string_view text() const noexcept { return _text; }
     inline void setText(std::string_view text) noexcept { _text = text; }
-    void addLeadingTrivia(std::unique_ptr<SyntaxTrivia> leadingTrivia) noexcept;
-    void addTrailingTrivia(std::unique_ptr<SyntaxTrivia> trailingTrivia) noexcept;
+    void addLeadingTrivia(std::shared_ptr<SyntaxTrivia> leadingTrivia) noexcept;
+    void addTrailingTrivia(std::shared_ptr<SyntaxTrivia> trailingTrivia) noexcept;
 
 private:
     std::string_view _text;
-    std::vector<std::unique_ptr<SyntaxTrivia>> _leadingTrivia;
-    std::vector<std::unique_ptr<SyntaxTrivia>> _trailingTrivia;
+    std::vector<std::shared_ptr<SyntaxTrivia>> _leadingTrivia;
+    std::vector<std::shared_ptr<SyntaxTrivia>> _trailingTrivia;
 };
 
 } // end namespace polyglot::CodeAnalysis

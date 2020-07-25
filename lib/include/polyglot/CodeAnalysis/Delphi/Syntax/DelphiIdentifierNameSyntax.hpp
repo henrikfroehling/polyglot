@@ -17,7 +17,7 @@ public:
 
 protected:
     explicit DelphiIdentifierNameSyntax(SyntaxKind syntaxKind,
-                                        std::unique_ptr<SyntaxToken> identifier) noexcept;
+                                        std::shared_ptr<SyntaxToken> identifier) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -15,9 +15,9 @@ class POLYGLOT_API DelphiQualifiedNameSyntax : public DelphiNameSyntax
 {
 public:
     explicit DelphiQualifiedNameSyntax(SyntaxKind syntaxKind,
-                                       std::unique_ptr<DelphiNameSyntax> left,
-                                       std::unique_ptr<SyntaxToken> dotToken,
-                                       std::unique_ptr<DelphiSimpleNameSyntax> right) noexcept;
+                                       std::shared_ptr<DelphiNameSyntax> left,
+                                       std::shared_ptr<SyntaxToken> dotToken,
+                                       std::shared_ptr<DelphiSimpleNameSyntax> right) noexcept;
 
     virtual ~DelphiQualifiedNameSyntax() noexcept = default;
     inline DelphiNameSyntax* left() const noexcept { return _ptrLeft.get(); }
@@ -25,9 +25,9 @@ public:
     inline DelphiSimpleNameSyntax* right() const noexcept { return _ptrRight.get(); }
 
 private:
-    std::unique_ptr<DelphiNameSyntax> _ptrLeft;
-    std::unique_ptr<SyntaxToken> _ptrDotToken;
-    std::unique_ptr<DelphiSimpleNameSyntax> _ptrRight;
+    std::shared_ptr<DelphiNameSyntax> _ptrLeft;
+    std::shared_ptr<SyntaxToken> _ptrDotToken;
+    std::shared_ptr<DelphiSimpleNameSyntax> _ptrRight;
 };
 
 } // end namespace polyglot::CodeAnalysis

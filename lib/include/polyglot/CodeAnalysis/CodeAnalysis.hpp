@@ -11,7 +11,7 @@ namespace polyglot::CodeAnalysis
 namespace Delphi
 {
 
-std::unique_ptr<SyntaxTree> parseSourceText(std::string source) noexcept;
+std::shared_ptr<SyntaxTree> parseSourceText(std::string source) noexcept;
 
 } // end namespace Delphi
 } // end namespace polyglot::CodeAnalysis

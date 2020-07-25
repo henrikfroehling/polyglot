@@ -18,7 +18,9 @@ public:
                           std::string_view text) noexcept;
 
     virtual ~SyntaxTrivia() noexcept;
+    SyntaxTrivia(const SyntaxTrivia&) noexcept = default;
     SyntaxTrivia(SyntaxTrivia&&) noexcept = default;
+    SyntaxTrivia& operator=(const SyntaxTrivia&) noexcept = default;
     SyntaxTrivia& operator=(SyntaxTrivia&&) noexcept = default;
     inline bool isTrivia() const noexcept override { return true; }
 

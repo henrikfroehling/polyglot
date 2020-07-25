@@ -4,7 +4,8 @@ namespace polyglot::CodeAnalysis
 {
 
 Lexer::Lexer(SourceText* sourceText) noexcept
-    : _textWindow{sourceText}
+    : _textWindow{sourceText},
+      _lexerCache{}
 {}
 
 Lexer::~Lexer()
