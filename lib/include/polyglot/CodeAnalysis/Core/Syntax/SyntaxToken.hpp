@@ -20,7 +20,6 @@ public:
     explicit SyntaxToken(SyntaxKind syntaxKind) noexcept;
 
     SyntaxToken(SyntaxKind syntaxKind,
-                pg_size position,
                 std::string_view text = "") noexcept;
 
     SyntaxToken(const SyntaxToken&) noexcept = default;
@@ -30,13 +29,16 @@ public:
     inline bool isToken() const noexcept override { return true; }
     inline std::string_view text() const noexcept { return _text; }
     inline void setText(std::string_view text) noexcept { _text = text; }
-    void addLeadingTrivia(std::shared_ptr<SyntaxTrivia> leadingTrivia) noexcept;
-    void addTrailingTrivia(std::shared_ptr<SyntaxTrivia> trailingTrivia) noexcept;
+    void setLeadingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& leadingTrivia) noexcept;
+    void setTrailingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& trailingTrivia) noexcept;
+    inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
+    inline void setContextualKind(SyntaxKind contextualKind) noexcept { _contextualKind = contextualKind; }
 
-private:
+protected:
     std::string_view _text;
     std::vector<std::shared_ptr<SyntaxTrivia>> _leadingTrivia;
     std::vector<std::shared_ptr<SyntaxTrivia>> _trailingTrivia;
+    SyntaxKind _contextualKind;
 };
 
 } // end namespace polyglot::CodeAnalysis

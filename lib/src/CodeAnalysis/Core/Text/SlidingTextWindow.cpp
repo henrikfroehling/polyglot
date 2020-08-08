@@ -22,6 +22,7 @@ SlidingTextWindow::SlidingTextWindow(SourceText* sourceText) noexcept
 void SlidingTextWindow::start() noexcept
 {
     _lexemeStart = _offset;
+    moreCharacters();
 }
 
 void SlidingTextWindow::reset(const pg_size position) noexcept

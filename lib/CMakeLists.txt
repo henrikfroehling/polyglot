@@ -55,6 +55,7 @@ set(SOURCES_CODEANALYSIS_CORE
 
 set(SOURCES_CODEANALYSIS_DELPHI
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp

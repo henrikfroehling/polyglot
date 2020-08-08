@@ -30,7 +30,16 @@ public:
     void start() noexcept;
     void reset(const pg_size position) noexcept;
     bool isReallyAtEnd() const noexcept;
-    inline void advanceCharacter(const pg_size n = 1) noexcept { _offset += n; }
+
+    inline void advanceCharacter(const pg_size n = 1,
+                                 const bool setLexemeStart = false) noexcept
+    {
+        _offset += n;
+
+        if (setLexemeStart)
+            _lexemeStart = _offset;
+    }
+
     char nextCharacter() noexcept;
     char peekCharacter() noexcept;
     char peekCharacter(const pg_size offset) noexcept;

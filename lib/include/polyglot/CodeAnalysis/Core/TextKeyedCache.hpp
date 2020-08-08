@@ -16,17 +16,17 @@ public:
     TextKeyedCache() noexcept = default;
 
 private:
-    static const int LOCAL_SIZE_BITS = 11;
-    static const int LOCAL_SIZE = (1 << LOCAL_SIZE_BITS);
-    static const int LOCAL_SIZE_MASK = LOCAL_SIZE - 1;
+    static constexpr int LOCAL_SIZE_BITS = 11;
+    static constexpr int LOCAL_SIZE = (1 << LOCAL_SIZE_BITS);
+    static constexpr int LOCAL_SIZE_MASK = LOCAL_SIZE - 1;
 
-    static const int SHARED_SIZE_BITS = 16;
-    static const int SHARED_SIZE = (1 << SHARED_SIZE_BITS);
-    static const int SHARED_SIZE_MASK = SHARED_SIZE - 1;
+    static constexpr int SHARED_SIZE_BITS = 16;
+    static constexpr int SHARED_SIZE = (1 << SHARED_SIZE_BITS);
+    static constexpr int SHARED_SIZE_MASK = SHARED_SIZE - 1;
 
-    static const int SHARED_BUCKET_BITS = 4;
-    static const int SHARED_BUCKET_SIZE = (1 << SHARED_BUCKET_BITS);
-    static const int SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
+    static constexpr int SHARED_BUCKET_BITS = 4;
+    static constexpr int SHARED_BUCKET_SIZE = (1 << SHARED_BUCKET_BITS);
+    static constexpr int SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
 
 private:
     constexpr int localIndexFromHash(int hash) const noexcept { return hash & LOCAL_SIZE_MASK; }
@@ -119,14 +119,14 @@ private:
         return sharedEntryValue;
     }
 
-    int nextRandom() noexcept
+    inline constexpr int nextRandom() const noexcept
     {
         std::random_device rd{};
         std::mt19937 generator{rd()};
         return generator();
     }
 
-    void addSharedItem(int hashCode, std::shared_ptr<SharedEntryValue<T>> cacheEntry)
+    void addSharedItem(int hashCode, std::shared_ptr<SharedEntryValue<T>> cacheEntry) noexcept
     {
         int sharedIndex = sharedIndexFromHash(hashCode);
         int currentIndex = sharedIndex;
@@ -176,18 +176,18 @@ public:
         return nullptr;
     }
 
-    void addItem(std::string_view chars, int hashCode, std::shared_ptr<T> item)
+    void addItem(std::string_view chars, int hashCode, std::shared_ptr<T> item) noexcept
     {
         auto sharedEntryValue = std::make_shared<SharedEntryValue<T>>();
         sharedEntryValue->text = chars;
         sharedEntryValue->item = item;
         addSharedItem(hashCode, sharedEntryValue);
 
-        std::shared_ptr<LocalCacheEntry<T>> localSlot = _localTable[localIndexFromHash(hashCode)];
-        localSlot = std::make_shared<LocalCacheEntry<T>>();
-        localSlot->hashCode = hashCode;
-        localSlot->text = chars;
-        localSlot->item = item;
+        const int localIndex = localIndexFromHash(hashCode);
+        _localTable[localIndex] = std::make_shared<LocalCacheEntry<T>>();
+        _localTable[localIndex]->hashCode = hashCode;
+        _localTable[localIndex]->text = chars;
+        _localTable[localIndex]->item = item;
     }
 };
 

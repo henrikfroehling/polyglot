@@ -16,8 +16,12 @@ void DelphiParser::parse() noexcept
     lex();
     const auto end = std::chrono::steady_clock::now();
 
-    //std::cout << "Token Count: " << _tokens.size() << "\n";
     std::cout << "Lexing took " << std::chrono::duration<double, std::milli>(end - start).count() << " ms\n";
+}
+
+void DelphiParser::parseUnitBody() noexcept
+{
+
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -5,35 +5,37 @@ namespace polyglot::CodeAnalysis
 
 SyntaxToken::SyntaxToken() noexcept
     : SyntaxNode{SyntaxKind::None},
-    _text{},
-    _leadingTrivia{},
-    _trailingTrivia{}
+      _text{},
+      _leadingTrivia{},
+      _trailingTrivia{},
+      _contextualKind{SyntaxKind::None}
 {}
 
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind) noexcept
     : SyntaxNode{syntaxKind},
       _text{},
       _leadingTrivia{},
-      _trailingTrivia{}
+      _trailingTrivia{},
+      _contextualKind{SyntaxKind::None}
 {}
 
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
-                         pg_size position,
                          std::string_view text) noexcept
-    : SyntaxNode{syntaxKind, position},
+    : SyntaxNode{syntaxKind},
       _text{text},
       _leadingTrivia{},
-      _trailingTrivia{}
+      _trailingTrivia{},
+      _contextualKind{SyntaxKind::None}
 {}
 
-void SyntaxToken::addLeadingTrivia(std::shared_ptr<SyntaxTrivia> leadingTrivia) noexcept
+void SyntaxToken::setLeadingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& leadingTrivia) noexcept
 {
-    _leadingTrivia.push_back(std::move(leadingTrivia));
+    _leadingTrivia = std::move(leadingTrivia);
 }
 
-void SyntaxToken::addTrailingTrivia(std::shared_ptr<SyntaxTrivia> trailingTrivia) noexcept
+void SyntaxToken::setTrailingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& trailingTrivia) noexcept
 {
-    _trailingTrivia.push_back(std::move(trailingTrivia));
+    _trailingTrivia = std::move(trailingTrivia);
 }
 
 } // end namespace polyglot::CodeAnalysis

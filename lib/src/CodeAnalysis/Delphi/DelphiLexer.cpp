@@ -1,330 +1,34 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
 #include "polyglot/Core/Hashing.hpp"
+#include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
-#include <limits>
 
 namespace polyglot::CodeAnalysis
 {
 
-constexpr unsigned MAX_KEYWORD_LENGTH{14};
-constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
-constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
-
-enum class QuickScanState : char
-{
-    Initial,
-    FollowingWhite,
-    FollowingCR,
-    Identifier,
-    Number,
-    Punctuation,
-    Dot,
-    CompoundPunctuationStart,
-    DoneAfterNext,
-    Done,
-    Bad = Done + 1
-};
-
-enum class CharFlags : char
-{
-    White,
-    CR,
-    LF,
-    Letter,
-    Digit,
-    Punctuation,
-    Dot,
-    CompoundPunctuationStart,
-    Slash,
-    Complex,
-    EndOfFile
-};
-
-constexpr QuickScanState STATE_TRANSITIONS[9][11]
-{
-    // Initial
-    {
-        QuickScanState::Initial,                     // White
-        QuickScanState::Initial,                     // CR
-        QuickScanState::Initial,                     // LF
-        QuickScanState::Identifier,                  // Letter
-        QuickScanState::Number,                      // Digit
-        QuickScanState::Punctuation,                 // Punctuation
-        QuickScanState::Dot,                         // Dot
-        QuickScanState::CompoundPunctuationStart,    // Compound Punctuation
-        QuickScanState::Bad,                         // Slash
-        QuickScanState::Bad,                         // Complex
-        QuickScanState::Bad                          // EndOfFile
-    },
-
-    // Following White
-    {
-        QuickScanState::FollowingWhite,     // White
-        QuickScanState::FollowingCR,        // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Done,               // Letter
-        QuickScanState::Done,               // Digit
-        QuickScanState::Done,               // Punctuation
-        QuickScanState::Done,               // Dot
-        QuickScanState::Done,               // Compound Punctuation
-        QuickScanState::Bad,                // Slash
-        QuickScanState::Bad,                // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Following CR
-    {
-        QuickScanState::Done,               // White
-        QuickScanState::Done,               // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Done,               // Letter
-        QuickScanState::Done,               // Digit
-        QuickScanState::Done,               // Punctuation
-        QuickScanState::Done,               // Dot
-        QuickScanState::Done,               // Compound Punctuation
-        QuickScanState::Done,               // Slash
-        QuickScanState::Done,               // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Identifier
-    {
-        QuickScanState::FollowingWhite,     // White
-        QuickScanState::FollowingCR,        // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Identifier,         // Letter
-        QuickScanState::Identifier,         // Digit
-        QuickScanState::Done,               // Punctuation
-        QuickScanState::Done,               // Dot
-        QuickScanState::Done,               // Compound Punctuation
-        QuickScanState::Bad,                // Slash
-        QuickScanState::Bad,                // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Number
-    {
-        QuickScanState::FollowingWhite,     // White
-        QuickScanState::FollowingCR,        // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Bad,                // Letter
-        QuickScanState::Number,             // Digit
-        QuickScanState::Done,               // Punctuation
-        QuickScanState::Bad,                // Dot
-        QuickScanState::Done,               // Compound Punctuation
-        QuickScanState::Bad,                // Slash
-        QuickScanState::Bad,                // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Punctuation
-    {
-        QuickScanState::FollowingWhite,     // White
-        QuickScanState::FollowingCR,        // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Done,               // Letter
-        QuickScanState::Done,               // Digit
-        QuickScanState::Done,               // Punctuation
-        QuickScanState::Done,               // Dot
-        QuickScanState::Done,               // Compound Punctuation
-        QuickScanState::Bad,                // Slash
-        QuickScanState::Bad,                // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Dot
-    {
-        QuickScanState::FollowingWhite,     // White
-        QuickScanState::FollowingCR,        // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Done,               // Letter
-        QuickScanState::Number,             // Digit
-        QuickScanState::Done,               // Punctuation
-        QuickScanState::Bad,                // Dot
-        QuickScanState::Done,               // Compound Punctuation
-        QuickScanState::Bad,                // Slash
-        QuickScanState::Bad,                // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Compound Punctuation
-    {
-        QuickScanState::FollowingWhite,     // White
-        QuickScanState::FollowingCR,        // CR
-        QuickScanState::DoneAfterNext,      // LF
-        QuickScanState::Done,               // Letter
-        QuickScanState::Done,               // Digit
-        QuickScanState::Bad,                // Punctuation
-        QuickScanState::Done,               // Dot
-        QuickScanState::Bad,                // Compound Punctuation
-        QuickScanState::Bad,                // Slash
-        QuickScanState::Bad,                // Complex
-        QuickScanState::Done                // EndOfFile
-    },
-
-    // Done after next
-    {
-        QuickScanState::Done,   // White
-        QuickScanState::Done,   // CR
-        QuickScanState::Done,   // LF
-        QuickScanState::Done,   // Letter
-        QuickScanState::Done,   // Digit
-        QuickScanState::Done,   // Punctuation
-        QuickScanState::Done,   // Dot
-        QuickScanState::Done,   // Compound Punctuation
-        QuickScanState::Done,   // Slash
-        QuickScanState::Done,   // Complex
-        QuickScanState::Done    // EndOfFile
-    }
-};
-
-constexpr CharFlags CHAR_PROPERTIES[255]
-{
-    // 0 .. 31
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::White,   // TAB
-    CharFlags::LF,      // LF
-    CharFlags::White,   // VT
-    CharFlags::White,   // FF
-    CharFlags::CR,      // CR
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-
-    // 32 .. 63
-    CharFlags::White,                       // SPC
-    CharFlags::Complex,                     // !
-    CharFlags::Complex,                     // "
-    CharFlags::Punctuation,                 // #
-    CharFlags::Punctuation,                 // $
-    CharFlags::Complex,                     // %
-    CharFlags::Punctuation,                 // &
-    CharFlags::Complex,                     // '
-    CharFlags::Punctuation,                 // (
-    CharFlags::Punctuation,                 // )
-    CharFlags::Punctuation,                 // *
-    CharFlags::Punctuation,                 // +
-    CharFlags::Punctuation,                 // ,
-    CharFlags::CompoundPunctuationStart,    // -
-    CharFlags::Dot,                         // .
-    CharFlags::Slash,                       // /
-    CharFlags::Digit,                       // 0
-    CharFlags::Digit,                       // 1
-    CharFlags::Digit,                       // 2
-    CharFlags::Digit,                       // 3
-    CharFlags::Digit,                       // 4
-    CharFlags::Digit,                       // 5
-    CharFlags::Digit,                       // 6
-    CharFlags::Digit,                       // 7
-    CharFlags::Digit,                       // 8
-    CharFlags::Digit,                       // 9
-    CharFlags::CompoundPunctuationStart,    // :
-    CharFlags::Punctuation,                 // ;
-    CharFlags::CompoundPunctuationStart,    // <
-    CharFlags::Punctuation,                 // =
-    CharFlags::CompoundPunctuationStart,    // >
-    CharFlags::Complex,                     // ?
-
-    // 64 .. 95
-    CharFlags::CompoundPunctuationStart,    // @
-    CharFlags::Letter,                      // A
-    CharFlags::Letter,                      // B
-    CharFlags::Letter,                      // C
-    CharFlags::Letter,                      // D
-    CharFlags::Letter,                      // E
-    CharFlags::Letter,                      // F
-    CharFlags::Letter,                      // G
-    CharFlags::Letter,                      // H
-    CharFlags::Letter,                      // I
-    CharFlags::Letter,                      // J
-    CharFlags::Letter,                      // K
-    CharFlags::Letter,                      // L
-    CharFlags::Letter,                      // M
-    CharFlags::Letter,                      // N
-    CharFlags::Letter,                      // O
-    CharFlags::Letter,                      // P
-    CharFlags::Letter,                      // Q
-    CharFlags::Letter,                      // R
-    CharFlags::Letter,                      // S
-    CharFlags::Letter,                      // T
-    CharFlags::Letter,                      // U
-    CharFlags::Letter,                      // V
-    CharFlags::Letter,                      // W
-    CharFlags::Letter,                      // X
-    CharFlags::Letter,                      // Y
-    CharFlags::Letter,                      // Z
-    CharFlags::Punctuation,                 // [
-    CharFlags::Complex,                     // Backslash
-    CharFlags::Punctuation,                 // ]
-    CharFlags::CompoundPunctuationStart,    // ^
-    CharFlags::Letter,                      // _
-
-    // 96 .. 127
-    CharFlags::Complex,                     // `
-    CharFlags::Letter,                      // a
-    CharFlags::Letter,                      // b
-    CharFlags::Letter,                      // c
-    CharFlags::Letter,                      // d
-    CharFlags::Letter,                      // e
-    CharFlags::Letter,                      // f
-    CharFlags::Letter,                      // g
-    CharFlags::Letter,                      // h
-    CharFlags::Letter,                      // i
-    CharFlags::Letter,                      // j
-    CharFlags::Letter,                      // k
-    CharFlags::Letter,                      // k
-    CharFlags::Letter,                      // m
-    CharFlags::Letter,                      // n
-    CharFlags::Letter,                      // o
-    CharFlags::Letter,                      // p
-    CharFlags::Letter,                      // q
-    CharFlags::Letter,                      // r
-    CharFlags::Letter,                      // s
-    CharFlags::Letter,                      // t
-    CharFlags::Letter,                      // u
-    CharFlags::Letter,                      // v
-    CharFlags::Letter,                      // w
-    CharFlags::Letter,                      // x
-    CharFlags::Letter,                      // y
-    CharFlags::Letter,                      // z
-    CharFlags::Punctuation,                 // {
-    CharFlags::CompoundPunctuationStart,    // |
-    CharFlags::Punctuation,                 // }
-    CharFlags::CompoundPunctuationStart,    // ~
-    CharFlags::Complex,                     // DEL
-
-    // 128 .. 159
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-
-    // 160 .. 191
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-
-    // 192 ..
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex
-};
-
-constexpr auto CHAR_PROPERTIES_LENGTH = sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]);
-
 DelphiLexer::DelphiLexer(SourceText* sourceText) noexcept
-    : Lexer{sourceText}
+    : Lexer{sourceText},
+      _leadingTrivia{},
+      _trailingTrivia{}
 {}
 
 std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
 {
+    _leadingTrivia = std::vector<std::shared_ptr<SyntaxTrivia>>{};
+    lexSyntaxTrivia(false);
+
     auto ptrSyntaxToken = quickScanSyntaxToken();
 
     if (ptrSyntaxToken == nullptr)
-        return lexSyntaxToken();
+        ptrSyntaxToken = lexSyntaxToken();
+
+    _trailingTrivia = std::vector<std::shared_ptr<SyntaxTrivia>>{};
+    lexSyntaxTrivia(true);
+
+    ptrSyntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
+    ptrSyntaxToken->setTrailingTrivia(std::move(_trailingTrivia));
 
     return std::move(ptrSyntaxToken);
 }
@@ -332,19 +36,23 @@ std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
 std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
 {
     start();
+    QuickScanState previousState = QuickScanState::Initial;
     QuickScanState state = QuickScanState::Initial;
     pg_size offset = _textWindow.offset();
     pg_size characterWindowCount = _textWindow.characterWindowCount();
     characterWindowCount = std::min(characterWindowCount, offset + MAX_CACHED_TOKEN_SIZE);
     int hashCode = Hashing::FNV_OFFSET_BIAS;
     auto& characterWindow = _textWindow.characterWindow();
+    CharFlags flags = CharFlags::Complex;
 
     for (; offset < characterWindowCount; offset++)
     {
         char currentCharacter = characterWindow[offset];
         int c = static_cast<int>(currentCharacter);
 
-        CharFlags flags = c < CHAR_PROPERTIES_LENGTH ? CHAR_PROPERTIES[c] : CharFlags::Complex;
+        const CharFlags previousFlags = flags;
+        flags = c < CHAR_PROPERTIES_LENGTH ? CHAR_PROPERTIES[c] : CharFlags::Complex;
+        previousState = state;
         state = STATE_TRANSITIONS[static_cast<int>(state)][static_cast<int>(flags)];
 
         if (state >= QuickScanState::Done)
@@ -363,11 +71,16 @@ exitWhile:
     {
         const pg_size lexemeRelativeStart = _textWindow.lexemeRelativeStart();
 
-        auto ptrSyntaxToken = _lexerCache.lookupToken(std::string_view{characterWindow.data() + lexemeRelativeStart, offset - lexemeRelativeStart}, hashCode,
-            [&]()
+        auto ptrSyntaxToken = _lexerCache.lookupToken(_textWindow.text(), hashCode,
+            [&](std::string_view chars)
             {
-                _textWindow.reset(_textWindow.lexemeStartPosition());
-                return lexSyntaxToken();
+                if (previousState == QuickScanState::Identifier)
+                    return lexSyntaxTokenLiteral(chars);
+                else
+                {
+                    _textWindow.reset(_textWindow.lexemeStartPosition());
+                    return lexSyntaxToken();
+                }
             });
 
         return ptrSyntaxToken;
@@ -382,10 +95,16 @@ exitWhile:
 std::shared_ptr<SyntaxToken> DelphiLexer::lexSyntaxToken() noexcept
 {
     auto ptrToken = std::make_shared<SyntaxToken>();
-    lexSyntaxTrivia(false, *ptrToken);
     start();
     scanSyntaxToken(*ptrToken);
-    lexSyntaxTrivia(true, *ptrToken);
+    return std::move(ptrToken);
+}
+
+std::shared_ptr<SyntaxToken> DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
+{
+    auto ptrToken = std::make_shared<SyntaxToken>();
+    scanIdentifierOrKeyword(chars, *ptrToken);
+    ptrToken->setText(chars);
     return std::move(ptrToken);
 }
 
@@ -399,7 +118,6 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::EndOfFileToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '.':
         {
@@ -412,18 +130,15 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::DotDotToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 case ')':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::DotCloseParenthesisToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::DotToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -433,13 +148,11 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CommaToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case ';':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::SemiColonToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case ':':
         {
@@ -452,12 +165,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::ColonEqualToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::ColonToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -467,7 +178,6 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::EqualToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '^':
         {
@@ -480,12 +190,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::CaretDotToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::CaretToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -502,18 +210,15 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::LessThanEqualToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 case '>':
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::LessThanGreaterThanToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::LessThanToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -530,12 +235,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::GreaterThanEqualToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::GreaterThanToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -552,12 +255,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenParenthesisDotToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::OpenParenthesisToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -567,19 +268,16 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseParenthesisToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '[':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::OpenBracketToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case ']':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseBracketToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '{':
         {
@@ -592,12 +290,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::OpenBraceDollerToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::OpenBraceToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -607,7 +303,6 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::CloseBraceToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '@':
         {
@@ -620,12 +315,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::AtAtToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::AtToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -635,7 +328,6 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::PlusToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '-':
         {
@@ -648,12 +340,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::MinusMinusToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::MinusToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -670,12 +360,10 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
                     _textWindow.advanceCharacter();
                     token.setSyntaxKind(SyntaxKind::SlashSlashToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
                 default:
                     token.setSyntaxKind(SyntaxKind::SlashToken);
                     token.setText(_textWindow.text());
-                    token.setPosition(_textWindow.position());
                     break;
             }
 
@@ -685,19 +373,16 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::AmpersandToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '$':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::DollarToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '#':
             _textWindow.advanceCharacter();
             token.setSyntaxKind(SyntaxKind::HashToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         case '\'':
         case '"':
@@ -725,7 +410,6 @@ lettercase:
 
             token.setSyntaxKind(SyntaxKind::EndOfFileToken);
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
         default:
 defaultcase:
@@ -734,7 +418,6 @@ defaultcase:
 
             _textWindow.advanceCharacter();
             token.setText(_textWindow.text());
-            token.setPosition(_textWindow.position());
             break;
     }
 }
@@ -773,8 +456,6 @@ void DelphiLexer::scanStringLiteral(SyntaxToken& token) noexcept
     }
     else
         token.setSyntaxKind(SyntaxKind::None);
-
-    token.setPosition(_textWindow.position());
 }
 
 void DelphiLexer::scanIdentifierOrKeyword(SyntaxToken& token) noexcept
@@ -792,8 +473,22 @@ void DelphiLexer::scanIdentifierOrKeyword(SyntaxToken& token) noexcept
             else
                 token.setSyntaxKind(syntaxKind);
         }
+    }
+}
 
-        token.setPosition(_textWindow.position());
+void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
+                                          SyntaxToken& token) noexcept
+{
+    if (chars.length() > MAX_KEYWORD_LENGTH)
+        token.setSyntaxKind(SyntaxKind::IdentifierToken);
+    else
+    {
+        const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(chars);
+
+        if (syntaxKind == SyntaxKind::None)
+            token.setSyntaxKind(SyntaxKind::IdentifierToken);
+        else
+            token.setSyntaxKind(syntaxKind);
     }
 }
 
@@ -845,7 +540,6 @@ bool DelphiLexer::scanIdentifier(SyntaxToken& token) noexcept
             {
                 _textWindow.advanceCharacter(currentOffset - startOffset);
                 token.setText(_textWindow.text());
-                token.setPosition(_textWindow.position());
                 return true;
             }
             case '0': case '1': case '2': case '3': case '4':
@@ -886,22 +580,24 @@ void DelphiLexer::scanNumericLiteral(SyntaxToken& token) noexcept
 
     token.setText(_textWindow.text());
     token.setSyntaxKind(SyntaxKind::NumberLiteralToken);
-    token.setPosition(_textWindow.position());
 }
 
-void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
+void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
+                                  bool needsStart) noexcept
 {
     while (true)
     {
-        start();
+        if (needsStart)
+            start();
+
         char character = _textWindow.peekCharacter();
 
         if (character == ' ')
         {
             if (isTrailing)
-                token.addTrailingTrivia(scanWhitespace());
+                _trailingTrivia.emplace_back(scanWhitespace());
             else
-                token.addLeadingTrivia(scanWhitespace());
+                _leadingTrivia.emplace_back(scanWhitespace());
 
             continue;
         }
@@ -921,9 +617,9 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
             case '\f':
             {
                 if (isTrailing)
-                    token.addTrailingTrivia(scanWhitespace());
+                    _trailingTrivia.emplace_back(scanWhitespace());
                 else
-                    token.addLeadingTrivia(scanWhitespace());
+                    _leadingTrivia.emplace_back(scanWhitespace());
 
                 break;
             }
@@ -936,9 +632,9 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.text());
 
                     if (isTrailing)
-                        token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
+                        _trailingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
                     else
-                        token.addLeadingTrivia(std::move(ptrSyntaxTrivia));
+                        _leadingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
 
                     break;
                 }
@@ -960,9 +656,9 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
 
                     if (isTrailing)
-                        token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
+                        _trailingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
                     else
-                        token.addLeadingTrivia(std::move(ptrSyntaxTrivia));
+                        _leadingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
 
                     break;
                 }
@@ -986,9 +682,9 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.text());
 
                     if (isTrailing)
-                        token.addTrailingTrivia(std::move(ptrSyntaxTrivia));
+                        _trailingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
                     else
-                        token.addLeadingTrivia(std::move(ptrSyntaxTrivia));
+                        _leadingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
 
                     break;
                 }
@@ -1000,9 +696,9 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
             case '\n':
             {
                 if (isTrailing)
-                    token.addTrailingTrivia(scanEndOfLine());
+                    _trailingTrivia.emplace_back(scanEndOfLine());
                 else
-                    token.addLeadingTrivia(scanEndOfLine());
+                    _leadingTrivia.emplace_back(scanEndOfLine());
 
                 if (isTrailing)
                     return;
@@ -1017,6 +713,9 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing, SyntaxToken& token) noexcept
 
 std::shared_ptr<SyntaxTrivia> DelphiLexer::scanWhitespace() noexcept
 {
+    int hashCode = Hashing::FNV_OFFSET_BIAS;
+    bool onlySpaces = true;
+
 top:
     char character = _textWindow.peekCharacter();
 
@@ -1025,21 +724,46 @@ top:
         case '\t':
         case '\v':
         case '\f':
+nonspaces:
+            onlySpaces = false;
+            goto space;
         case ' ':
 space:
             _textWindow.advanceCharacter();
+            hashCode = Hashing::combineFNVHash(hashCode, character);
             goto top;
         case '\r':
         case '\n':
             break;
         default:
-            if (character > 127 && (character == ' ' || character == '\t' || character == '\v' || character == '\f'))
-                goto space;
+            if (character > 127)
+            {
+                if (character == ' ')
+                    goto space;
+                else if (character == '\t' || character == '\v' || character == '\f')
+                    goto nonspaces;
+            }
 
             break;
     }
 
-    return std::make_shared<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
+    const pg_size width = _textWindow.width();
+
+    if (width == 1 && onlySpaces)
+        return std::make_shared<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
+    else
+    {
+        if (width < MAX_CACHED_TOKEN_SIZE)
+        {
+            return _lexerCache.lookupTrivia(_textWindow.text(), hashCode,
+                [&]()
+                {
+                    return std::make_shared<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
+                });
+        }
+        else
+            return std::make_shared<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
+    }
 }
 
 void DelphiLexer::scanToEndOfLine() noexcept

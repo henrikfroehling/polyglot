@@ -15,11 +15,22 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API LexerCache
 {
 public:
+#ifndef DEBUG
+    LexerCache() noexcept
+        : _cacheMisses{},
+          _cacheHits{}
+    {}
+#else
     LexerCache() noexcept = default;
+#endif
 
     std::shared_ptr<SyntaxToken> lookupToken(std::string_view chars,
                                              int hashCode,
-                                             std::function<std::shared_ptr<SyntaxToken>()> createTokenFunction) noexcept;
+                                             std::function<std::shared_ptr<SyntaxToken>(std::string_view chars)> createTokenFunction) noexcept;
+
+    std::shared_ptr<SyntaxTrivia> lookupTrivia(std::string_view chars,
+                                               int hashCode,
+                                               std::function<std::shared_ptr<SyntaxTrivia>()> createTriviaFunction) noexcept;
 
 private:
     TextKeyedCache<SyntaxTrivia> _triviaCache;
