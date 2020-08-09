@@ -38,14 +38,14 @@ std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
     start();
     QuickScanState previousState = QuickScanState::Initial;
     QuickScanState state = QuickScanState::Initial;
+    CharFlags flags = CharFlags::Complex;
+    int hashCode = Hashing::FNV_OFFSET_BIAS;
     pg_size offset = _textWindow.offset();
     pg_size characterWindowCount = _textWindow.characterWindowCount();
     characterWindowCount = std::min(characterWindowCount, offset + MAX_CACHED_TOKEN_SIZE);
-    int hashCode = Hashing::FNV_OFFSET_BIAS;
     auto& characterWindow = _textWindow.characterWindow();
-    CharFlags flags = CharFlags::Complex;
 
-    for (; offset < characterWindowCount; offset++)
+    while (offset < characterWindowCount)
     {
         char currentCharacter = characterWindow[offset];
         int c = static_cast<int>(currentCharacter);
@@ -59,6 +59,19 @@ std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
             goto exitWhile;
 
         hashCode = (hashCode ^ c) * Hashing::FNV_PRIME;
+        offset++;
+
+        if (offset == characterWindowCount && !_textWindow.isReallyAtEnd())
+        {
+            _textWindow.resetOffset(offset);
+
+            if (_textWindow.moreCharacters())
+            {
+                offset = _textWindow.offset();
+                characterWindowCount = _textWindow.characterWindowCount();
+                characterWindowCount = std::min(characterWindowCount, offset + MAX_CACHED_TOKEN_SIZE);
+            }
+        }
     }
 
     state = QuickScanState::Bad;

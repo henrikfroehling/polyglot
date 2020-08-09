@@ -40,13 +40,12 @@ public:
             _lexemeStart = _offset;
     }
 
+    inline void resetOffset(pg_size newOffset) noexcept { _offset = newOffset; }
     char nextCharacter() noexcept;
     char peekCharacter() noexcept;
     char peekCharacter(const pg_size offset) noexcept;
     char peekPreviousCharacter(const pg_size offset) noexcept;
     std::string_view text() const noexcept;
-
-private:
     bool moreCharacters() noexcept;
 
 private:
