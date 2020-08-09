@@ -41,6 +41,7 @@ enum class SyntaxKind : unsigned short
     HashToken, // #
     SingleQuoteToken, // '
     DoubleQuoteToken, // "
+    ExclamationMarkToken, // !
 
     // compound punctuation
     DotDotToken = 500, // ..

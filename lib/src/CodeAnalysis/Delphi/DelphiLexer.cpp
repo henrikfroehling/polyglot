@@ -384,6 +384,11 @@ void DelphiLexer::scanSyntaxToken(SyntaxToken& token) noexcept
             token.setSyntaxKind(SyntaxKind::HashToken);
             token.setText(_textWindow.text());
             break;
+        case '!':
+            _textWindow.advanceCharacter();
+            token.setSyntaxKind(SyntaxKind::ExclamationMarkToken);
+            token.setText(_textWindow.text());
+            break;
         case '\'':
         case '"':
             scanStringLiteral(token);
