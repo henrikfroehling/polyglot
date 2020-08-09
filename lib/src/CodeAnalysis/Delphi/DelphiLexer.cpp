@@ -479,19 +479,7 @@ void DelphiLexer::scanStringLiteral(SyntaxToken& token) noexcept
 void DelphiLexer::scanIdentifierOrKeyword(SyntaxToken& token) noexcept
 {
     if (scanIdentifier(token))
-    {
-        if (token.text().length() > MAX_KEYWORD_LENGTH)
-            token.setSyntaxKind(SyntaxKind::IdentifierToken);
-        else
-        {
-            const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(token.text());
-
-            if (syntaxKind == SyntaxKind::None)
-                token.setSyntaxKind(SyntaxKind::IdentifierToken);
-            else
-                token.setSyntaxKind(syntaxKind);
-        }
-    }
+        scanIdentifierOrKeyword(token.text(), token);
 }
 
 void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
