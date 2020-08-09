@@ -22,9 +22,50 @@ configure_file(
 
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
-set(SOURCES_CORE
+set(SOURCES
   ${SOURCE_DIR}/Polyglot.cpp
   ${SOURCE_DIR}/Version.cpp
+)
+
+set(SOURCES_CORE
+  ${SOURCE_DIR}/Core/Hashing.cpp
+  ${SOURCE_DIR}/Core/Types.cpp
+)
+
+set(SOURCES_CODEANALYSIS_CORE
+  ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SlidingTextWindow.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLine.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLineCollection.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextSpan.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextUtilities.cpp
+)
+
+set(SOURCES_CODEANALYSIS_DELPHI
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSimpleNameSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiTypeSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -32,7 +73,10 @@ add_library(${PROJECT_NAME} SHARED)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME} PRIVATE
+  ${SOURCES}
   ${SOURCES_CORE}
+  ${SOURCES_CODEANALYSIS_CORE}
+  ${SOURCES_CODEANALYSIS_DELPHI}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
