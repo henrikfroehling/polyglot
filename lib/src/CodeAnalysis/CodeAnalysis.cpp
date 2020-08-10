@@ -7,9 +7,10 @@ namespace polyglot::CodeAnalysis
 namespace Delphi
 {
 
-std::shared_ptr<SyntaxTree> parseSourceText(std::string source) noexcept
+std::shared_ptr<SyntaxTree> parseSourceText(std::string filename,
+                                            std::string source) noexcept
 {
-    SourceText sourceText{std::move(source)};
+    SourceText sourceText{std::move(filename), std::move(source)};
     sourceText.parseLineStarts();
     return DelphiSyntaxTree::parseSourceText(std::move(sourceText));
 }

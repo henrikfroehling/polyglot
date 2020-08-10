@@ -16,7 +16,10 @@ void DelphiParser::parse() noexcept
     lex();
     const auto end = std::chrono::steady_clock::now();
 
-    std::cout << "Lexing took " << std::chrono::duration<double, std::milli>(end - start).count() << " ms\n";
+#ifdef COLLECT_BENCHMARKS
+    _ptrLexer->benchmark().setDuration(std::chrono::duration<double, std::milli>(end - start).count());
+    std::cout << _ptrLexer->benchmark() << "\n";
+#endif
 }
 
 void DelphiParser::parseUnitBody() noexcept

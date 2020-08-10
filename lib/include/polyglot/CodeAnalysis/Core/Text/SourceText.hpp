@@ -18,11 +18,15 @@ class POLYGLOT_API SourceText final
 {
 public:
     SourceText() = delete;
-    explicit SourceText(std::string sourceText) noexcept;
+
+    explicit SourceText(std::string filename,
+                        std::string sourceText) noexcept;
+
     SourceText(const SourceText&) noexcept = default;
     SourceText(SourceText&&) noexcept = default;
     SourceText& operator=(const SourceText&) noexcept = default;
     SourceText& operator=(SourceText&&) noexcept = default;
+    inline std::string filename() const noexcept { return _filename; }
     pg_size length() const noexcept;
     std::string_view content() const noexcept;
     pg_size indexOf(const pg_size position) const noexcept;
@@ -48,6 +52,7 @@ public:
                                     const SourceText& sourceText) noexcept;
 
 private:
+    std::string _filename;
     std::string _sourceText;
     TextLineCollection _lineStarts;
 };

@@ -12,7 +12,7 @@ int main(int argc,
     using namespace polyglot::CodeAnalysis;
 
     const std::string sourceText = readFile(argv[1]);
-    auto ptrSyntaxTree = Delphi::parseSourceText(sourceText);
+    auto ptrSyntaxTree = Delphi::parseSourceText(argv[1], sourceText);
     return 0;
 }
 

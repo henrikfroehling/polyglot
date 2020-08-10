@@ -1,5 +1,8 @@
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
-#include <iostream>
+
+#ifdef COLLECT_BENCHMARKS
+#include "polyglot/CodeAnalysis/Core/LexerBenchmark.hpp"
+#endif
 
 namespace polyglot::CodeAnalysis
 {
@@ -26,11 +29,8 @@ void Parser::lex() noexcept
     }
     while (tokenKind != SyntaxKind::EndOfFileToken && tokenKind != SyntaxKind::None);
 
-    std::cout << "Token Count: " << tokenCount << "\n";
-
-#ifndef NDEBUG
-    std::cout << "Lexer Cache Misses: " << _ptrLexer->cacheMisses() << "\n";
-    std::cout << "Lexer Cache Hits: " << _ptrLexer->cacheHits() << "\n";
+#ifdef COLLECT_BENCHMARKS
+    _ptrLexer->benchmark().setTokenCount(tokenCount);
 #endif
 }
 

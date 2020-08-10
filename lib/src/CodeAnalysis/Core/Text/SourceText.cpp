@@ -7,8 +7,10 @@
 namespace polyglot::CodeAnalysis
 {
 
-SourceText::SourceText(std::string sourceText) noexcept
-    : _sourceText{std::move(sourceText)},
+SourceText::SourceText(std::string filename,
+                       std::string sourceText) noexcept
+    : _filename{std::move(filename)},
+      _sourceText{std::move(sourceText)},
       _lineStarts{this}
 {}
 

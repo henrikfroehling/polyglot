@@ -12,20 +12,15 @@
 namespace polyglot::CodeAnalysis
 {
 
+class Lexer;
+
 class POLYGLOT_API LexerCache
 {
 public:
     static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
 
 public:
-#ifndef NDEBUG
-    LexerCache() noexcept
-        : _cacheMisses{},
-          _cacheHits{}
-    {}
-#else
-    LexerCache() noexcept = default;
-#endif
+    explicit LexerCache(Lexer* lexer) noexcept;
 
     std::shared_ptr<SyntaxToken> lookupToken(std::string_view chars,
                                              int hashCode,
@@ -38,20 +33,7 @@ public:
 private:
     TextKeyedCache<SyntaxTrivia> _triviaCache;
     TextKeyedCache<SyntaxToken> _tokenCache;
-
-#ifndef NDEBUG
-public:
-    inline int cacheMisses() const noexcept { return _cacheMisses; }
-    inline int cacheHits() const noexcept { return _cacheHits; }
-
-private:
-    inline void CacheMiss() noexcept { _cacheMisses++; }
-    inline void CacheHit() noexcept { _cacheHits++; }
-
-private:
-    int _cacheMisses;
-    int _cacheHits;
-#endif
+    Lexer* _pLexer;
 };
 
 } // end namespace polyglot::CodeAnalyis

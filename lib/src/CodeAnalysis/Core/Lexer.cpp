@@ -1,14 +1,18 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
 Lexer::Lexer(SourceText* sourceText) noexcept
     : _textWindow{sourceText},
-      _lexerCache{},
+      _lexerCache{this},
       _leadingTrivia{},
-      _trailingTrivia{}
-{}
+      _trailingTrivia{},
+      _benchmark{}
+{
+    _benchmark.setFilename(sourceText->filename());
+}
 
 Lexer::~Lexer()
 {}

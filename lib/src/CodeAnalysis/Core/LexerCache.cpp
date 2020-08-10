@@ -1,7 +1,18 @@
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
+#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+
+#ifdef COLLECT_BENCHMARKS
+#include "polyglot/CodeAnalysis/Core/LexerBenchmark.hpp"
+#endif
 
 namespace polyglot::CodeAnalysis
 {
+
+LexerCache::LexerCache(Lexer* lexer) noexcept
+    : _triviaCache{},
+      _tokenCache{},
+      _pLexer{lexer}
+{}
 
 std::shared_ptr<SyntaxToken> LexerCache::lookupToken(std::string_view chars,
                                                      int hashCode,
@@ -11,17 +22,15 @@ std::shared_ptr<SyntaxToken> LexerCache::lookupToken(std::string_view chars,
 
     if (ptrSyntaxToken == nullptr)
     {
-#ifndef NDEBUG
-        CacheMiss();
+#ifdef COLLECT_BENCHMARKS
+        _pLexer->benchmark().incrementCacheMisses();
 #endif
         ptrSyntaxToken = createTokenFunction(chars);
         _tokenCache.addItem(chars, hashCode, ptrSyntaxToken);
     }
-#ifndef NDEBUG
+#ifdef COLLECT_BENCHMARKS
     else
-    {
-        CacheHit();
-    }
+        _pLexer->benchmark().incrementCacheHits();
 #endif
 
     return ptrSyntaxToken;
@@ -35,17 +44,15 @@ std::shared_ptr<SyntaxTrivia> LexerCache::lookupTrivia(std::string_view chars,
 
     if (ptrSyntaxTrivia == nullptr)
     {
-#ifndef NDEBUG
-        CacheMiss();
+#ifdef COLLECT_BENCHMARKS
+        _pLexer->benchmark().incrementCacheMisses();
 #endif
         ptrSyntaxTrivia = createTriviaFunction();
         _triviaCache.addItem(chars, hashCode, ptrSyntaxTrivia);
     }
-#ifndef NDEBUG
+#ifdef COLLECT_BENCHMARKS
     else
-    {
-        CacheHit();
-    }
+        _pLexer->benchmark().incrementCacheHits();
 #endif
 
     return ptrSyntaxTrivia;
