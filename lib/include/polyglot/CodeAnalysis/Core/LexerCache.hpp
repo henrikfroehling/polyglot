@@ -15,7 +15,10 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API LexerCache
 {
 public:
-#ifndef DEBUG
+    static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
+
+public:
+#ifndef NDEBUG
     LexerCache() noexcept
         : _cacheMisses{},
           _cacheHits{}

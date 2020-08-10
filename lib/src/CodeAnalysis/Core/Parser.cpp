@@ -1,7 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
-#ifndef NDEBUG
 #include <iostream>
-#endif
 
 namespace polyglot::CodeAnalysis
 {

@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 #define POLYGLOT_CODEANALYSIS_CORE_LEXER_H
 
+#include <limits>
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -15,6 +16,9 @@ class SourceText;
 
 class POLYGLOT_API Lexer
 {
+public:
+    static constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
+
 public:
     virtual ~Lexer();
     Lexer(const Lexer&) = delete;
@@ -31,10 +35,13 @@ public:
 protected:
     explicit Lexer(SourceText* sourceText) noexcept;
     void start() noexcept;
+    virtual std::shared_ptr<SyntaxToken> quickScanSyntaxToken() noexcept { return nullptr; }
 
 protected:
     SlidingTextWindow _textWindow;
     LexerCache _lexerCache;
+    std::vector<std::shared_ptr<SyntaxTrivia>> _leadingTrivia;
+    std::vector<std::shared_ptr<SyntaxTrivia>> _trailingTrivia;
 };
 
 } // end namespace polyglot::CodeAnalysis

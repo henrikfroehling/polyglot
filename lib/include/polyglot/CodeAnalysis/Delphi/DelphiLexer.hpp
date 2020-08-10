@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <string_view>
-#include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
@@ -21,7 +20,7 @@ public:
     std::shared_ptr<SyntaxToken> nextToken() noexcept override final;
 
 private:
-    std::shared_ptr<SyntaxToken> quickScanSyntaxToken() noexcept;
+    std::shared_ptr<SyntaxToken> quickScanSyntaxToken() noexcept override;
     std::shared_ptr<SyntaxToken> lexSyntaxToken() noexcept;
     std::shared_ptr<SyntaxToken> lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
@@ -41,10 +40,6 @@ private:
 
     bool scanIdentifier(SyntaxToken& token) noexcept;
     void scanNumericLiteral(SyntaxToken& token) noexcept;
-
-private:
-    std::vector<std::shared_ptr<SyntaxTrivia>> _leadingTrivia;
-    std::vector<std::shared_ptr<SyntaxTrivia>> _trailingTrivia;
 };
 
 } // end namespace polyglot::CodeAnalysis

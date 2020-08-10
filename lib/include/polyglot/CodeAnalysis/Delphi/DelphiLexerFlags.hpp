@@ -1,185 +1,12 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXERFLAGS_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXERFLAGS_H
 
-#include <limits>
-#include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/CharFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-constexpr unsigned MAX_KEYWORD_LENGTH{14};
-constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
-constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
-
-enum class QuickScanState : char
-{
-    Initial,
-    FollowingWhite,
-    FollowingCR,
-    Identifier,
-    Number,
-    Punctuation,
-    Dot,
-    CompoundPunctuationStart,
-    DoneAfterNext,
-    Done,
-    Bad = Done + 1
-};
-
-enum class CharFlags : char
-{
-    White,
-    CR,
-    LF,
-    Letter,
-    Digit,
-    Punctuation,
-    Dot,
-    CompoundPunctuationStart,
-    Slash,
-    Complex,
-    EndOfFile
-};
-
-constexpr QuickScanState STATE_TRANSITIONS[9][11]
-{
-    // Initial
-    {
-        QuickScanState::FollowingWhite,             // White
-        QuickScanState::FollowingCR,                // CR
-        QuickScanState::DoneAfterNext,              // LF
-        QuickScanState::Identifier,                 // Letter
-        QuickScanState::Number,                     // Digit
-        QuickScanState::Punctuation,                // Punctuation
-        QuickScanState::Dot,                        // Dot
-        QuickScanState::CompoundPunctuationStart,   // Compound Punctuation
-        QuickScanState::Bad,                        // Slash
-        QuickScanState::Bad,                        // Complex
-        QuickScanState::Bad                         // EndOfFile
-    },
-
-    // Following White
-    {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::FollowingCR,    // CR
-        QuickScanState::DoneAfterNext,  // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Done,           // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Done,           // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
-    },
-
-    // Following CR
-    {
-        QuickScanState::Done,           // White
-        QuickScanState::Done,           // CR
-        QuickScanState::DoneAfterNext,  // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Done,           // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Done,           // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Done,           // Slash
-        QuickScanState::Done,           // Complex
-        QuickScanState::Done            // EndOfFile
-    },
-
-    // Identifier
-    {
-        QuickScanState::Done,       // White
-        QuickScanState::Done,       // CR
-        QuickScanState::Done,       // LF
-        QuickScanState::Identifier, // Letter
-        QuickScanState::Identifier, // Digit
-        QuickScanState::Done,       // Punctuation
-        QuickScanState::Done,       // Dot
-        QuickScanState::Done,       // Compound Punctuation
-        QuickScanState::Bad,        // Slash
-        QuickScanState::Bad,        // Complex
-        QuickScanState::Done        // EndOfFile
-    },
-
-    // Number
-    {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::FollowingCR,    // CR
-        QuickScanState::DoneAfterNext,  // LF
-        QuickScanState::Bad,            // Letter
-        QuickScanState::Number,         // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Bad,            // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
-    },
-
-    // Punctuation
-    {
-        QuickScanState::Done,   // White
-        QuickScanState::Done,   // CR
-        QuickScanState::Done,   // LF
-        QuickScanState::Done,   // Letter
-        QuickScanState::Done,   // Digit
-        QuickScanState::Done,   // Punctuation
-        QuickScanState::Done,   // Dot
-        QuickScanState::Done,   // Compound Punctuation
-        QuickScanState::Bad,    // Slash
-        QuickScanState::Bad,    // Complex
-        QuickScanState::Done    // EndOfFile
-    },
-
-    // Dot
-    {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::Done,           // CR
-        QuickScanState::Done,           // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Number,         // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Bad,            // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
-    },
-
-    // Compound Punctuation
-    {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::Done,           // CR
-        QuickScanState::Done,           // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Done,           // Digit
-        QuickScanState::Bad,            // Punctuation
-        QuickScanState::Done,           // Dot
-        QuickScanState::Bad,            // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
-    },
-
-    // Done after next
-    {
-        QuickScanState::Done,   // White
-        QuickScanState::Done,   // CR
-        QuickScanState::Done,   // LF
-        QuickScanState::Done,   // Letter
-        QuickScanState::Done,   // Digit
-        QuickScanState::Done,   // Punctuation
-        QuickScanState::Done,   // Dot
-        QuickScanState::Done,   // Compound Punctuation
-        QuickScanState::Done,   // Slash
-        QuickScanState::Done,   // Complex
-        QuickScanState::Done    // EndOfFile
-    }
-};
-
-constexpr CharFlags CHAR_PROPERTIES[255]
+static constexpr CharFlags CHAR_PROPERTIES[255]
 {
     // 0 .. 31
     CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
@@ -312,7 +139,7 @@ constexpr CharFlags CHAR_PROPERTIES[255]
     CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex
 };
 
-constexpr auto CHAR_PROPERTIES_LENGTH = sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]);
+static constexpr auto CHAR_PROPERTIES_LENGTH = sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]);
 
 } // end namespace polyglot::CodeAnalysis
 

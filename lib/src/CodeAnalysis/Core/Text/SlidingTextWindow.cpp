@@ -1,4 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
+#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include <algorithm>
 #include <limits>
@@ -6,7 +7,6 @@
 namespace polyglot::CodeAnalysis
 {
 
-constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
 constexpr pg_size DEFAULT_WINDOW_LENGTH{2048};
 
 SlidingTextWindow::SlidingTextWindow(SourceText* sourceText) noexcept
@@ -55,7 +55,7 @@ char SlidingTextWindow::nextCharacter() noexcept
 {
     const char character = peekCharacter();
 
-    if (character != INVALID_CHARACTER)
+    if (character != Lexer::INVALID_CHARACTER)
         advanceCharacter();
 
     return character;
@@ -64,7 +64,7 @@ char SlidingTextWindow::nextCharacter() noexcept
 char SlidingTextWindow::peekCharacter() noexcept
 {
     if (_offset >= _characterWindowCount && !moreCharacters())
-        return INVALID_CHARACTER;
+        return Lexer::INVALID_CHARACTER;
 
     return _characterWindow[_offset];
 }
@@ -75,7 +75,7 @@ char SlidingTextWindow::peekCharacter(const pg_size offset) noexcept
     char character{};
 
     if (_offset >= _characterWindowCount && !moreCharacters())
-        character = INVALID_CHARACTER;
+        character = Lexer::INVALID_CHARACTER;
     else
         character = _characterWindow[_offset];
 
@@ -89,7 +89,7 @@ char SlidingTextWindow::peekPreviousCharacter(const pg_size offset) noexcept
     const pg_size position = _offset - offset;
 
     if (position >= _characterWindowCount)
-        character = INVALID_CHARACTER;
+        character = Lexer::INVALID_CHARACTER;
     else
         character = _characterWindow[position];
 

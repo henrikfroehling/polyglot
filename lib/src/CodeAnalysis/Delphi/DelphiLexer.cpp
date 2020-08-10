@@ -1,6 +1,8 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
 #include "polyglot/Core/Hashing.hpp"
+#include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
+#include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
@@ -8,10 +10,10 @@
 namespace polyglot::CodeAnalysis
 {
 
+static constexpr unsigned MAX_KEYWORD_LENGTH{14};
+
 DelphiLexer::DelphiLexer(SourceText* sourceText) noexcept
-    : Lexer{sourceText},
-      _leadingTrivia{},
-      _trailingTrivia{}
+    : Lexer{sourceText}
 {}
 
 std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
@@ -42,7 +44,7 @@ std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
     int hashCode = Hashing::FNV_OFFSET_BIAS;
     pg_size offset = _textWindow.offset();
     pg_size characterWindowCount = _textWindow.characterWindowCount();
-    characterWindowCount = std::min(characterWindowCount, offset + MAX_CACHED_TOKEN_SIZE);
+    characterWindowCount = std::min(characterWindowCount, offset + LexerCache::MAX_CACHED_TOKEN_SIZE);
     auto& characterWindow = _textWindow.characterWindow();
 
     while (offset < characterWindowCount)
@@ -69,7 +71,7 @@ std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
             {
                 offset = _textWindow.offset();
                 characterWindowCount = _textWindow.characterWindowCount();
-                characterWindowCount = std::min(characterWindowCount, offset + MAX_CACHED_TOKEN_SIZE);
+                characterWindowCount = std::min(characterWindowCount, offset + LexerCache::MAX_CACHED_TOKEN_SIZE);
             }
         }
     }
@@ -759,7 +761,7 @@ space:
         return std::make_shared<SyntaxTrivia>(SyntaxKind::WhitespaceTrivia, _textWindow.text());
     else
     {
-        if (width < MAX_CACHED_TOKEN_SIZE)
+        if (width < LexerCache::MAX_CACHED_TOKEN_SIZE)
         {
             return _lexerCache.lookupTrivia(_textWindow.text(), hashCode,
                 [&]()

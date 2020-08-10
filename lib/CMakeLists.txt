@@ -34,9 +34,11 @@ set(SOURCES_CORE
 
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/CharFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
@@ -56,6 +58,7 @@ set(SOURCES_CODEANALYSIS_CORE
 set(SOURCES_CODEANALYSIS_DELPHI
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
