@@ -4,6 +4,7 @@
 #include <ostream>
 #include <string>
 #include <unordered_map>
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/polyglot_global.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -21,6 +22,8 @@ public:
     inline void setFilename(std::string filename) noexcept { _filename = std::move(filename); }
     inline double duration() const noexcept { return _duration; }
     inline void setDuration(double duration) noexcept { _duration = duration; }
+    inline pg_size lineCount() const noexcept { return _lineCount; }
+    inline void setLineCount(pg_size lineCount) noexcept { _lineCount = lineCount; }
     inline int tokenCount() const noexcept { return _tokenCount; }
     inline void setTokenCount(int tokenCount) noexcept { _tokenCount = tokenCount; }
     inline void incrementTokenCount() noexcept { _tokenCount++; }
@@ -37,6 +40,7 @@ public:
 private:
     std::string _filename;
     double _duration;
+    pg_size _lineCount;
     int _tokenCount;
     int _cacheMisses;
     int _cacheHits;

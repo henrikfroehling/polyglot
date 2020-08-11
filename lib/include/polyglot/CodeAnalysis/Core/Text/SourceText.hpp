@@ -29,6 +29,7 @@ public:
     inline std::string filename() const noexcept { return _filename; }
     pg_size length() const noexcept;
     std::string_view content() const noexcept;
+    inline const TextLineCollection& textLines() const noexcept { return _lineStarts; }
     pg_size indexOf(const pg_size position) const noexcept;
     void parseLineStarts() noexcept;
     const char& operator[](const pg_size index) const noexcept;

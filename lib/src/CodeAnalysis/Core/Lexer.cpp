@@ -11,7 +11,10 @@ Lexer::Lexer(SourceText* sourceText) noexcept
       _trailingTrivia{},
       _benchmark{}
 {
+#ifdef COLLECT_BENCHMARKS
     _benchmark.setFilename(sourceText->filename());
+    _benchmark.setLineCount(sourceText->textLines().count());
+#endif
 }
 
 Lexer::~Lexer()
