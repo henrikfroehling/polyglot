@@ -28,6 +28,7 @@ public:
     Lexer& operator=(Lexer&&) = delete;
     virtual std::shared_ptr<SyntaxToken> nextToken() noexcept = 0;
     inline LexerBenchmark& benchmark() noexcept { return _benchmark; }
+    inline const SlidingTextWindow& textWindow() const noexcept { return _textWindow; }
 
 protected:
     explicit Lexer(SourceText* sourceText) noexcept;

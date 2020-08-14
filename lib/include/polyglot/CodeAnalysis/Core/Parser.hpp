@@ -20,16 +20,25 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    virtual void parse() noexcept = 0;
+    virtual void parse() noexcept;
 
 protected:
     explicit Parser(std::unique_ptr<Lexer> lexer) noexcept;
-    void lex() noexcept;
+    void preLex() noexcept;
+    std::shared_ptr<SyntaxToken> currentToken() noexcept;
+    std::shared_ptr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
+    std::shared_ptr<SyntaxToken> takeToken() noexcept;
+    std::shared_ptr<SyntaxToken> peekToken(pg_size n) noexcept;
 
 protected:
     std::unique_ptr<Lexer> _ptrLexer;
-    std::vector<std::shared_ptr<SyntaxToken>> _tokens;
-    pg_size _position;
+    std::vector<std::shared_ptr<SyntaxToken>> _lexedTokens;
+    pg_size _tokenCount;
+    pg_size _tokenOffset;
+    std::shared_ptr<SyntaxToken> _ptrCurrentToken;
+
+private:
+    void addLexedToken(std::shared_ptr<SyntaxToken> token) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis
