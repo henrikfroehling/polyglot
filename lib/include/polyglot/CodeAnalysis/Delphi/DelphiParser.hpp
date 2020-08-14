@@ -16,9 +16,6 @@ public:
     DelphiParser() = delete;
     explicit DelphiParser(SourceText* sourceText) noexcept;
     void parse() noexcept override;
-
-private:
-    void parseUnitBody() noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

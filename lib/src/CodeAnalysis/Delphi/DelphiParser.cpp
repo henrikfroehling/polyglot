@@ -22,9 +22,4 @@ void DelphiParser::parse() noexcept
 #endif
 }
 
-void DelphiParser::parseUnitBody() noexcept
-{
-
-}
-
 } // end namespace polyglot::CodeAnalysis
