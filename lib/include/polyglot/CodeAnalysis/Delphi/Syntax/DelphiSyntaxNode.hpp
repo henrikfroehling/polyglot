@@ -11,10 +11,8 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiSyntaxNode : public SyntaxNode
 {
 public:
-    virtual ~DelphiSyntaxNode() noexcept = default;
-
-protected:
     explicit DelphiSyntaxNode(SyntaxKind syntaxKind) noexcept;
+    virtual ~DelphiSyntaxNode() noexcept = default;
 };
 
 } // end namespace polyglot::CodeAnalysis

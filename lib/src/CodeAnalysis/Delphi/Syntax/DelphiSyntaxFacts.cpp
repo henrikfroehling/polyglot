@@ -464,6 +464,19 @@ bool isKeyword(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
+bool isModuleStart(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::UnitKeyword:
+        case SyntaxKind::PackageKeyword:
+        case SyntaxKind::ProgramKeyword:
+            return true;
+    }
+
+    return false;
+}
+
 SyntaxKind keywordKind(std::string_view text) noexcept
 {
     std::string lowerCaseText{text};

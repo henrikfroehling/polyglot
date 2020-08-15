@@ -5,6 +5,7 @@
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/Core/Types.hpp"
 
@@ -20,11 +21,12 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    virtual void parse() noexcept;
+    std::shared_ptr<SyntaxNode> parse() noexcept;
 
 protected:
     explicit Parser(std::unique_ptr<Lexer> lexer) noexcept;
     void preLex() noexcept;
+    virtual std::shared_ptr<SyntaxNode> parseCore() noexcept = 0;
     std::shared_ptr<SyntaxToken> currentToken() noexcept;
     std::shared_ptr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
     std::shared_ptr<SyntaxToken> takeToken() noexcept;

@@ -11,6 +11,7 @@ namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
 bool POLYGLOT_API isPunctuation(SyntaxKind syntaxKind) noexcept;
 bool POLYGLOT_API isCompoundPunctuation(SyntaxKind syntaxKind) noexcept;
 bool POLYGLOT_API isKeyword(SyntaxKind syntaxKind) noexcept;
+bool POLYGLOT_API isModuleStart(SyntaxKind syntaxKind) noexcept;
 SyntaxKind POLYGLOT_API keywordKind(std::string_view text) noexcept;
 
 } // end namespace polyglot::CodeAnalysis::DelphiSyntaxFacts

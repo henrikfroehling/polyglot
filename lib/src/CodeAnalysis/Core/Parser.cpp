@@ -21,9 +21,10 @@ Parser::Parser(std::unique_ptr<Lexer> lexer) noexcept
 Parser::~Parser() noexcept
 {}
 
-void Parser::parse() noexcept
+std::shared_ptr<SyntaxNode> Parser::parse() noexcept
 {
     preLex();
+    return parseCore();
 }
 
 void Parser::preLex() noexcept
