@@ -14,9 +14,9 @@ LexerCache::LexerCache(Lexer* lexer) noexcept
       _pLexer{lexer}
 {}
 
-std::shared_ptr<SyntaxToken> LexerCache::lookupToken(std::string_view chars,
-                                                     int hashCode,
-                                                     std::function<std::shared_ptr<SyntaxToken>(std::string_view chars)> createTokenFunction) noexcept
+SyntaxTokenPtr LexerCache::lookupToken(std::string_view chars,
+                                       int hashCode,
+                                       std::function<SyntaxTokenPtr(std::string_view chars)> createTokenFunction) noexcept
 {
     auto ptrSyntaxToken = _tokenCache.lookupItem(chars, hashCode);
 
@@ -36,9 +36,9 @@ std::shared_ptr<SyntaxToken> LexerCache::lookupToken(std::string_view chars,
     return ptrSyntaxToken;
 }
 
-std::shared_ptr<SyntaxTrivia> LexerCache::lookupTrivia(std::string_view chars,
-                                                       int hashCode,
-                                                       std::function<std::shared_ptr<SyntaxTrivia>()> createTriviaFunction) noexcept
+SyntaxTriviaPtr LexerCache::lookupTrivia(std::string_view chars,
+                                         int hashCode,
+                                         std::function<SyntaxTriviaPtr()> createTriviaFunction) noexcept
 {
     auto ptrSyntaxTrivia = _triviaCache.lookupItem(chars, hashCode);
 

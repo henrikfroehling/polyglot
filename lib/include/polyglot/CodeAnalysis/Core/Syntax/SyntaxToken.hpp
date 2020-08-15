@@ -29,17 +29,19 @@ public:
     inline bool isToken() const noexcept override { return true; }
     inline std::string_view text() const noexcept { return _text; }
     inline void setText(std::string_view text) noexcept { _text = text; }
-    void setLeadingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& leadingTrivia) noexcept;
-    void setTrailingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& trailingTrivia) noexcept;
+    void setLeadingTrivia(std::vector<SyntaxTriviaPtr>&& leadingTrivia) noexcept;
+    void setTrailingTrivia(std::vector<SyntaxTriviaPtr>&& trailingTrivia) noexcept;
     inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
     inline void setContextualKind(SyntaxKind contextualKind) noexcept { _contextualKind = contextualKind; }
 
 protected:
     std::string_view _text;
-    std::vector<std::shared_ptr<SyntaxTrivia>> _leadingTrivia;
-    std::vector<std::shared_ptr<SyntaxTrivia>> _trailingTrivia;
+    std::vector<SyntaxTriviaPtr> _leadingTrivia;
+    std::vector<SyntaxTriviaPtr> _trailingTrivia;
     SyntaxKind _contextualKind;
 };
+
+using SyntaxTokenPtr = std::shared_ptr<SyntaxToken>;
 
 } // end namespace polyglot::CodeAnalysis
 

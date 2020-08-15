@@ -13,7 +13,7 @@ DelphiParser::DelphiParser(SourceText* sourceText) noexcept
     : Parser{std::make_unique<DelphiLexer>(sourceText)}
 {}
 
-std::shared_ptr<SyntaxNode> DelphiParser::parseCore() noexcept
+SyntaxNodePtr DelphiParser::parseCore() noexcept
 {
     Parser::parse();
     if (DelphiSyntaxFacts::isModuleStart(currentToken()->syntaxKind()))
@@ -25,10 +25,10 @@ std::shared_ptr<SyntaxNode> DelphiParser::parseCore() noexcept
     }
 }
 
-std::shared_ptr<DelphiCompilationUnitSyntax> DelphiParser::parseCompilationUnit() noexcept
+DelphiCompilationUnitSyntaxPtr DelphiParser::parseCompilationUnit() noexcept
 {
     auto ptrCurrentToken = currentToken();
-    std::shared_ptr<DelphiCompilationUnitSyntax> ptrCompilationUnit = nullptr;
+    DelphiCompilationUnitSyntaxPtr ptrCompilationUnit = nullptr;
 
     switch (ptrCurrentToken->syntaxKind())
     {
@@ -52,17 +52,17 @@ std::shared_ptr<DelphiCompilationUnitSyntax> DelphiParser::parseCompilationUnit(
     return ptrCompilationUnit;
 }
 
-std::shared_ptr<DelphiUnitModuleSyntax> DelphiParser::parseUnitModule() noexcept
+DelphiUnitModuleSyntaxPtr DelphiParser::parseUnitModule() noexcept
 {
     return std::make_shared<DelphiUnitModuleSyntax>(SyntaxKind::UnitModuleSyntax);
 }
 
-std::shared_ptr<DelphiPackageModuleSyntax> DelphiParser::parsePackageModule() noexcept
+DelphiPackageModuleSyntaxPtr DelphiParser::parsePackageModule() noexcept
 {
     return std::make_shared<DelphiPackageModuleSyntax>(SyntaxKind::PackageModuleSyntax);
 }
 
-std::shared_ptr<DelphiProgramModuleSyntax> DelphiParser::parseProgramModule() noexcept
+DelphiProgramModuleSyntaxPtr DelphiParser::parseProgramModule() noexcept
 {
     return std::make_shared<DelphiProgramModuleSyntax>(SyntaxKind::ProgramModuleSyntax);
 }

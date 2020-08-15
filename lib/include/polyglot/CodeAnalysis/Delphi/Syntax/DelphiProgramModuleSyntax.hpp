@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 
+#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
@@ -15,6 +16,8 @@ public:
     virtual ~DelphiProgramModuleSyntax() noexcept = default;
     inline bool isProgramModule() const noexcept override { return true; }
 };
+
+using DelphiProgramModuleSyntaxPtr = std::shared_ptr<DelphiProgramModuleSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

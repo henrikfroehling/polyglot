@@ -19,23 +19,25 @@ public:
     explicit DelphiUnitModuleSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~DelphiUnitModuleSyntax() noexcept = default;
     inline bool isUnitModule() const noexcept override { return true; }
-    inline const std::shared_ptr<DelphiUnitInterfaceSectionSyntax>& interfaceSection() const noexcept { return _ptrInterfaceSection; }
-    inline void setInterfaceSection(std::shared_ptr<DelphiUnitInterfaceSectionSyntax> interfaceSection) noexcept { _ptrInterfaceSection = interfaceSection; }
-    inline const std::shared_ptr<DelphiUnitImplementationSectionSyntax>& implementationSection() const noexcept { return _ptrImplementationSection; }
-    inline void setImplementationSection(std::shared_ptr<DelphiUnitImplementationSectionSyntax> implementationSection) noexcept { _ptrImplementationSection = implementationSection; }
-    inline const std::shared_ptr<DelphiUnitInitializationSectionSyntax>& initializationSection() const noexcept { return _ptrInitializationSection; }
-    inline void setInitializationSection(std::shared_ptr<DelphiUnitInitializationSectionSyntax> initializationSection) noexcept { _ptrInitializationSection = initializationSection; }
-    inline const std::shared_ptr<DelphiUnitFinalizationSectionSyntax>& finalizationSection() const noexcept { return _ptrFinalizationSection; }
-    inline void setFinalizationSection(std::shared_ptr<DelphiUnitFinalizationSectionSyntax> finalizationSection) noexcept { _ptrFinalizationSection = finalizationSection; }
+    inline const DelphiUnitInterfaceSectionSyntaxPtr& interfaceSection() const noexcept { return _ptrInterfaceSection; }
+    inline void setInterfaceSection(DelphiUnitInterfaceSectionSyntaxPtr interfaceSection) noexcept { _ptrInterfaceSection = interfaceSection; }
+    inline const DelphiUnitImplementationSectionSyntaxPtr& implementationSection() const noexcept { return _ptrImplementationSection; }
+    inline void setImplementationSection(DelphiUnitImplementationSectionSyntaxPtr implementationSection) noexcept { _ptrImplementationSection = implementationSection; }
+    inline const DelphiUnitInitializationSectionSyntaxPtr& initializationSection() const noexcept { return _ptrInitializationSection; }
+    inline void setInitializationSection(DelphiUnitInitializationSectionSyntaxPtr initializationSection) noexcept { _ptrInitializationSection = initializationSection; }
+    inline const DelphiUnitFinalizationSectionSyntaxPtr& finalizationSection() const noexcept { return _ptrFinalizationSection; }
+    inline void setFinalizationSection(DelphiUnitFinalizationSectionSyntaxPtr finalizationSection) noexcept { _ptrFinalizationSection = finalizationSection; }
     inline bool hasInitializationSection() const noexcept { return _ptrInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _ptrFinalizationSection != nullptr; }
 
 private:
-    std::shared_ptr<DelphiUnitInterfaceSectionSyntax> _ptrInterfaceSection;
-    std::shared_ptr<DelphiUnitImplementationSectionSyntax> _ptrImplementationSection;
-    std::shared_ptr<DelphiUnitInitializationSectionSyntax> _ptrInitializationSection;
-    std::shared_ptr<DelphiUnitFinalizationSectionSyntax> _ptrFinalizationSection;
+    DelphiUnitInterfaceSectionSyntaxPtr _ptrInterfaceSection;
+    DelphiUnitImplementationSectionSyntaxPtr _ptrImplementationSection;
+    DelphiUnitInitializationSectionSyntaxPtr _ptrInitializationSection;
+    DelphiUnitFinalizationSectionSyntaxPtr _ptrFinalizationSection;
 };
+
+using DelphiUnitModuleSyntaxPtr = std::shared_ptr<DelphiUnitModuleSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

@@ -26,20 +26,20 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    virtual std::shared_ptr<SyntaxToken> nextToken() noexcept = 0;
+    virtual SyntaxTokenPtr nextToken() noexcept = 0;
     inline LexerBenchmark& benchmark() noexcept { return _benchmark; }
     inline const SlidingTextWindow& textWindow() const noexcept { return _textWindow; }
 
 protected:
     explicit Lexer(SourceText* sourceText) noexcept;
     void start() noexcept;
-    virtual std::shared_ptr<SyntaxToken> quickScanSyntaxToken() noexcept { return nullptr; }
+    virtual SyntaxTokenPtr quickScanSyntaxToken() noexcept { return nullptr; }
 
 protected:
     SlidingTextWindow _textWindow;
     LexerCache _lexerCache;
-    std::vector<std::shared_ptr<SyntaxTrivia>> _leadingTrivia;
-    std::vector<std::shared_ptr<SyntaxTrivia>> _trailingTrivia;
+    std::vector<SyntaxTriviaPtr> _leadingTrivia;
+    std::vector<SyntaxTriviaPtr> _trailingTrivia;
     LexerBenchmark _benchmark;
 };
 

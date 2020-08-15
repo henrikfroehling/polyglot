@@ -21,7 +21,7 @@ Parser::Parser(std::unique_ptr<Lexer> lexer) noexcept
 Parser::~Parser() noexcept
 {}
 
-std::shared_ptr<SyntaxNode> Parser::parse() noexcept
+SyntaxNodePtr Parser::parse() noexcept
 {
     preLex();
     return parseCore();
@@ -38,7 +38,7 @@ void Parser::preLex() noexcept
 
     for (pg_size i = 0; i < size; i++)
     {
-        std::shared_ptr<SyntaxToken> ptrToken = _ptrLexer->nextToken();
+        SyntaxTokenPtr ptrToken = _ptrLexer->nextToken();
         assert(ptrToken != nullptr);
         _lexedTokens.push_back(ptrToken);
         _tokenCount++;
@@ -48,7 +48,7 @@ void Parser::preLex() noexcept
     }
 }
 
-std::shared_ptr<SyntaxToken> Parser::currentToken() noexcept
+SyntaxTokenPtr Parser::currentToken() noexcept
 {
     if (_tokenOffset >= _tokenCount)
         addLexedToken(_ptrLexer->nextToken());
@@ -56,7 +56,7 @@ std::shared_ptr<SyntaxToken> Parser::currentToken() noexcept
     return _lexedTokens[_tokenOffset];
 }
 
-std::shared_ptr<SyntaxToken> Parser::takeToken(SyntaxKind syntaxKind) noexcept
+SyntaxTokenPtr Parser::takeToken(SyntaxKind syntaxKind) noexcept
 {
     auto ptrCurrentToken = currentToken();
 
@@ -70,14 +70,14 @@ std::shared_ptr<SyntaxToken> Parser::takeToken(SyntaxKind syntaxKind) noexcept
     return nullptr;
 }
 
-std::shared_ptr<SyntaxToken> Parser::takeToken() noexcept
+SyntaxTokenPtr Parser::takeToken() noexcept
 {
     auto ptrCurrentToken = currentToken();
     _tokenOffset++;
     return ptrCurrentToken;
 }
 
-std::shared_ptr<SyntaxToken> Parser::peekToken(pg_size n) noexcept
+SyntaxTokenPtr Parser::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);
 
@@ -87,7 +87,7 @@ std::shared_ptr<SyntaxToken> Parser::peekToken(pg_size n) noexcept
     return _lexedTokens[_tokenOffset + n];
 }
 
-void Parser::addLexedToken(std::shared_ptr<SyntaxToken> token) noexcept
+void Parser::addLexedToken(SyntaxTokenPtr token) noexcept
 {
     assert(token != nullptr);
 

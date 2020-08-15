@@ -22,13 +22,13 @@ public:
 public:
     explicit LexerCache(Lexer* lexer) noexcept;
 
-    std::shared_ptr<SyntaxToken> lookupToken(std::string_view chars,
-                                             int hashCode,
-                                             std::function<std::shared_ptr<SyntaxToken>(std::string_view chars)> createTokenFunction) noexcept;
+    SyntaxTokenPtr lookupToken(std::string_view chars,
+                               int hashCode,
+                               std::function<SyntaxTokenPtr(std::string_view chars)> createTokenFunction) noexcept;
 
-    std::shared_ptr<SyntaxTrivia> lookupTrivia(std::string_view chars,
-                                               int hashCode,
-                                               std::function<std::shared_ptr<SyntaxTrivia>()> createTriviaFunction) noexcept;
+    SyntaxTriviaPtr lookupTrivia(std::string_view chars,
+                                 int hashCode,
+                                 std::function<SyntaxTriviaPtr()> createTriviaFunction) noexcept;
 
 private:
     TextKeyedCache<SyntaxTrivia> _triviaCache;

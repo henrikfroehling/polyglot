@@ -21,26 +21,26 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    std::shared_ptr<SyntaxNode> parse() noexcept;
+    SyntaxNodePtr parse() noexcept;
 
 protected:
     explicit Parser(std::unique_ptr<Lexer> lexer) noexcept;
     void preLex() noexcept;
-    virtual std::shared_ptr<SyntaxNode> parseCore() noexcept = 0;
-    std::shared_ptr<SyntaxToken> currentToken() noexcept;
-    std::shared_ptr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
-    std::shared_ptr<SyntaxToken> takeToken() noexcept;
-    std::shared_ptr<SyntaxToken> peekToken(pg_size n) noexcept;
+    virtual SyntaxNodePtr parseCore() noexcept = 0;
+    SyntaxTokenPtr currentToken() noexcept;
+    SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
+    SyntaxTokenPtr takeToken() noexcept;
+    SyntaxTokenPtr peekToken(pg_size n) noexcept;
 
 protected:
     std::unique_ptr<Lexer> _ptrLexer;
-    std::vector<std::shared_ptr<SyntaxToken>> _lexedTokens;
+    std::vector<SyntaxTokenPtr> _lexedTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
-    std::shared_ptr<SyntaxToken> _ptrCurrentToken;
+    SyntaxTokenPtr _ptrCurrentToken;
 
 private:
-    void addLexedToken(std::shared_ptr<SyntaxToken> token) noexcept;
+    void addLexedToken(SyntaxTokenPtr token) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

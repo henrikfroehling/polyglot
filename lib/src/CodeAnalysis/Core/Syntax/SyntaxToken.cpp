@@ -28,12 +28,12 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
       _contextualKind{SyntaxKind::None}
 {}
 
-void SyntaxToken::setLeadingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& leadingTrivia) noexcept
+void SyntaxToken::setLeadingTrivia(std::vector<SyntaxTriviaPtr>&& leadingTrivia) noexcept
 {
     _leadingTrivia = std::move(leadingTrivia);
 }
 
-void SyntaxToken::setTrailingTrivia(std::vector<std::shared_ptr<SyntaxTrivia>>&& trailingTrivia) noexcept
+void SyntaxToken::setTrailingTrivia(std::vector<SyntaxTriviaPtr>&& trailingTrivia) noexcept
 {
     _trailingTrivia = std::move(trailingTrivia);
 }

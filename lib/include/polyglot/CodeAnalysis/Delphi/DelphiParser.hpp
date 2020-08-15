@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
@@ -22,11 +21,11 @@ public:
     explicit DelphiParser(SourceText* sourceText) noexcept;
 
 private:
-    std::shared_ptr<SyntaxNode> parseCore() noexcept override;
-    std::shared_ptr<DelphiCompilationUnitSyntax> parseCompilationUnit() noexcept;
-    std::shared_ptr<DelphiUnitModuleSyntax> parseUnitModule() noexcept;
-    std::shared_ptr<DelphiPackageModuleSyntax> parsePackageModule() noexcept;
-    std::shared_ptr<DelphiProgramModuleSyntax> parseProgramModule() noexcept;
+    SyntaxNodePtr parseCore() noexcept override;
+    DelphiCompilationUnitSyntaxPtr parseCompilationUnit() noexcept;
+    DelphiUnitModuleSyntaxPtr parseUnitModule() noexcept;
+    DelphiPackageModuleSyntaxPtr parsePackageModule() noexcept;
+    DelphiProgramModuleSyntaxPtr parseProgramModule() noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -16,9 +16,9 @@ DelphiLexer::DelphiLexer(SourceText* sourceText) noexcept
     : Lexer{sourceText}
 {}
 
-std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
+SyntaxTokenPtr DelphiLexer::nextToken() noexcept
 {
-    _leadingTrivia = std::vector<std::shared_ptr<SyntaxTrivia>>{};
+    _leadingTrivia = std::vector<SyntaxTriviaPtr>{};
     lexSyntaxTrivia(false);
 
     auto ptrSyntaxToken = quickScanSyntaxToken();
@@ -26,7 +26,7 @@ std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
     if (ptrSyntaxToken == nullptr)
         ptrSyntaxToken = lexSyntaxToken();
 
-    _trailingTrivia = std::vector<std::shared_ptr<SyntaxTrivia>>{};
+    _trailingTrivia = std::vector<SyntaxTriviaPtr>{};
     lexSyntaxTrivia(true);
 
     ptrSyntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
@@ -35,7 +35,7 @@ std::shared_ptr<SyntaxToken> DelphiLexer::nextToken() noexcept
     return std::move(ptrSyntaxToken);
 }
 
-std::shared_ptr<SyntaxToken> DelphiLexer::quickScanSyntaxToken() noexcept
+SyntaxTokenPtr DelphiLexer::quickScanSyntaxToken() noexcept
 {
     start();
     QuickScanState previousState = QuickScanState::Initial;
@@ -107,7 +107,7 @@ exitWhile:
     }
 }
 
-std::shared_ptr<SyntaxToken> DelphiLexer::lexSyntaxToken() noexcept
+SyntaxTokenPtr DelphiLexer::lexSyntaxToken() noexcept
 {
     auto ptrToken = std::make_shared<SyntaxToken>();
     start();
@@ -115,7 +115,7 @@ std::shared_ptr<SyntaxToken> DelphiLexer::lexSyntaxToken() noexcept
     return std::move(ptrToken);
 }
 
-std::shared_ptr<SyntaxToken> DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
+SyntaxTokenPtr DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
 {
     auto ptrToken = std::make_shared<SyntaxToken>();
     scanIdentifierOrKeyword(chars, *ptrToken);
@@ -719,7 +719,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
     }
 }
 
-std::shared_ptr<SyntaxTrivia> DelphiLexer::scanWhitespace() noexcept
+SyntaxTriviaPtr DelphiLexer::scanWhitespace() noexcept
 {
     int hashCode = Hashing::FNV_OFFSET_BIAS;
     bool onlySpaces = true;
@@ -842,7 +842,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
         isTerminated = false;
 }
 
-std::shared_ptr<SyntaxTrivia> DelphiLexer::scanEndOfLine() noexcept
+SyntaxTriviaPtr DelphiLexer::scanEndOfLine() noexcept
 {
     char character = _textWindow.peekCharacter();
 
