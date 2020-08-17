@@ -19,7 +19,7 @@ public:
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
     inline const SyntaxTokenPtr& EOFToken() const noexcept { return _ptrEOFToken; }
-    inline void setEOFToken(SyntaxTokenPtr eofToken) noexcept { _ptrEOFToken = eofToken; }
+    inline void setEOFToken(SyntaxTokenPtr eofToken) noexcept { _ptrEOFToken = std::move(eofToken); }
 
 private:
     std::shared_ptr<SyntaxToken> _ptrEOFToken;

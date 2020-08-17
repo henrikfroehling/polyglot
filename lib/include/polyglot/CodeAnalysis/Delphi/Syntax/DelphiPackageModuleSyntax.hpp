@@ -18,11 +18,11 @@ public:
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
     inline const DelphiPackageHeadingSyntaxPtr& heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(DelphiPackageHeadingSyntaxPtr heading) noexcept { _ptrHeading = heading; }
+    inline void setHeading(DelphiPackageHeadingSyntaxPtr heading) noexcept { _ptrHeading = std::move(heading); }
     inline const DelphiPackageRequiresClauseSyntaxPtr& requiresClause() const noexcept { return _ptrRequiresClause; }
-    inline void setRequiresClause(DelphiPackageRequiresClauseSyntaxPtr requiresClause) noexcept { _ptrRequiresClause = requiresClause; }
+    inline void setRequiresClause(DelphiPackageRequiresClauseSyntaxPtr requiresClause) noexcept { _ptrRequiresClause = std::move(requiresClause); }
     inline const DelphiPackageContainsClauseSyntaxPtr& containsClause() const noexcept { return _ptrContainsClause; }
-    inline void setContainsClause(DelphiPackageContainsClauseSyntaxPtr containsClause) noexcept { _ptrContainsClause = containsClause; }
+    inline void setContainsClause(DelphiPackageContainsClauseSyntaxPtr containsClause) noexcept { _ptrContainsClause = std::move(containsClause); }
 
 private:
     DelphiPackageHeadingSyntaxPtr _ptrHeading;

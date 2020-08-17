@@ -93,7 +93,9 @@ endOfUnit:
     assert(ptrInterfaceSection != nullptr);
     assert(ptrImplementationSection != nullptr);
 
-    auto ptrUnitModule = std::make_shared<DelphiUnitModuleSyntax>(std::move(ptrHeading), std::move(ptrInterfaceSection), std::move(ptrImplementationSection));
+    auto ptrUnitModule = std::make_shared<DelphiUnitModuleSyntax>(std::move(ptrHeading), std::move(ptrInterfaceSection), std::move(ptrImplementationSection),
+                                                                  std::move(ptrEndKeyword), std::move(ptrDotToken));
+
     ptrUnitModule->setEOFToken(std::move(ptrEOFToken));
 
     if (ptrFinalizationSection)
@@ -114,7 +116,10 @@ DelphiUnitHeadingSyntaxPtr DelphiParser::parseUnitHeading() noexcept
     DelphiNameSyntaxPtr ptrName = parseQualifiedName();
     assert(ptrName != nullptr);
 
-    return std::make_shared<DelphiUnitHeadingSyntax>(std::move(ptrUnitKeyword), std::move(ptrName));
+    SyntaxTokenPtr ptrSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    assert(ptrSemiColonToken != nullptr);
+
+    return std::make_shared<DelphiUnitHeadingSyntax>(std::move(ptrUnitKeyword), std::move(ptrName), std::move(ptrSemiColonToken));
 }
 
 DelphiUnitInterfaceSectionSyntaxPtr DelphiParser::parseUnitInterfaceSection() noexcept

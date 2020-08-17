@@ -15,7 +15,7 @@ public:
     DelphiUnitImplementationSectionSyntax() noexcept;
     virtual ~DelphiUnitImplementationSectionSyntax() noexcept = default;
     virtual const DelphiUsesClauseSyntaxPtr& uses() const noexcept { return _ptrUses; }
-    virtual void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = uses; }
+    virtual void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = std::move(uses); }
 
 private:
     DelphiUsesClauseSyntaxPtr _ptrUses;

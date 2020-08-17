@@ -17,9 +17,9 @@ public:
     virtual ~DelphiProgramModuleSyntax() noexcept = default;
     inline bool isProgramModule() const noexcept override { return true; }
     inline const DelphiProgramHeadingSyntaxPtr& heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(DelphiProgramHeadingSyntaxPtr heading) noexcept { _ptrHeading = heading; }
+    inline void setHeading(DelphiProgramHeadingSyntaxPtr heading) noexcept { _ptrHeading = std::move(heading); }
     inline const DelphiUsesClauseSyntaxPtr& uses() const noexcept { return _ptrUses; }
-    inline void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = uses; }
+    inline void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = std::move(uses); }
 
 private:
     DelphiProgramHeadingSyntaxPtr _ptrHeading;
