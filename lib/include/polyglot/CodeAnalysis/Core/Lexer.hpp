@@ -9,11 +9,10 @@
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
-
-class SourceText;
 
 class POLYGLOT_API Lexer
 {
@@ -31,7 +30,7 @@ public:
     inline const SlidingTextWindow& textWindow() const noexcept { return _textWindow; }
 
 protected:
-    explicit Lexer(SourceText* sourceText) noexcept;
+    explicit Lexer(SourceTextPtr sourceText) noexcept;
     void start() noexcept;
     virtual SyntaxTokenPtr quickScanSyntaxToken() noexcept { return nullptr; }
 

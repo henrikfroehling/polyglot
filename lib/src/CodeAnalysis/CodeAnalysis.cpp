@@ -10,9 +10,9 @@ namespace Delphi
 std::shared_ptr<SyntaxTree> parseSourceText(std::string filename,
                                             std::string source) noexcept
 {
-    SourceText sourceText{std::move(filename), std::move(source)};
-    sourceText.parseLineStarts();
-    return DelphiSyntaxTree::parseSourceText(std::move(sourceText));
+    SourceTextPtr ptrSourceText = std::make_shared<SourceText>(std::move(filename), std::move(source));
+    ptrSourceText->parseLineStarts();
+    return DelphiSyntaxTree::parseSourceText(std::move(ptrSourceText));
 }
 
 } // end namespace Delphi

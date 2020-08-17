@@ -5,6 +5,7 @@
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.hpp"
@@ -16,18 +17,18 @@
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class SourceText;
-
 class POLYGLOT_API DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;
-    explicit DelphiParser(SourceText* sourceText) noexcept;
+    explicit DelphiParser(SourceTextPtr sourceText) noexcept;
 
 private:
     SyntaxNodePtr parseRoot() noexcept override;

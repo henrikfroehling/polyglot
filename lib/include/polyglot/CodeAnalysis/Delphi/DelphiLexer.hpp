@@ -7,16 +7,15 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class SourceText;
-
 class POLYGLOT_API DelphiLexer final : public Lexer
 {
 public:
-    explicit DelphiLexer(SourceText* sourceText) noexcept;
+    explicit DelphiLexer(SourceTextPtr sourceText) noexcept;
     SyntaxTokenPtr nextToken() noexcept override final;
 
 private:

@@ -1,6 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include <algorithm>
 #include <limits>
 
@@ -9,8 +8,8 @@ namespace polyglot::CodeAnalysis
 
 constexpr pg_size DEFAULT_WINDOW_LENGTH{2048};
 
-SlidingTextWindow::SlidingTextWindow(SourceText* sourceText) noexcept
-    : _pSourceText{sourceText},
+SlidingTextWindow::SlidingTextWindow(SourceTextPtr sourceText) noexcept
+    : _ptrSourceText{sourceText},
       _basis{},
       _offset{},
       _textEnd{sourceText->length()},
@@ -33,11 +32,11 @@ void SlidingTextWindow::reset(const pg_size position) noexcept
         _offset = relativePosition;
     else
     {
-        pg_size amountToRead = std::min(_pSourceText->length(), position + _characterWindow.size()) - position;
+        pg_size amountToRead = std::min(_ptrSourceText->length(), position + _characterWindow.size()) - position;
         amountToRead = std::max(amountToRead, static_cast<pg_size>(0));
 
         if (amountToRead > 0)
-            _pSourceText->copyTo(position, _characterWindow, 0, amountToRead);
+            _ptrSourceText->copyTo(position, _characterWindow, 0, amountToRead);
 
         _lexemeStart = 0;
         _offset = 0;
@@ -157,7 +156,7 @@ bool SlidingTextWindow::moreCharacters() noexcept
             _characterWindow.reserve(_characterWindow.size() * 2);
 
         const pg_size amountToRead = std::min(_textEnd - (_basis + _characterWindowCount), _characterWindow.size() - _characterWindowCount);
-        _pSourceText->copyTo(_basis + _characterWindowCount, _characterWindow, _characterWindowCount, amountToRead);
+        _ptrSourceText->copyTo(_basis + _characterWindowCount, _characterWindow, _characterWindowCount, amountToRead);
         _characterWindowCount += amountToRead;
         return amountToRead > 0;
     }

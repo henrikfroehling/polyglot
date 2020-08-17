@@ -1,13 +1,14 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_SOURCETEXT_H
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_SOURCETEXT_H
 
+#include <memory>
 #include <ostream>
 #include <string>
 #include <string_view>
 #include <vector>
-#include "polyglot/CodeAnalysis/Core/Text/TextLineCollection.hpp"
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextLineCollection.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -57,6 +58,8 @@ private:
     std::string _sourceText;
     TextLineCollection _lineStarts;
 };
+
+using SourceTextPtr = std::shared_ptr<SourceText>;
 
 } // end namespace polyglot::CodeAnalysis
 

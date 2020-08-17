@@ -1,10 +1,11 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTLINE_H
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTLINE_H
 
+#include <memory>
 #include <ostream>
-#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 
 namespace polyglot::CodeAnalysis
 {

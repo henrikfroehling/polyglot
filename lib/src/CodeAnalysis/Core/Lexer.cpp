@@ -1,10 +1,9 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-Lexer::Lexer(SourceText* sourceText) noexcept
+Lexer::Lexer(SourceTextPtr sourceText) noexcept
     : _textWindow{sourceText},
       _lexerCache{this},
       _leadingTrivia{},

@@ -12,8 +12,8 @@ namespace polyglot::CodeAnalysis
 
 static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
-DelphiLexer::DelphiLexer(SourceText* sourceText) noexcept
-    : Lexer{sourceText}
+DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
+    : Lexer{std::move(sourceText)}
 {}
 
 SyntaxTokenPtr DelphiLexer::nextToken() noexcept

@@ -3,19 +3,18 @@
 
 #include <string_view>
 #include <vector>
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
-
-class SourceText;
 
 class POLYGLOT_API SlidingTextWindow final
 {
 public:
     SlidingTextWindow() = delete;
-    explicit SlidingTextWindow(SourceText* sourceText) noexcept;
+    explicit SlidingTextWindow(SourceTextPtr sourceText) noexcept;
     SlidingTextWindow(const SlidingTextWindow&) noexcept = default;
     SlidingTextWindow(SlidingTextWindow&&) noexcept = default;
     SlidingTextWindow& operator=(const SlidingTextWindow&) noexcept = default;
@@ -49,7 +48,7 @@ public:
     bool moreCharacters() noexcept;
 
 private:
-    SourceText* _pSourceText;
+    SourceTextPtr _ptrSourceText;
     pg_size _basis;
     pg_size _offset;
     pg_size _textEnd;
