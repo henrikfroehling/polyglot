@@ -472,7 +472,11 @@ void DelphiLexer::scanStringLiteral(SyntaxToken& token) noexcept
         }
 
         token.setText(_textWindow.text());
-        token.setSyntaxKind(SyntaxKind::StringLiteralToken);
+
+        if (quoteCharacter == '\'')
+            token.setSyntaxKind(SyntaxKind::SingleQuotationStringLiteralToken);
+        else
+            token.setSyntaxKind(SyntaxKind::DoubleQuotationStringLiteralToken);
     }
     else
         token.setSyntaxKind(SyntaxKind::None);

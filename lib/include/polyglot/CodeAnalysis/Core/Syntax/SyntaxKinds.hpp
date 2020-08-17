@@ -260,7 +260,8 @@ enum class SyntaxKind : unsigned short
     MultiLineCommentTrivia,
     EndOfLineTrivia,
 
-    StringLiteralToken = 2500,
+    SingleQuotationStringLiteralToken = 2500,
+    DoubleQuotationStringLiteralToken,
     NumberLiteralToken,
     IdentifierToken,
 

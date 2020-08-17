@@ -244,7 +244,8 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::SingleLineCommentTrivia: return "SingleLineCommentTrivia";
         case SyntaxKind::MultiLineCommentTrivia: return "MultiLineCommentTrivia";
         case SyntaxKind::EndOfLineTrivia: return "EndOfLineTrivia";
-        case SyntaxKind::StringLiteralToken: return "StringLiteralToken";
+        case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
+        case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";
         case SyntaxKind::NumberLiteralToken: return "NumberLiteralToken";
         case SyntaxKind::IdentifierToken: return "IdentifierToken";
         case SyntaxKind::WhitespaceToken: return "WhitespaceToken";
