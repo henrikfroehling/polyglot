@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 
@@ -12,13 +13,14 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitInterfaceSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    DelphiUnitInterfaceSectionSyntax() noexcept;
+    explicit DelphiUnitInterfaceSectionSyntax(SyntaxTokenPtr interfaceKeyword) noexcept;
     virtual ~DelphiUnitInterfaceSectionSyntax() noexcept = default;
     virtual const DelphiUsesClauseSyntaxPtr& uses() const noexcept { return _ptrUses; }
-    virtual void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = uses; }
+    virtual void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = std::move(uses); }
 
 private:
-    DelphiUsesClauseSyntaxPtr _ptrUses;
+    SyntaxTokenPtr _ptrInterfaceKeyword;
+    DelphiUsesClauseSyntaxPtr _ptrUses; // optional
 };
 
 using DelphiUnitInterfaceSectionSyntaxPtr = std::shared_ptr<DelphiUnitInterfaceSectionSyntax>;

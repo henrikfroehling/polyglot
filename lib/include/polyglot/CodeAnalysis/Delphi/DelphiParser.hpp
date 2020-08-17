@@ -41,6 +41,8 @@ private:
     DelphiUnitFinalizationSectionSyntaxPtr parseUnitFinalizationSection() noexcept;
     DelphiPackageModuleSyntaxPtr parsePackageModule() noexcept;
     DelphiProgramModuleSyntaxPtr parseProgramModule() noexcept;
+    DelphiUsesClauseSyntaxPtr parseUsesClause() noexcept;
+    DelphiUnitReferenceDeclarationSyntaxPtr parseUnitReference() noexcept;
     DelphiNameSyntaxPtr parseQualifiedName() noexcept;
 
     DelphiNameSyntaxPtr parseQualifiedNameRight(DelphiNameSyntaxPtr left,

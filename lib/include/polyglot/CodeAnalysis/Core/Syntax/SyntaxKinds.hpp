@@ -282,7 +282,8 @@ enum class SyntaxKind : unsigned short
     UsesClause,
 
     IdentifierName,
-    QualifiedName
+    QualifiedName,
+    UnitReference
 };
 
 std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
