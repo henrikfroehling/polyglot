@@ -31,6 +31,8 @@ public:
     inline void setText(std::string_view text) noexcept { _text = text; }
     void setLeadingTrivia(std::vector<SyntaxTriviaPtr>&& leadingTrivia) noexcept;
     void setTrailingTrivia(std::vector<SyntaxTriviaPtr>&& trailingTrivia) noexcept;
+    inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
+    inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
     inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
     inline void setContextualKind(SyntaxKind contextualKind) noexcept { _contextualKind = contextualKind; }
 

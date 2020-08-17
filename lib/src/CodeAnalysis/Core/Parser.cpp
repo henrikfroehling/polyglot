@@ -24,7 +24,7 @@ Parser::~Parser() noexcept
 SyntaxNodePtr Parser::parse() noexcept
 {
     preLex();
-    return parseCore();
+    return parseRoot();
 }
 
 void Parser::preLex() noexcept
@@ -48,7 +48,7 @@ void Parser::preLex() noexcept
     }
 }
 
-SyntaxTokenPtr Parser::currentToken() noexcept
+const SyntaxTokenPtr& Parser::currentToken() noexcept
 {
     if (_tokenOffset >= _tokenCount)
         addLexedToken(_ptrLexer->nextToken());
@@ -58,7 +58,7 @@ SyntaxTokenPtr Parser::currentToken() noexcept
 
 SyntaxTokenPtr Parser::takeToken(SyntaxKind syntaxKind) noexcept
 {
-    auto ptrCurrentToken = currentToken();
+    auto& ptrCurrentToken = currentToken();
 
     if (ptrCurrentToken->syntaxKind() == syntaxKind)
     {
@@ -72,12 +72,12 @@ SyntaxTokenPtr Parser::takeToken(SyntaxKind syntaxKind) noexcept
 
 SyntaxTokenPtr Parser::takeToken() noexcept
 {
-    auto ptrCurrentToken = currentToken();
+    auto& ptrCurrentToken = currentToken();
     _tokenOffset++;
     return ptrCurrentToken;
 }
 
-SyntaxTokenPtr Parser::peekToken(pg_size n) noexcept
+const SyntaxTokenPtr& Parser::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);
 
@@ -85,6 +85,11 @@ SyntaxTokenPtr Parser::peekToken(pg_size n) noexcept
         addLexedToken(_ptrLexer->nextToken());
 
     return _lexedTokens[_tokenOffset + n];
+}
+
+void Parser::advance() noexcept
+{
+    _tokenOffset++;
 }
 
 void Parser::addLexedToken(SyntaxTokenPtr token) noexcept

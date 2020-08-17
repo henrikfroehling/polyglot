@@ -3,9 +3,9 @@
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitHeadingSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
@@ -16,9 +16,14 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
 {
 public:
-    explicit DelphiUnitModuleSyntax(SyntaxKind syntaxKind) noexcept;
+    explicit DelphiUnitModuleSyntax(DelphiUnitHeadingSyntaxPtr heading,
+                                    DelphiUnitInterfaceSectionSyntaxPtr interfaceSection,
+                                    DelphiUnitImplementationSectionSyntaxPtr implementationSection) noexcept;
+
     virtual ~DelphiUnitModuleSyntax() noexcept = default;
     inline bool isUnitModule() const noexcept override { return true; }
+    inline const DelphiUnitHeadingSyntaxPtr& heading() const noexcept { return _ptrHeading; }
+    inline void setHeading(DelphiUnitHeadingSyntaxPtr heading) noexcept { _ptrHeading = heading; }
     inline const DelphiUnitInterfaceSectionSyntaxPtr& interfaceSection() const noexcept { return _ptrInterfaceSection; }
     inline void setInterfaceSection(DelphiUnitInterfaceSectionSyntaxPtr interfaceSection) noexcept { _ptrInterfaceSection = interfaceSection; }
     inline const DelphiUnitImplementationSectionSyntaxPtr& implementationSection() const noexcept { return _ptrImplementationSection; }
@@ -31,6 +36,7 @@ public:
     inline bool hasFinalizationSection() const noexcept { return _ptrFinalizationSection != nullptr; }
 
 private:
+    DelphiUnitHeadingSyntaxPtr _ptrHeading;
     DelphiUnitInterfaceSectionSyntaxPtr _ptrInterfaceSection;
     DelphiUnitImplementationSectionSyntaxPtr _ptrImplementationSection;
     DelphiUnitInitializationSectionSyntaxPtr _ptrInitializationSection;

@@ -3,7 +3,6 @@
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -12,7 +11,7 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitFinalizationSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitFinalizationSectionSyntax(SyntaxKind syntaxKind) noexcept;
+    DelphiUnitFinalizationSectionSyntax() noexcept;
     virtual ~DelphiUnitFinalizationSectionSyntax() noexcept = default;
 };
 

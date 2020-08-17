@@ -1,10 +1,11 @@
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitFinalizationSectionSyntax::DelphiUnitFinalizationSectionSyntax(SyntaxKind syntaxKind) noexcept
-    : DelphiSyntaxNode{syntaxKind}
+DelphiUnitFinalizationSectionSyntax::DelphiUnitFinalizationSectionSyntax() noexcept
+    : DelphiSyntaxNode{SyntaxKind::UnitFinalizationSection}
 {}
 
 } // end namespace polyglot::CodeAnalysis

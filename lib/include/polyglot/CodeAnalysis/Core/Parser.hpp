@@ -26,11 +26,12 @@ public:
 protected:
     explicit Parser(std::unique_ptr<Lexer> lexer) noexcept;
     void preLex() noexcept;
-    virtual SyntaxNodePtr parseCore() noexcept = 0;
-    SyntaxTokenPtr currentToken() noexcept;
+    virtual SyntaxNodePtr parseRoot() noexcept = 0;
+    const SyntaxTokenPtr& currentToken() noexcept;
     SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
     SyntaxTokenPtr takeToken() noexcept;
-    SyntaxTokenPtr peekToken(pg_size n) noexcept;
+    const SyntaxTokenPtr& peekToken(pg_size n) noexcept;
+    void advance() noexcept;
 
 protected:
     std::unique_ptr<Lexer> _ptrLexer;

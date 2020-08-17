@@ -3,8 +3,10 @@
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiPackageHeadingSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -12,9 +14,20 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiPackageModuleSyntax : public DelphiCompilationUnitSyntax
 {
 public:
-    explicit DelphiPackageModuleSyntax(SyntaxKind syntaxKind) noexcept;
+    DelphiPackageModuleSyntax() noexcept;
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
+    inline const DelphiPackageHeadingSyntaxPtr& heading() const noexcept { return _ptrHeading; }
+    inline void setHeading(DelphiPackageHeadingSyntaxPtr heading) noexcept { _ptrHeading = heading; }
+    inline const DelphiPackageRequiresClauseSyntaxPtr& requiresClause() const noexcept { return _ptrRequiresClause; }
+    inline void setRequiresClause(DelphiPackageRequiresClauseSyntaxPtr requiresClause) noexcept { _ptrRequiresClause = requiresClause; }
+    inline const DelphiPackageContainsClauseSyntaxPtr& containsClause() const noexcept { return _ptrContainsClause; }
+    inline void setContainsClause(DelphiPackageContainsClauseSyntaxPtr containsClause) noexcept { _ptrContainsClause = containsClause; }
+
+private:
+    DelphiPackageHeadingSyntaxPtr _ptrHeading;
+    DelphiPackageRequiresClauseSyntaxPtr _ptrRequiresClause;
+    DelphiPackageContainsClauseSyntaxPtr _ptrContainsClause;
 };
 
 using DelphiPackageModuleSyntaxPtr = std::shared_ptr<DelphiPackageModuleSyntax>;

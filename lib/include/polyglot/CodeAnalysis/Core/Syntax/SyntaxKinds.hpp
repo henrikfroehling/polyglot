@@ -264,14 +264,24 @@ enum class SyntaxKind : unsigned short
     NumberLiteralToken,
     IdentifierToken,
 
-    CompilationUnitSyntax = 2700,
-    UnitModuleSyntax,
-    PackageModuleSyntax,
-    ProgramModuleSyntax,
-    UnitInterfaceSectionSyntax,
-    UnitImplementationSectionSyntax,
-    UnitInitializationSectionSyntax,
-    UnitFinalizationSectionSyntax
+    CompilationUnit = 2700,
+    UnitModule,
+    UnitHeading,
+    UnitInterfaceSection,
+    UnitImplementationSection,
+    UnitInitializationSection,
+    UnitFinalizationSection,
+    PackageModule,
+    PackageHeading,
+    ProgramModule,
+    ProgramHeading,
+
+    PackageRequiresClause,
+    PackageContainsClause,
+    UsesClause,
+
+    IdentifierName,
+    QualifiedName
 };
 
 std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
