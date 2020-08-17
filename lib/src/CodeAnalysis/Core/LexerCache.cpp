@@ -1,10 +1,6 @@
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 
-#ifdef COLLECT_BENCHMARKS
-#include "polyglot/CodeAnalysis/Core/LexerBenchmark.hpp"
-#endif
-
 namespace polyglot::CodeAnalysis
 {
 
@@ -22,16 +18,9 @@ SyntaxTokenPtr LexerCache::lookupToken(std::string_view chars,
 
     if (ptrSyntaxToken == nullptr)
     {
-#ifdef COLLECT_BENCHMARKS
-        _pLexer->benchmark().incrementCacheMisses();
-#endif
         ptrSyntaxToken = createTokenFunction(chars);
         _tokenCache.addItem(chars, hashCode, ptrSyntaxToken);
     }
-#ifdef COLLECT_BENCHMARKS
-    else
-        _pLexer->benchmark().incrementCacheHits();
-#endif
 
     return ptrSyntaxToken;
 }
@@ -44,16 +33,9 @@ SyntaxTriviaPtr LexerCache::lookupTrivia(std::string_view chars,
 
     if (ptrSyntaxTrivia == nullptr)
     {
-#ifdef COLLECT_BENCHMARKS
-        _pLexer->benchmark().incrementCacheMisses();
-#endif
         ptrSyntaxTrivia = createTriviaFunction();
         _triviaCache.addItem(chars, hashCode, ptrSyntaxTrivia);
     }
-#ifdef COLLECT_BENCHMARKS
-    else
-        _pLexer->benchmark().incrementCacheHits();
-#endif
 
     return ptrSyntaxTrivia;
 }

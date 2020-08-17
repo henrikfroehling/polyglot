@@ -15,10 +15,6 @@ if(EXISTS ${LOC_PATH})
   message(FATAL_ERROR "You cannot build in a source directory.")
 endif()
 
-if(NOT DEFINED COLLECT_BENCHMARKS)
-  set(COLLECT_BENCHMARKS 1)
-endif()
-
 configure_file(
   ${PROJECT_SOURCE_DIR}/include/polyglot/Version.hpp.in
   ${PROJECT_BINARY_DIR}/include/polyglot/Version.hpp
@@ -40,7 +36,6 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/CharFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/LexerBenchmark.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
@@ -121,7 +116,6 @@ target_compile_options(${PROJECT_NAME}
 target_compile_definitions(${PROJECT_NAME}
   PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:polyglot_EXPORTS>
-    -DCOLLECT_BENCHMARKS=${COLLECT_BENCHMARKS}
 )
 
 target_include_directories(${PROJECT_NAME}

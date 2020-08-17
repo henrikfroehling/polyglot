@@ -4,17 +4,11 @@ namespace polyglot::CodeAnalysis
 {
 
 Lexer::Lexer(SourceTextPtr sourceText) noexcept
-    : _textWindow{sourceText},
+    : _textWindow{std::move(sourceText)},
       _lexerCache{this},
       _leadingTrivia{},
-      _trailingTrivia{},
-      _benchmark{}
-{
-#ifdef COLLECT_BENCHMARKS
-    _benchmark.setFilename(sourceText->filename());
-    _benchmark.setLineCount(sourceText->textLines().count());
-#endif
-}
+      _trailingTrivia{}
+{}
 
 Lexer::~Lexer()
 {}

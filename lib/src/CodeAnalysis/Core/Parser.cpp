@@ -1,9 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 
-#ifdef COLLECT_BENCHMARKS
-#include "polyglot/CodeAnalysis/Core/LexerBenchmark.hpp"
-#endif
-
 #include <cassert>
 #include <algorithm>
 
