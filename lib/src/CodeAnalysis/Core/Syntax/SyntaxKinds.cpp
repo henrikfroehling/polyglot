@@ -45,7 +45,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::AsteriskCloseParenthesisToken: return "AsteriskCloseParenthesisToken";
         case SyntaxKind::OpenParenthesisDotToken: return "OpenParenthesisDotToken";
         case SyntaxKind::DotCloseParenthesisToken: return "DotCloseParenthesisToken";
-        case SyntaxKind::OpenBraceDollerToken: return "OpenBraceDollerToken";
+        case SyntaxKind::OpenBraceDollarToken: return "OpenBraceDollarToken";
         case SyntaxKind::AtAtToken: return "AtAtToken";
         case SyntaxKind::AndKeyword: return "AndKeyword";
         case SyntaxKind::ArrayKeyword: return "ArrayKeyword";

@@ -6,6 +6,7 @@
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
+#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
@@ -30,7 +31,7 @@ public:
 protected:
     explicit Lexer(SourceTextPtr sourceText) noexcept;
     void start() noexcept;
-    virtual SyntaxTokenPtr quickScanSyntaxToken() noexcept { return nullptr; }
+    virtual TokenInfo quickScanSyntaxToken() noexcept { return TokenInfo{}; }
 
 protected:
     SlidingTextWindow _textWindow;

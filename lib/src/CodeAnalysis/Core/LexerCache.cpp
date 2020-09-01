@@ -4,40 +4,49 @@
 namespace polyglot::CodeAnalysis
 {
 
+pg_size LexerCache::CACHE_HITS = 0;
+pg_size LexerCache::CACHE_MISSES = 0;
+
 LexerCache::LexerCache(Lexer* lexer) noexcept
-    : _triviaCache{},
-      _tokenCache{},
+    : _tokenCacheN{},
+      _triviaCacheN{},
       _pLexer{lexer}
 {}
 
-SyntaxTokenPtr LexerCache::lookupToken(std::string_view chars,
-                                       int hashCode,
-                                       std::function<SyntaxTokenPtr(std::string_view chars)> createTokenFunction) noexcept
+TokenInfo LexerCache::lookupToken(std::string_view chars,
+                                  int hashCode,
+                                  std::function<TokenInfo(std::string_view chars)> createTokenInfoFunction) noexcept
 {
-    auto ptrSyntaxToken = _tokenCache.lookupItem(chars, hashCode);
+    TokenInfo tokenInfo = _tokenCacheN.lookupItem(chars, hashCode);
 
-    if (ptrSyntaxToken == nullptr)
+    if (tokenInfo == TokenInfo{})
     {
-        ptrSyntaxToken = createTokenFunction(chars);
-        _tokenCache.addItem(chars, hashCode, ptrSyntaxToken);
+        tokenInfo = createTokenInfoFunction(chars);
+        _tokenCacheN.addItem(chars, hashCode, tokenInfo);
+        CACHE_MISSES++;
     }
+    else
+        CACHE_HITS++;
 
-    return ptrSyntaxToken;
+    return tokenInfo;
 }
 
-SyntaxTriviaPtr LexerCache::lookupTrivia(std::string_view chars,
-                                         int hashCode,
-                                         std::function<SyntaxTriviaPtr()> createTriviaFunction) noexcept
+TokenInfo LexerCache::lookupTrivia(std::string_view chars,
+                                   int hashCode,
+                                   std::function<TokenInfo()> createTokenInfoFunction) noexcept
 {
-    auto ptrSyntaxTrivia = _triviaCache.lookupItem(chars, hashCode);
+    TokenInfo tokenInfo = _triviaCacheN.lookupItem(chars, hashCode);
 
-    if (ptrSyntaxTrivia == nullptr)
+    if (tokenInfo == TokenInfo{})
     {
-        ptrSyntaxTrivia = createTriviaFunction();
-        _triviaCache.addItem(chars, hashCode, ptrSyntaxTrivia);
+        tokenInfo = createTokenInfoFunction();
+        _triviaCacheN.addItem(chars, hashCode, tokenInfo);
+        CACHE_MISSES++;
     }
+    else
+        CACHE_HITS++;
 
-    return ptrSyntaxTrivia;
+    return tokenInfo;
 }
 
 } // end namespace polyglot::CodeAnalysis

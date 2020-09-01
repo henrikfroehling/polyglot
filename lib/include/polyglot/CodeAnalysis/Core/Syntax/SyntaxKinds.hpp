@@ -56,7 +56,7 @@ enum class SyntaxKind : unsigned short
     AsteriskCloseParenthesisToken, // *)
     OpenParenthesisDotToken, // (.
     DotCloseParenthesisToken, // .)
-    OpenBraceDollerToken, // {$
+    OpenBraceDollarToken, // {$
     AtAtToken, // @@
 
     // keywords

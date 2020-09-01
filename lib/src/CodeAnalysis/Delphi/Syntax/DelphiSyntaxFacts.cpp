@@ -253,7 +253,7 @@ bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::AsteriskCloseParenthesisToken:
         case SyntaxKind::OpenParenthesisDotToken:
         case SyntaxKind::DotCloseParenthesisToken:
-        case SyntaxKind::OpenBraceDollerToken:
+        case SyntaxKind::OpenBraceDollarToken:
         case SyntaxKind::AtAtToken:
             return true;
     }

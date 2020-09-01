@@ -5,6 +5,7 @@
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
@@ -19,9 +20,9 @@ public:
     SyntaxTokenPtr nextToken() noexcept override final;
 
 private:
-    SyntaxTokenPtr quickScanSyntaxToken() noexcept override;
-    SyntaxTokenPtr lexSyntaxToken() noexcept;
-    SyntaxTokenPtr lexSyntaxTokenLiteral(std::string_view chars) noexcept;
+    TokenInfo quickScanSyntaxToken() noexcept override;
+    TokenInfo lexSyntaxToken() noexcept;
+    TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
     void lexSyntaxTrivia(bool isTrailing,
                          bool needsStart = true) noexcept;
@@ -30,15 +31,15 @@ private:
     void scanToEndOfLine() noexcept;
     void scanMultiLineComment(bool& isTerminated) noexcept;
     SyntaxTriviaPtr scanEndOfLine() noexcept;
-    void scanSyntaxToken(SyntaxToken& token) noexcept;
-    void scanStringLiteral(SyntaxToken& token) noexcept;
-    void scanIdentifierOrKeyword(SyntaxToken& token) noexcept;
+    void scanSyntaxToken(TokenInfo& tokenInfo) noexcept;
+    void scanStringLiteral(TokenInfo& tokenInfo) noexcept;
+    void scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept;
 
     void scanIdentifierOrKeyword(std::string_view chars,
-                                 SyntaxToken& token) noexcept;
+                                 TokenInfo& tokenInfo) noexcept;
 
-    bool scanIdentifier(SyntaxToken& token) noexcept;
-    void scanNumericLiteral(SyntaxToken& token) noexcept;
+    bool scanIdentifier(TokenInfo& token) noexcept;
+    void scanNumericLiteral(TokenInfo& tokenInfo) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

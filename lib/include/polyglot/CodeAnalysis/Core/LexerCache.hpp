@@ -6,6 +6,7 @@
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/TextKeyedCache.hpp"
+#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 
@@ -19,20 +20,23 @@ class POLYGLOT_API LexerCache
 public:
     static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
 
+    static pg_size CACHE_HITS;
+    static pg_size CACHE_MISSES;
+
 public:
     explicit LexerCache(Lexer* lexer) noexcept;
 
-    SyntaxTokenPtr lookupToken(std::string_view chars,
-                               int hashCode,
-                               std::function<SyntaxTokenPtr(std::string_view chars)> createTokenFunction) noexcept;
+    TokenInfo lookupToken(std::string_view chars,
+                          int hashCode,
+                          std::function<TokenInfo(std::string_view chars)> createTokenInfoFunction) noexcept;
 
-    SyntaxTriviaPtr lookupTrivia(std::string_view chars,
-                                 int hashCode,
-                                 std::function<SyntaxTriviaPtr()> createTriviaFunction) noexcept;
+    TokenInfo lookupTrivia(std::string_view chars,
+                           int hashCode,
+                           std::function<TokenInfo()> createTokenInfoFunction) noexcept;
 
 private:
-    TextKeyedCache<SyntaxTrivia> _triviaCache;
-    TextKeyedCache<SyntaxToken> _tokenCache;
+    TextKeyedCache _tokenCacheN;
+    TextKeyedCache _triviaCacheN;
     Lexer* _pLexer;
 };
 
