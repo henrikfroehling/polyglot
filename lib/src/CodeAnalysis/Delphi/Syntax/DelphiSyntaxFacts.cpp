@@ -480,7 +480,7 @@ bool isModuleStart(SyntaxKind syntaxKind) noexcept
 SyntaxKind keywordKind(std::string_view text) noexcept
 {
     std::string lowerCaseText{text};
-    std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), std::tolower);
+    std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), static_cast<int(*)(int)>(std::tolower));
 
     if (SYNTAXKEYWORDS.find(lowerCaseText) != SYNTAXKEYWORDS.end())
         return SYNTAXKEYWORDS.at(lowerCaseText);
