@@ -28,7 +28,7 @@ void Parser::preLex() noexcept
     _lexedTokens.clear();
 
     const pg_size size = std::min(static_cast<pg_size>(4096),
-                                  std::max(static_cast<pg_size>(32), _ptrLexer->textWindow().text().length()));
+                                  std::max(static_cast<pg_size>(32), _ptrLexer->textWindow().lexemeText().length()));
 
     _lexedTokens.reserve(size);
 
