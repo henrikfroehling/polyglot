@@ -4,9 +4,6 @@
 namespace polyglot::CodeAnalysis
 {
 
-pg_size LexerCache::CACHE_HITS = 0;
-pg_size LexerCache::CACHE_MISSES = 0;
-
 LexerCache::LexerCache(Lexer* lexer) noexcept
     : _tokenCacheN{},
       _triviaCacheN{},
@@ -23,10 +20,7 @@ TokenInfo LexerCache::lookupToken(std::string_view chars,
     {
         tokenInfo = createTokenInfoFunction(chars);
         _tokenCacheN.addItem(chars, hashCode, tokenInfo);
-        CACHE_MISSES++;
     }
-    else
-        CACHE_HITS++;
 
     return tokenInfo;
 }
@@ -41,10 +35,7 @@ TokenInfo LexerCache::lookupTrivia(std::string_view chars,
     {
         tokenInfo = createTokenInfoFunction();
         _triviaCacheN.addItem(chars, hashCode, tokenInfo);
-        CACHE_MISSES++;
     }
-    else
-        CACHE_HITS++;
 
     return tokenInfo;
 }

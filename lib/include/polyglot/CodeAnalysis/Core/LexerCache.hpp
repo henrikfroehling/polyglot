@@ -20,9 +20,6 @@ class POLYGLOT_API LexerCache
 public:
     static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
 
-    static pg_size CACHE_HITS;
-    static pg_size CACHE_MISSES;
-
 public:
     explicit LexerCache(Lexer* lexer) noexcept;
 
