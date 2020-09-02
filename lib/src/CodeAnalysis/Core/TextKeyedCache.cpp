@@ -80,8 +80,10 @@ void TextKeyedCache::addSharedItem(int hashCode,
         currentIndex = (currentIndex + i) & SHARED_SIZE_MASK;
     }
 
-    int randomIndex = nextRandom() & SHARED_BUCKET_SIZE_MASK;
-    sharedIndex = (sharedIndex + ((randomIndex * randomIndex + randomIndex) / 2)) & SHARED_SIZE_MASK;
+    {
+        int randomIndex = nextRandom() & SHARED_BUCKET_SIZE_MASK;
+        sharedIndex = (sharedIndex + ((randomIndex * randomIndex + randomIndex) / 2)) & SHARED_SIZE_MASK;
+    }
 
 foundIndex:
     _sharedTable[sharedIndex] = cacheEntry;
