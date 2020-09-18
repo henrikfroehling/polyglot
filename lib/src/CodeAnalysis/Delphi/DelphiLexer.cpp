@@ -19,6 +19,7 @@ DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
 
 SyntaxTokenPtr DelphiLexer::nextToken() noexcept
 {
+    const pg_size currentPosition = _textWindow.position();
     _leadingTrivia = std::vector<SyntaxTriviaPtr>{};
     lexSyntaxTrivia(false);
 
@@ -34,6 +35,7 @@ SyntaxTokenPtr DelphiLexer::nextToken() noexcept
     ptrSyntaxToken->setSyntaxKind(tokenInfo.kind);
     ptrSyntaxToken->setContextualKind(tokenInfo.contextualKind);
     ptrSyntaxToken->setText(tokenInfo.text);
+    ptrSyntaxToken->setPosition(currentPosition);
     ptrSyntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
     ptrSyntaxToken->setTrailingTrivia(std::move(_trailingTrivia));
     return std::move(ptrSyntaxToken);

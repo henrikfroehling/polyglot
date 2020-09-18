@@ -22,6 +22,8 @@ public:
     inline virtual bool isTrivia() const noexcept { return false; }
     inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
     inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
+    inline pg_size position() const noexcept { return _position; }
+    inline void setPosition(const pg_size position) noexcept { _position = position; }
 
 protected:
     explicit SyntaxNode(SyntaxKind syntaxKind) noexcept;
@@ -31,6 +33,7 @@ protected:
 
 protected:
     SyntaxKind _syntaxKind;
+    pg_size _position;
 };
 
 using SyntaxNodePtr = std::shared_ptr<SyntaxNode>;
