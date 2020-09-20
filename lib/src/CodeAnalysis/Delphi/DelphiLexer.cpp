@@ -20,7 +20,6 @@ DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
 
 SyntaxTokenPtr DelphiLexer::nextToken() noexcept
 {
-    const pg_size tokenPosition = _textWindow.position();
     _leadingTrivia = std::vector<SyntaxTriviaPtr>{};
     lexSyntaxTrivia(false);
 
@@ -29,6 +28,7 @@ SyntaxTokenPtr DelphiLexer::nextToken() noexcept
     if (tokenInfo == EMPTY_TOKEN_INFO)
         tokenInfo = lexSyntaxToken();
 
+    const pg_size tokenPosition = _textWindow.lexemeStartPosition();
     _trailingTrivia = std::vector<SyntaxTriviaPtr>{};
     lexSyntaxTrivia(true);
 
@@ -598,7 +598,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
         if (needsStart)
             start();
 
-        _currentTriviaPosition = _textWindow.position();
+        _currentTriviaPosition = _textWindow.lexemeStartPosition();
         char character = _textWindow.peekCharacter();
 
         if (character == ' ')
