@@ -6,6 +6,9 @@
 namespace polyglot::CodeAnalysis
 {
 
+constexpr pg_size MIN_LEXED_TOKENS_COUNT{32};
+constexpr pg_size MAX_LEXED_TOKENS_COUNT{4096};
+
 Parser::Parser(std::unique_ptr<Lexer> lexer) noexcept
     : _ptrLexer{std::move(lexer)},
       _lexedTokens{},
@@ -27,8 +30,9 @@ void Parser::preLex() noexcept
 {
     _lexedTokens.clear();
 
-    const pg_size size = std::min(static_cast<pg_size>(4096),
-                                  std::max(static_cast<pg_size>(32), _ptrLexer->textWindow().lexemeText().length()));
+    const pg_size size = std::min(static_cast<pg_size>(MAX_LEXED_TOKENS_COUNT),
+                                  std::max(static_cast<pg_size>(MIN_LEXED_TOKENS_COUNT),
+                                           _ptrLexer->textWindow().content().length() / 2));
 
     _lexedTokens.reserve(size);
 
