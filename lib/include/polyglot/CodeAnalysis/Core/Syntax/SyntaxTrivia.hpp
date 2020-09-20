@@ -5,6 +5,7 @@
 #include <string_view>
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/polyglot_global.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -16,7 +17,8 @@ public:
     SyntaxTrivia() noexcept;
 
     explicit SyntaxTrivia(SyntaxKind syntaxKind,
-                          std::string_view text) noexcept;
+                          std::string_view text,
+                          pg_size position = 0) noexcept;
 
     virtual ~SyntaxTrivia() noexcept;
     SyntaxTrivia(const SyntaxTrivia&) noexcept = default;

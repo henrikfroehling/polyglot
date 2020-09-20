@@ -40,6 +40,9 @@ private:
 
     bool scanIdentifier(TokenInfo& token) noexcept;
     void scanNumericLiteral(TokenInfo& tokenInfo) noexcept;
+
+private:
+    pg_size _currentTriviaPosition;
 };
 
 } // end namespace polyglot::CodeAnalysis
