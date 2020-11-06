@@ -1,6 +1,7 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
 #include "polyglot/Core/Hashing.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
+#include "polyglot/CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
@@ -682,7 +683,10 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
                     break;
                 }
                 else
+                {
                     _textWindow.reset(_textWindow.position() - 1);
+                    lexDirectiveAndExcludedTrivia(false /* afterFirstToken */, false /* afterNonWhitespaceOnLine*/);
+                }
 
                 return;
             case '(':
@@ -708,7 +712,10 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
                     break;
                 }
                 else
+                {
                     _textWindow.reset(_textWindow.position() - 1);
+                    lexDirectiveAndExcludedTrivia(false /* afterFirstToken */, false /* afterNonWhitespaceOnLine*/);
+                }
 
                 return;
             case '\r':
@@ -883,6 +890,41 @@ SyntaxTriviaPtr DelphiLexer::scanEndOfLine() noexcept
 
         return std::make_shared<SyntaxTrivia>(SyntaxKind::None, "");
     }
+}
+
+void DelphiLexer::lexDirectiveAndExcludedTrivia(bool afterFirstToken,
+                                                bool afterNonWhitespaceOnLine) noexcept
+{
+    SyntaxNodePtr directive = lexSingleDirective(true, true, afterFirstToken, afterNonWhitespaceOnLine);
+
+    // TODO
+    lexExludedDirectivesAndTrivia(true /* endIsActive */);
+}
+
+SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
+                                              bool endIsActive,
+                                              bool afterFirstToken,
+                                              bool afterNonWhitespaceOnLine) noexcept
+{
+    char character = _textWindow.peekCharacter();
+
+    if (character == '\t' || character == '\v' || character == '\f' || character == '\r' || character == '\n')
+        _leadingTrivia.emplace_back(scanWhitespace()); // CHECK always leading trivia?
+
+    LexerMode saveMode = _mode;
+    DelphiDirectiveParser directiveParser{shared_from_this()};
+    SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
+
+    // TODO add trivia
+    // TODO apply directives
+
+    _mode = saveMode;
+    return std::move(ptrDirective);
+}
+
+void DelphiLexer::lexExludedDirectivesAndTrivia(bool endIsActive) noexcept
+{
+
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -20,7 +20,7 @@ enum class LexerMode
     Directive
 };
 
-class POLYGLOT_API Lexer
+class POLYGLOT_API Lexer : public std::enable_shared_from_this<Lexer>
 {
 public:
     static constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();

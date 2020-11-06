@@ -57,6 +57,7 @@ set(SOURCES_CODEANALYSIS_CORE
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_CORE
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiDirectiveParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp

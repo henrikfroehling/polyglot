@@ -6,6 +6,7 @@
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
@@ -40,6 +41,16 @@ private:
 
     bool scanIdentifier(TokenInfo& token) noexcept;
     void scanNumericLiteral(TokenInfo& tokenInfo) noexcept;
+
+    void lexDirectiveAndExcludedTrivia(bool afterFirstToken,
+                                       bool afterNonWhitespaceOnLine) noexcept;
+
+    SyntaxNodePtr lexSingleDirective(bool isActive,
+                                     bool endIsActive,
+                                     bool afterFirstToken,
+                                     bool afterNonWhitespaceOnLine) noexcept;
+
+    void lexExludedDirectivesAndTrivia(bool endIsActive) noexcept;
 
 private:
     pg_size _currentTriviaPosition;
