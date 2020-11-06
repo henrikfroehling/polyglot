@@ -14,6 +14,12 @@
 namespace polyglot::CodeAnalysis
 {
 
+enum class LexerMode
+{
+    Syntax,
+    Directive
+};
+
 class POLYGLOT_API Lexer
 {
 public:
@@ -35,6 +41,7 @@ protected:
 
 protected:
     SlidingTextWindow _textWindow;
+    LexerMode _mode;
     LexerCache _lexerCache;
     std::vector<SyntaxTriviaPtr> _leadingTrivia;
     std::vector<SyntaxTriviaPtr> _trailingTrivia;
