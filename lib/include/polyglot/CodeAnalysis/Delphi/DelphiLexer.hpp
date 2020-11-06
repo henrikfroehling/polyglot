@@ -17,10 +17,10 @@ class POLYGLOT_API DelphiLexer final : public Lexer
 {
 public:
     explicit DelphiLexer(SourceTextPtr sourceText) noexcept;
-    SyntaxTokenPtr nextToken() noexcept override final;
 
 private:
-    TokenInfo quickScanSyntaxToken() noexcept override;
+    SyntaxTokenPtr lex(LexerMode mode) noexcept override;
+    TokenInfo quickScanSyntaxToken() noexcept;
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 

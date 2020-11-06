@@ -18,28 +18,38 @@ DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
       _currentTriviaPosition{}
 {}
 
-SyntaxTokenPtr DelphiLexer::nextToken() noexcept
+SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
 {
-    _leadingTrivia = std::vector<SyntaxTriviaPtr>{};
-    lexSyntaxTrivia(false);
+    switch (_mode)
+    {
+        case LexerMode::Syntax:
+        {
+            _leadingTrivia = std::vector<SyntaxTriviaPtr>{};
+            lexSyntaxTrivia(false);
+            TokenInfo tokenInfo = quickScanSyntaxToken();
 
-    TokenInfo tokenInfo = quickScanSyntaxToken();
+            if (tokenInfo == EMPTY_TOKEN_INFO)
+                tokenInfo = lexSyntaxToken();
 
-    if (tokenInfo == EMPTY_TOKEN_INFO)
-        tokenInfo = lexSyntaxToken();
+            const pg_size tokenPosition = _textWindow.lexemeStartPosition();
+            _trailingTrivia = std::vector<SyntaxTriviaPtr>{};
+            lexSyntaxTrivia(true);
 
-    const pg_size tokenPosition = _textWindow.lexemeStartPosition();
-    _trailingTrivia = std::vector<SyntaxTriviaPtr>{};
-    lexSyntaxTrivia(true);
+            auto ptrSyntaxToken = std::make_shared<SyntaxToken>();
+            ptrSyntaxToken->setSyntaxKind(tokenInfo.kind);
+            ptrSyntaxToken->setContextualKind(tokenInfo.contextualKind);
+            ptrSyntaxToken->setText(tokenInfo.text);
+            ptrSyntaxToken->setPosition(tokenPosition);
+            ptrSyntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
+            ptrSyntaxToken->setTrailingTrivia(std::move(_trailingTrivia));
+            return std::move(ptrSyntaxToken);
+        }
+        case LexerMode::Directive:
+            // TODO
+            break;
+    }
 
-    auto ptrSyntaxToken = std::make_shared<SyntaxToken>();
-    ptrSyntaxToken->setSyntaxKind(tokenInfo.kind);
-    ptrSyntaxToken->setContextualKind(tokenInfo.contextualKind);
-    ptrSyntaxToken->setText(tokenInfo.text);
-    ptrSyntaxToken->setPosition(tokenPosition);
-    ptrSyntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
-    ptrSyntaxToken->setTrailingTrivia(std::move(_trailingTrivia));
-    return std::move(ptrSyntaxToken);
+    return nullptr;
 }
 
 TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept

@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_CORE_PARSER_H
 
 #include <memory>
-#include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
@@ -24,24 +23,16 @@ public:
     SyntaxNodePtr parse() noexcept;
 
 protected:
-    explicit Parser(std::unique_ptr<Lexer> lexer) noexcept;
-    void preLex() noexcept;
+    explicit Parser(std::shared_ptr<Lexer> lexer) noexcept;
     virtual SyntaxNodePtr parseRoot() noexcept = 0;
-    const SyntaxTokenPtr& currentToken() noexcept;
-    SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
-    SyntaxTokenPtr takeToken() noexcept;
-    const SyntaxTokenPtr& peekToken(pg_size n) noexcept;
-    void advance() noexcept;
+    inline const SyntaxTokenPtr& currentToken() noexcept { return _ptrLexer->currentToken(); }
+    inline SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
+    inline SyntaxTokenPtr takeToken() noexcept { return _ptrLexer->takeToken(); }
+    inline const SyntaxTokenPtr& peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
+    inline void advance() noexcept { _ptrLexer->advance(); }
 
 protected:
-    std::unique_ptr<Lexer> _ptrLexer;
-    std::vector<SyntaxTokenPtr> _lexedTokens;
-    pg_size _tokenCount;
-    pg_size _tokenOffset;
-    SyntaxTokenPtr _ptrCurrentToken;
-
-private:
-    void addLexedToken(SyntaxTokenPtr token) noexcept;
+    std::shared_ptr<Lexer> _ptrLexer;
 };
 
 } // end namespace polyglot::CodeAnalysis

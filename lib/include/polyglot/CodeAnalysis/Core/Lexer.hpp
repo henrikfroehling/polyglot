@@ -31,13 +31,21 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    virtual SyntaxTokenPtr nextToken() noexcept = 0;
+    inline SyntaxTokenPtr lex() noexcept { return lex(_mode); }
     inline const SlidingTextWindow& textWindow() const noexcept { return _textWindow; }
+    void preLex() noexcept;
+    const SyntaxTokenPtr& currentToken() noexcept;
+    SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
+    SyntaxTokenPtr takeToken() noexcept;
+    const SyntaxTokenPtr& peekToken(pg_size n) noexcept;
+    void advance() noexcept;
+    inline void setMode(LexerMode mode) noexcept { _mode = mode; }
 
 protected:
     explicit Lexer(SourceTextPtr sourceText) noexcept;
     void start() noexcept;
-    virtual TokenInfo quickScanSyntaxToken() noexcept { return TokenInfo{}; }
+    virtual SyntaxTokenPtr lex(LexerMode mode) noexcept = 0;
+    void addLexedToken(SyntaxTokenPtr token) noexcept;
 
 protected:
     SlidingTextWindow _textWindow;
@@ -45,6 +53,10 @@ protected:
     LexerCache _lexerCache;
     std::vector<SyntaxTriviaPtr> _leadingTrivia;
     std::vector<SyntaxTriviaPtr> _trailingTrivia;
+    std::vector<SyntaxTokenPtr> _lexedTokens;
+    pg_size _tokenCount;
+    pg_size _tokenOffset;
+    SyntaxTokenPtr _ptrCurrentToken;
 };
 
 } // end namespace polyglot::CodeAnalysis
