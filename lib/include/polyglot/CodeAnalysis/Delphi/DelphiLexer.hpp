@@ -10,6 +10,7 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
+#include "polyglot/CodeAnalysis/Delphi/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -54,6 +55,7 @@ private:
 
 private:
     pg_size _currentTriviaPosition;
+    DirectiveStack _directives;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -6,6 +6,7 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Delphi/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -14,7 +15,8 @@ class POLYGLOT_API DelphiDirectiveParser : public Parser
 {
 public:
     DelphiDirectiveParser() = delete;
-    explicit DelphiDirectiveParser(std::shared_ptr<Lexer> lexer) noexcept;
+    explicit DelphiDirectiveParser(std::shared_ptr<Lexer> lexer,
+                                   const DirectiveStack& context) noexcept;
 
     SyntaxNodePtr parseDirective(bool isActive,
                                  bool endIsActive,
@@ -23,6 +25,9 @@ public:
 
 private:
     inline SyntaxNodePtr parseRoot() noexcept override { return nullptr; }
+
+private:
+    const DirectiveStack& _context;
 };
 
 } // end namespace polyglot::CodeAnalysis

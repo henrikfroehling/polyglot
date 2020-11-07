@@ -16,7 +16,8 @@ static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
 DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
     : Lexer{std::move(sourceText)},
-      _currentTriviaPosition{}
+      _currentTriviaPosition{},
+      _directives{}
 {}
 
 SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
@@ -912,7 +913,7 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
         _leadingTrivia.emplace_back(scanWhitespace()); // CHECK always leading trivia?
 
     LexerMode saveMode = _mode;
-    DelphiDirectiveParser directiveParser{shared_from_this()};
+    DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
     SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
 
     // TODO add trivia

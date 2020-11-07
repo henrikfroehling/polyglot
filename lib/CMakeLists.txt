@@ -62,6 +62,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_CORE
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DirectiveStack.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX

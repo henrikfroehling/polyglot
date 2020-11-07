@@ -3,8 +3,10 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiDirectiveParser::DelphiDirectiveParser(std::shared_ptr<Lexer> lexer) noexcept
-    : Parser{lexer}
+DelphiDirectiveParser::DelphiDirectiveParser(std::shared_ptr<Lexer> lexer,
+                                             const DirectiveStack& context) noexcept
+    : Parser{lexer},
+      _context{context}
 {
     lexer->setMode(LexerMode::Directive);
 }
