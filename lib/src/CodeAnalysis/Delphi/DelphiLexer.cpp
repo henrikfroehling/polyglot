@@ -917,7 +917,9 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
     SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
 
     // TODO add trivia
+
     // TODO apply directives
+    // _directives = ptrDirective->applyDirectives(_directives);
 
     _mode = saveMode;
     return std::move(ptrDirective);

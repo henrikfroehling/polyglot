@@ -4,6 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DirectiveStack::DirectiveStack() noexcept
+    : _directives{}
 {}
 
 } // end namespace polyglot::CodeAnalysis
