@@ -4,7 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiTypeSyntax::DelphiTypeSyntax(SyntaxKind syntaxKind) noexcept
-    : DelphiExpressionSyntax{syntaxKind}
+    : ExpressionSyntax{syntaxKind}
 {}
 
 } // end namespace polyglot::CodeAnalysis

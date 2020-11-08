@@ -3,7 +3,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-Directive::Directive(DelphiDirectiveTriviaSyntaxPtr node) noexcept
+Directive::Directive(DirectiveTriviaSyntaxPtr node) noexcept
     : _node{std::move(node)}
 {}
 

@@ -41,6 +41,9 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TokenInfo.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/DirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/StructuredTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
@@ -68,8 +71,6 @@ set(SOURCES_CODEANALYSIS_DELPHI_CORE
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
@@ -80,7 +81,6 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSimpleNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiStructuredTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
