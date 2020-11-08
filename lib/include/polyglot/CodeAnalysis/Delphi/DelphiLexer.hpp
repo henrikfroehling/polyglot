@@ -26,8 +26,9 @@ private:
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
-    void lexSyntaxTrivia(bool isTrailing,
-                         bool needsStart = true) noexcept;
+    void lexSyntaxTrivia(bool afterFirstToken,
+                         bool isTrailing,
+                         std::vector<SyntaxNodePtr>& triviaList) noexcept;
 
     SyntaxTriviaPtr scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;

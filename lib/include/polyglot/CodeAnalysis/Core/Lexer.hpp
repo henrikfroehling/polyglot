@@ -7,6 +7,7 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
@@ -51,8 +52,8 @@ protected:
     SlidingTextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<SyntaxTriviaPtr> _leadingTrivia;
-    std::vector<SyntaxTriviaPtr> _trailingTrivia;
+    std::vector<SyntaxNodePtr> _leadingTrivia;
+    std::vector<SyntaxNodePtr> _trailingTrivia;
     std::vector<SyntaxTokenPtr> _lexedTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;

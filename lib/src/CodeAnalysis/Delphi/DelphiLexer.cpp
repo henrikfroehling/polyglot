@@ -26,16 +26,16 @@ SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
     {
         case LexerMode::Syntax:
         {
-            _leadingTrivia = std::vector<SyntaxTriviaPtr>{};
-            lexSyntaxTrivia(false);
+            _leadingTrivia = std::vector<SyntaxNodePtr>{};
+            lexSyntaxTrivia(_textWindow.position() > 0, false, _leadingTrivia);
             TokenInfo tokenInfo = quickScanSyntaxToken();
 
             if (tokenInfo == EMPTY_TOKEN_INFO)
                 tokenInfo = lexSyntaxToken();
 
             const pg_size tokenPosition = _textWindow.lexemeStartPosition();
-            _trailingTrivia = std::vector<SyntaxTriviaPtr>{};
-            lexSyntaxTrivia(true);
+            _trailingTrivia = std::vector<SyntaxNodePtr>{};
+            lexSyntaxTrivia(true, true, _trailingTrivia);
 
             auto ptrSyntaxToken = std::make_shared<SyntaxToken>();
             ptrSyntaxToken->setSyntaxKind(tokenInfo.kind);
@@ -602,24 +602,18 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
     tokenInfo.kind = SyntaxKind::NumberLiteralToken;
 }
 
-void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
-                                  bool needsStart) noexcept
+void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
+                                  bool isTrailing,
+                                  std::vector<SyntaxNodePtr>& triviaList) noexcept
 {
     while (true)
     {
-        if (needsStart)
-            start();
-
         _currentTriviaPosition = _textWindow.lexemeStartPosition();
         char character = _textWindow.peekCharacter();
 
         if (character == ' ')
         {
-            if (isTrailing)
-                _trailingTrivia.emplace_back(scanWhitespace());
-            else
-                _leadingTrivia.emplace_back(scanWhitespace());
-
+            triviaList.emplace_back(scanWhitespace());
             continue;
         }
         else if (character > 127)
@@ -637,11 +631,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
             case '\v':
             case '\f':
             {
-                if (isTrailing)
-                    _trailingTrivia.emplace_back(scanWhitespace());
-                else
-                    _leadingTrivia.emplace_back(scanWhitespace());
-
+                triviaList.emplace_back(scanWhitespace());
                 break;
             }
             case '/':
@@ -651,12 +641,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
                 {
                     scanToEndOfLine();
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
-
-                    if (isTrailing)
-                        _trailingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
-                    else
-                        _leadingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
-
+                    triviaList.emplace_back(std::move(ptrSyntaxTrivia));
                     break;
                 }
 
@@ -675,12 +660,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
                     }
 
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
-
-                    if (isTrailing)
-                        _trailingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
-                    else
-                        _leadingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
-
+                    triviaList.emplace_back(std::move(ptrSyntaxTrivia));
                     break;
                 }
                 else
@@ -704,12 +684,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
                     }
 
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
-
-                    if (isTrailing)
-                        _trailingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
-                    else
-                        _leadingTrivia.emplace_back(std::move(ptrSyntaxTrivia));
-
+                    triviaList.emplace_back(std::move(ptrSyntaxTrivia));
                     break;
                 }
                 else
@@ -722,10 +697,7 @@ void DelphiLexer::lexSyntaxTrivia(bool isTrailing,
             case '\r':
             case '\n':
             {
-                if (isTrailing)
-                    _trailingTrivia.emplace_back(scanEndOfLine());
-                else
-                    _leadingTrivia.emplace_back(scanEndOfLine());
+                triviaList.emplace_back(scanEndOfLine());
 
                 if (isTrailing)
                     return;
