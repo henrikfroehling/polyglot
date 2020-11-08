@@ -32,26 +32,26 @@ SyntaxNodePtr DirectiveParser::parseDirective(bool isActive,
 
     switch (contextualKind)
     {
-        case SyntaxKind::IfKeyword:
+        case SyntaxKind::IfDirective:
             result = parseIfDirective(openBraceDollar, takeContextualToken(contextualKind), isActive);
             break;
-        case SyntaxKind::ElseKeyword:
+        case SyntaxKind::ElseDirective:
             result = parseElseDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::ElseIfKeyword:
+        case SyntaxKind::ElseIfDirective:
             result = parseElseIfDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::EndIfKeyword:
+        case SyntaxKind::EndIfDirective:
             result = parseEndIfDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::DefineKeyword:
-        case SyntaxKind::UndefKeyword:
+        case SyntaxKind::DefineDirective:
+        case SyntaxKind::UndefDirective:
             result = parseDefineOrUndefDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::RegionKeyword:
+        case SyntaxKind::RegionDirective:
             result = parseRegionDirective(openBraceDollar, takeContextualToken(contextualKind), isActive);
             break;
-        case SyntaxKind::EndRegionKeyword:
+        case SyntaxKind::EndRegionDirective:
             result = parseEndRegionDirective(openBraceDollar, takeContextualToken(contextualKind), isActive);
             break;
         default:
@@ -172,7 +172,7 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseDefineOrUndefDirective(SyntaxToke
     SyntaxTokenPtr identifier = takeToken(SyntaxKind::IdentifierToken);
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
 
-    if (keyword->syntaxKind() == SyntaxKind::DefineKeyword)
+    if (keyword->syntaxKind() == SyntaxKind::DefineDirective)
     {
         // TODO create define directive trivia
     }

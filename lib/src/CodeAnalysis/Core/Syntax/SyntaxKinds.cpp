@@ -7,7 +7,13 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
+        // special tokens
         case SyntaxKind::None: return "None";
+        case SyntaxKind::BadToken: return "BadToken";
+        case SyntaxKind::EndOfFileToken: return "EndOfFileToken";
+        case SyntaxKind::WhitespaceToken: return "WhitespaceToken";
+
+        // punctuation
         case SyntaxKind::DotToken: return "DotToken";
         case SyntaxKind::CommaToken: return "CommaToken";
         case SyntaxKind::SemiColonToken: return "SemiColonToken";
@@ -33,6 +39,9 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::HashToken: return "HashToken";
         case SyntaxKind::SingleQuoteToken: return "SingleQuoteToken";
         case SyntaxKind::DoubleQuoteToken: return "DoubleQuoteToken";
+        case SyntaxKind::ExclamationMarkToken: return "ExclamationMarkToken";
+
+        // compound punctuation
         case SyntaxKind::DotDotToken: return "DotDotToken";
         case SyntaxKind::CaretDotToken: return "CaretDotToken";
         case SyntaxKind::ColonEqualToken: return "ColonEqualToken";
@@ -48,6 +57,8 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::OpenBraceDollarToken: return "OpenBraceDollarToken";
         case SyntaxKind::OpenParenthesisDollarToken: return "OpenParenthesisDollarToken";
         case SyntaxKind::AtAtToken: return "AtAtToken";
+
+        // keywords
         case SyntaxKind::AndKeyword: return "AndKeyword";
         case SyntaxKind::ArrayKeyword: return "ArrayKeyword";
         case SyntaxKind::AsKeyword: return "AsKeyword";
@@ -241,26 +252,50 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::AssemblyKeyword: return "AssemblyKeyword";
         case SyntaxKind::BreakKeyword: return "BreakKeyword";
         case SyntaxKind::ContinueKeyword: return "ContinueKeyword";
-        case SyntaxKind::ElseIfKeyword: return "ElseIfKeyword";
-        case SyntaxKind::EndIfKeyword: return "EndIfKeyword";
-        case SyntaxKind::DefineKeyword: return "DefineKeyword";
-        case SyntaxKind::UndefKeyword: return "UndefKeyword";
-        case SyntaxKind::RegionKeyword: return "RegionKeyword";
-        case SyntaxKind::EndRegionKeyword: return "EndRegionKeyword";
         case SyntaxKind::TrueKeyword: return "TrueKeyword";
         case SyntaxKind::FalseKeyword: return "FalseKeyword";
+
+        // trivia
         case SyntaxKind::WhitespaceTrivia: return "WhitespaceTrivia";
         case SyntaxKind::SingleLineCommentTrivia: return "SingleLineCommentTrivia";
         case SyntaxKind::MultiLineCommentTrivia: return "MultiLineCommentTrivia";
         case SyntaxKind::EndOfLineTrivia: return "EndOfLineTrivia";
-        case SyntaxKind::EndOfDirectiveToken: return "EndOfDirectiveToken";
+
         case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
         case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";
         case SyntaxKind::NumberLiteralToken: return "NumberLiteralToken";
         case SyntaxKind::IdentifierToken: return "IdentifierToken";
-        case SyntaxKind::WhitespaceToken: return "WhitespaceToken";
-        case SyntaxKind::BadToken: return "BadToken";
-        case SyntaxKind::EndOfFileToken: return "EOF";
+
+        case SyntaxKind::CompilationUnit: return "CompilationUnit";
+        case SyntaxKind::UnitModule: return "UnitModule";
+        case SyntaxKind::UnitHeading: return "UnitHeading";
+        case SyntaxKind::UnitInterfaceSection: return "UnitInterfaceSection";
+        case SyntaxKind::UnitImplementationSection: return "UnitImplementationSection";
+        case SyntaxKind::UnitInitializationSection: return "UnitInitializationSection";
+        case SyntaxKind::UnitFinalizationSection: return "UnitFinalizationSection";
+        case SyntaxKind::PackageModule: return "PackageModule";
+        case SyntaxKind::PackageHeading: return "PackageHeading";
+        case SyntaxKind::ProgramModule: return "ProgramModule";
+        case SyntaxKind::ProgramHeading: return "ProgramHeading";
+
+        // directives
+        case SyntaxKind::IfDirective: return "IfDirective";
+        case SyntaxKind::ElseIfDirective: return "ElseIfDirective";
+        case SyntaxKind::ElseDirective: return "ElseDirective";
+        case SyntaxKind::EndIfDirective: return "EndIfDirective";
+        case SyntaxKind::DefineDirective: return "DefineDirective";
+        case SyntaxKind::UndefDirective: return "UndefDirective";
+        case SyntaxKind::RegionDirective: return "RegionDirective";
+        case SyntaxKind::EndRegionDirective: return "EndRegionDirective";
+        case SyntaxKind::EndOfDirectiveToken: return "EndOfDirectiveToken";
+
+        case SyntaxKind::PackageRequiresClause: return "PackageRequiresClause";
+        case SyntaxKind::PackageContainsClause: return "PackageContainsClause";
+        case SyntaxKind::UsesClause: return "UsesClause";
+
+        case SyntaxKind::IdentifierName: return "IdentifierName";
+        case SyntaxKind::QualifiedName: return "QualifiedName";
+        case SyntaxKind::UnitReference: return "UnitReference";
     }
 
     return "";

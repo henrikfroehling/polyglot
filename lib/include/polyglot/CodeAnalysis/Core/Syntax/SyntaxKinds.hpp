@@ -254,12 +254,6 @@ enum class SyntaxKind : unsigned short
     AssemblyKeyword, // assembly
     BreakKeyword, // break
     ContinueKeyword, // continue
-    ElseIfKeyword, // ELSEIF
-    EndIfKeyword, // ENDIF
-    DefineKeyword, // DEFINE
-    UndefKeyword, // UNDEF
-    RegionKeyword, // REGION
-    EndRegionKeyword, // ENDREGION
     TrueKeyword, // true
     FalseKeyword, // false
 
@@ -268,7 +262,6 @@ enum class SyntaxKind : unsigned short
     SingleLineCommentTrivia,
     MultiLineCommentTrivia,
     EndOfLineTrivia,
-    EndOfDirectiveToken,
 
     SingleQuotationStringLiteralToken = 2500,
     DoubleQuotationStringLiteralToken,
@@ -286,6 +279,17 @@ enum class SyntaxKind : unsigned short
     PackageHeading,
     ProgramModule,
     ProgramHeading,
+
+    // directives
+    IfDirective, // IF
+    ElseIfDirective, // ELSEIF
+    ElseDirective, // ELSE
+    EndIfDirective, // ENDIF
+    DefineDirective, // DEFINE
+    UndefDirective, // UNDEF
+    RegionDirective, // REGION
+    EndRegionDirective, // ENDREGION
+    EndOfDirectiveToken,
 
     PackageRequiresClause,
     PackageContainsClause,
