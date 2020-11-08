@@ -38,6 +38,7 @@ public:
     const SyntaxTokenPtr& currentToken() noexcept;
     SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
     SyntaxTokenPtr takeToken() noexcept;
+    SyntaxTokenPtr takeContextualToken(SyntaxKind syntaxKind) noexcept;
     const SyntaxTokenPtr& peekToken(pg_size n) noexcept;
     void advance() noexcept;
     inline void setMode(LexerMode mode) noexcept { _mode = mode; }

@@ -47,8 +47,7 @@ SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
             return std::move(ptrSyntaxToken);
         }
         case LexerMode::Directive:
-            // TODO
-            break;
+            return lexDirectiveToken();
     }
 
     return nullptr;
@@ -606,6 +605,8 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                                   bool isTrailing,
                                   std::vector<SyntaxNodePtr>& triviaList) noexcept
 {
+    bool onlyWhitespaceOnLine = !isTrailing;
+
     while (true)
     {
         _currentTriviaPosition = _textWindow.lexemeStartPosition();
@@ -642,6 +643,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     scanToEndOfLine();
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
                     triviaList.emplace_back(std::move(ptrSyntaxTrivia));
+                    onlyWhitespaceOnLine = false;
                     break;
                 }
 
@@ -661,12 +663,13 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
 
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
                     triviaList.emplace_back(std::move(ptrSyntaxTrivia));
+                    onlyWhitespaceOnLine = false;
                     break;
                 }
                 else
                 {
                     _textWindow.reset(_textWindow.position() - 1);
-                    lexDirectiveAndExcludedTrivia(false /* afterFirstToken */, false /* afterNonWhitespaceOnLine*/);
+                    lexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
                 }
 
                 return;
@@ -685,12 +688,13 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
 
                     auto ptrSyntaxTrivia = std::make_shared<SyntaxTrivia>(SyntaxKind::MultiLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
                     triviaList.emplace_back(std::move(ptrSyntaxTrivia));
+                    onlyWhitespaceOnLine = false;
                     break;
                 }
                 else
                 {
                     _textWindow.reset(_textWindow.position() - 1);
-                    lexDirectiveAndExcludedTrivia(false /* afterFirstToken */, false /* afterNonWhitespaceOnLine*/);
+                    lexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
                 }
 
                 return;
@@ -702,6 +706,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 if (isTrailing)
                     return;
 
+                onlyWhitespaceOnLine = true;
                 break;
             }
             default:
@@ -866,9 +871,10 @@ SyntaxTriviaPtr DelphiLexer::scanEndOfLine() noexcept
 }
 
 void DelphiLexer::lexDirectiveAndExcludedTrivia(bool afterFirstToken,
-                                                bool afterNonWhitespaceOnLine) noexcept
+                                                bool afterNonWhitespaceOnLine,
+                                                std::vector<SyntaxNodePtr>& triviaList) noexcept
 {
-    SyntaxNodePtr directive = lexSingleDirective(true, true, afterFirstToken, afterNonWhitespaceOnLine);
+    SyntaxNodePtr directive = lexSingleDirective(true, true, afterFirstToken, afterNonWhitespaceOnLine, triviaList);
 
     // TODO
     lexExludedDirectivesAndTrivia(true /* endIsActive */);
@@ -877,18 +883,21 @@ void DelphiLexer::lexDirectiveAndExcludedTrivia(bool afterFirstToken,
 SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
                                               bool endIsActive,
                                               bool afterFirstToken,
-                                              bool afterNonWhitespaceOnLine) noexcept
+                                              bool afterNonWhitespaceOnLine,
+                                              std::vector<SyntaxNodePtr>& triviaList) noexcept
 {
     char character = _textWindow.peekCharacter();
 
     if (character == '\t' || character == '\v' || character == '\f' || character == '\r' || character == '\n')
-        _leadingTrivia.emplace_back(scanWhitespace()); // CHECK always leading trivia?
+    {
+        start();
+        triviaList.emplace_back(scanWhitespace());
+    }
 
     LexerMode saveMode = _mode;
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
     SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
-
-    // TODO add trivia
+    triviaList.push_back(ptrDirective);
 
     // TODO apply directives
     // _directives = ptrDirective->applyDirectives(_directives);
@@ -900,6 +909,273 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
 void DelphiLexer::lexExludedDirectivesAndTrivia(bool endIsActive) noexcept
 {
 
+}
+
+SyntaxTokenPtr DelphiLexer::lexDirectiveToken() noexcept
+{
+    start();
+    TokenInfo tokenInfo{};
+    scanDirectiveToken(tokenInfo);
+    const pg_size tokenPosition = _textWindow.lexemeStartPosition();
+    std::vector<SyntaxTriviaPtr> trailingTrivia{}; // TODO
+    lexDirectiveTrailingTrivia(tokenInfo.kind == SyntaxKind::EndOfDirectiveToken);
+
+    auto ptrSyntaxToken = std::make_shared<SyntaxToken>();
+    ptrSyntaxToken->setSyntaxKind(tokenInfo.kind);
+    ptrSyntaxToken->setContextualKind(tokenInfo.contextualKind);
+    ptrSyntaxToken->setText(tokenInfo.text);
+    ptrSyntaxToken->setPosition(tokenPosition);
+    //ptrSyntaxToken->setTrailingTrivia(std::move(trailingTrivia));
+    return std::move(ptrSyntaxToken);
+}
+
+void DelphiLexer::scanDirectiveToken(TokenInfo& tokenInfo) noexcept
+{
+    char character = _textWindow.peekCharacter();
+
+    switch (character)
+    {
+        case INVALID_CHARACTER:
+            if (!_textWindow.isAtEnd())
+                goto defaultCase;
+
+            tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
+            break;
+        case '\r':
+        case '\n':
+newLine:
+            tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case ')':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::CloseParenthesisToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case '!':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::ExclamationMarkToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case '=':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::EqualToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case '+':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::PlusToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case '-':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::MinusToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case ',':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::CommaToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+        case '{':
+        {
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
+
+            switch (character)
+            {
+                case '$':
+                    _textWindow.advanceCharacter();
+                    tokenInfo.kind = SyntaxKind::OpenBraceDollarToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+                default:
+                    tokenInfo.kind = SyntaxKind::OpenBraceToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+            }
+
+            break;
+        }
+        case '(':
+        {
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
+
+            switch (character)
+            {
+                case '$':
+                    _textWindow.advanceCharacter();
+                    tokenInfo.kind = SyntaxKind::OpenParenthesisDollarToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+                default:
+                    tokenInfo.kind = SyntaxKind::OpenParenthesisToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+            }
+
+            break;
+        }
+        case '<':
+        {
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
+
+            switch (character)
+            {
+                case '=':
+                    _textWindow.advanceCharacter();
+                    tokenInfo.kind = SyntaxKind::LessThanEqualToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+                case '>':
+                    _textWindow.advanceCharacter();
+                    tokenInfo.kind = SyntaxKind::LessThanGreaterThanToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+                default:
+                    tokenInfo.kind = SyntaxKind::LessThanToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+            }
+
+            break;
+        }
+        case '>':
+        {
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
+
+            switch (character)
+            {
+                case '=':
+                    _textWindow.advanceCharacter();
+                    tokenInfo.kind = SyntaxKind::GreaterThanEqualToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+                default:
+                    tokenInfo.kind = SyntaxKind::GreaterThanToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+            }
+
+            break;
+        }
+        case '*':
+        {
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
+
+            switch (character)
+            {
+                case ')':
+                    _textWindow.advanceCharacter();
+                    tokenInfo.kind = SyntaxKind::AsteriskCloseParenthesisToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+                default:
+                    tokenInfo.kind = SyntaxKind::AsteriskToken;
+                    tokenInfo.text = _textWindow.lexemeText();
+                    break;
+            }
+
+            break;
+        }
+        case '\'':
+        case '"':
+            scanStringLiteral(tokenInfo);
+            break;
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+            scanNumericLiteral(tokenInfo);
+            break;
+        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H':
+        case 'I': case 'J': case 'K': case 'L': case 'M': case 'N': case 'O': case 'P':
+        case 'Q': case 'R': case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
+        case 'Y': case 'Z':
+        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h':
+        case 'i': case 'j': case 'k': case 'l': case 'm': case 'n': case 'o': case 'p':
+        case 'q': case 'r': case 's': case 't': case 'u': case 'v': case 'w': case 'x':
+        case 'y': case 'z':
+        case '_':
+letterCase:
+            scanIdentifierOrKeyword(tokenInfo);
+            break;
+        default:
+defaultCase:
+            if (character == '\r' || character == '\n')
+                goto newLine;
+
+            if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || character == '_')
+                goto letterCase;
+
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::None;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
+    }
+}
+
+void DelphiLexer::lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept
+{
+    while (true)
+    {
+        const pg_size position = _textWindow.position();
+        const pg_size triviaPosition = _currentTriviaPosition;
+        _currentTriviaPosition = _textWindow.lexemeStartPosition();
+        SyntaxNodePtr trivia = lexDirectiveTrivia();
+        _currentTriviaPosition = triviaPosition;
+
+        if (trivia == nullptr)
+            break;
+        else if (trivia->syntaxKind() == SyntaxKind::EndOfLineTrivia)
+        {
+            if (includeEndOfLine)
+            {
+                // TODO add trivia
+            }
+            else
+                _textWindow.reset(position);
+        }
+        else
+        {
+            // TODO add trivia
+        }
+    }
+}
+
+SyntaxNodePtr DelphiLexer::lexDirectiveTrivia() noexcept
+{
+    char character = _textWindow.peekCharacter();
+
+    switch (character)
+    {
+        case '/':
+        {
+            character = _textWindow.peekCharacter(1);
+
+            if (character == '/')
+            {
+                scanToEndOfLine();
+                return std::make_shared<SyntaxTrivia>(SyntaxKind::SingleLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
+            }
+
+            break;
+        }
+        case '\r':
+        case '\n':
+            return scanEndOfLine();
+            break;
+        case ' ':
+        case '\t':
+        case '\v':
+        case '\f':
+            return scanWhitespace();
+            break;
+    }
+
+    return nullptr;
 }
 
 } // end namespace polyglot::CodeAnalysis

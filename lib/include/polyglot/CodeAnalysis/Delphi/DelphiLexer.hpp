@@ -45,14 +45,20 @@ private:
     void scanNumericLiteral(TokenInfo& tokenInfo) noexcept;
 
     void lexDirectiveAndExcludedTrivia(bool afterFirstToken,
-                                       bool afterNonWhitespaceOnLine) noexcept;
+                                       bool afterNonWhitespaceOnLine,
+                                       std::vector<SyntaxNodePtr>& triviaList) noexcept;
 
     SyntaxNodePtr lexSingleDirective(bool isActive,
                                      bool endIsActive,
                                      bool afterFirstToken,
-                                     bool afterNonWhitespaceOnLine) noexcept;
+                                     bool afterNonWhitespaceOnLine,
+                                     std::vector<SyntaxNodePtr>& triviaList) noexcept;
 
     void lexExludedDirectivesAndTrivia(bool endIsActive) noexcept;
+    SyntaxTokenPtr lexDirectiveToken() noexcept;
+    void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
+    void lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept;
+    SyntaxNodePtr lexDirectiveTrivia() noexcept;
 
 private:
     pg_size _currentTriviaPosition;

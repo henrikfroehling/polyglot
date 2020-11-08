@@ -28,6 +28,7 @@ protected:
     inline const SyntaxTokenPtr& currentToken() noexcept { return _ptrLexer->currentToken(); }
     inline SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
     inline SyntaxTokenPtr takeToken() noexcept { return _ptrLexer->takeToken(); }
+    inline SyntaxTokenPtr takeContextualToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeContextualToken(syntaxKind); }
     inline const SyntaxTokenPtr& peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
     inline void advance() noexcept { _ptrLexer->advance(); }
 

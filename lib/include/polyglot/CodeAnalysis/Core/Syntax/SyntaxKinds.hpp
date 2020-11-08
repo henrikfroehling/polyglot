@@ -57,6 +57,7 @@ enum class SyntaxKind : unsigned short
     OpenParenthesisDotToken, // (.
     DotCloseParenthesisToken, // .)
     OpenBraceDollarToken, // {$
+    OpenParenthesisDollarToken, // ($
     AtAtToken, // @@
 
     // keywords
@@ -253,12 +254,21 @@ enum class SyntaxKind : unsigned short
     AssemblyKeyword, // assembly
     BreakKeyword, // break
     ContinueKeyword, // continue
+    ElseIfKeyword, // ELSEIF
+    EndIfKeyword, // ENDIF
+    DefineKeyword, // DEFINE
+    UndefKeyword, // UNDEF
+    RegionKeyword, // REGION
+    EndRegionKeyword, // ENDREGION
+    TrueKeyword, // true
+    FalseKeyword, // false
 
     // trivia
     WhitespaceTrivia = 2000,
     SingleLineCommentTrivia,
     MultiLineCommentTrivia,
     EndOfLineTrivia,
+    EndOfDirectiveToken,
 
     SingleQuotationStringLiteralToken = 2500,
     DoubleQuotationStringLiteralToken,

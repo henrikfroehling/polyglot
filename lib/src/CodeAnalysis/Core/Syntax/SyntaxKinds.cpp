@@ -46,6 +46,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::OpenParenthesisDotToken: return "OpenParenthesisDotToken";
         case SyntaxKind::DotCloseParenthesisToken: return "DotCloseParenthesisToken";
         case SyntaxKind::OpenBraceDollarToken: return "OpenBraceDollarToken";
+        case SyntaxKind::OpenParenthesisDollarToken: return "OpenParenthesisDollarToken";
         case SyntaxKind::AtAtToken: return "AtAtToken";
         case SyntaxKind::AndKeyword: return "AndKeyword";
         case SyntaxKind::ArrayKeyword: return "ArrayKeyword";
@@ -240,10 +241,19 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::AssemblyKeyword: return "AssemblyKeyword";
         case SyntaxKind::BreakKeyword: return "BreakKeyword";
         case SyntaxKind::ContinueKeyword: return "ContinueKeyword";
+        case SyntaxKind::ElseIfKeyword: return "ElseIfKeyword";
+        case SyntaxKind::EndIfKeyword: return "EndIfKeyword";
+        case SyntaxKind::DefineKeyword: return "DefineKeyword";
+        case SyntaxKind::UndefKeyword: return "UndefKeyword";
+        case SyntaxKind::RegionKeyword: return "RegionKeyword";
+        case SyntaxKind::EndRegionKeyword: return "EndRegionKeyword";
+        case SyntaxKind::TrueKeyword: return "TrueKeyword";
+        case SyntaxKind::FalseKeyword: return "FalseKeyword";
         case SyntaxKind::WhitespaceTrivia: return "WhitespaceTrivia";
         case SyntaxKind::SingleLineCommentTrivia: return "SingleLineCommentTrivia";
         case SyntaxKind::MultiLineCommentTrivia: return "MultiLineCommentTrivia";
         case SyntaxKind::EndOfLineTrivia: return "EndOfLineTrivia";
+        case SyntaxKind::EndOfDirectiveToken: return "EndOfDirectiveToken";
         case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
         case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";
         case SyntaxKind::NumberLiteralToken: return "NumberLiteralToken";
