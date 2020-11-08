@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Delphi/DirectiveStack.hpp"
+#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {

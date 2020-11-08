@@ -35,6 +35,9 @@ set(SOURCES_CORE
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/CharFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Directive.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveStack.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
@@ -60,13 +63,10 @@ set(SOURCES_CODEANALYSIS_CORE
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_CORE
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiDirectiveParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Directive.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DirectiveStack.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX

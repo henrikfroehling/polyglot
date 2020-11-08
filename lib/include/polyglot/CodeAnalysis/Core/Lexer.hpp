@@ -5,6 +5,7 @@
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
@@ -59,6 +60,7 @@ protected:
     pg_size _tokenCount;
     pg_size _tokenOffset;
     SyntaxTokenPtr _ptrCurrentToken;
+    DirectiveStack _directives;
 };
 
 } // end namespace polyglot::CodeAnalysis

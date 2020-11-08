@@ -1,7 +1,7 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
 #include "polyglot/Core/Hashing.hpp"
+#include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
-#include "polyglot/CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
@@ -16,8 +16,7 @@ static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
 DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
     : Lexer{std::move(sourceText)},
-      _currentTriviaPosition{},
-      _directives{}
+      _currentTriviaPosition{}
 {}
 
 SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
@@ -895,7 +894,7 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
     }
 
     LexerMode saveMode = _mode;
-    DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
+    DirectiveParser directiveParser{shared_from_this(), _directives};
     SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(ptrDirective);
 

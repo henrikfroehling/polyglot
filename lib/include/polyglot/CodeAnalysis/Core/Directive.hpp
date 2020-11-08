@@ -1,5 +1,5 @@
-#ifndef POLYGLOT_CODEANALYSIS_DELPHI_DIRECTIVE_H
-#define POLYGLOT_CODEANALYSIS_DELPHI_DIRECTIVE_H
+#ifndef POLYGLOT_CODEANALYSIS_CORE_DIRECTIVE_H
+#define POLYGLOT_CODEANALYSIS_CORE_DIRECTIVE_H
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
@@ -26,4 +26,4 @@ using DirectivePtr = std::shared_ptr<Directive>;
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_DELPHI_DIRECTIVE_H
+#endif // POLYGLOT_CODEANALYSIS_CORE_DIRECTIVE_H

@@ -17,7 +17,8 @@ Lexer::Lexer(SourceTextPtr sourceText) noexcept
       _lexedTokens{},
       _tokenCount{},
       _tokenOffset{},
-      _ptrCurrentToken{nullptr}
+      _ptrCurrentToken{nullptr},
+      _directives{}
 {}
 
 Lexer::~Lexer()

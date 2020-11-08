@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Delphi/Directive.hpp"
+#include "polyglot/CodeAnalysis/Core/Directive.hpp"
 
 namespace polyglot::CodeAnalysis
 {
