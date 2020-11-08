@@ -2,6 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIDIRECTIVEPARSER_H
 
 #include <memory>
+#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
@@ -67,6 +68,8 @@ private:
     DelphiExpressionSyntaxPtr parseEquality() noexcept;
     DelphiExpressionSyntaxPtr parseLogicalNot() noexcept;
     DelphiExpressionSyntaxPtr parsePrimary() noexcept;
+    bool evaluateBool(DelphiExpressionSyntaxPtr expression) const noexcept;
+    bool isDefined(std::string_view id) const noexcept;
 
 private:
     const DirectiveStack& _context;

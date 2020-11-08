@@ -76,6 +76,8 @@ DelphiDirectiveTriviaSyntaxPtr DelphiDirectiveParser::parseIfDirective(SyntaxTok
 {
     DelphiExpressionSyntaxPtr expression = parseExpression();
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
+    const bool isTrue = evaluateBool(expression);
+    const bool isBranchTaken = isActive && isTrue;
     // TODO evaluate expression
     // TODO determine if branch is taken
     return nullptr; // TODO create if directive trivia
@@ -87,6 +89,25 @@ DelphiDirectiveTriviaSyntaxPtr DelphiDirectiveParser::parseElseDirective(SyntaxT
                                                                          bool endIsActive) noexcept
 {
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
+
+    if (_context.hasPreviousIfOrElseIf())
+    {
+        const bool isBranchTaken = endIsActive && !_context.isPreviousBranchTaken();
+        return nullptr; // TODO create else directive trivia
+    }
+    else if (_context.hasUnfinishedRegion())
+    {
+        // TODO error handling
+    }
+    else if (_context.hasUnfinishedIf())
+    {
+        // TODO error handling
+    }
+    else
+    {
+        // TODO error handling
+    }
+
     // TODO
     return nullptr;
 }
@@ -98,6 +119,18 @@ DelphiDirectiveTriviaSyntaxPtr DelphiDirectiveParser::parseElseIfDirective(Synta
 {
     DelphiExpressionSyntaxPtr expression = parseExpression();
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
+
+    if (_context.hasPreviousIfOrElseIf())
+    {
+        const bool isTrue = evaluateBool(expression);
+        const bool isBranchTaken = endIsActive && isTrue && !_context.isPreviousBranchTaken();
+        return nullptr; // TODO create else if directive trivia
+    }
+    else
+    {
+        // TODO error handling
+    }
+
     // TODO
     return nullptr;
 }
@@ -108,6 +141,20 @@ DelphiDirectiveTriviaSyntaxPtr DelphiDirectiveParser::parseEndIfDirective(Syntax
                                                                           bool endIsActive) noexcept
 {
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
+
+    if (_context.hasUnfinishedIf())
+    {
+        return nullptr; // TODO create end if directive trivia
+    }
+    else if (_context.hasUnfinishedRegion())
+    {
+        // TODO error handling
+    }
+    else
+    {
+        // TODO error handling
+    }
+
     // TODO
     return nullptr;
 }
@@ -141,21 +188,51 @@ DelphiDirectiveTriviaSyntaxPtr DelphiDirectiveParser::parseRegionDirective(Synta
                                                                            SyntaxTokenPtr keyword,
                                                                            bool isActive) noexcept
 {
-    return nullptr;
+    return nullptr; // TODO create region directive trivia
 }
 
 DelphiDirectiveTriviaSyntaxPtr DelphiDirectiveParser::parseEndRegionDirective(SyntaxTokenPtr openBraceDollarToken,
                                                                               SyntaxTokenPtr keyword,
                                                                               bool isActive) noexcept
 {
+    SyntaxTokenPtr endOfDirective = parseEndOfDirective();
+
+    if (_context.hasUnfinishedRegion())
+    {
+        return nullptr; // TODO create end region directive trivia
+    }
+    else if (_context.hasUnfinishedIf())
+    {
+        // TODO error handling
+    }
+    else
+    {
+        // TODO error handling
+    }
+
     // TODO create region directive trivia
     return nullptr;
 }
 
 SyntaxTokenPtr DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
+    if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
+    {
+        // TODO
+
+        while (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
+        {
+            // TODO
+        }
+    }
+
+    SyntaxTokenPtr endOfDirective = currentToken()->syntaxKind() == SyntaxKind::EndOfDirectiveToken
+        ? takeToken()
+        : nullptr; // TODO create token SyntaxKind::EndOfDirectiveToken
+
     // TODO
-    return nullptr;
+
+    return endOfDirective;
 }
 
 DelphiExpressionSyntaxPtr DelphiDirectiveParser::parseExpression() noexcept
@@ -243,6 +320,28 @@ DelphiExpressionSyntaxPtr DelphiDirectiveParser::parsePrimary() noexcept
     }
 
     return nullptr;
+}
+
+bool DelphiDirectiveParser::evaluateBool(DelphiExpressionSyntaxPtr expression) const noexcept
+{
+    // TODO
+    return false;
+}
+
+bool DelphiDirectiveParser::isDefined(std::string_view id) const noexcept
+{
+    DefineState state = _context.isDefined(id);
+
+    switch (state)
+    {
+        case DefineState::Defined:
+            return true;
+        case DefineState::Undefined:
+            return false;
+        case DefineState::Unspecified:
+        default:
+            return false; // TODO
+    }
 }
 
 } // end namespace polyglot::CodeAnalysis
