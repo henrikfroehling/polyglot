@@ -102,10 +102,12 @@ void Lexer::advance() noexcept
 void Lexer::addLexedToken(SyntaxTokenPtr token) noexcept
 {
     assert(token != nullptr);
+    pg_size newSize{2};
 
-    if (_tokenCount >= _lexedTokens.size())
-        _lexedTokens.resize(_lexedTokens.size() * 2);
+    if (_lexedTokens.size() > 0)
+        newSize = _lexedTokens.size() * 2;
 
+    _lexedTokens.resize(newSize);
     _lexedTokens[_tokenCount] = token;
     _tokenCount++;
 }
