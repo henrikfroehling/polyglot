@@ -1,6 +1,6 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis

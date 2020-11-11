@@ -4,8 +4,8 @@
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis

@@ -8,8 +8,8 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 

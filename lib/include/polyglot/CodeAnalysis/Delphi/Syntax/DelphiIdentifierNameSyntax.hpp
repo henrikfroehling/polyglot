@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSimpleNameSyntax.hpp"
 
 namespace polyglot::CodeAnalysis

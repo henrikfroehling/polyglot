@@ -1,5 +1,5 @@
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiParser.hpp"
 
 namespace polyglot::CodeAnalysis

@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 

@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTREE_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis

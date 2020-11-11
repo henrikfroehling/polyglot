@@ -7,9 +7,9 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/DirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
