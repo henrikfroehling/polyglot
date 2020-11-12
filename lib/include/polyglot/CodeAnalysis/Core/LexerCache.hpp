@@ -7,8 +7,7 @@
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/TextKeyedCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {

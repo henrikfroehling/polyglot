@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {

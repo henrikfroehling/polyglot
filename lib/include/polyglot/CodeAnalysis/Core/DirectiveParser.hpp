@@ -8,7 +8,7 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -68,7 +68,7 @@ private:
     ExpressionSyntaxPtr parseEquality() noexcept;
     ExpressionSyntaxPtr parseLogicalNot() noexcept;
     ExpressionSyntaxPtr parsePrimary() noexcept;
-    bool evaluateBool(ExpressionSyntaxPtr expression) const noexcept;
+    bool evaluateBool(const ExpressionSyntaxPtr& expression) const noexcept;
     bool isDefined(std::string_view id) const noexcept;
 
 private:

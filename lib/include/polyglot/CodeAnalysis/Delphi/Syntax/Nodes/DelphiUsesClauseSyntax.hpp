@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiSyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.hpp"
 
 namespace polyglot::CodeAnalysis

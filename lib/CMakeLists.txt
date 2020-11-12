@@ -47,14 +47,25 @@ set(SOURCES_CODEANALYSIS_CORE
 )
 
 set(SOURCES_CODEANALYSIS_CORE_SYNTAX
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SyntaxTrivia.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_TEXT
@@ -83,7 +94,6 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramHeadingSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.cpp
@@ -97,6 +107,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSimpleNameSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiTypeSyntax.cpp
 )

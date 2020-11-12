@@ -262,6 +262,15 @@ enum class SyntaxKind : unsigned short
     SingleLineCommentTrivia,
     MultiLineCommentTrivia,
     EndOfLineTrivia,
+    BadDirectiveTrivia,
+    IfDirectiveTrivia,
+    ElseIfDirectiveTrivia,
+    ElseDirectiveTrivia,
+    EndIfDirectiveTrivia,
+    DefineDirectiveTrivia,
+    UndefDirectiveTrivia,
+    RegionDirectiveTrivia,
+    EndRegionDirectiveTrivia,
 
     SingleQuotationStringLiteralToken = 2500,
     DoubleQuotationStringLiteralToken,
@@ -281,14 +290,14 @@ enum class SyntaxKind : unsigned short
     ProgramHeading,
 
     // directives
-    IfDirective, // IF
-    ElseIfDirective, // ELSEIF
-    ElseDirective, // ELSE
-    EndIfDirective, // ENDIF
-    DefineDirective, // DEFINE
-    UndefDirective, // UNDEF
-    RegionDirective, // REGION
-    EndRegionDirective, // ENDREGION
+    IfDirectiveKeyword, // IF
+    ElseIfDirectiveKeyword, // ELSEIF
+    ElseDirectiveKeyword, // ELSE
+    EndIfDirectiveKeyword, // ENDIF
+    DefineDirectiveKeyword, // DEFINE
+    UndefDirectiveKeyword, // UNDEF
+    RegionDirectiveKeyword, // REGION
+    EndRegionDirectiveKeyword, // ENDREGION
     EndOfDirectiveToken,
 
     PackageRequiresClause,

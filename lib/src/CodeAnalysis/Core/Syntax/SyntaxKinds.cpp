@@ -260,6 +260,15 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::SingleLineCommentTrivia: return "SingleLineCommentTrivia";
         case SyntaxKind::MultiLineCommentTrivia: return "MultiLineCommentTrivia";
         case SyntaxKind::EndOfLineTrivia: return "EndOfLineTrivia";
+        case SyntaxKind::BadDirectiveTrivia: return "BadDirectiveTrivia";
+        case SyntaxKind::IfDirectiveTrivia: return "IfDirectiveTrivia";
+        case SyntaxKind::ElseIfDirectiveTrivia: return "ElseIfDirectiveTrivia";
+        case SyntaxKind::ElseDirectiveTrivia: return "ElseDirectiveTrivia";
+        case SyntaxKind::EndIfDirectiveTrivia: return "EndIfDirectiveTrivia";
+        case SyntaxKind::DefineDirectiveTrivia: return "DefineDirectiveTrivia";
+        case SyntaxKind::UndefDirectiveTrivia: return "UndefDirectiveTrivia";
+        case SyntaxKind::RegionDirectiveTrivia: return "RegionDirectiveTrivia";
+        case SyntaxKind::EndRegionDirectiveTrivia: return "EndRegionDirectiveTrivia";
 
         case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
         case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";
@@ -279,14 +288,14 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ProgramHeading: return "ProgramHeading";
 
         // directives
-        case SyntaxKind::IfDirective: return "IfDirective";
-        case SyntaxKind::ElseIfDirective: return "ElseIfDirective";
-        case SyntaxKind::ElseDirective: return "ElseDirective";
-        case SyntaxKind::EndIfDirective: return "EndIfDirective";
-        case SyntaxKind::DefineDirective: return "DefineDirective";
-        case SyntaxKind::UndefDirective: return "UndefDirective";
-        case SyntaxKind::RegionDirective: return "RegionDirective";
-        case SyntaxKind::EndRegionDirective: return "EndRegionDirective";
+        case SyntaxKind::IfDirectiveKeyword: return "IfDirectiveKeyword";
+        case SyntaxKind::ElseIfDirectiveKeyword: return "ElseIfDirectiveKeyword";
+        case SyntaxKind::ElseDirectiveKeyword: return "ElseDirectiveKeyword";
+        case SyntaxKind::EndIfDirectiveKeyword: return "EndIfDirectiveKeyword";
+        case SyntaxKind::DefineDirectiveKeyword: return "DefineDirectiveKeyword";
+        case SyntaxKind::UndefDirectiveKeyword: return "UndefDirectiveKeyword";
+        case SyntaxKind::RegionDirectiveKeyword: return "RegionDirectiveKeyword";
+        case SyntaxKind::EndRegionDirectiveKeyword: return "EndRegionDirectiveKeyword";
         case SyntaxKind::EndOfDirectiveToken: return "EndOfDirectiveToken";
 
         case SyntaxKind::PackageRequiresClause: return "PackageRequiresClause";

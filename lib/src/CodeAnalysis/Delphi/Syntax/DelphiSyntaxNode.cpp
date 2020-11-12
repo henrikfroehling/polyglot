@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiSyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {

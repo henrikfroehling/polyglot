@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITIONSPAN_H
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITIONSPAN_H
 
-#include "polyglot/CodeAnalysis/Core/Text/LinePosition.hpp"
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/LinePosition.hpp"
 
 namespace polyglot::CodeAnalysis
 {

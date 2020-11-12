@@ -2,9 +2,10 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.hpp"
@@ -19,7 +20,6 @@
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.hpp"
-#include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis
 {

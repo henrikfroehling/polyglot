@@ -1,6 +1,15 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
@@ -32,27 +41,27 @@ SyntaxNodePtr DirectiveParser::parseDirective(bool isActive,
 
     switch (contextualKind)
     {
-        case SyntaxKind::IfDirective:
-            result = parseIfDirective(openBraceDollar, takeContextualToken(contextualKind), isActive);
+        case SyntaxKind::IfDirectiveKeyword:
+            result = parseIfDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive);
             break;
-        case SyntaxKind::ElseDirective:
-            result = parseElseDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
+        case SyntaxKind::ElseDirectiveKeyword:
+            result = parseElseDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::ElseIfDirective:
-            result = parseElseIfDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
+        case SyntaxKind::ElseIfDirectiveKeyword:
+            result = parseElseIfDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::EndIfDirective:
-            result = parseEndIfDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
+        case SyntaxKind::EndIfDirectiveKeyword:
+            result = parseEndIfDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::DefineDirective:
-        case SyntaxKind::UndefDirective:
-            result = parseDefineOrUndefDirective(openBraceDollar, takeContextualToken(contextualKind), isActive, endIsActive);
+        case SyntaxKind::DefineDirectiveKeyword:
+        case SyntaxKind::UndefDirectiveKeyword:
+            result = parseDefineOrUndefDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
-        case SyntaxKind::RegionDirective:
-            result = parseRegionDirective(openBraceDollar, takeContextualToken(contextualKind), isActive);
+        case SyntaxKind::RegionDirectiveKeyword:
+            result = parseRegionDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive);
             break;
-        case SyntaxKind::EndRegionDirective:
-            result = parseEndRegionDirective(openBraceDollar, takeContextualToken(contextualKind), isActive);
+        case SyntaxKind::EndRegionDirectiveKeyword:
+            result = parseEndRegionDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive);
             break;
         default:
             SyntaxTokenPtr identifier = takeToken(SyntaxKind::IdentifierToken);
@@ -78,9 +87,9 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseIfDirective(SyntaxTokenPtr openBr
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
     const bool isTrue = evaluateBool(expression);
     const bool isBranchTaken = isActive && isTrue;
-    // TODO evaluate expression
-    // TODO determine if branch is taken
-    return nullptr; // TODO create if directive trivia
+
+    return IfDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(expression),
+                                           std::move(endOfDirective), isActive, isBranchTaken, isTrue);
 }
 
 DirectiveTriviaSyntaxPtr DirectiveParser::parseElseDirective(SyntaxTokenPtr openBraceDollarToken,
@@ -93,23 +102,25 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseElseDirective(SyntaxTokenPtr open
     if (_context.hasPreviousIfOrElseIf())
     {
         const bool isBranchTaken = endIsActive && !_context.isPreviousBranchTaken();
-        return nullptr; // TODO create else directive trivia
+
+        return ElseDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword),
+                                                 std::move(endOfDirective), isActive, isBranchTaken);
     }
     else if (_context.hasUnfinishedRegion())
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
     else if (_context.hasUnfinishedIf())
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
     else
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
-
-    // TODO
-    return nullptr;
 }
 
 DirectiveTriviaSyntaxPtr DirectiveParser::parseElseIfDirective(SyntaxTokenPtr openBraceDollarToken,
@@ -124,15 +135,30 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseElseIfDirective(SyntaxTokenPtr op
     {
         const bool isTrue = evaluateBool(expression);
         const bool isBranchTaken = endIsActive && isTrue && !_context.isPreviousBranchTaken();
-        return nullptr; // TODO create else if directive trivia
+
+        return ElseIfDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(expression),
+                                                   std::move(endOfDirective), isActive, isBranchTaken, isTrue);
     }
     else
     {
         // TODO error handling
-    }
 
-    // TODO
-    return nullptr;
+        if (_context.hasUnfinishedRegion())
+        {
+            // TODO error handling
+            return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
+        }
+        else if (_context.hasUnfinishedIf())
+        {
+            // TODO error handling
+            return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
+        }
+        else
+        {
+            // TODO error handling
+            return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
+        }
+    }
 }
 
 DirectiveTriviaSyntaxPtr DirectiveParser::parseEndIfDirective(SyntaxTokenPtr openBraceDollarToken,
@@ -144,19 +170,18 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseEndIfDirective(SyntaxTokenPtr ope
 
     if (_context.hasUnfinishedIf())
     {
-        return nullptr; // TODO create end if directive trivia
+        return EndIfDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
     else if (_context.hasUnfinishedRegion())
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
     else
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
-
-    // TODO
-    return nullptr;
 }
 
 DirectiveTriviaSyntaxPtr DirectiveParser::parseDefineOrUndefDirective(SyntaxTokenPtr openBraceDollarToken,
@@ -169,26 +194,25 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseDefineOrUndefDirective(SyntaxToke
         // TODO error handling
     }
 
-    SyntaxTokenPtr identifier = takeToken(SyntaxKind::IdentifierToken);
+    SyntaxTokenPtr name = takeToken(SyntaxKind::IdentifierToken);
     SyntaxTokenPtr endOfDirective = parseEndOfDirective();
 
-    if (keyword->syntaxKind() == SyntaxKind::DefineDirective)
+    if (keyword->syntaxKind() == SyntaxKind::DefineDirectiveKeyword)
     {
-        // TODO create define directive trivia
+        return DefineDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(name), std::move(endOfDirective), isActive);
     }
     else
     {
-        // TODO create undef directive trivia
+        return UndefDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(name), std::move(endOfDirective), isActive);
     }
-
-    return nullptr;
 }
 
 DirectiveTriviaSyntaxPtr DirectiveParser::parseRegionDirective(SyntaxTokenPtr openBraceDollarToken,
                                                                SyntaxTokenPtr keyword,
                                                                bool isActive) noexcept
 {
-    return nullptr; // TODO create region directive trivia
+    SyntaxTokenPtr endOfDirective = parseEndOfDirective();
+    return RegionDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
 }
 
 DirectiveTriviaSyntaxPtr DirectiveParser::parseEndRegionDirective(SyntaxTokenPtr openBraceDollarToken,
@@ -199,19 +223,18 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseEndRegionDirective(SyntaxTokenPtr
 
     if (_context.hasUnfinishedRegion())
     {
-        return nullptr; // TODO create end region directive trivia
+        return EndRegionDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
     else if (_context.hasUnfinishedIf())
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
     else
     {
         // TODO error handling
+        return BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(keyword), std::move(endOfDirective), isActive);
     }
-
-    // TODO create region directive trivia
-    return nullptr;
 }
 
 SyntaxTokenPtr DirectiveParser::parseEndOfDirective() noexcept
@@ -322,7 +345,7 @@ ExpressionSyntaxPtr DirectiveParser::parsePrimary() noexcept
     return nullptr;
 }
 
-bool DirectiveParser::evaluateBool(ExpressionSyntaxPtr expression) const noexcept
+bool DirectiveParser::evaluateBool(const ExpressionSyntaxPtr& expression) const noexcept
 {
     // TODO
     return false;

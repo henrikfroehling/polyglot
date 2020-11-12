@@ -4,12 +4,12 @@
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API StructuredTriviaSyntax : public SyntaxNode
+class POLYGLOT_API StructuredTriviaSyntax : public SyntaxTrivia
 {
 public:
     explicit StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept;

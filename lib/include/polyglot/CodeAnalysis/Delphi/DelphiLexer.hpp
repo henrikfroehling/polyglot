@@ -6,9 +6,9 @@
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Tokens/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis

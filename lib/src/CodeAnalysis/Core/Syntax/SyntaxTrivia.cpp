@@ -1,10 +1,15 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
 SyntaxTrivia::SyntaxTrivia() noexcept
     : SyntaxNode{},
+      _text{}
+{}
+
+SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind) noexcept
+    : SyntaxNode{syntaxKind},
       _text{}
 {}
 

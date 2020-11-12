@@ -73,14 +73,14 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
         state = STATE_TRANSITIONS[static_cast<int>(state)][static_cast<int>(flags)];
 
         if (state >= QuickScanState::Done)
-            goto exitWhile;
+            goto exitFor;
 
         hashCode = (hashCode ^ c) * Hashing::FNV_PRIME;
     }
 
     state = QuickScanState::Bad;
 
-exitWhile:
+exitFor:
     _textWindow.advanceCharacter(offset - _textWindow.offset());
     assert(state == QuickScanState::Bad || state == QuickScanState::Done);
 

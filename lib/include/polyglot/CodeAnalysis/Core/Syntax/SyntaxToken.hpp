@@ -5,10 +5,9 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Nodes/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SyntaxTrivia.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -27,8 +26,8 @@ public:
     SyntaxToken& operator=(const SyntaxToken&) noexcept = default;
     SyntaxToken& operator=(SyntaxToken&&) noexcept = default;
     inline bool isToken() const noexcept override { return true; }
-    inline std::string_view text() const noexcept { return _text; }
-    inline void setText(std::string_view text) noexcept { _text = text; }
+    virtual inline std::string_view text() const noexcept { return _text; }
+    inline virtual void setText(std::string_view text) noexcept { _text = text; }
     void setLeadingTrivia(std::vector<SyntaxNodePtr>&& leadingTrivia) noexcept;
     void setTrailingTrivia(std::vector<SyntaxNodePtr>&& trailingTrivia) noexcept;
     inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
