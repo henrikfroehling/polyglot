@@ -71,12 +71,12 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
 set(SOURCES_CODEANALYSIS_CORE_TEXT
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SlidingTextWindow.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLine.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLineCollection.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextSpan.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextUtilities.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_CORE

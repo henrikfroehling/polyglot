@@ -10,7 +10,7 @@
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -34,7 +34,7 @@ public:
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
     inline SyntaxTokenPtr lex() noexcept { return lex(_mode); }
-    inline const SlidingTextWindow& textWindow() const noexcept { return _textWindow; }
+    inline const TextWindow& textWindow() const noexcept { return _textWindow; }
     void preLex() noexcept;
     const SyntaxTokenPtr& currentToken() noexcept;
     SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
@@ -51,7 +51,7 @@ protected:
     void addLexedToken(SyntaxTokenPtr token) noexcept;
 
 protected:
-    SlidingTextWindow _textWindow;
+    TextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
     std::vector<SyntaxNodePtr> _leadingTrivia;

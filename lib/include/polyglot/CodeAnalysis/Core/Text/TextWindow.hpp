@@ -1,5 +1,5 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_SLIDINGTEXTWINDOW_H
-#define POLYGLOT_CODEANALYSIS_CORE_TEXT_SLIDINGTEXTWINDOW_H
+#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTWINDOW_H
+#define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTWINDOW_H
 
 #include <string_view>
 #include <vector>
@@ -10,15 +10,15 @@
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API SlidingTextWindow final
+class POLYGLOT_API TextWindow final
 {
 public:
-    SlidingTextWindow() = delete;
-    explicit SlidingTextWindow(SourceTextPtr sourceText) noexcept;
-    SlidingTextWindow(const SlidingTextWindow&) noexcept = default;
-    SlidingTextWindow(SlidingTextWindow&&) noexcept = default;
-    SlidingTextWindow& operator=(const SlidingTextWindow&) noexcept = default;
-    SlidingTextWindow& operator=(SlidingTextWindow&&) noexcept = default;
+    TextWindow() = delete;
+    explicit TextWindow(SourceTextPtr sourceText) noexcept;
+    TextWindow(const TextWindow&) noexcept = default;
+    TextWindow(TextWindow&&) noexcept = default;
+    TextWindow& operator=(const TextWindow&) noexcept = default;
+    TextWindow& operator=(TextWindow&&) noexcept = default;
     inline pg_size position() const noexcept { return _basis + _offset; }
     inline pg_size offset() const noexcept { return _offset; }
     inline pg_size lexemeStartPosition() const noexcept { return _basis + _lexemeStart; }
@@ -45,4 +45,4 @@ private:
 
 } // end namespace polyglot::CodeAnaylsis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_SLIDINGTEXTWINDOW_H
+#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTWINDOW_H

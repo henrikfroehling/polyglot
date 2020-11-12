@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include <algorithm>
 #include <limits>
@@ -8,7 +8,7 @@ namespace polyglot::CodeAnalysis
 
 constexpr pg_size DEFAULT_WINDOW_LENGTH{2048};
 
-SlidingTextWindow::SlidingTextWindow(SourceTextPtr sourceText) noexcept
+TextWindow::TextWindow(SourceTextPtr sourceText) noexcept
     : _ptrSourceText{sourceText},
       _basis{},
       _offset{},
@@ -16,7 +16,7 @@ SlidingTextWindow::SlidingTextWindow(SourceTextPtr sourceText) noexcept
       _lexemeStart{}
 {}
 
-void SlidingTextWindow::reset(const pg_size position) noexcept
+void TextWindow::reset(const pg_size position) noexcept
 {
     const pg_size relativePosition = position - _basis;
 
@@ -30,12 +30,12 @@ void SlidingTextWindow::reset(const pg_size position) noexcept
     }
 }
 
-bool SlidingTextWindow::isAtEnd() const noexcept
+bool TextWindow::isAtEnd() const noexcept
 {
     return position() >= _textEnd;
 }
 
-char SlidingTextWindow::nextCharacter() noexcept
+char TextWindow::nextCharacter() noexcept
 {
     const char character = peekCharacter();
 
@@ -45,7 +45,7 @@ char SlidingTextWindow::nextCharacter() noexcept
     return character;
 }
 
-char SlidingTextWindow::peekCharacter() noexcept
+char TextWindow::peekCharacter() noexcept
 {
     if (_offset >= _textEnd)
         return Lexer::INVALID_CHARACTER;
@@ -53,7 +53,7 @@ char SlidingTextWindow::peekCharacter() noexcept
     return (*_ptrSourceText)[_offset];
 }
 
-char SlidingTextWindow::peekCharacter(const pg_size offset) noexcept
+char TextWindow::peekCharacter(const pg_size offset) noexcept
 {
     advanceCharacter(offset);
     char character{};
@@ -67,7 +67,7 @@ char SlidingTextWindow::peekCharacter(const pg_size offset) noexcept
     return character;
 }
 
-char SlidingTextWindow::peekPreviousCharacter(const pg_size offset) noexcept
+char TextWindow::peekPreviousCharacter(const pg_size offset) noexcept
 {
     char character{};
     const pg_size position = _offset - offset;
@@ -80,7 +80,7 @@ char SlidingTextWindow::peekPreviousCharacter(const pg_size offset) noexcept
     return character;
 }
 
-std::string_view SlidingTextWindow::lexemeText() const noexcept
+std::string_view TextWindow::lexemeText() const noexcept
 {
     pg_size offset = lexemeStartPosition() - _basis;
 
