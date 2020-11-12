@@ -47,6 +47,15 @@ set(SOURCES_CODEANALYSIS_CORE
 )
 
 set(SOURCES_CODEANALYSIS_CORE_SYNTAX
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/TypeExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
@@ -61,6 +70,7 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxFacts.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
@@ -102,14 +112,9 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSimpleNameSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiTypeSyntax.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

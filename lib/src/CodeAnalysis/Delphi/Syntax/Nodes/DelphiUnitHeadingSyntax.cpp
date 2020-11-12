@@ -5,7 +5,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(SyntaxTokenPtr unitKeyword,
-                                                 DelphiNameSyntaxPtr name,
+                                                 NameExpressionSyntaxPtr name,
                                                  SyntaxTokenPtr semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitHeading},
       _ptrUnitKeyword{std::move(unitKeyword)},

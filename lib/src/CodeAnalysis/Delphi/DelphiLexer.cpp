@@ -4,7 +4,6 @@
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
 
@@ -16,6 +15,7 @@ static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
 DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
     : Lexer{std::move(sourceText)},
+      _ptrSyntaxFacts{std::make_shared<DelphiSyntaxFacts>()},
       _currentTriviaPosition{}
 {}
 
@@ -502,7 +502,7 @@ void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
         tokenInfo.kind = SyntaxKind::IdentifierToken;
     else
     {
-        const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(chars);
+        const SyntaxKind syntaxKind = _ptrSyntaxFacts->keywordKind(chars);
 
         if (syntaxKind == SyntaxKind::None)
             tokenInfo.kind = SyntaxKind::IdentifierToken;
@@ -894,7 +894,7 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
     }
 
     LexerMode saveMode = _mode;
-    DirectiveParser directiveParser{shared_from_this(), _directives};
+    DirectiveParser directiveParser{shared_from_this(), _directives, _ptrSyntaxFacts};
     SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(ptrDirective);
 

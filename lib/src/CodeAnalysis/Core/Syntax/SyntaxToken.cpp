@@ -11,14 +11,6 @@ SyntaxToken::SyntaxToken() noexcept
       _contextualKind{SyntaxKind::None}
 {}
 
-SyntaxToken::SyntaxToken(SyntaxKind syntaxKind) noexcept
-    : SyntaxNode{syntaxKind},
-      _text{},
-      _leadingTrivia{},
-      _trailingTrivia{},
-      _contextualKind{SyntaxKind::None}
-{}
-
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
                          std::string_view text) noexcept
     : SyntaxNode{syntaxKind},
@@ -36,6 +28,17 @@ void SyntaxToken::setLeadingTrivia(std::vector<SyntaxNodePtr>&& leadingTrivia) n
 void SyntaxToken::setTrailingTrivia(std::vector<SyntaxNodePtr>&& trailingTrivia) noexcept
 {
     _trailingTrivia = std::move(trailingTrivia);
+}
+
+bool SyntaxToken::value() const noexcept
+{
+    switch (_syntaxKind)
+    {
+        case SyntaxKind::TrueKeyword: return true;
+        case SyntaxKind::FalseKeyword: return false;
+    }
+
+    return false;
 }
 
 } // end namespace polyglot::CodeAnalysis

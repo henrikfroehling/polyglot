@@ -4,7 +4,7 @@
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -13,9 +13,9 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitReferenceDeclarationSyntax(DelphiNameSyntaxPtr unitName) noexcept;
+    explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntaxPtr unitName) noexcept;
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept = default;
-    inline const DelphiNameSyntaxPtr& unitName() const noexcept { return _ptrUnitName; }
+    inline const NameExpressionSyntaxPtr& unitName() const noexcept { return _ptrUnitName; }
     inline const SyntaxTokenPtr& inKeyword() const noexcept { return _ptrInKeyword; }
     inline void setInKeyword(SyntaxTokenPtr inKeyword) noexcept { _ptrInKeyword = std::move(inKeyword); }
     inline const SyntaxTokenPtr& sourceFile() const noexcept { return _ptrSourceFile; }
@@ -24,7 +24,7 @@ public:
     inline void setCommaToken(SyntaxTokenPtr commaToken) noexcept { _ptrCommaToken = std::move(commaToken); }
 
 private:
-    DelphiNameSyntaxPtr _ptrUnitName;
+    NameExpressionSyntaxPtr _ptrUnitName;
     SyntaxTokenPtr _ptrInKeyword; // optional
     SyntaxTokenPtr _ptrSourceFile; // optional
     SyntaxTokenPtr _ptrCommaToken; // optional

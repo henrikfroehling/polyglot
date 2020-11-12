@@ -16,10 +16,9 @@ class POLYGLOT_API SyntaxToken : public SyntaxNode
 {
 public:
     SyntaxToken() noexcept;
-    explicit SyntaxToken(SyntaxKind syntaxKind) noexcept;
 
-    SyntaxToken(SyntaxKind syntaxKind,
-                std::string_view text = "") noexcept;
+    explicit SyntaxToken(SyntaxKind syntaxKind,
+                         std::string_view text = "") noexcept;
 
     SyntaxToken(const SyntaxToken&) noexcept = default;
     SyntaxToken(SyntaxToken&&) noexcept = default;
@@ -34,6 +33,7 @@ public:
     inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
     inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
     inline void setContextualKind(SyntaxKind contextualKind) noexcept { _contextualKind = contextualKind; }
+    virtual bool value() const noexcept; // TODO use variant / any as return type
 
 protected:
     std::string_view _text;

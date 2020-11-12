@@ -3,17 +3,24 @@
 
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxFacts.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
-namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+namespace polyglot::CodeAnalysis
 {
 
-bool POLYGLOT_API isPunctuation(SyntaxKind syntaxKind) noexcept;
-bool POLYGLOT_API isCompoundPunctuation(SyntaxKind syntaxKind) noexcept;
-bool POLYGLOT_API isKeyword(SyntaxKind syntaxKind) noexcept;
-bool POLYGLOT_API isModuleStart(SyntaxKind syntaxKind) noexcept;
-SyntaxKind POLYGLOT_API keywordKind(std::string_view text) noexcept;
+class POLYGLOT_API DelphiSyntaxFacts : public SyntaxFacts
+{
+public:
+    bool isPunctuation(SyntaxKind syntaxKind) const noexcept override;
+    bool isCompoundPunctuation(SyntaxKind syntaxKind) const noexcept override;
+    SyntaxKind binaryExpressionKind(SyntaxKind syntaxKind) const noexcept override;
+    SyntaxKind literalExpressionKind(SyntaxKind syntaxKind) const noexcept override;
+    bool isKeyword(SyntaxKind syntaxKind) const noexcept override;
+    bool isModuleStart(SyntaxKind syntaxKind) const noexcept override;
+    SyntaxKind keywordKind(std::string_view text) const noexcept override;
+};
 
-} // end namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+} // end namespace polyglot::CodeAnalysis
 
 #endif // POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H

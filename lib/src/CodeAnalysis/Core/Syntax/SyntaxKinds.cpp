@@ -301,10 +301,21 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::PackageRequiresClause: return "PackageRequiresClause";
         case SyntaxKind::PackageContainsClause: return "PackageContainsClause";
         case SyntaxKind::UsesClause: return "UsesClause";
-
-        case SyntaxKind::IdentifierName: return "IdentifierName";
-        case SyntaxKind::QualifiedName: return "QualifiedName";
         case SyntaxKind::UnitReference: return "UnitReference";
+
+        // expressions
+        case SyntaxKind::LogicalNotExpression: return "LogicalNotExpression";
+        case SyntaxKind::LogicalOrExpression: return "LogicalOrExpression";
+        case SyntaxKind::LogicalAndExpression: return "LogicalAndExpression";
+        case SyntaxKind::EqualsExpression: return "EqualsExpression";
+        case SyntaxKind::NotEqualsExpression: return "NotEqualsExpression";
+        case SyntaxKind::ParenthesizedExpression: return "ParenthesizedExpression";
+        case SyntaxKind::StringLiteralExpression: return "StringLiteralExpression";
+        case SyntaxKind::NumericLiteralExpression: return "NumericLiteralExpression";
+        case SyntaxKind::TrueLiteralExpression: return "TrueLiteralExpression";
+        case SyntaxKind::FalseLiteralExpression: return "FalseLiteralExpression";
+        case SyntaxKind::IdentifierNameExpression: return "IdentifierNameExpression";
+        case SyntaxKind::QualifiedNameExpression: return "QualifiedNameExpression";
     }
 
     return "";

@@ -1,14 +1,16 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
+#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.hpp"
@@ -31,6 +33,9 @@ public:
     explicit DelphiParser(SourceTextPtr sourceText) noexcept;
 
 private:
+    std::shared_ptr<DelphiSyntaxFacts> _ptrSyntaxFacts;
+
+private:
     SyntaxNodePtr parseRoot() noexcept override;
     DelphiCompilationUnitSyntaxPtr parseCompilationUnit() noexcept;
     DelphiUnitModuleSyntaxPtr parseUnitModule() noexcept;
@@ -43,12 +48,12 @@ private:
     DelphiProgramModuleSyntaxPtr parseProgramModule() noexcept;
     DelphiUsesClauseSyntaxPtr parseUsesClause() noexcept;
     DelphiUnitReferenceDeclarationSyntaxPtr parseUnitReference() noexcept;
-    DelphiNameSyntaxPtr parseQualifiedName() noexcept;
+    NameExpressionSyntaxPtr parseQualifiedName() noexcept;
 
-    DelphiNameSyntaxPtr parseQualifiedNameRight(DelphiNameSyntaxPtr left,
-                                                SyntaxTokenPtr dotToken) noexcept;
+    NameExpressionSyntaxPtr parseQualifiedNameRight(NameExpressionSyntaxPtr left,
+                                                    SyntaxTokenPtr dotToken) noexcept;
 
-    DelphiIdentifierNameSyntaxPtr parseIdentifierName() noexcept;
+    IdentifierNameExpressionSyntaxPtr parseIdentifierName() noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

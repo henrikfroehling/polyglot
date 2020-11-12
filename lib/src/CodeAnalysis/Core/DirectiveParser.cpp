@@ -1,6 +1,12 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
@@ -11,14 +17,17 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 #include <cassert>
+#include <vector>
 
 namespace polyglot::CodeAnalysis
 {
 
 DirectiveParser::DirectiveParser(std::shared_ptr<Lexer> lexer,
-                                 const DirectiveStack& context) noexcept
+                                 const DirectiveStack& context,
+                                 std::shared_ptr<SyntaxFacts> syntaxFacts) noexcept
     : Parser{lexer},
-      _context{context}
+      _context{context},
+      _ptrSyntaxFacts{std::move(syntaxFacts)}
 {
     lexer->setMode(LexerMode::Directive);
 }
@@ -28,8 +37,8 @@ SyntaxNodePtr DirectiveParser::parseDirective(bool isActive,
                                               bool isFirstAfterTokenInFile,
                                               bool isAfterNonWhitespaceOnLine) noexcept
 {
-    SyntaxTokenPtr openBraceDollar = takeToken(SyntaxKind::OpenBraceDollarToken);
-    assert(openBraceDollar != nullptr);
+    SyntaxTokenPtr openBraceDollarToken = takeToken(SyntaxKind::OpenBraceDollarToken);
+    assert(openBraceDollarToken != nullptr);
 
     if (isAfterNonWhitespaceOnLine)
     {
@@ -42,37 +51,37 @@ SyntaxNodePtr DirectiveParser::parseDirective(bool isActive,
     switch (contextualKind)
     {
         case SyntaxKind::IfDirectiveKeyword:
-            result = parseIfDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive);
+            result = parseIfDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive);
             break;
         case SyntaxKind::ElseDirectiveKeyword:
-            result = parseElseDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
+            result = parseElseDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
         case SyntaxKind::ElseIfDirectiveKeyword:
-            result = parseElseIfDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
+            result = parseElseIfDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
         case SyntaxKind::EndIfDirectiveKeyword:
-            result = parseEndIfDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
+            result = parseEndIfDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
         case SyntaxKind::DefineDirectiveKeyword:
         case SyntaxKind::UndefDirectiveKeyword:
-            result = parseDefineOrUndefDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive, endIsActive);
+            result = parseDefineOrUndefDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive, endIsActive);
             break;
         case SyntaxKind::RegionDirectiveKeyword:
-            result = parseRegionDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive);
+            result = parseRegionDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive);
             break;
         case SyntaxKind::EndRegionDirectiveKeyword:
-            result = parseEndRegionDirective(std::move(openBraceDollar), takeContextualToken(contextualKind), isActive);
+            result = parseEndRegionDirective(std::move(openBraceDollarToken), takeContextualToken(contextualKind), isActive);
             break;
         default:
-            SyntaxTokenPtr identifier = takeToken(SyntaxKind::IdentifierToken);
-            SyntaxTokenPtr end = parseEndOfDirective();
+            SyntaxTokenPtr identifierToken = takeToken(SyntaxKind::IdentifierToken);
+            SyntaxTokenPtr endOfDirectiveToken = parseEndOfDirective();
 
             if (!isAfterNonWhitespaceOnLine)
             {
                 // TODO error handling
             }
 
-            result = nullptr;
+            result = BadDirectiveTriviaSyntax::Create(std::move(openBraceDollarToken), std::move(identifierToken), std::move(endOfDirectiveToken), isActive);
             break;
     }
 
@@ -239,23 +248,27 @@ DirectiveTriviaSyntaxPtr DirectiveParser::parseEndRegionDirective(SyntaxTokenPtr
 
 SyntaxTokenPtr DirectiveParser::parseEndOfDirective() noexcept
 {
-    if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
-    {
-        // TODO
+    std::vector<SyntaxTokenPtr> skippedTokens{};
 
-        while (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
+    if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
+        && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
+    {
+        // TODO error handling
+
+        while (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
+               && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
         {
-            // TODO
+            skippedTokens.push_back(takeToken());
         }
     }
 
     SyntaxTokenPtr endOfDirective = currentToken()->syntaxKind() == SyntaxKind::EndOfDirectiveToken
         ? takeToken()
-        : nullptr; // TODO create token SyntaxKind::EndOfDirectiveToken
+        : std::make_shared<SyntaxToken>(SyntaxKind::EndOfDirectiveToken);
 
-    // TODO
+    // TODO create skipped tokens trivia
 
-    return endOfDirective;
+    return std::move(endOfDirective);
 }
 
 ExpressionSyntaxPtr DirectiveParser::parseExpression() noexcept
@@ -265,52 +278,60 @@ ExpressionSyntaxPtr DirectiveParser::parseExpression() noexcept
 
 ExpressionSyntaxPtr DirectiveParser::parseLogicalOr() noexcept
 {
-    ExpressionSyntaxPtr left = parseLogicalAnd();
+    ExpressionSyntaxPtr leftExpression = parseLogicalAnd();
 
     while (currentToken()->syntaxKind() == SyntaxKind::OrKeyword)
     {
-        SyntaxTokenPtr op = takeToken();
-        ExpressionSyntaxPtr right = parseLogicalAnd();
-        left = nullptr; // TODO create binary expression
+        SyntaxTokenPtr operatorToken = takeToken();
+        ExpressionSyntaxPtr rightExpression = parseLogicalAnd();
+
+        leftExpression = BinaryExpressionSyntax::Create(SyntaxKind::LogicalOrExpression, std::move(leftExpression),
+                                                        std::move(operatorToken), std::move(rightExpression));
     }
 
-    return std::move(left);
+    return std::move(leftExpression);
 }
 
 ExpressionSyntaxPtr DirectiveParser::parseLogicalAnd() noexcept
 {
-    ExpressionSyntaxPtr left = parseEquality();
+    ExpressionSyntaxPtr leftExpression = parseEquality();
 
     while (currentToken()->syntaxKind() == SyntaxKind::AndKeyword)
     {
-        SyntaxTokenPtr op = takeToken();
-        ExpressionSyntaxPtr right = parseEquality();
-        left = nullptr; // TODO create binary expression
+        SyntaxTokenPtr operatorToken = takeToken();
+        ExpressionSyntaxPtr rightExpression = parseEquality();
+
+        leftExpression = BinaryExpressionSyntax::Create(SyntaxKind::LogicalAndExpression, std::move(leftExpression),
+                                                        std::move(operatorToken), std::move(rightExpression));
     }
     
-    return std::move(left);
+    return std::move(leftExpression);
 }
 
 ExpressionSyntaxPtr DirectiveParser::parseEquality() noexcept
 {
-    ExpressionSyntaxPtr left = parseLogicalNot();
+    ExpressionSyntaxPtr leftExpression = parseLogicalNot();
 
-    while (currentToken()->syntaxKind() == SyntaxKind::EqualToken || currentToken()->syntaxKind() == SyntaxKind::ExclamationMarkToken)
+    while (currentToken()->syntaxKind() == SyntaxKind::EqualToken
+           || currentToken()->syntaxKind() == SyntaxKind::LessThanGreaterThanToken)
     {
-        SyntaxTokenPtr op = takeToken();
-        ExpressionSyntaxPtr right = parseEquality();
-        left = nullptr; // TODO create binary expression
+        SyntaxTokenPtr operatorToken = takeToken();
+        ExpressionSyntaxPtr rightExpression = parseEquality();
+        const SyntaxKind expressionKind = _ptrSyntaxFacts->binaryExpressionKind(operatorToken->syntaxKind());
+
+        leftExpression = BinaryExpressionSyntax::Create(expressionKind, std::move(leftExpression),
+                                                        std::move(operatorToken), std::move(rightExpression));
     }
 
-    return std::move(left);
+    return std::move(leftExpression);
 }
 
 ExpressionSyntaxPtr DirectiveParser::parseLogicalNot() noexcept
 {
     if (currentToken()->syntaxKind() == SyntaxKind::ExclamationMarkToken)
     {
-        SyntaxTokenPtr op = takeToken();
-        return nullptr; // TODO create prefix unary expression
+        SyntaxTokenPtr operatorToken = takeToken();
+        return PrefixUnaryExpressionSyntax::Create(SyntaxKind::LogicalNotExpression, std::move(operatorToken), parseLogicalNot());
     }
 
     return parsePrimary();
@@ -324,22 +345,18 @@ ExpressionSyntaxPtr DirectiveParser::parsePrimary() noexcept
     {
         case SyntaxKind::OpenParenthesisToken:
         {
-            SyntaxTokenPtr open = takeToken();
+            SyntaxTokenPtr openParenthesisToken = takeToken();
             ExpressionSyntaxPtr expression = parseExpression();
-            SyntaxTokenPtr close = takeToken();
-            break; // TODO create parenthesized expression
+            SyntaxTokenPtr closeParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
+            return ParenthesizedExpressionSyntax::Create(std::move(openParenthesisToken), std::move(expression), std::move(closeParenthesisToken));
         }
         case SyntaxKind::IdentifierToken:
-        {
-            break; // TODO create identifier token
-        }
+            return IdentifierNameExpressionSyntax::Create(takeToken());
         case SyntaxKind::TrueKeyword:
         case SyntaxKind::FalseKeyword:
-            // TODO create literal expression
-            break;
+            return LiteralExpressionSyntax::Create(_ptrSyntaxFacts->literalExpressionKind(syntaxKind), takeToken());
         default:
-            // TODO create identifier token
-            break;
+            return IdentifierNameExpressionSyntax::Create(takeToken(SyntaxKind::IdentifierToken));
     }
 
     return nullptr;
@@ -347,7 +364,39 @@ ExpressionSyntaxPtr DirectiveParser::parsePrimary() noexcept
 
 bool DirectiveParser::evaluateBool(const ExpressionSyntaxPtr& expression) const noexcept
 {
-    // TODO
+    switch (expression->syntaxKind())
+    {
+        case SyntaxKind::LogicalNotExpression:
+            return !evaluateBool(std::dynamic_pointer_cast<PrefixUnaryExpressionSyntax>(expression)->operandExpression());
+        case SyntaxKind::LogicalOrExpression:
+        {
+            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
+            return evaluateBool(binaryExpression->leftExpression()) || evaluateBool(binaryExpression->rightExpression());
+        }
+        case SyntaxKind::LogicalAndExpression:
+        {
+            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
+            return evaluateBool(binaryExpression->leftExpression()) && evaluateBool(binaryExpression->rightExpression());
+        }
+        case SyntaxKind::EqualsExpression:
+        {
+            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
+            return evaluateBool(binaryExpression->leftExpression()) == evaluateBool(binaryExpression->rightExpression());
+        }
+        case SyntaxKind::NotEqualsExpression:
+        {
+            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
+            return evaluateBool(binaryExpression->leftExpression()) != evaluateBool(binaryExpression->rightExpression());
+        }
+        case SyntaxKind::ParenthesizedExpression:
+            return evaluateBool(std::dynamic_pointer_cast<ParenthesizedExpressionSyntax>(expression));
+        case SyntaxKind::TrueLiteralExpression:
+        case SyntaxKind::FalseLiteralExpression:
+            return std::dynamic_pointer_cast<LiteralExpressionSyntax>(expression)->token()->value();
+        case SyntaxKind::IdentifierNameExpression:
+            return isDefined(std::dynamic_pointer_cast<IdentifierNameExpressionSyntax>(expression)->identifier()->text());
+    }
+
     return false;
 }
 
@@ -360,10 +409,8 @@ bool DirectiveParser::isDefined(std::string_view id) const noexcept
         case DefineState::Defined:
             return true;
         case DefineState::Undefined:
-            return false;
         case DefineState::Unspecified:
-        default:
-            return false; // TODO
+            return false;
     }
 }
 

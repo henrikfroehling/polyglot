@@ -290,7 +290,7 @@ enum class SyntaxKind : unsigned short
     ProgramHeading,
 
     // directives
-    IfDirectiveKeyword, // IF
+    IfDirectiveKeyword = 3000, // IF
     ElseIfDirectiveKeyword, // ELSEIF
     ElseDirectiveKeyword, // ELSE
     EndIfDirectiveKeyword, // ENDIF
@@ -303,10 +303,21 @@ enum class SyntaxKind : unsigned short
     PackageRequiresClause,
     PackageContainsClause,
     UsesClause,
+    UnitReference,
 
-    IdentifierName,
-    QualifiedName,
-    UnitReference
+    // expressions
+    LogicalNotExpression = 3500,
+    LogicalOrExpression,
+    LogicalAndExpression,
+    EqualsExpression,
+    NotEqualsExpression,
+    ParenthesizedExpression,
+    StringLiteralExpression,
+    NumericLiteralExpression,
+    TrueLiteralExpression,
+    FalseLiteralExpression,
+    IdentifierNameExpression,
+    QualifiedNameExpression,
 };
 
 std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;

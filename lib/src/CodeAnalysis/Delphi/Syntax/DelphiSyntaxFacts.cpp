@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <unordered_map>
 
-namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+namespace polyglot::CodeAnalysis
 {
 
 static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
@@ -202,7 +202,7 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "continue", SyntaxKind::ContinueKeyword }
 };
 
-bool isPunctuation(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) const noexcept
 {
     switch (syntaxKind)
     {
@@ -237,7 +237,7 @@ bool isPunctuation(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isCompoundPunctuation(SyntaxKind syntaxKind) const noexcept
 {
     switch (syntaxKind)
     {
@@ -254,14 +254,46 @@ bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::OpenParenthesisDotToken:
         case SyntaxKind::DotCloseParenthesisToken:
         case SyntaxKind::OpenBraceDollarToken:
+        case SyntaxKind::OpenParenthesisDollarToken:
         case SyntaxKind::AtAtToken:
-            return true;
+        return true;
     }
 
     return false;
 }
 
-bool isKeyword(SyntaxKind syntaxKind) noexcept
+SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) const noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::AndKeyword: return SyntaxKind::LogicalAndExpression;
+        case SyntaxKind::OrKeyword: return SyntaxKind::LogicalOrExpression;
+        case SyntaxKind::EqualToken: return SyntaxKind::EqualsExpression;
+        case SyntaxKind::LessThanGreaterThanToken: return SyntaxKind::NotEqualsExpression;
+    }
+
+    return SyntaxKind::None;
+}
+
+SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) const noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+            return SyntaxKind::StringLiteralExpression;
+        case SyntaxKind::NumberLiteralToken:
+            return SyntaxKind::NumericLiteralExpression;
+        case SyntaxKind::TrueKeyword:
+            return SyntaxKind::TrueLiteralExpression;
+        case SyntaxKind::FalseKeyword:
+            return SyntaxKind::FalseLiteralExpression;
+    }
+
+    return SyntaxKind::None;
+}
+
+bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) const noexcept
 {
     switch (syntaxKind)
     {
@@ -464,7 +496,7 @@ bool isKeyword(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-bool isModuleStart(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) const noexcept
 {
     switch (syntaxKind)
     {
@@ -477,7 +509,7 @@ bool isModuleStart(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-SyntaxKind keywordKind(std::string_view text) noexcept
+SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text) const noexcept
 {
     std::string lowerCaseText{text};
     std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), static_cast<int(*)(int)>(std::tolower));
@@ -488,4 +520,4 @@ SyntaxKind keywordKind(std::string_view text) noexcept
     return SyntaxKind::None;
 }
 
-} // end namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+} // end namespace polyglot::CodeAnalysis

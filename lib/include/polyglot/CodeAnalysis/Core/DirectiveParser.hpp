@@ -8,6 +8,7 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxFacts.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
@@ -19,12 +20,16 @@ class POLYGLOT_API DirectiveParser : public Parser
 public:
     DirectiveParser() = delete;
     explicit DirectiveParser(std::shared_ptr<Lexer> lexer,
-                             const DirectiveStack& context) noexcept;
+                             const DirectiveStack& context,
+                             std::shared_ptr<SyntaxFacts> syntaxFacts) noexcept;
 
     SyntaxNodePtr parseDirective(bool isActive,
                                  bool endIsActive,
                                  bool isFirstAfterTokenInFile,
                                  bool isAfterNonWhitespaceOnLine) noexcept;
+
+private:
+    std::shared_ptr<SyntaxFacts> _ptrSyntaxFacts;
 
 private:
     inline SyntaxNodePtr parseRoot() noexcept override { return nullptr; }
