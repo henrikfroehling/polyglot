@@ -7,6 +7,8 @@ endif()
 
 project(polyglot-driver LANGUAGES CXX)
 
+get_target_property(POLYGLOT_INCLUDES polyglot INCLUDE_DIRECTORIES)
+
 set(SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
@@ -23,8 +25,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE polyglot)
 target_compile_options(${PROJECT_NAME}
   PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:>
-    $<$<CXX_COMPILER_ID:MSVC>:
-      /w44265 /wd4251>
+    $<$<CXX_COMPILER_ID:MSVC>:/w44265 /wd4251>
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -33,6 +34,12 @@ target_include_directories(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}
+    ${POLYGLOT_INCLUDES}
+)
+
+target_link_directories(${PROJECT_NAME}
+  PRIVATE
+    ${POLYGLOT_INCLUDES}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
