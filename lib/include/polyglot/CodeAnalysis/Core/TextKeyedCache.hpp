@@ -40,17 +40,17 @@ struct CacheEntry final
 class TextKeyedCache final
 {
 private:
-    static constexpr int LOCAL_SIZE_BITS = 11;
-    static constexpr int LOCAL_SIZE = (1 << LOCAL_SIZE_BITS);
-    static constexpr int LOCAL_SIZE_MASK = LOCAL_SIZE - 1;
+    static constexpr long LOCAL_SIZE_BITS = 11;
+    static constexpr long LOCAL_SIZE = (1 << LOCAL_SIZE_BITS);
+    static constexpr long LOCAL_SIZE_MASK = LOCAL_SIZE - 1;
 
-    static constexpr int SHARED_SIZE_BITS = 16;
-    static constexpr int SHARED_SIZE = (1 << SHARED_SIZE_BITS);
-    static constexpr int SHARED_SIZE_MASK = SHARED_SIZE - 1;
+    static constexpr long SHARED_SIZE_BITS = 16;
+    static constexpr long SHARED_SIZE = (1 << SHARED_SIZE_BITS);
+    static constexpr long SHARED_SIZE_MASK = SHARED_SIZE - 1;
 
-    static constexpr int SHARED_BUCKET_BITS = 4;
-    static constexpr int SHARED_BUCKET_SIZE = (1 << SHARED_BUCKET_BITS);
-    static constexpr int SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
+    static constexpr long SHARED_BUCKET_BITS = 4;
+    static constexpr long SHARED_BUCKET_SIZE = (1 << SHARED_BUCKET_BITS);
+    static constexpr long SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
 
 private:
     std::vector<std::shared_ptr<CacheEntry>> _localTable;
@@ -63,15 +63,15 @@ public:
     {}
 
     TokenInfo lookupItem(std::string_view chars,
-                         int hashCode) noexcept;
+                         long hashCode) noexcept;
 
     void addItem(std::string_view chars,
-                 int hashCode,
+                 long hashCode,
                  TokenInfo item) noexcept;
 
 private:
-    inline constexpr int localIndexFromHash(int hash) const noexcept { return hash & LOCAL_SIZE_MASK; }
-    inline constexpr int sharedIndexFromHash(int hash) const noexcept { return (hash ^ (hash >> LOCAL_SIZE_MASK)) & SHARED_SIZE_MASK; }
+    inline constexpr long localIndexFromHash(long hash) const noexcept { return hash & LOCAL_SIZE_MASK; }
+    inline constexpr long sharedIndexFromHash(long hash) const noexcept { return (hash ^ (hash >> LOCAL_SIZE_MASK)) & SHARED_SIZE_MASK; }
 
     inline int nextRandom() const noexcept
     {
@@ -81,9 +81,9 @@ private:
     }
 
     std::shared_ptr<CacheEntry> lookupSharedEntry(std::string_view chars,
-                                                  int hashCode) noexcept;
+                                                  long hashCode) noexcept;
 
-    void addSharedItem(int hashCode,
+    void addSharedItem(long hashCode,
                        const std::shared_ptr<CacheEntry>& cacheEntry) noexcept;
 };
 

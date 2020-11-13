@@ -4,7 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
-                                     int hashCode) noexcept
+                                     long hashCode) noexcept
 {
     const int localIndex = localIndexFromHash(hashCode);
     auto& ptrLocalEntry = _localTable[localIndex];
@@ -32,7 +32,7 @@ TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
 }
 
 void TextKeyedCache::addItem(std::string_view chars,
-                             int hashCode,
+                             long hashCode,
                              TokenInfo item) noexcept
 {
     auto ptrCacheEntry = std::make_shared<CacheEntry>(hashCode, std::move(item), chars);
@@ -43,7 +43,7 @@ void TextKeyedCache::addItem(std::string_view chars,
 }
 
 std::shared_ptr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view chars,
-                                                              int hashCode) noexcept
+                                                              long hashCode) noexcept
 {
     int sharedIndex = sharedIndexFromHash(hashCode);
     std::shared_ptr<CacheEntry> ptrSharedEntry = nullptr;
@@ -63,7 +63,7 @@ std::shared_ptr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view c
     return nullptr;
 }
 
-void TextKeyedCache::addSharedItem(int hashCode,
+void TextKeyedCache::addSharedItem(long hashCode,
                                    const std::shared_ptr<CacheEntry>& cacheEntry) noexcept
 {
     int sharedIndex = sharedIndexFromHash(hashCode);
