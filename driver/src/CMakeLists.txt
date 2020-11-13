@@ -8,6 +8,7 @@ endif()
 project(polyglot-driver LANGUAGES CXX)
 
 get_target_property(POLYGLOT_INCLUDES polyglot INCLUDE_DIRECTORIES)
+set(POLYGLOT_INCLUDE_DIR ${POLYGLOT_INCLUDES}/include)
 
 set(SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
@@ -39,7 +40,7 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_directories(${PROJECT_NAME}
   PRIVATE
-    ${POLYGLOT_INCLUDES}
+    ${POLYGLOT_INCLUDE_DIR}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
