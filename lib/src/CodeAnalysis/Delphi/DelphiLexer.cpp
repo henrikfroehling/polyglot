@@ -1,7 +1,7 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
 #include "polyglot/Core/Hashing.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
+#include "polyglot/CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
 #include <cassert>
@@ -894,7 +894,7 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
     }
 
     LexerMode saveMode = _mode;
-    DirectiveParser directiveParser{shared_from_this(), _directives, _ptrSyntaxFacts};
+    DelphiDirectiveParser directiveParser{shared_from_this(), _directives, _ptrSyntaxFacts};
     SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(ptrDirective);
 
