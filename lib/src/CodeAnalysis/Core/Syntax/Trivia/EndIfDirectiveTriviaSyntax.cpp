@@ -16,7 +16,7 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _isActive{isActive}
 {}
 
-EndIfDirectiveTriviaSyntaxPtr EndIfDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
+EndIfDirectiveTriviaSyntaxPtr EndIfDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
                                                                  SyntaxTokenPtr endIfKeyword,
                                                                  SyntaxTokenPtr endOfDirectiveToken,
                                                                  bool isActive) noexcept

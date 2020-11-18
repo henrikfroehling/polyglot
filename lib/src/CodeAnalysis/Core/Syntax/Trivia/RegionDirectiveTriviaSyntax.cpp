@@ -16,7 +16,7 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _isActive{isActive}
 {}
 
-RegionDirectiveTriviaSyntaxPtr RegionDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
+RegionDirectiveTriviaSyntaxPtr RegionDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
                                                                    SyntaxTokenPtr regionKeyword,
                                                                    SyntaxTokenPtr endOfDirectiveToken,
                                                                    bool isActive) noexcept

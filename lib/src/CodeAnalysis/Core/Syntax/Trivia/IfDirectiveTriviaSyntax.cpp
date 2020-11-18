@@ -22,7 +22,7 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _conditionValue{conditionValue}
 {}
 
-IfDirectiveTriviaSyntaxPtr IfDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
+IfDirectiveTriviaSyntaxPtr IfDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
                                                            SyntaxTokenPtr ifKeyword,
                                                            ExpressionSyntaxPtr condition,
                                                            SyntaxTokenPtr endOfDirectiveToken,

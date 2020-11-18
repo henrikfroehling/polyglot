@@ -18,7 +18,7 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _isActive{isActive}
 {}
 
-DefineDirectiveTriviaSyntaxPtr DefineDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
+DefineDirectiveTriviaSyntaxPtr DefineDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
                                                                    SyntaxTokenPtr defineKeyword,
                                                                    SyntaxTokenPtr name,
                                                                    SyntaxTokenPtr endOfDirectiveToken,

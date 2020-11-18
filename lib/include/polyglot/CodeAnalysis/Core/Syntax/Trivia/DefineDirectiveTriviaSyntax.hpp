@@ -30,7 +30,7 @@ public:
     inline virtual const SyntaxTokenPtr& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static DefineDirectiveTriviaSyntaxPtr Create(SyntaxTokenPtr startToken,
+    static DefineDirectiveTriviaSyntaxPtr create(SyntaxTokenPtr startToken,
                                                  SyntaxTokenPtr defineKeyword,
                                                  SyntaxTokenPtr name,
                                                  SyntaxTokenPtr endOfDirectiveToken,

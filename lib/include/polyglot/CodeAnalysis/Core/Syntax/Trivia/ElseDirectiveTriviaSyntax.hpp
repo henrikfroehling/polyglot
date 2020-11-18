@@ -30,7 +30,7 @@ public:
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
 
-    static ElseDirectiveTriviaSyntaxPtr Create(SyntaxTokenPtr startToken,
+    static ElseDirectiveTriviaSyntaxPtr create(SyntaxTokenPtr startToken,
                                                SyntaxTokenPtr elseKeyword,
                                                SyntaxTokenPtr endOfDirectiveToken,
                                                bool isActive,

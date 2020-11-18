@@ -35,7 +35,7 @@ public:
     inline virtual const ExpressionSyntaxPtr& condition() const noexcept override { return _ptrCondition; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
 
-    static ElseIfDirectiveTriviaSyntaxPtr Create(SyntaxTokenPtr startToken,
+    static ElseIfDirectiveTriviaSyntaxPtr create(SyntaxTokenPtr startToken,
                                                  SyntaxTokenPtr elseIfKeyword,
                                                  ExpressionSyntaxPtr condition,
                                                  SyntaxTokenPtr endOfDirectiveToken,

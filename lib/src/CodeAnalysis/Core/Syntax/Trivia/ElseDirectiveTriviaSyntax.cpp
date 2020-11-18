@@ -18,7 +18,7 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isBranchTaken{isBranchTaken}
 {}
 
-ElseDirectiveTriviaSyntaxPtr ElseDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
+ElseDirectiveTriviaSyntaxPtr ElseDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
                                                                SyntaxTokenPtr elseKeyword,
                                                                SyntaxTokenPtr endOfDirectiveToken,
                                                                bool isActive,

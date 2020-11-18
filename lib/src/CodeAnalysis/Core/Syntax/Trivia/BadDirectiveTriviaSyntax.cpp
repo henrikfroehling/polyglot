@@ -16,7 +16,7 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _isActive{isActive}
 {}
 
-BadDirectiveTriviaSyntaxPtr BadDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
+BadDirectiveTriviaSyntaxPtr BadDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
                                                              SyntaxTokenPtr identifier,
                                                              SyntaxTokenPtr endOfDirectiveToken,
                                                              bool isActive) noexcept
