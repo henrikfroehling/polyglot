@@ -2,6 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_DIRECTIVE_H
 
 #include <memory>
+#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
@@ -15,8 +16,15 @@ public:
     explicit Directive(DirectiveTriviaSyntaxPtr node) noexcept;
     virtual ~Directive() noexcept = default;
     inline SyntaxKind syntaxKind() const noexcept { return _node->syntaxKind(); }
-    bool isActive() const noexcept;
+    inline bool isActive() const noexcept { return _node->isActive(); }
     bool isBranchTaken() const noexcept;
+    std::string_view identifier() const noexcept;
+
+    friend bool operator==(const Directive& lhs,
+                           const Directive& rhs) noexcept;
+
+    friend bool operator!=(const Directive& lhs,
+                           const Directive& rhs) noexcept;
 
 private:
     DirectiveTriviaSyntaxPtr _node;

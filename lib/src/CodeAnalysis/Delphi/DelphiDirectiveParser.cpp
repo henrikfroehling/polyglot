@@ -361,24 +361,26 @@ bool DelphiDirectiveParser::evaluateBool(const ExpressionSyntaxPtr& expression) 
         case SyntaxKind::LogicalNotExpression:
             return !evaluateBool(std::dynamic_pointer_cast<PrefixUnaryExpressionSyntax>(expression)->operandExpression());
         case SyntaxKind::LogicalOrExpression:
-        {
-            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
-            return evaluateBool(binaryExpression->leftExpression()) || evaluateBool(binaryExpression->rightExpression());
-        }
         case SyntaxKind::LogicalAndExpression:
-        {
-            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
-            return evaluateBool(binaryExpression->leftExpression()) && evaluateBool(binaryExpression->rightExpression());
-        }
         case SyntaxKind::EqualsExpression:
-        {
-            BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
-            return evaluateBool(binaryExpression->leftExpression()) == evaluateBool(binaryExpression->rightExpression());
-        }
         case SyntaxKind::NotEqualsExpression:
         {
             BinaryExpressionSyntaxPtr binaryExpression = std::dynamic_pointer_cast<BinaryExpressionSyntax>(expression);
-            return evaluateBool(binaryExpression->leftExpression()) != evaluateBool(binaryExpression->rightExpression());
+            assert(binaryExpression != nullptr);
+
+            switch (binaryExpression->syntaxKind())
+            {
+                case SyntaxKind::LogicalOrExpression:
+                    return evaluateBool(binaryExpression->leftExpression()) || evaluateBool(binaryExpression->rightExpression());
+                case SyntaxKind::LogicalAndExpression:
+                    return evaluateBool(binaryExpression->leftExpression()) && evaluateBool(binaryExpression->rightExpression());
+                case SyntaxKind::EqualsExpression:
+                    return evaluateBool(binaryExpression->leftExpression()) == evaluateBool(binaryExpression->rightExpression());
+                case SyntaxKind::NotEqualsExpression:
+                    return evaluateBool(binaryExpression->leftExpression()) != evaluateBool(binaryExpression->rightExpression());
+            }
+
+            break;
         }
         case SyntaxKind::ParenthesizedExpression:
             return evaluateBool(std::dynamic_pointer_cast<ParenthesizedExpressionSyntax>(expression));
