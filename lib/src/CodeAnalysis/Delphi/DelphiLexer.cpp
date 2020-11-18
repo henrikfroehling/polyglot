@@ -58,7 +58,7 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
     QuickScanState previousState = QuickScanState::Initial;
     QuickScanState state = QuickScanState::Initial;
     CharFlags flags = CharFlags::Complex;
-    int hashCode = Hashing::FNV_OFFSET_BIAS;
+    long hashCode = Hashing::FNV_OFFSET_BIAS;
     pg_size offset = _textWindow.offset();
     const std::string_view content = _textWindow.content();
 
@@ -716,7 +716,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
 
 SyntaxTriviaPtr DelphiLexer::scanWhitespace() noexcept
 {
-    int hashCode = Hashing::FNV_OFFSET_BIAS;
+    long hashCode = Hashing::FNV_OFFSET_BIAS;
     bool onlySpaces = true;
 
 top:
