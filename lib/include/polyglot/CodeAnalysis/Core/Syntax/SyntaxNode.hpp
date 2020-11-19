@@ -5,6 +5,7 @@
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -24,6 +25,7 @@ public:
     inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
     inline pg_size position() const noexcept { return _position; }
     inline void setPosition(const pg_size position) noexcept { _position = position; }
+    inline bool containsDirectives() const noexcept { return (_flags & SyntaxNodeFlags::ContainsDirectives) != SyntaxNodeFlags::None; }
 
 protected:
     explicit SyntaxNode(SyntaxKind syntaxKind) noexcept;
@@ -34,6 +36,7 @@ protected:
 protected:
     SyntaxKind _syntaxKind;
     pg_size _position;
+    SyntaxNodeFlags _flags;
 };
 
 using SyntaxNodePtr = std::shared_ptr<SyntaxNode>;
