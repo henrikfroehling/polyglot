@@ -36,6 +36,7 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/CharFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Directive.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveList.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveStack.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
