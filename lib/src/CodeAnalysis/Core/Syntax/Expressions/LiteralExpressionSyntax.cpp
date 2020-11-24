@@ -10,7 +10,7 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
       _ptrToken{std::move(token)}
 {}
 
-LiteralExpressionSyntaxPtr LiteralExpressionSyntax::Create(SyntaxKind syntaxKind,
+LiteralExpressionSyntaxPtr LiteralExpressionSyntax::create(SyntaxKind syntaxKind,
                                                            SyntaxTokenPtr token) noexcept
 {
     assert(token != nullptr);

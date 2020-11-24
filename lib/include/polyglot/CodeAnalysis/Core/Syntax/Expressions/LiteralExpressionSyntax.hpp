@@ -22,7 +22,7 @@ public:
     virtual ~LiteralExpressionSyntax() noexcept = default;
     inline virtual const SyntaxTokenPtr& token() const noexcept { return _ptrToken; }
 
-    static LiteralExpressionSyntaxPtr Create(SyntaxKind syntaxKind,
+    static LiteralExpressionSyntaxPtr create(SyntaxKind syntaxKind,
                                              SyntaxTokenPtr token) noexcept;
 
 private:

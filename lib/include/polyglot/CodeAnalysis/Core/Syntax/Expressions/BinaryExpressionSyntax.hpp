@@ -26,7 +26,7 @@ public:
     inline virtual const SyntaxTokenPtr& operatorToken() const noexcept { return _ptrOperatorToken; }
     inline virtual const ExpressionSyntaxPtr& rightExpression() const noexcept { return _ptrRightExpression; }
 
-    static BinaryExpressionSyntaxPtr Create(SyntaxKind syntaxKind,
+    static BinaryExpressionSyntaxPtr create(SyntaxKind syntaxKind,
                                             ExpressionSyntaxPtr leftExpression,
                                             SyntaxTokenPtr operatorToken,
                                             ExpressionSyntaxPtr rightExpression) noexcept;

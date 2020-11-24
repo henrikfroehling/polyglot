@@ -10,7 +10,7 @@ IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(SyntaxTokenPtr id
       _ptrIdentifier{std::move(identfier)}
 {}
 
-IdentifierNameExpressionSyntaxPtr IdentifierNameExpressionSyntax::Create(SyntaxTokenPtr identifier) noexcept
+IdentifierNameExpressionSyntaxPtr IdentifierNameExpressionSyntax::create(SyntaxTokenPtr identifier) noexcept
 {
     assert(identifier != nullptr);
     assert(identifier->syntaxKind() == SyntaxKind::IdentifierToken);

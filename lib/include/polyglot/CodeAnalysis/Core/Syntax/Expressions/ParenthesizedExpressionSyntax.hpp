@@ -26,7 +26,7 @@ public:
     inline virtual const ExpressionSyntaxPtr& expression() const noexcept { return _ptrExpression; }
     inline virtual const SyntaxTokenPtr& closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
 
-    static ParenthesizedExpressionSyntaxPtr Create(SyntaxTokenPtr openParenthesisToken,
+    static ParenthesizedExpressionSyntaxPtr create(SyntaxTokenPtr openParenthesisToken,
                                                    ExpressionSyntaxPtr expression,
                                                    SyntaxTokenPtr closeParenthesisToken) noexcept;
 

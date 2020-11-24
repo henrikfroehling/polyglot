@@ -19,7 +19,7 @@ public:
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
     virtual const SyntaxTokenPtr& identifier() const noexcept override { return _ptrIdentifier; }
 
-    static IdentifierNameExpressionSyntaxPtr Create(SyntaxTokenPtr identifier) noexcept;
+    static IdentifierNameExpressionSyntaxPtr create(SyntaxTokenPtr identifier) noexcept;
 
 protected:
     SyntaxTokenPtr _ptrIdentifier;

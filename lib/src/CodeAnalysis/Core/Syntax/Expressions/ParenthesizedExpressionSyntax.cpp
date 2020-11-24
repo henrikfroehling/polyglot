@@ -14,7 +14,7 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
       _ptrCloseParenthesisToken{std::move(closeParenthesisToken)}
 {}
 
-ParenthesizedExpressionSyntaxPtr ParenthesizedExpressionSyntax::Create(SyntaxTokenPtr openParenthesisToken,
+ParenthesizedExpressionSyntaxPtr ParenthesizedExpressionSyntax::create(SyntaxTokenPtr openParenthesisToken,
                                                                        ExpressionSyntaxPtr expression,
                                                                        SyntaxTokenPtr closeParenthesisToken) noexcept
 {

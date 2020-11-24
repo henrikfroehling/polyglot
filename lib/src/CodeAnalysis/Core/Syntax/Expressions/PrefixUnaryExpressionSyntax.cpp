@@ -12,7 +12,7 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
       _ptrOperandExpression{std::move(operandExpression)}
 {}
 
-PrefixUnaryExpressionSyntaxPtr PrefixUnaryExpressionSyntax::Create(SyntaxKind syntaxKind,
+PrefixUnaryExpressionSyntaxPtr PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
                                                                    SyntaxTokenPtr operatorToken,
                                                                    ExpressionSyntaxPtr operandExpression) noexcept
 {

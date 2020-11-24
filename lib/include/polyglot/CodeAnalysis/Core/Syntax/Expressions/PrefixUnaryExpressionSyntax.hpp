@@ -24,7 +24,7 @@ public:
     inline virtual const SyntaxTokenPtr& operatorToken() const noexcept { return _ptrOperatorToken; }
     inline virtual const ExpressionSyntaxPtr& operandExpression() const noexcept { return _ptrOperandExpression; }
 
-    static PrefixUnaryExpressionSyntaxPtr Create(SyntaxKind syntaxKind,
+    static PrefixUnaryExpressionSyntaxPtr create(SyntaxKind syntaxKind,
                                                  SyntaxTokenPtr operatorToken,
                                                  ExpressionSyntaxPtr operandExpression) noexcept;
 

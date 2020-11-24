@@ -277,7 +277,7 @@ ExpressionSyntaxPtr DelphiDirectiveParser::parseLogicalOr() noexcept
         SyntaxTokenPtr operatorToken = takeToken();
         ExpressionSyntaxPtr rightExpression = parseLogicalAnd();
 
-        leftExpression = BinaryExpressionSyntax::Create(SyntaxKind::LogicalOrExpression, std::move(leftExpression),
+        leftExpression = BinaryExpressionSyntax::create(SyntaxKind::LogicalOrExpression, std::move(leftExpression),
                                                         std::move(operatorToken), std::move(rightExpression));
     }
 
@@ -293,7 +293,7 @@ ExpressionSyntaxPtr DelphiDirectiveParser::parseLogicalAnd() noexcept
         SyntaxTokenPtr operatorToken = takeToken();
         ExpressionSyntaxPtr rightExpression = parseEquality();
 
-        leftExpression = BinaryExpressionSyntax::Create(SyntaxKind::LogicalAndExpression, std::move(leftExpression),
+        leftExpression = BinaryExpressionSyntax::create(SyntaxKind::LogicalAndExpression, std::move(leftExpression),
                                                         std::move(operatorToken), std::move(rightExpression));
     }
 
@@ -311,7 +311,7 @@ ExpressionSyntaxPtr DelphiDirectiveParser::parseEquality() noexcept
         ExpressionSyntaxPtr rightExpression = parseEquality();
         const SyntaxKind expressionKind = _ptrSyntaxFacts->binaryExpressionKind(operatorToken->syntaxKind());
 
-        leftExpression = BinaryExpressionSyntax::Create(expressionKind, std::move(leftExpression),
+        leftExpression = BinaryExpressionSyntax::create(expressionKind, std::move(leftExpression),
                                                         std::move(operatorToken), std::move(rightExpression));
     }
 
@@ -323,7 +323,7 @@ ExpressionSyntaxPtr DelphiDirectiveParser::parseLogicalNot() noexcept
     if (currentToken()->syntaxKind() == SyntaxKind::ExclamationMarkToken)
     {
         SyntaxTokenPtr operatorToken = takeToken();
-        return PrefixUnaryExpressionSyntax::Create(SyntaxKind::LogicalNotExpression, std::move(operatorToken), parseLogicalNot());
+        return PrefixUnaryExpressionSyntax::create(SyntaxKind::LogicalNotExpression, std::move(operatorToken), parseLogicalNot());
     }
 
     return parsePrimary();
@@ -340,15 +340,15 @@ ExpressionSyntaxPtr DelphiDirectiveParser::parsePrimary() noexcept
             SyntaxTokenPtr openParenthesisToken = takeToken();
             ExpressionSyntaxPtr expression = parseExpression();
             SyntaxTokenPtr closeParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
-            return ParenthesizedExpressionSyntax::Create(std::move(openParenthesisToken), std::move(expression), std::move(closeParenthesisToken));
+            return ParenthesizedExpressionSyntax::create(std::move(openParenthesisToken), std::move(expression), std::move(closeParenthesisToken));
         }
         case SyntaxKind::IdentifierToken:
-            return IdentifierNameExpressionSyntax::Create(takeToken());
+            return IdentifierNameExpressionSyntax::create(takeToken());
         case SyntaxKind::TrueKeyword:
         case SyntaxKind::FalseKeyword:
-            return LiteralExpressionSyntax::Create(_ptrSyntaxFacts->literalExpressionKind(syntaxKind), takeToken());
+            return LiteralExpressionSyntax::create(_ptrSyntaxFacts->literalExpressionKind(syntaxKind), takeToken());
         default:
-            return IdentifierNameExpressionSyntax::Create(takeToken(SyntaxKind::IdentifierToken));
+            return IdentifierNameExpressionSyntax::create(takeToken(SyntaxKind::IdentifierToken));
     }
 
     return nullptr;

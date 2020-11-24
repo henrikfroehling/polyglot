@@ -14,7 +14,7 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
       _ptrRightExpression{std::move(rightExpression)}
 {}
 
-BinaryExpressionSyntaxPtr BinaryExpressionSyntax::Create(SyntaxKind syntaxKind,
+BinaryExpressionSyntaxPtr BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
                                                          ExpressionSyntaxPtr leftExpression,
                                                          SyntaxTokenPtr operatorToken,
                                                          ExpressionSyntaxPtr rightExpression) noexcept
