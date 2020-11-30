@@ -8,7 +8,7 @@ namespace polyglot::CodeAnalysis
 constexpr pg_size MIN_LEXED_TOKENS_COUNT{32};
 constexpr pg_size MAX_LEXED_TOKENS_COUNT{4096};
 
-Lexer::Lexer(SourceTextPtr sourceText) noexcept
+Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
     : _textWindow{std::move(sourceText)},
       _mode{LexerMode::Syntax},
       _lexerCache{this},
@@ -43,7 +43,7 @@ void Lexer::preLex() noexcept
 
     for (pg_size i = 0; i < size; i++)
     {
-        SyntaxTokenPtr ptrToken = lex();
+        SharedPtr<SyntaxToken> ptrToken = lex();
         assert(ptrToken != nullptr);
         _lexedTokens.push_back(ptrToken);
         _tokenCount++;
@@ -56,7 +56,7 @@ void Lexer::preLex() noexcept
     _tokenOffset = currentTokenOffset;
 }
 
-const SyntaxTokenPtr& Lexer::currentToken() noexcept
+const SharedPtr<SyntaxToken>& Lexer::currentToken() noexcept
 {
     if (_tokenOffset >= _tokenCount)
         addLexedToken(lex());
@@ -64,7 +64,7 @@ const SyntaxTokenPtr& Lexer::currentToken() noexcept
     return _lexedTokens[_tokenOffset];
 }
 
-SyntaxTokenPtr Lexer::takeToken(SyntaxKind syntaxKind) noexcept
+SharedPtr<SyntaxToken> Lexer::takeToken(SyntaxKind syntaxKind) noexcept
 {
     auto& ptrCurrentToken = currentToken();
 
@@ -78,14 +78,14 @@ SyntaxTokenPtr Lexer::takeToken(SyntaxKind syntaxKind) noexcept
     return nullptr;
 }
 
-SyntaxTokenPtr Lexer::takeToken() noexcept
+SharedPtr<SyntaxToken> Lexer::takeToken() noexcept
 {
     auto& ptrCurrentToken = currentToken();
     _tokenOffset++;
     return ptrCurrentToken;
 }
 
-SyntaxTokenPtr Lexer::takeContextualToken(SyntaxKind syntaxKind) noexcept
+SharedPtr<SyntaxToken> Lexer::takeContextualToken(SyntaxKind syntaxKind) noexcept
 {
     auto& ptrCurrentToken = currentToken();
 
@@ -99,7 +99,7 @@ SyntaxTokenPtr Lexer::takeContextualToken(SyntaxKind syntaxKind) noexcept
     return nullptr;
 }
 
-const SyntaxTokenPtr& Lexer::peekToken(pg_size n) noexcept
+const SharedPtr<SyntaxToken>& Lexer::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);
 
@@ -114,7 +114,7 @@ void Lexer::advance() noexcept
     _tokenOffset++;
 }
 
-void Lexer::addLexedToken(SyntaxTokenPtr token) noexcept
+void Lexer::addLexedToken(SharedPtr<SyntaxToken> token) noexcept
 {
     assert(token != nullptr);
     pg_size newSize{2};

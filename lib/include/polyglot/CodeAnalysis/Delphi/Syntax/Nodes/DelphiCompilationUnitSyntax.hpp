@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHICOMPILATIONUNITSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHICOMPILATIONUNITSYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
@@ -18,14 +18,12 @@ public:
     inline virtual bool isUnitModule() const noexcept { return false; }
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
-    inline const SyntaxTokenPtr& EOFToken() const noexcept { return _ptrEOFToken; }
-    inline void setEOFToken(SyntaxTokenPtr eofToken) noexcept { _ptrEOFToken = std::move(eofToken); }
+    inline const SharedPtr<SyntaxToken>& EOFToken() const noexcept { return _ptrEOFToken; }
+    inline void setEOFToken(SharedPtr<SyntaxToken> eofToken) noexcept { _ptrEOFToken = std::move(eofToken); }
 
 private:
-    std::shared_ptr<SyntaxToken> _ptrEOFToken;
+    SharedPtr<SyntaxToken> _ptrEOFToken;
 };
-
-using DelphiCompilationUnitSyntaxPtr = std::shared_ptr<DelphiCompilationUnitSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

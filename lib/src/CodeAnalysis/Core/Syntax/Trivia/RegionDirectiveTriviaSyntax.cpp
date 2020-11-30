@@ -5,21 +5,21 @@ namespace polyglot::CodeAnalysis
 {
 
 RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxTokenPtr startToken,
-                                                         SyntaxTokenPtr regionKeyword,
-                                                         SyntaxTokenPtr endOfDirectiveToken,
+                                                         SharedPtr<SyntaxToken> startToken,
+                                                         SharedPtr<SyntaxToken> regionKeyword,
+                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-    _ptrStartToken{std::move(startToken)},
-    _ptrRegionKeyword{std::move(regionKeyword)},
-    _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
-    _isActive{isActive}
+      _ptrStartToken{std::move(startToken)},
+      _ptrRegionKeyword{std::move(regionKeyword)},
+      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _isActive{isActive}
 {}
 
-RegionDirectiveTriviaSyntaxPtr RegionDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
-                                                                   SyntaxTokenPtr regionKeyword,
-                                                                   SyntaxTokenPtr endOfDirectiveToken,
-                                                                   bool isActive) noexcept
+SharedPtr<RegionDirectiveTriviaSyntax> RegionDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
+                                                                           SharedPtr<SyntaxToken> regionKeyword,
+                                                                           SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                           bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(regionKeyword != nullptr);

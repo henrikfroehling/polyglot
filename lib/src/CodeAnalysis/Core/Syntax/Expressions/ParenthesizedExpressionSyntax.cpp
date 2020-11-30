@@ -5,18 +5,18 @@ namespace polyglot::CodeAnalysis
 {
 
 ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                                             SyntaxTokenPtr openParenthesisToken,
-                                                             ExpressionSyntaxPtr expression,
-                                                             SyntaxTokenPtr closeParenthesisToken) noexcept
-    : ExpressionSyntax{ syntaxKind },
+                                                             SharedPtr<SyntaxToken> openParenthesisToken,
+                                                             SharedPtr<ExpressionSyntax> expression,
+                                                             SharedPtr<SyntaxToken> closeParenthesisToken) noexcept
+    : ExpressionSyntax{syntaxKind},
       _ptrOpenParenthesisToken{std::move(openParenthesisToken)},
       _ptrExpression{std::move(expression)},
       _ptrCloseParenthesisToken{std::move(closeParenthesisToken)}
 {}
 
-ParenthesizedExpressionSyntaxPtr ParenthesizedExpressionSyntax::create(SyntaxTokenPtr openParenthesisToken,
-                                                                       ExpressionSyntaxPtr expression,
-                                                                       SyntaxTokenPtr closeParenthesisToken) noexcept
+SharedPtr<ParenthesizedExpressionSyntax> ParenthesizedExpressionSyntax::create(SharedPtr<SyntaxToken> openParenthesisToken,
+                                                                               SharedPtr<ExpressionSyntax> expression,
+                                                                               SharedPtr<SyntaxToken> closeParenthesisToken) noexcept
 {
     assert(openParenthesisToken != nullptr);
     assert(openParenthesisToken->syntaxKind() == SyntaxKind::OpenParenthesisToken);

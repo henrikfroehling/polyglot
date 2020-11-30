@@ -13,19 +13,19 @@ namespace polyglot::CodeAnalysis
 static constexpr TokenInfo EMPTY_TOKEN_INFO{};
 static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
-DelphiLexer::DelphiLexer(SourceTextPtr sourceText) noexcept
+DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText) noexcept
     : Lexer{std::move(sourceText)},
       _ptrSyntaxFacts{std::make_shared<DelphiSyntaxFacts>()},
       _currentTriviaPosition{}
 {}
 
-SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
+SharedPtr<SyntaxToken> DelphiLexer::lex(LexerMode mode) noexcept
 {
     switch (_mode)
     {
         case LexerMode::Syntax:
         {
-            _leadingTrivia = std::vector<SyntaxNodePtr>{};
+            _leadingTrivia = std::vector<SharedPtr<SyntaxNode>>{};
             lexSyntaxTrivia(_textWindow.position() > 0, false, _leadingTrivia);
             TokenInfo tokenInfo = quickScanSyntaxToken();
 
@@ -33,7 +33,7 @@ SyntaxTokenPtr DelphiLexer::lex(LexerMode mode) noexcept
                 tokenInfo = lexSyntaxToken();
 
             const pg_size tokenPosition = _textWindow.lexemeStartPosition();
-            _trailingTrivia = std::vector<SyntaxNodePtr>{};
+            _trailingTrivia = std::vector<SharedPtr<SyntaxNode>>{};
             lexSyntaxTrivia(true, true, _trailingTrivia);
 
             auto ptrSyntaxToken = std::make_shared<SyntaxToken>();
@@ -496,7 +496,7 @@ void DelphiLexer::scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept
 }
 
 void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
-                                            TokenInfo& tokenInfo) noexcept
+                                          TokenInfo& tokenInfo) noexcept
 {
     if (chars.length() > MAX_KEYWORD_LENGTH)
         tokenInfo.kind = SyntaxKind::IdentifierToken;
@@ -602,7 +602,7 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
 
 void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                                   bool isTrailing,
-                                  std::vector<SyntaxNodePtr>& triviaList) noexcept
+                                  std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept
 {
     bool onlyWhitespaceOnLine = !isTrailing;
 
@@ -714,7 +714,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
     }
 }
 
-SyntaxTriviaPtr DelphiLexer::scanWhitespace() noexcept
+SharedPtr<SyntaxTrivia> DelphiLexer::scanWhitespace() noexcept
 {
     long hashCode = Hashing::FNV_OFFSET_BIAS;
     bool onlySpaces = true;
@@ -839,7 +839,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
         isTerminated = false;
 }
 
-SyntaxTriviaPtr DelphiLexer::scanEndOfLine() noexcept
+SharedPtr<SyntaxTrivia> DelphiLexer::scanEndOfLine() noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -871,19 +871,19 @@ SyntaxTriviaPtr DelphiLexer::scanEndOfLine() noexcept
 
 void DelphiLexer::lexDirectiveAndExcludedTrivia(bool afterFirstToken,
                                                 bool afterNonWhitespaceOnLine,
-                                                std::vector<SyntaxNodePtr>& triviaList) noexcept
+                                                std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept
 {
-    SyntaxNodePtr directive = lexSingleDirective(true, true, afterFirstToken, afterNonWhitespaceOnLine, triviaList);
+    SharedPtr<SyntaxNode> directive = lexSingleDirective(true, true, afterFirstToken, afterNonWhitespaceOnLine, triviaList);
 
     // TODO
     lexExludedDirectivesAndTrivia(true /* endIsActive */);
 }
 
-SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
-                                              bool endIsActive,
-                                              bool afterFirstToken,
-                                              bool afterNonWhitespaceOnLine,
-                                              std::vector<SyntaxNodePtr>& triviaList) noexcept
+SharedPtr<SyntaxNode> DelphiLexer::lexSingleDirective(bool isActive,
+                                                      bool endIsActive,
+                                                      bool afterFirstToken,
+                                                      bool afterNonWhitespaceOnLine,
+                                                      std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -895,7 +895,7 @@ SyntaxNodePtr DelphiLexer::lexSingleDirective(bool isActive,
 
     LexerMode saveMode = _mode;
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives, _ptrSyntaxFacts};
-    SyntaxNodePtr ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
+    SharedPtr<SyntaxNode> ptrDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(ptrDirective);
 
     // TODO apply directives
@@ -910,13 +910,13 @@ void DelphiLexer::lexExludedDirectivesAndTrivia(bool endIsActive) noexcept
 
 }
 
-SyntaxTokenPtr DelphiLexer::lexDirectiveToken() noexcept
+SharedPtr<SyntaxToken> DelphiLexer::lexDirectiveToken() noexcept
 {
     start();
     TokenInfo tokenInfo{};
     scanDirectiveToken(tokenInfo);
     const pg_size tokenPosition = _textWindow.lexemeStartPosition();
-    std::vector<SyntaxTriviaPtr> trailingTrivia{}; // TODO
+    std::vector<SharedPtr<SyntaxTrivia>> trailingTrivia{}; // TODO
     lexDirectiveTrailingTrivia(tokenInfo.kind == SyntaxKind::EndOfDirectiveToken);
 
     auto ptrSyntaxToken = std::make_shared<SyntaxToken>();
@@ -1123,7 +1123,7 @@ void DelphiLexer::lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept
         const pg_size position = _textWindow.position();
         const pg_size triviaPosition = _currentTriviaPosition;
         _currentTriviaPosition = _textWindow.lexemeStartPosition();
-        SyntaxNodePtr trivia = lexDirectiveTrivia();
+        SharedPtr<SyntaxNode> trivia = lexDirectiveTrivia();
         _currentTriviaPosition = triviaPosition;
 
         if (trivia == nullptr)
@@ -1144,7 +1144,7 @@ void DelphiLexer::lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept
     }
 }
 
-SyntaxNodePtr DelphiLexer::lexDirectiveTrivia() noexcept
+SharedPtr<SyntaxNode> DelphiLexer::lexDirectiveTrivia() noexcept
 {
     char character = _textWindow.peekCharacter();
 

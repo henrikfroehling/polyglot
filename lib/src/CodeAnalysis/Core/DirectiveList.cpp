@@ -4,20 +4,20 @@
 namespace polyglot::CodeAnalysis
 {
 
-static DirectiveListPtr EMPTY = []()
+static SharedPtr<DirectiveList> EMPTY = []()
 {
     return std::make_shared<DirectiveList>();
 }();
 
 DirectiveList::DirectiveList() noexcept
     : _ptrHead{ nullptr },
-    _ptrTail{ nullptr }
+      _ptrTail{ nullptr }
 {}
 
-DirectiveList::DirectiveList(DirectivePtr head,
-                             DirectiveListPtr tail) noexcept
+DirectiveList::DirectiveList(SharedPtr<Directive> head,
+                             SharedPtr<DirectiveList> tail) noexcept
     : _ptrHead{ std::move(head) },
-    _ptrTail{ std::move(tail) }
+      _ptrTail{ std::move(tail) }
 {
     assert(_ptrTail != nullptr);
 }
@@ -27,13 +27,13 @@ bool DirectiveList::any() const noexcept
     return *this != *EMPTY;
 }
 
-DirectiveListPtr DirectiveList::empty() noexcept
+SharedPtr<DirectiveList> DirectiveList::empty() noexcept
 {
     return EMPTY;
 }
 
-DirectiveListPtr DirectiveList::create(DirectivePtr directive,
-                                       DirectiveListPtr tail) noexcept
+SharedPtr<DirectiveList> DirectiveList::create(SharedPtr<Directive> directive,
+                                               SharedPtr<DirectiveList> tail) noexcept
 {
     return std::make_shared<DirectiveList>(std::move(directive), std::move(tail));
 }

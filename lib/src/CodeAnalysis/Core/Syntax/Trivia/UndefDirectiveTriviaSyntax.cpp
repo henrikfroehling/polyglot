@@ -5,24 +5,24 @@ namespace polyglot::CodeAnalysis
 {
 
 UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       SyntaxTokenPtr startToken,
-                                                       SyntaxTokenPtr undefKeyword,
-                                                       SyntaxTokenPtr name,
-                                                       SyntaxTokenPtr endOfDirectiveToken,
+                                                       SharedPtr<SyntaxToken> startToken,
+                                                       SharedPtr<SyntaxToken> undefKeyword,
+                                                       SharedPtr<SyntaxToken> name,
+                                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{ syntaxKind },
-    _ptrStartToken{ std::move(startToken) },
-    _ptrUndefKeyword{ std::move(undefKeyword) },
-    _ptrName{ std::move(name) },
-    _ptrEndOfDirectiveToken{ std::move(endOfDirectiveToken) },
-    _isActive{ isActive }
+      _ptrStartToken{ std::move(startToken) },
+      _ptrUndefKeyword{ std::move(undefKeyword) },
+      _ptrName{ std::move(name) },
+      _ptrEndOfDirectiveToken{ std::move(endOfDirectiveToken) },
+      _isActive{ isActive }
 {}
 
-UndefDirectiveTriviaSyntaxPtr UndefDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
-                                                                 SyntaxTokenPtr undefKeyword,
-                                                                 SyntaxTokenPtr name,
-                                                                 SyntaxTokenPtr endOfDirectiveToken,
-                                                                 bool isActive) noexcept
+SharedPtr<UndefDirectiveTriviaSyntax> UndefDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
+                                                                         SharedPtr<SyntaxToken> undefKeyword,
+                                                                         SharedPtr<SyntaxToken> name,
+                                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                         bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(undefKeyword != nullptr);

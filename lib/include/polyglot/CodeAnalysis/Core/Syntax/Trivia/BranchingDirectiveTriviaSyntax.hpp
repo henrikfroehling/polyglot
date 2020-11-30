@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_BRANCHINGDIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_BRANCHINGDIRECTIVETRIVIASYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
@@ -16,8 +15,6 @@ public:
     virtual ~BranchingDirectiveTriviaSyntax() noexcept = default;
     virtual bool isBranchTaken() const noexcept = 0;
 };
-
-using BranchingDirectiveTriviaSyntaxPtr = std::shared_ptr<BranchingDirectiveTriviaSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

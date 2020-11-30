@@ -5,10 +5,10 @@ namespace polyglot::CodeAnalysis
 {
 
 IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                 SyntaxTokenPtr startToken,
-                                                 SyntaxTokenPtr ifKeyword,
-                                                 ExpressionSyntaxPtr condition,
-                                                 SyntaxTokenPtr endOfDirectiveToken,
+                                                 SharedPtr<SyntaxToken> startToken,
+                                                 SharedPtr<SyntaxToken> ifKeyword,
+                                                 SharedPtr<ExpressionSyntax> condition,
+                                                 SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                  bool isActive,
                                                  bool isBranchTaken,
                                                  bool conditionValue) noexcept
@@ -22,13 +22,13 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _conditionValue{conditionValue}
 {}
 
-IfDirectiveTriviaSyntaxPtr IfDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
-                                                           SyntaxTokenPtr ifKeyword,
-                                                           ExpressionSyntaxPtr condition,
-                                                           SyntaxTokenPtr endOfDirectiveToken,
-                                                           bool isActive,
-                                                           bool isBranchTaken,
-                                                           bool conditionValue) noexcept
+SharedPtr<IfDirectiveTriviaSyntax> IfDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
+                                                                   SharedPtr<SyntaxToken> ifKeyword,
+                                                                   SharedPtr<ExpressionSyntax> condition,
+                                                                   SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                   bool isActive,
+                                                                   bool isBranchTaken,
+                                                                   bool conditionValue) noexcept
 {
     assert(startToken != nullptr);
     assert(ifKeyword != nullptr);

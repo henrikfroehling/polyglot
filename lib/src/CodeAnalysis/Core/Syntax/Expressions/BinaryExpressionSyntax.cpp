@@ -5,19 +5,19 @@ namespace polyglot::CodeAnalysis
 {
 
 BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
-                                               ExpressionSyntaxPtr leftExpression,
-                                               SyntaxTokenPtr operatorToken,
-                                               ExpressionSyntaxPtr rightExpression) noexcept
+                                               SharedPtr<ExpressionSyntax> leftExpression,
+                                               SharedPtr<SyntaxToken> operatorToken,
+                                               SharedPtr<ExpressionSyntax> rightExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _ptrLeftExpression{std::move(leftExpression)},
       _ptrOperatorToken{std::move(operatorToken)},
       _ptrRightExpression{std::move(rightExpression)}
 {}
 
-BinaryExpressionSyntaxPtr BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                         ExpressionSyntaxPtr leftExpression,
-                                                         SyntaxTokenPtr operatorToken,
-                                                         ExpressionSyntaxPtr rightExpression) noexcept
+SharedPtr<BinaryExpressionSyntax> BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                                 SharedPtr<ExpressionSyntax> leftExpression,
+                                                                 SharedPtr<SyntaxToken> operatorToken,
+                                                                 SharedPtr<ExpressionSyntax> rightExpression) noexcept
 {
     assert(leftExpression != nullptr);
     assert(operatorToken != nullptr);

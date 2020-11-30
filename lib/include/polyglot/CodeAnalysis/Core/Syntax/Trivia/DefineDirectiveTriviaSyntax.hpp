@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_DEFINEDIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_DEFINEDIRECTIVETRIVIASYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
@@ -10,37 +10,34 @@
 namespace polyglot::CodeAnalysis
 {
 
-class DefineDirectiveTriviaSyntax;
-using DefineDirectiveTriviaSyntaxPtr = std::shared_ptr<DefineDirectiveTriviaSyntax>;
-
 class POLYGLOT_API DefineDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         SyntaxTokenPtr startToken,
-                                         SyntaxTokenPtr defineKeyword,
-                                         SyntaxTokenPtr name,
-                                         SyntaxTokenPtr endOfDirectiveToken,
+                                         SharedPtr<SyntaxToken> startToken,
+                                         SharedPtr<SyntaxToken> defineKeyword,
+                                         SharedPtr<SyntaxToken> name,
+                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
                                          bool isActive) noexcept;
 
     virtual ~DefineDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const SyntaxTokenPtr& startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const SyntaxTokenPtr& defineKeyword() const noexcept { return _ptrDefineKeyword; }
-    inline virtual const SyntaxTokenPtr& name() const noexcept { return _ptrName; }
-    inline virtual const SyntaxTokenPtr& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual const SharedPtr<SyntaxToken>& startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual const SharedPtr<SyntaxToken>& defineKeyword() const noexcept { return _ptrDefineKeyword; }
+    inline virtual const SharedPtr<SyntaxToken>& name() const noexcept { return _ptrName; }
+    inline virtual const SharedPtr<SyntaxToken>& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static DefineDirectiveTriviaSyntaxPtr create(SyntaxTokenPtr startToken,
-                                                 SyntaxTokenPtr defineKeyword,
-                                                 SyntaxTokenPtr name,
-                                                 SyntaxTokenPtr endOfDirectiveToken,
-                                                 bool isActive) noexcept;
+    static SharedPtr<DefineDirectiveTriviaSyntax> create(SharedPtr<SyntaxToken> startToken,
+                                                         SharedPtr<SyntaxToken> defineKeyword,
+                                                         SharedPtr<SyntaxToken> name,
+                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                         bool isActive) noexcept;
 
 private:
-    SyntaxTokenPtr _ptrStartToken;
-    SyntaxTokenPtr _ptrDefineKeyword;
-    SyntaxTokenPtr _ptrName;
-    SyntaxTokenPtr _ptrEndOfDirectiveToken;
+    SharedPtr<SyntaxToken> _ptrStartToken;
+    SharedPtr<SyntaxToken> _ptrDefineKeyword;
+    SharedPtr<SyntaxToken> _ptrName;
+    SharedPtr<SyntaxToken> _ptrEndOfDirectiveToken;
     bool _isActive;
 };
 

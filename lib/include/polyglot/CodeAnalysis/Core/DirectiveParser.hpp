@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_DELPHIDIRECTIVEPARSER_H
 #define POLYGLOT_CODEANALYSIS_CORE_DELPHIDIRECTIVEPARSER_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
@@ -18,22 +18,22 @@ public:
     DirectiveParser() = delete;
     virtual ~DirectiveParser() noexcept = default;
 
-    virtual SyntaxNodePtr parseDirective(bool isActive,
-                                         bool endIsActive,
-                                         bool isFirstAfterTokenInFile,
-                                         bool isAfterNonWhitespaceOnLine) noexcept = 0;
+    virtual SharedPtr<SyntaxNode> parseDirective(bool isActive,
+                                                 bool endIsActive,
+                                                 bool isFirstAfterTokenInFile,
+                                                 bool isAfterNonWhitespaceOnLine) noexcept = 0;
 
 protected:
-    explicit DirectiveParser(std::shared_ptr<Lexer> lexer,
+    explicit DirectiveParser(SharedPtr<Lexer> lexer,
                              const DirectiveStack& context,
-                             std::shared_ptr<SyntaxFacts> syntaxFacts) noexcept;
+                             SharedPtr<SyntaxFacts> syntaxFacts) noexcept;
 
 protected:
     const DirectiveStack& _context;
-    std::shared_ptr<SyntaxFacts> _ptrSyntaxFacts;
+    SharedPtr<SyntaxFacts> _ptrSyntaxFacts;
 
 private:
-    inline SyntaxNodePtr parseRoot() noexcept override { return nullptr; }
+    inline SharedPtr<SyntaxNode> parseRoot() noexcept override { return nullptr; }
 };
 
 } // end namespace polyglot::CodeAnalysis

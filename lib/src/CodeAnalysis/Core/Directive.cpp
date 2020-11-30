@@ -6,13 +6,13 @@
 namespace polyglot::CodeAnalysis
 {
 
-Directive::Directive(DirectiveTriviaSyntaxPtr node) noexcept
+Directive::Directive(SharedPtr<DirectiveTriviaSyntax> node) noexcept
     : _node{std::move(node)}
 {}
 
 bool Directive::isBranchTaken() const noexcept
 {
-    BranchingDirectiveTriviaSyntaxPtr ptrBranching = std::dynamic_pointer_cast<BranchingDirectiveTriviaSyntax>(_node);
+    SharedPtr<BranchingDirectiveTriviaSyntax> ptrBranching = std::dynamic_pointer_cast<BranchingDirectiveTriviaSyntax>(_node);
 
     if (ptrBranching != nullptr)
         return ptrBranching->isBranchTaken();

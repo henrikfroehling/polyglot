@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXNODE_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXNODE_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
@@ -38,8 +37,6 @@ protected:
     pg_size _position;
     SyntaxNodeFlags _flags;
 };
-
-using SyntaxNodePtr = std::shared_ptr<SyntaxNode>;
 
 } // end namespace polyglot::CodeAnalysis
 

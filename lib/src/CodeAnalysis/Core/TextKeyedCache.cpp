@@ -42,11 +42,11 @@ void TextKeyedCache::addItem(std::string_view chars,
     _localTable[localIndex] = ptrCacheEntry;
 }
 
-std::shared_ptr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view chars,
-                                                              long hashCode) noexcept
+SharedPtr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view chars,
+                                                        long hashCode) noexcept
 {
     int sharedIndex = sharedIndexFromHash(hashCode);
-    std::shared_ptr<CacheEntry> ptrSharedEntry = nullptr;
+    SharedPtr<CacheEntry> ptrSharedEntry = nullptr;
 
     for (int i = 0; i < SHARED_BUCKET_SIZE + 1; i++)
     {
@@ -64,7 +64,7 @@ std::shared_ptr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view c
 }
 
 void TextKeyedCache::addSharedItem(long hashCode,
-                                   const std::shared_ptr<CacheEntry>& cacheEntry) noexcept
+                                   const SharedPtr<CacheEntry>& cacheEntry) noexcept
 {
     int sharedIndex = sharedIndexFromHash(hashCode);
     int currentIndex = sharedIndex;
