@@ -5,9 +5,9 @@ namespace polyglot::CodeAnalysis
 {
 
 ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                     SyntaxTokenPtr startToken,
-                                                     SyntaxTokenPtr elseKeyword,
-                                                     SyntaxTokenPtr endOfDirectiveToken,
+                                                     SharedPtr<SyntaxToken> startToken,
+                                                     SharedPtr<SyntaxToken> elseKeyword,
+                                                     SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                      bool isActive,
                                                      bool isBranchTaken) noexcept
     : BranchingDirectiveTriviaSyntax{syntaxKind},
@@ -18,11 +18,11 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isBranchTaken{isBranchTaken}
 {}
 
-ElseDirectiveTriviaSyntaxPtr ElseDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
-                                                               SyntaxTokenPtr elseKeyword,
-                                                               SyntaxTokenPtr endOfDirectiveToken,
-                                                               bool isActive,
-                                                               bool isBranchTaken) noexcept
+SharedPtr<ElseDirectiveTriviaSyntax> ElseDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
+                                                                       SharedPtr<SyntaxToken> elseKeyword,
+                                                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                       bool isActive,
+                                                                       bool isBranchTaken) noexcept
 {
     assert(startToken != nullptr);
     assert(elseKeyword != nullptr);

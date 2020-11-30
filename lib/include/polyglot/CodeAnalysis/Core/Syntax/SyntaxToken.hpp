@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTOKEN_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTOKEN_H
 
-#include <memory>
 #include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
@@ -27,8 +26,8 @@ public:
     inline bool isToken() const noexcept override { return true; }
     virtual inline std::string_view text() const noexcept { return _text; }
     inline virtual void setText(std::string_view text) noexcept { _text = text; }
-    void setLeadingTrivia(std::vector<SyntaxNodePtr>&& leadingTrivia) noexcept;
-    void setTrailingTrivia(std::vector<SyntaxNodePtr>&& trailingTrivia) noexcept;
+    void setLeadingTrivia(std::vector<SharedPtr<SyntaxNode>>&& leadingTrivia) noexcept;
+    void setTrailingTrivia(std::vector<SharedPtr<SyntaxNode>>&& trailingTrivia) noexcept;
     inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
     inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
     inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
@@ -37,12 +36,10 @@ public:
 
 protected:
     std::string_view _text;
-    std::vector<SyntaxNodePtr> _leadingTrivia;
-    std::vector<SyntaxNodePtr> _trailingTrivia;
+    std::vector<SharedPtr<SyntaxNode>> _leadingTrivia;
+    std::vector<SharedPtr<SyntaxNode>> _trailingTrivia;
     SyntaxKind _contextualKind;
 };
-
-using SyntaxTokenPtr = std::shared_ptr<SyntaxToken>;
 
 } // end namespace polyglot::CodeAnalysis
 

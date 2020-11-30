@@ -4,11 +4,11 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntaxPtr heading,
-                                               DelphiUnitInterfaceSectionSyntaxPtr interfaceSection,
-                                               DelphiUnitImplementationSectionSyntaxPtr implementationSection,
-                                               SyntaxTokenPtr endKeyword,
-                                               SyntaxTokenPtr dotToken) noexcept
+DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(SharedPtr<DelphiUnitHeadingSyntax> heading,
+                                               SharedPtr<DelphiUnitInterfaceSectionSyntax> interfaceSection,
+                                               SharedPtr<DelphiUnitImplementationSectionSyntax> implementationSection,
+                                               SharedPtr<SyntaxToken> endKeyword,
+                                               SharedPtr<SyntaxToken> dotToken) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::UnitModule},
       _ptrHeading{std::move(heading)},
       _ptrInterfaceSection{std::move(interfaceSection)},

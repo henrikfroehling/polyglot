@@ -1,9 +1,9 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_DIRECTIVE_H
 #define POLYGLOT_CODEANALYSIS_CORE_DIRECTIVE_H
 
-#include <memory>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
@@ -13,7 +13,7 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API Directive
 {
 public:
-    explicit Directive(DirectiveTriviaSyntaxPtr node) noexcept;
+    explicit Directive(SharedPtr<DirectiveTriviaSyntax> node) noexcept;
     virtual ~Directive() noexcept = default;
     inline SyntaxKind syntaxKind() const noexcept { return _node->syntaxKind(); }
     inline bool isActive() const noexcept { return _node->isActive(); }
@@ -27,10 +27,8 @@ public:
                            const Directive& rhs) noexcept;
 
 private:
-    DirectiveTriviaSyntaxPtr _node;
+    SharedPtr<DirectiveTriviaSyntax> _node;
 };
-
-using DirectivePtr = std::shared_ptr<Directive>;
 
 } // end namespace polyglot::CodeAnalysis
 

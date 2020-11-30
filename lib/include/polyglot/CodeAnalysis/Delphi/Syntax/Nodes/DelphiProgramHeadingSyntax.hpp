@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIPROGRAMHEADINGSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIPROGRAMHEADINGSYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 
@@ -14,8 +13,6 @@ public:
     DelphiProgramHeadingSyntax() noexcept;
     virtual ~DelphiProgramHeadingSyntax() noexcept = default;
 };
-
-using DelphiProgramHeadingSyntaxPtr = std::shared_ptr<DelphiProgramHeadingSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

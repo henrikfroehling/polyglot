@@ -2,29 +2,27 @@
 #define POLYGLOT_CODEANALYSIS_CORE_DIRECTIVELIST_H
 
 #include <memory>
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Directive.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class DirectiveList;
-using DirectiveListPtr = std::shared_ptr<DirectiveList>;
-
 class DirectiveList : public std::enable_shared_from_this<DirectiveList>
 {
 public:
     DirectiveList() noexcept;
-    explicit DirectiveList(DirectivePtr head,
-                           DirectiveListPtr tail) noexcept;
+    explicit DirectiveList(SharedPtr<Directive> head,
+                           SharedPtr<DirectiveList> tail) noexcept;
 
-    inline const DirectivePtr& head() const noexcept { return _ptrHead; }
-    inline const DirectiveListPtr& tail() const noexcept { return _ptrTail; }
-    inline DirectiveListPtr push(DirectivePtr value) noexcept { return std::make_shared<DirectiveList>(std::move(value), shared_from_this()); }
+    inline const SharedPtr<Directive>& head() const noexcept { return _ptrHead; }
+    inline const SharedPtr<DirectiveList>& tail() const noexcept { return _ptrTail; }
+    inline SharedPtr<DirectiveList> push(SharedPtr<Directive> value) noexcept { return std::make_shared<DirectiveList>(std::move(value), shared_from_this()); }
     bool any() const noexcept;
-    static DirectiveListPtr empty() noexcept;
+    static SharedPtr<DirectiveList> empty() noexcept;
 
-    static DirectiveListPtr create(DirectivePtr directive,
-                                   DirectiveListPtr tail) noexcept;
+    static SharedPtr<DirectiveList> create(SharedPtr<Directive> directive,
+                                           SharedPtr<DirectiveList> tail) noexcept;
 
     friend bool operator==(const DirectiveList& lhs,
                            const DirectiveList& rhs) noexcept;
@@ -33,8 +31,8 @@ public:
                            const DirectiveList& rhs) noexcept;
 
 private:
-    DirectivePtr _ptrHead;
-    DirectiveListPtr _ptrTail;
+    SharedPtr<Directive> _ptrHead;
+    SharedPtr<DirectiveList> _ptrTail;
 };
 
 } // end namespace polyglot::CodeAnalysis

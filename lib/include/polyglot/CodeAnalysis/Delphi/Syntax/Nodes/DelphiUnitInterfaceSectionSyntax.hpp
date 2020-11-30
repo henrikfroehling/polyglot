@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITINTERFACESECTIONSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITINTERFACESECTIONSYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.hpp"
@@ -13,17 +13,15 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitInterfaceSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitInterfaceSectionSyntax(SyntaxTokenPtr interfaceKeyword) noexcept;
+    explicit DelphiUnitInterfaceSectionSyntax(SharedPtr<SyntaxToken> interfaceKeyword) noexcept;
     virtual ~DelphiUnitInterfaceSectionSyntax() noexcept = default;
-    virtual const DelphiUsesClauseSyntaxPtr& uses() const noexcept { return _ptrUses; }
-    virtual void setUses(DelphiUsesClauseSyntaxPtr uses) noexcept { _ptrUses = std::move(uses); }
+    virtual const SharedPtr<DelphiUsesClauseSyntax>& uses() const noexcept { return _ptrUses; }
+    virtual void setUses(SharedPtr<DelphiUsesClauseSyntax> uses) noexcept { _ptrUses = std::move(uses); }
 
 private:
-    SyntaxTokenPtr _ptrInterfaceKeyword;
-    DelphiUsesClauseSyntaxPtr _ptrUses; // optional
+    SharedPtr<SyntaxToken> _ptrInterfaceKeyword;
+    SharedPtr<DelphiUsesClauseSyntax> _ptrUses; // optional
 };
-
-using DelphiUnitInterfaceSectionSyntaxPtr = std::shared_ptr<DelphiUnitInterfaceSectionSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

@@ -5,21 +5,21 @@ namespace polyglot::CodeAnalysis
 {
 
 EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                               SyntaxTokenPtr startToken,
-                                                               SyntaxTokenPtr endRegionKeyword,
-                                                               SyntaxTokenPtr endOfDirectiveToken,
+                                                               SharedPtr<SyntaxToken> startToken,
+                                                               SharedPtr<SyntaxToken> endRegionKeyword,
+                                                               SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                                bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-    _ptrStartToken{std::move(startToken)},
-    _ptrEndRegionKeyword{std::move(endRegionKeyword)},
-    _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
-    _isActive{isActive}
+      _ptrStartToken{std::move(startToken)},
+      _ptrEndRegionKeyword{std::move(endRegionKeyword)},
+      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _isActive{isActive}
 {}
 
-EndRegionDirectiveTriviaSyntaxPtr EndRegionDirectiveTriviaSyntax::Create(SyntaxTokenPtr startToken,
-                                                                         SyntaxTokenPtr endRegionKeyword,
-                                                                         SyntaxTokenPtr endOfDirectiveToken,
-                                                                         bool isActive) noexcept
+SharedPtr<EndRegionDirectiveTriviaSyntax> EndRegionDirectiveTriviaSyntax::Create(SharedPtr<SyntaxToken> startToken,
+                                                                                 SharedPtr<SyntaxToken> endRegionKeyword,
+                                                                                 SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                                 bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(endRegionKeyword != nullptr);

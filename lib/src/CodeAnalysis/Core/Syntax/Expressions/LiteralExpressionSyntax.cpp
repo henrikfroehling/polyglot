@@ -5,13 +5,13 @@ namespace polyglot::CodeAnalysis
 {
 
 LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
-                                                 SyntaxTokenPtr token) noexcept
+                                                 SharedPtr<SyntaxToken> token) noexcept
     : ExpressionSyntax{syntaxKind},
       _ptrToken{std::move(token)}
 {}
 
-LiteralExpressionSyntaxPtr LiteralExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                           SyntaxTokenPtr token) noexcept
+SharedPtr<LiteralExpressionSyntax> LiteralExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                                   SharedPtr<SyntaxToken> token) noexcept
 {
     assert(token != nullptr);
     return std::make_shared<LiteralExpressionSyntax>(syntaxKind, std::move(token));

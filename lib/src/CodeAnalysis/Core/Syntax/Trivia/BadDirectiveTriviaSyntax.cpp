@@ -5,21 +5,21 @@ namespace polyglot::CodeAnalysis
 {
 
 BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                   SyntaxTokenPtr startToken,
-                                                   SyntaxTokenPtr identifier,
-                                                   SyntaxTokenPtr endOfDirectiveToken,
+                                                   SharedPtr<SyntaxToken> startToken,
+                                                   SharedPtr<SyntaxToken> identifier,
+                                                   SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                    bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-    _ptrStartToken{std::move(startToken)},
-    _ptrIdentifier{std::move(identifier)},
-    _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
-    _isActive{isActive}
+      _ptrStartToken{std::move(startToken)},
+      _ptrIdentifier{std::move(identifier)},
+      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _isActive{isActive}
 {}
 
-BadDirectiveTriviaSyntaxPtr BadDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
-                                                             SyntaxTokenPtr identifier,
-                                                             SyntaxTokenPtr endOfDirectiveToken,
-                                                             bool isActive) noexcept
+SharedPtr<BadDirectiveTriviaSyntax> BadDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
+                                                                     SharedPtr<SyntaxToken> identifier,
+                                                                     SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                     bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(identifier != nullptr);

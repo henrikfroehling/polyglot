@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTRIVIA_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTRIVIA_H
 
-#include <memory>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -34,8 +33,6 @@ public:
 protected:
     std::string_view _text;
 };
-
-using SyntaxTriviaPtr = std::shared_ptr<SyntaxTrivia>;
 
 } // end namespace polyglot::CodeAnalysis
 

@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITINITIALIZATIONSECTIONSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITINITIALIZATIONSECTIONSYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 
@@ -14,8 +13,6 @@ public:
     DelphiUnitInitializationSectionSyntax() noexcept;
     virtual ~DelphiUnitInitializationSectionSyntax() noexcept = default;
 };
-
-using DelphiUnitInitializationSectionSyntaxPtr = std::shared_ptr<DelphiUnitInitializationSectionSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

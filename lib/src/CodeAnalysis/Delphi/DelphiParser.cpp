@@ -2,18 +2,17 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
 #include <cassert>
-#include <chrono>
 #include <iostream>
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiParser::DelphiParser(SourceTextPtr sourceText) noexcept
+DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
     : Parser{std::make_shared<DelphiLexer>(sourceText)},
       _ptrSyntaxFacts{std::make_shared<DelphiSyntaxFacts>()}
 {}
 
-SyntaxNodePtr DelphiParser::parseRoot() noexcept
+SharedPtr<SyntaxNode> DelphiParser::parseRoot() noexcept
 {
     if (_ptrSyntaxFacts->isModuleStart(currentToken()->syntaxKind()))
         return parseCompilationUnit();
@@ -24,10 +23,10 @@ SyntaxNodePtr DelphiParser::parseRoot() noexcept
     }
 }
 
-DelphiCompilationUnitSyntaxPtr DelphiParser::parseCompilationUnit() noexcept
+SharedPtr<DelphiCompilationUnitSyntax> DelphiParser::parseCompilationUnit() noexcept
 {
-    SyntaxTokenPtr ptrCurrentToken = currentToken();
-    DelphiCompilationUnitSyntaxPtr ptrCompilationUnit = nullptr;
+    SharedPtr<SyntaxToken> ptrCurrentToken = currentToken();
+    SharedPtr<DelphiCompilationUnitSyntax> ptrCompilationUnit = nullptr;
 
     switch (ptrCurrentToken->syntaxKind())
     {
@@ -48,17 +47,17 @@ DelphiCompilationUnitSyntaxPtr DelphiParser::parseCompilationUnit() noexcept
     return ptrCompilationUnit;
 }
 
-DelphiUnitModuleSyntaxPtr DelphiParser::parseUnitModule() noexcept
+SharedPtr<DelphiUnitModuleSyntax> DelphiParser::parseUnitModule() noexcept
 {
-    DelphiUnitHeadingSyntaxPtr ptrHeading = nullptr;
-    DelphiUnitInterfaceSectionSyntaxPtr ptrInterfaceSection = nullptr;
-    DelphiUnitImplementationSectionSyntaxPtr ptrImplementationSection = nullptr;
-    DelphiUnitInitializationSectionSyntaxPtr ptrInitializationSection = nullptr; // optional
-    DelphiUnitFinalizationSectionSyntaxPtr ptrFinalizationSection = nullptr; // optional, but requires initialization section
+    SharedPtr<DelphiUnitHeadingSyntax> ptrHeading = nullptr;
+    SharedPtr<DelphiUnitInterfaceSectionSyntax> ptrInterfaceSection = nullptr;
+    SharedPtr<DelphiUnitImplementationSectionSyntax> ptrImplementationSection = nullptr;
+    SharedPtr<DelphiUnitInitializationSectionSyntax> ptrInitializationSection = nullptr; // optional
+    SharedPtr<DelphiUnitFinalizationSectionSyntax> ptrFinalizationSection = nullptr; // optional, but requires initialization section
 
     while (true)
     {
-        SyntaxTokenPtr ptrCurrentToken = currentToken();
+        SharedPtr<SyntaxToken> ptrCurrentToken = currentToken();
 
         switch (ptrCurrentToken->syntaxKind())
         {
@@ -92,13 +91,13 @@ DelphiUnitModuleSyntaxPtr DelphiParser::parseUnitModule() noexcept
     }
 
 endOfUnit:
-    SyntaxTokenPtr ptrEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    SharedPtr<SyntaxToken> ptrEndKeyword = takeToken(SyntaxKind::EndKeyword);
     assert(ptrEndKeyword != nullptr);
 
-    SyntaxTokenPtr ptrDotToken = takeToken(SyntaxKind::DotToken);
+    SharedPtr<SyntaxToken> ptrDotToken = takeToken(SyntaxKind::DotToken);
     assert(ptrDotToken != nullptr);
 
-    SyntaxTokenPtr ptrEOFToken = takeToken(SyntaxKind::EndOfFileToken);
+    SharedPtr<SyntaxToken> ptrEOFToken = takeToken(SyntaxKind::EndOfFileToken);
     assert(ptrEOFToken != nullptr);
 
     assert(ptrHeading != nullptr);
@@ -120,26 +119,26 @@ endOfUnit:
     return ptrUnitModule;
 }
 
-DelphiUnitHeadingSyntaxPtr DelphiParser::parseUnitHeading() noexcept
+SharedPtr<DelphiUnitHeadingSyntax> DelphiParser::parseUnitHeading() noexcept
 {
-    SyntaxTokenPtr ptrUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
+    SharedPtr<SyntaxToken> ptrUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
     assert(ptrUnitKeyword != nullptr);
 
-    NameExpressionSyntaxPtr ptrName = parseQualifiedName();
+    SharedPtr<NameExpressionSyntax> ptrName = parseQualifiedName();
     assert(ptrName != nullptr);
 
-    SyntaxTokenPtr ptrSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    SharedPtr<SyntaxToken> ptrSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     assert(ptrSemiColonToken != nullptr);
 
     return std::make_shared<DelphiUnitHeadingSyntax>(std::move(ptrUnitKeyword), std::move(ptrName), std::move(ptrSemiColonToken));
 }
 
-DelphiUnitInterfaceSectionSyntaxPtr DelphiParser::parseUnitInterfaceSection() noexcept
+SharedPtr<DelphiUnitInterfaceSectionSyntax> DelphiParser::parseUnitInterfaceSection() noexcept
 {
-    SyntaxTokenPtr ptrInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
+    SharedPtr<SyntaxToken> ptrInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
     assert(ptrInterfaceKeyword != nullptr);
 
-    DelphiUsesClauseSyntaxPtr ptrUses = parseUsesClause();
+    SharedPtr<DelphiUsesClauseSyntax> ptrUses = parseUsesClause();
     assert(ptrUses != nullptr);
 
     auto ptrInterfaceSection = std::make_shared<DelphiUnitInterfaceSectionSyntax>(std::move(ptrInterfaceKeyword));
@@ -148,12 +147,12 @@ DelphiUnitInterfaceSectionSyntaxPtr DelphiParser::parseUnitInterfaceSection() no
     return ptrInterfaceSection;
 }
 
-DelphiUnitImplementationSectionSyntaxPtr DelphiParser::parseUnitImplementationSection() noexcept
+SharedPtr<DelphiUnitImplementationSectionSyntax> DelphiParser::parseUnitImplementationSection() noexcept
 {
-    SyntaxTokenPtr ptrImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
+    SharedPtr<SyntaxToken> ptrImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
     assert(ptrImplementationKeyword != nullptr);
 
-    DelphiUsesClauseSyntaxPtr ptrUses = parseUsesClause();
+    SharedPtr<DelphiUsesClauseSyntax> ptrUses = parseUsesClause();
     assert(ptrUses != nullptr);
 
     auto ptrImplementationSection = std::make_shared<DelphiUnitImplementationSectionSyntax>(std::move(ptrImplementationKeyword));
@@ -162,60 +161,60 @@ DelphiUnitImplementationSectionSyntaxPtr DelphiParser::parseUnitImplementationSe
     return ptrImplementationSection;
 }
 
-DelphiUnitInitializationSectionSyntaxPtr DelphiParser::parseUnitInitializationSection() noexcept
+SharedPtr<DelphiUnitInitializationSectionSyntax> DelphiParser::parseUnitInitializationSection() noexcept
 {
     return std::make_shared<DelphiUnitInitializationSectionSyntax>();
 }
 
-DelphiUnitFinalizationSectionSyntaxPtr DelphiParser::parseUnitFinalizationSection() noexcept
+SharedPtr<DelphiUnitFinalizationSectionSyntax> DelphiParser::parseUnitFinalizationSection() noexcept
 {
     return std::make_shared<DelphiUnitFinalizationSectionSyntax>();
 }
 
-DelphiPackageModuleSyntaxPtr DelphiParser::parsePackageModule() noexcept
+SharedPtr<DelphiPackageModuleSyntax> DelphiParser::parsePackageModule() noexcept
 {
     return std::make_shared<DelphiPackageModuleSyntax>();
 }
 
-DelphiProgramModuleSyntaxPtr DelphiParser::parseProgramModule() noexcept
+SharedPtr<DelphiProgramModuleSyntax> DelphiParser::parseProgramModule() noexcept
 {
     return std::make_shared<DelphiProgramModuleSyntax>();
 }
 
-DelphiUsesClauseSyntaxPtr DelphiParser::parseUsesClause() noexcept
+SharedPtr<DelphiUsesClauseSyntax> DelphiParser::parseUsesClause() noexcept
 {
-    SyntaxTokenPtr ptrUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
-    std::vector<DelphiUnitReferenceDeclarationSyntaxPtr> unitReferences{};
+    SharedPtr<SyntaxToken> ptrUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
+    std::vector<SharedPtr<DelphiUnitReferenceDeclarationSyntax>> unitReferences{};
 
     while (true)
     {
         if (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken)
             break;
 
-        DelphiUnitReferenceDeclarationSyntaxPtr unitReference = parseUnitReference();
+        SharedPtr<DelphiUnitReferenceDeclarationSyntax> unitReference = parseUnitReference();
         unitReferences.push_back(std::move(unitReference));
     }
 
-    SyntaxTokenPtr ptrSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    SharedPtr<SyntaxToken> ptrSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return std::make_shared<DelphiUsesClauseSyntax>(std::move(ptrUsesKeyword), std::move(unitReferences), std::move(ptrSemiColonToken));
 }
 
-DelphiUnitReferenceDeclarationSyntaxPtr DelphiParser::parseUnitReference() noexcept
+SharedPtr<DelphiUnitReferenceDeclarationSyntax> DelphiParser::parseUnitReference() noexcept
 {
     if (currentToken()->syntaxKind() != SyntaxKind::IdentifierToken)
         return nullptr; // TODO error handling
 
-    NameExpressionSyntaxPtr ptrUnitName = parseQualifiedName();
+    SharedPtr<NameExpressionSyntax> ptrUnitName = parseQualifiedName();
     assert(ptrUnitName != nullptr);
 
     auto ptrUnitReference = std::make_shared<DelphiUnitReferenceDeclarationSyntax>(std::move(ptrUnitName));
 
     if (currentToken()->syntaxKind() == SyntaxKind::InKeyword)
     {
-        SyntaxTokenPtr ptrInKeyword = takeToken(SyntaxKind::InKeyword);
+        SharedPtr<SyntaxToken> ptrInKeyword = takeToken(SyntaxKind::InKeyword);
         assert(ptrInKeyword != nullptr);
 
-        SyntaxTokenPtr ptrSourceFile = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
+        SharedPtr<SyntaxToken> ptrSourceFile = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
         assert(ptrSourceFile != nullptr);
 
         ptrUnitReference->setInKeyword(std::move(ptrInKeyword));
@@ -224,7 +223,7 @@ DelphiUnitReferenceDeclarationSyntaxPtr DelphiParser::parseUnitReference() noexc
 
     if (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
-        SyntaxTokenPtr ptrCommaToken = takeToken(SyntaxKind::CommaToken);
+        SharedPtr<SyntaxToken> ptrCommaToken = takeToken(SyntaxKind::CommaToken);
         assert(ptrCommaToken != nullptr);
         ptrUnitReference->setCommaToken(std::move(ptrCommaToken));
     }
@@ -232,36 +231,36 @@ DelphiUnitReferenceDeclarationSyntaxPtr DelphiParser::parseUnitReference() noexc
     return ptrUnitReference;
 }
 
-NameExpressionSyntaxPtr DelphiParser::parseQualifiedName() noexcept
+SharedPtr<NameExpressionSyntax> DelphiParser::parseQualifiedName() noexcept
 {
-    NameExpressionSyntaxPtr ptrName = parseIdentifierName();
+    SharedPtr<NameExpressionSyntax> ptrName = parseIdentifierName();
     assert(ptrName != nullptr);
 
     while (currentToken()->syntaxKind() == SyntaxKind::DotToken)
     {
-        SyntaxTokenPtr separator = takeToken();
+        SharedPtr<SyntaxToken> separator = takeToken();
         ptrName = parseQualifiedNameRight(std::move(ptrName), std::move(separator));
     }
 
     return ptrName;
 }
 
-NameExpressionSyntaxPtr DelphiParser::parseQualifiedNameRight(NameExpressionSyntaxPtr left,
-                                                              SyntaxTokenPtr dotToken) noexcept
+SharedPtr<NameExpressionSyntax> DelphiParser::parseQualifiedNameRight(SharedPtr<NameExpressionSyntax> left,
+                                                                      SharedPtr<SyntaxToken> dotToken) noexcept
 {
     assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
-    SimpleNameExpressionSyntaxPtr ptrRight = parseIdentifierName();
+    SharedPtr<SimpleNameExpressionSyntax> ptrRight = parseIdentifierName();
     assert(ptrRight != nullptr);
     return std::make_shared<QualifiedNameExpressionSyntax>(std::move(left), std::move(dotToken), std::move(ptrRight));
 }
 
-IdentifierNameExpressionSyntaxPtr DelphiParser::parseIdentifierName() noexcept
+SharedPtr<IdentifierNameExpressionSyntax> DelphiParser::parseIdentifierName() noexcept
 {
-    SyntaxTokenPtr ptrCurrentToken = currentToken();
+    SharedPtr<SyntaxToken> ptrCurrentToken = currentToken();
 
     if (ptrCurrentToken->syntaxKind() == SyntaxKind::IdentifierToken)
     {
-        SyntaxTokenPtr identifier = takeToken();
+        SharedPtr<SyntaxToken> identifier = takeToken();
         return std::make_shared<IdentifierNameExpressionSyntax>(std::move(identifier));
     }
     else

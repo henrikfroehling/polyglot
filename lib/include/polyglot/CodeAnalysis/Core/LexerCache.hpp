@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_CORE_LEXERCACHE_H
 
 #include <functional>
-#include <memory>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/TextKeyedCache.hpp"

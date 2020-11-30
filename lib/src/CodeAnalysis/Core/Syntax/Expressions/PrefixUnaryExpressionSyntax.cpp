@@ -5,16 +5,16 @@ namespace polyglot::CodeAnalysis
 {
 
 PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxTokenPtr operatorToken,
-                                                         ExpressionSyntaxPtr operandExpression) noexcept
+                                                         SharedPtr<SyntaxToken> operatorToken,
+                                                         SharedPtr<ExpressionSyntax> operandExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _ptrOperatorToken{std::move(operatorToken)},
       _ptrOperandExpression{std::move(operandExpression)}
 {}
 
-PrefixUnaryExpressionSyntaxPtr PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                                   SyntaxTokenPtr operatorToken,
-                                                                   ExpressionSyntaxPtr operandExpression) noexcept
+SharedPtr<PrefixUnaryExpressionSyntax> PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                                           SharedPtr<SyntaxToken> operatorToken,
+                                                                           SharedPtr<ExpressionSyntax> operandExpression) noexcept
 {
     assert(operatorToken != nullptr);
     assert(operandExpression != nullptr);

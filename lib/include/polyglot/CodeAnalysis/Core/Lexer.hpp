@@ -33,33 +33,33 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    inline SyntaxTokenPtr lex() noexcept { return lex(_mode); }
+    inline SharedPtr<SyntaxToken> lex() noexcept { return lex(_mode); }
     inline const TextWindow& textWindow() const noexcept { return _textWindow; }
     void preLex() noexcept;
-    const SyntaxTokenPtr& currentToken() noexcept;
-    SyntaxTokenPtr takeToken(SyntaxKind syntaxKind) noexcept;
-    SyntaxTokenPtr takeToken() noexcept;
-    SyntaxTokenPtr takeContextualToken(SyntaxKind syntaxKind) noexcept;
-    const SyntaxTokenPtr& peekToken(pg_size n) noexcept;
+    const SharedPtr<SyntaxToken>& currentToken() noexcept;
+    SharedPtr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
+    SharedPtr<SyntaxToken> takeToken() noexcept;
+    SharedPtr<SyntaxToken> takeContextualToken(SyntaxKind syntaxKind) noexcept;
+    const SharedPtr<SyntaxToken>& peekToken(pg_size n) noexcept;
     void advance() noexcept;
     inline void setMode(LexerMode mode) noexcept { _mode = mode; }
 
 protected:
-    explicit Lexer(SourceTextPtr sourceText) noexcept;
+    explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
-    virtual SyntaxTokenPtr lex(LexerMode mode) noexcept = 0;
-    void addLexedToken(SyntaxTokenPtr token) noexcept;
+    virtual SharedPtr<SyntaxToken> lex(LexerMode mode) noexcept = 0;
+    void addLexedToken(SharedPtr<SyntaxToken> token) noexcept;
 
 protected:
     TextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<SyntaxNodePtr> _leadingTrivia;
-    std::vector<SyntaxNodePtr> _trailingTrivia;
-    std::vector<SyntaxTokenPtr> _lexedTokens;
+    std::vector<SharedPtr<SyntaxNode>> _leadingTrivia;
+    std::vector<SharedPtr<SyntaxNode>> _trailingTrivia;
+    std::vector<SharedPtr<SyntaxToken>> _lexedTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
-    SyntaxTokenPtr _ptrCurrentToken;
+    SharedPtr<SyntaxToken> _ptrCurrentToken;
     DirectiveStack _directives;
 };
 

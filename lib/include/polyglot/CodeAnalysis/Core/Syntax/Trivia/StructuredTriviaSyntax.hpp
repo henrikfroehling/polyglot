@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_STRUCTUREDTRIVIASYNTAX_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_STRUCTUREDTRIVIASYNTAX_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
@@ -15,8 +14,6 @@ public:
     explicit StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~StructuredTriviaSyntax() noexcept = default;
 };
-
-using StructuredTriviaSyntaxPtr = std::shared_ptr<StructuredTriviaSyntax>;
 
 } // end namespace polyglot::CodeAnalysis
 

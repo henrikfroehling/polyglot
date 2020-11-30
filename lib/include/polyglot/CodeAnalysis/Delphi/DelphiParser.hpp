@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
-#include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
@@ -30,30 +29,30 @@ class POLYGLOT_API DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;
-    explicit DelphiParser(SourceTextPtr sourceText) noexcept;
+    explicit DelphiParser(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
-    std::shared_ptr<DelphiSyntaxFacts> _ptrSyntaxFacts;
+    SharedPtr<DelphiSyntaxFacts> _ptrSyntaxFacts;
 
 private:
-    SyntaxNodePtr parseRoot() noexcept override;
-    DelphiCompilationUnitSyntaxPtr parseCompilationUnit() noexcept;
-    DelphiUnitModuleSyntaxPtr parseUnitModule() noexcept;
-    DelphiUnitHeadingSyntaxPtr parseUnitHeading() noexcept;
-    DelphiUnitInterfaceSectionSyntaxPtr parseUnitInterfaceSection() noexcept;
-    DelphiUnitImplementationSectionSyntaxPtr parseUnitImplementationSection() noexcept;
-    DelphiUnitInitializationSectionSyntaxPtr parseUnitInitializationSection() noexcept;
-    DelphiUnitFinalizationSectionSyntaxPtr parseUnitFinalizationSection() noexcept;
-    DelphiPackageModuleSyntaxPtr parsePackageModule() noexcept;
-    DelphiProgramModuleSyntaxPtr parseProgramModule() noexcept;
-    DelphiUsesClauseSyntaxPtr parseUsesClause() noexcept;
-    DelphiUnitReferenceDeclarationSyntaxPtr parseUnitReference() noexcept;
-    NameExpressionSyntaxPtr parseQualifiedName() noexcept;
+    SharedPtr<SyntaxNode> parseRoot() noexcept override;
+    SharedPtr<DelphiCompilationUnitSyntax> parseCompilationUnit() noexcept;
+    SharedPtr<DelphiUnitModuleSyntax> parseUnitModule() noexcept;
+    SharedPtr<DelphiUnitHeadingSyntax> parseUnitHeading() noexcept;
+    SharedPtr<DelphiUnitInterfaceSectionSyntax> parseUnitInterfaceSection() noexcept;
+    SharedPtr<DelphiUnitImplementationSectionSyntax> parseUnitImplementationSection() noexcept;
+    SharedPtr<DelphiUnitInitializationSectionSyntax> parseUnitInitializationSection() noexcept;
+    SharedPtr<DelphiUnitFinalizationSectionSyntax> parseUnitFinalizationSection() noexcept;
+    SharedPtr<DelphiPackageModuleSyntax> parsePackageModule() noexcept;
+    SharedPtr<DelphiProgramModuleSyntax> parseProgramModule() noexcept;
+    SharedPtr<DelphiUsesClauseSyntax> parseUsesClause() noexcept;
+    SharedPtr<DelphiUnitReferenceDeclarationSyntax> parseUnitReference() noexcept;
+    SharedPtr<NameExpressionSyntax> parseQualifiedName() noexcept;
 
-    NameExpressionSyntaxPtr parseQualifiedNameRight(NameExpressionSyntaxPtr left,
-                                                    SyntaxTokenPtr dotToken) noexcept;
+    SharedPtr<NameExpressionSyntax> parseQualifiedNameRight(SharedPtr<NameExpressionSyntax> left,
+                                                            SharedPtr<SyntaxToken> dotToken) noexcept;
 
-    IdentifierNameExpressionSyntaxPtr parseIdentifierName() noexcept;
+    SharedPtr<IdentifierNameExpressionSyntax> parseIdentifierName() noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

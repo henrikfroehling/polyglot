@@ -5,12 +5,12 @@
 namespace polyglot::CodeAnalysis
 {
 
-IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(SyntaxTokenPtr identfier) noexcept
+IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(SharedPtr<SyntaxToken> identfier) noexcept
     : SimpleNameExpressionSyntax{SyntaxKind::IdentifierNameExpression},
       _ptrIdentifier{std::move(identfier)}
 {}
 
-IdentifierNameExpressionSyntaxPtr IdentifierNameExpressionSyntax::create(SyntaxTokenPtr identifier) noexcept
+SharedPtr<IdentifierNameExpressionSyntax> IdentifierNameExpressionSyntax::create(SharedPtr<SyntaxToken> identifier) noexcept
 {
     assert(identifier != nullptr);
     assert(identifier->syntaxKind() == SyntaxKind::IdentifierToken);

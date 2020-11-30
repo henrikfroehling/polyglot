@@ -5,21 +5,21 @@ namespace polyglot::CodeAnalysis
 {
 
 EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       SyntaxTokenPtr startToken,
-                                                       SyntaxTokenPtr endIfKeyword,
-                                                       SyntaxTokenPtr endOfDirectiveToken,
+                                                       SharedPtr<SyntaxToken> startToken,
+                                                       SharedPtr<SyntaxToken> endIfKeyword,
+                                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-    _ptrStartToken{std::move(startToken)},
-    _ptrEndIfKeyword{std::move(endIfKeyword)},
-    _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
-    _isActive{isActive}
+      _ptrStartToken{std::move(startToken)},
+      _ptrEndIfKeyword{std::move(endIfKeyword)},
+      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _isActive{isActive}
 {}
 
-EndIfDirectiveTriviaSyntaxPtr EndIfDirectiveTriviaSyntax::create(SyntaxTokenPtr startToken,
-                                                                 SyntaxTokenPtr endIfKeyword,
-                                                                 SyntaxTokenPtr endOfDirectiveToken,
-                                                                 bool isActive) noexcept
+SharedPtr<EndIfDirectiveTriviaSyntax> EndIfDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
+                                                                         SharedPtr<SyntaxToken> endIfKeyword,
+                                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                                         bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(endIfKeyword != nullptr);

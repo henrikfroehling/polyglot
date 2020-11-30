@@ -4,9 +4,9 @@
 namespace polyglot::CodeAnalysis
 {
 
-QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSyntaxPtr leftExpression,
-                                                             SyntaxTokenPtr dotToken,
-                                                             SimpleNameExpressionSyntaxPtr rightExpression) noexcept
+QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(SharedPtr<NameExpressionSyntax> leftExpression,
+                                                             SharedPtr<SyntaxToken> dotToken,
+                                                             SharedPtr<SimpleNameExpressionSyntax> rightExpression) noexcept
     : NameExpressionSyntax{SyntaxKind::QualifiedNameExpression},
       _ptrLeftExpression{std::move(leftExpression)},
       _ptrDotToken{std::move(dotToken)},
