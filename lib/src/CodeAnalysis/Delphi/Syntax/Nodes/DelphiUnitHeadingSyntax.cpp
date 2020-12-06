@@ -4,13 +4,13 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(SharedPtr<SyntaxToken> unitKeyword,
-                                                 SharedPtr<NameExpressionSyntax> name,
-                                                 SharedPtr<SyntaxToken> semiColonToken) noexcept
+DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(Ptr<SyntaxToken> unitKeyword,
+                                                 Ptr<NameExpressionSyntax> name,
+                                                 Ptr<SyntaxToken> semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitHeading},
-      _ptrUnitKeyword{std::move(unitKeyword)},
-      _ptrName{std::move(name)},
-      _ptrSemiColonToken{std::move(semiColonToken)}
+      _ptrUnitKeyword{unitKeyword},
+      _ptrName{name},
+      _ptrSemiColonToken{semiColonToken}
 {}
 
 } // end namespace polyglot::CodeAnalysis

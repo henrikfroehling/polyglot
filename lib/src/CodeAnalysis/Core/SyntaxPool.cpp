@@ -22,21 +22,21 @@ Ptr<SyntaxTrivia> SyntaxPool::createSyntaxTrivia() noexcept
     return _syntaxTrivia.back().get();
 }
 
-Ptr<SyntaxNode> SyntaxPool::add(UniquePtr<SyntaxNode> syntaxNode) noexcept
+Ptr<SyntaxNode> SyntaxPool::addSyntaxNode(UniquePtr<SyntaxNode> syntaxNode) noexcept
 {
     assert(syntaxNode != nullptr);
     _syntaxNodes.push_back(std::move(syntaxNode));
     return _syntaxNodes.back().get();
 }
 
-Ptr<SyntaxToken> SyntaxPool::add(UniquePtr<SyntaxToken> syntaxToken) noexcept
+Ptr<SyntaxToken> SyntaxPool::addSyntaxToken(UniquePtr<SyntaxToken> syntaxToken) noexcept
 {
     assert(syntaxToken != nullptr);
     _syntaxTokens.push_back(std::move(syntaxToken));
     return _syntaxTokens.back().get();
 }
 
-Ptr<SyntaxTrivia> SyntaxPool::add(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept
+Ptr<SyntaxTrivia> SyntaxPool::addSyntaxTrivia(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept
 {
     assert(syntaxTrivia != nullptr);
     _syntaxTrivia.push_back(std::move(syntaxTrivia));

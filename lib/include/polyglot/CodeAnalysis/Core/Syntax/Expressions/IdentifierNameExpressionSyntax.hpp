@@ -12,14 +12,14 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API IdentifierNameExpressionSyntax : public SimpleNameExpressionSyntax
 {
 public:
-    explicit IdentifierNameExpressionSyntax(SharedPtr<SyntaxToken> identifier) noexcept;
+    explicit IdentifierNameExpressionSyntax(Ptr<SyntaxToken> identifier) noexcept;
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
-    virtual const SharedPtr<SyntaxToken>& identifier() const noexcept override { return _ptrIdentifier; }
+    virtual const Ptr<SyntaxToken> identifier() const noexcept override { return _ptrIdentifier; }
 
-    static SharedPtr<IdentifierNameExpressionSyntax> create(SharedPtr<SyntaxToken> identifier) noexcept;
+    static Ptr<IdentifierNameExpressionSyntax> create(Ptr<SyntaxToken> identifier) noexcept;
 
 protected:
-    SharedPtr<SyntaxToken> _ptrIdentifier;
+    Ptr<SyntaxToken> _ptrIdentifier;
 };
 
 } // end namespace polyglot::CodeAnalysis

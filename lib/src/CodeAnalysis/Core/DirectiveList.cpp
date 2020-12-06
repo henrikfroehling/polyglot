@@ -10,14 +10,14 @@ static SharedPtr<DirectiveList> EMPTY = []()
 }();
 
 DirectiveList::DirectiveList() noexcept
-    : _ptrHead{ nullptr },
-      _ptrTail{ nullptr }
+    : _ptrHead{nullptr},
+      _ptrTail{nullptr}
 {}
 
-DirectiveList::DirectiveList(SharedPtr<Directive> head,
+DirectiveList::DirectiveList(Ptr<Directive> head,
                              SharedPtr<DirectiveList> tail) noexcept
-    : _ptrHead{ std::move(head) },
-      _ptrTail{ std::move(tail) }
+    : _ptrHead{head},
+      _ptrTail{std::move(tail)}
 {
     assert(_ptrTail != nullptr);
 }
@@ -32,10 +32,10 @@ SharedPtr<DirectiveList> DirectiveList::empty() noexcept
     return EMPTY;
 }
 
-SharedPtr<DirectiveList> DirectiveList::create(SharedPtr<Directive> directive,
+SharedPtr<DirectiveList> DirectiveList::create(Ptr<Directive> directive,
                                                SharedPtr<DirectiveList> tail) noexcept
 {
-    return std::make_shared<DirectiveList>(std::move(directive), std::move(tail));
+    return std::make_shared<DirectiveList>(directive, std::move(tail));
 }
 
 bool operator==(const DirectiveList& lhs,

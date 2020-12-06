@@ -1,22 +1,23 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
 ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                                             SharedPtr<SyntaxToken> openParenthesisToken,
-                                                             SharedPtr<ExpressionSyntax> expression,
-                                                             SharedPtr<SyntaxToken> closeParenthesisToken) noexcept
+                                                             Ptr<SyntaxToken> openParenthesisToken,
+                                                             Ptr<ExpressionSyntax> expression,
+                                                             Ptr<SyntaxToken> closeParenthesisToken) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrOpenParenthesisToken{std::move(openParenthesisToken)},
-      _ptrExpression{std::move(expression)},
-      _ptrCloseParenthesisToken{std::move(closeParenthesisToken)}
+      _ptrOpenParenthesisToken{openParenthesisToken},
+      _ptrExpression{expression},
+      _ptrCloseParenthesisToken{closeParenthesisToken}
 {}
 
-SharedPtr<ParenthesizedExpressionSyntax> ParenthesizedExpressionSyntax::create(SharedPtr<SyntaxToken> openParenthesisToken,
-                                                                               SharedPtr<ExpressionSyntax> expression,
-                                                                               SharedPtr<SyntaxToken> closeParenthesisToken) noexcept
+Ptr<ParenthesizedExpressionSyntax> ParenthesizedExpressionSyntax::create(Ptr<SyntaxToken> openParenthesisToken,
+                                                                         Ptr<ExpressionSyntax> expression,
+                                                                         Ptr<SyntaxToken> closeParenthesisToken) noexcept
 {
     assert(openParenthesisToken != nullptr);
     assert(openParenthesisToken->syntaxKind() == SyntaxKind::OpenParenthesisToken);
@@ -24,8 +25,10 @@ SharedPtr<ParenthesizedExpressionSyntax> ParenthesizedExpressionSyntax::create(S
     assert(closeParenthesisToken != nullptr);
     assert(closeParenthesisToken->syntaxKind() == SyntaxKind::CloseParenthesisToken);
 
-    return std::make_shared<ParenthesizedExpressionSyntax>(SyntaxKind::ParenthesizedExpression, std::move(openParenthesisToken),
-                                                           std::move(expression), std::move(closeParenthesisToken));
+    auto ptrParenthesizedExpression = std::make_unique<ParenthesizedExpressionSyntax>(SyntaxKind::ParenthesizedExpression, openParenthesisToken,
+                                                                                      expression, closeParenthesisToken);
+
+    return static_cast<ParenthesizedExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrParenthesizedExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

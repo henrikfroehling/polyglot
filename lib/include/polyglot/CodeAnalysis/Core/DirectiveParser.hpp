@@ -18,10 +18,10 @@ public:
     DirectiveParser() = delete;
     virtual ~DirectiveParser() noexcept = default;
 
-    virtual SharedPtr<SyntaxNode> parseDirective(bool isActive,
-                                                 bool endIsActive,
-                                                 bool isFirstAfterTokenInFile,
-                                                 bool isAfterNonWhitespaceOnLine) noexcept = 0;
+    virtual Ptr<SyntaxNode> parseDirective(bool isActive,
+                                           bool endIsActive,
+                                           bool isFirstAfterTokenInFile,
+                                           bool isAfterNonWhitespaceOnLine) noexcept = 0;
 
 protected:
     explicit DirectiveParser(SharedPtr<Lexer> lexer,
@@ -33,7 +33,7 @@ protected:
     SharedPtr<SyntaxFacts> _ptrSyntaxFacts;
 
 private:
-    inline SharedPtr<SyntaxNode> parseRoot() noexcept override { return nullptr; }
+    inline Ptr<SyntaxNode> parseRoot() noexcept override { return nullptr; }
 };
 
 } // end namespace polyglot::CodeAnalysis

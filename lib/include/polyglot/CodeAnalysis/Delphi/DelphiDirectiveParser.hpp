@@ -22,52 +22,52 @@ public:
                                    const DirectiveStack& context,
                                    SharedPtr<SyntaxFacts> syntaxFacts) noexcept;
 
-    SharedPtr<SyntaxNode> parseDirective(bool isActive,
-                                         bool endIsActive,
-                                         bool isFirstAfterTokenInFile,
-                                         bool isAfterNonWhitespaceOnLine) noexcept override final;
+    Ptr<SyntaxNode> parseDirective(bool isActive,
+                                   bool endIsActive,
+                                   bool isFirstAfterTokenInFile,
+                                   bool isAfterNonWhitespaceOnLine) noexcept override final;
 
 private:
-    SharedPtr<DirectiveTriviaSyntax> parseIfDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                      SharedPtr<SyntaxToken> keyword,
-                                                      bool isActive) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseIfDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                Ptr<SyntaxToken> keyword,
+                                                bool isActive) noexcept;
 
-    SharedPtr<DirectiveTriviaSyntax> parseElseDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                        SharedPtr<SyntaxToken> keyword,
-                                                        bool isActive,
-                                                        bool endIsActive) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseElseDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                  Ptr<SyntaxToken> keyword,
+                                                  bool isActive,
+                                                  bool endIsActive) noexcept;
 
-    SharedPtr<DirectiveTriviaSyntax> parseElseIfDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                          SharedPtr<SyntaxToken> keyword,
-                                                          bool isActive,
-                                                          bool endIsActive) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseElseIfDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                    Ptr<SyntaxToken> keyword,
+                                                    bool isActive,
+                                                    bool endIsActive) noexcept;
 
-    SharedPtr<DirectiveTriviaSyntax> parseEndIfDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                         SharedPtr<SyntaxToken> keyword,
-                                                         bool isActive,
-                                                         bool endIsActive) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseEndIfDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                   Ptr<SyntaxToken> keyword,
+                                                   bool isActive,
+                                                   bool endIsActive) noexcept;
 
-    SharedPtr<DirectiveTriviaSyntax> parseDefineOrUndefDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                                 SharedPtr<SyntaxToken> keyword,
-                                                                 bool isActive,
-                                                                 bool isFollowingToken) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseDefineOrUndefDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                           Ptr<SyntaxToken> keyword,
+                                                           bool isActive,
+                                                           bool isFollowingToken) noexcept;
 
-    SharedPtr<DirectiveTriviaSyntax> parseRegionDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                          SharedPtr<SyntaxToken> keyword,
-                                                          bool isActive) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseRegionDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                    Ptr<SyntaxToken> keyword,
+                                                    bool isActive) noexcept;
 
-    SharedPtr<DirectiveTriviaSyntax> parseEndRegionDirective(SharedPtr<SyntaxToken> openBraceDollarToken,
-                                                             SharedPtr<SyntaxToken> keyword,
-                                                             bool isActive) noexcept;
+    Ptr<DirectiveTriviaSyntax> parseEndRegionDirective(Ptr<SyntaxToken> openBraceDollarToken,
+                                                       Ptr<SyntaxToken> keyword,
+                                                       bool isActive) noexcept;
 
-    SharedPtr<SyntaxToken> parseEndOfDirective() noexcept;
-    SharedPtr<ExpressionSyntax> parseExpression() noexcept;
-    SharedPtr<ExpressionSyntax> parseLogicalOr() noexcept;
-    SharedPtr<ExpressionSyntax> parseLogicalAnd() noexcept;
-    SharedPtr<ExpressionSyntax> parseEquality() noexcept;
-    SharedPtr<ExpressionSyntax> parseLogicalNot() noexcept;
-    SharedPtr<ExpressionSyntax> parsePrimary() noexcept;
-    bool evaluateBool(const SharedPtr<ExpressionSyntax>& expression) const noexcept;
+    Ptr<SyntaxToken> parseEndOfDirective() noexcept;
+    Ptr<ExpressionSyntax> parseExpression() noexcept;
+    Ptr<ExpressionSyntax> parseLogicalOr() noexcept;
+    Ptr<ExpressionSyntax> parseLogicalAnd() noexcept;
+    Ptr<ExpressionSyntax> parseEquality() noexcept;
+    Ptr<ExpressionSyntax> parseLogicalNot() noexcept;
+    Ptr<ExpressionSyntax> parsePrimary() noexcept;
+    bool evaluateBool(const Ptr<ExpressionSyntax> expression) const noexcept;
     bool isDefined(std::string_view id) const noexcept;
 };
 

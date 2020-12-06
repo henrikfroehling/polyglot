@@ -21,19 +21,19 @@ public:
     explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> lex(LexerMode mode) noexcept override;
+    Ptr<SyntaxToken> lex(LexerMode mode) noexcept override;
     TokenInfo quickScanSyntaxToken() noexcept;
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
-                         std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept;
+                         std::vector<Ptr<SyntaxNode>>& triviaList) noexcept;
 
-    SharedPtr<SyntaxTrivia> scanWhitespace() noexcept;
+    Ptr<SyntaxTrivia> scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
     void scanMultiLineComment(bool& isTerminated) noexcept;
-    SharedPtr<SyntaxTrivia> scanEndOfLine() noexcept;
+    Ptr<SyntaxTrivia> scanEndOfLine() noexcept;
     void scanSyntaxToken(TokenInfo& tokenInfo) noexcept;
     void scanStringLiteral(TokenInfo& tokenInfo) noexcept;
     void scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept;
@@ -46,19 +46,19 @@ private:
 
     void lexDirectiveAndExcludedTrivia(bool afterFirstToken,
                                        bool afterNonWhitespaceOnLine,
-                                       std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept;
+                                       std::vector<Ptr<SyntaxNode>>& triviaList) noexcept;
 
-    SharedPtr<SyntaxNode> lexSingleDirective(bool isActive,
-                                             bool endIsActive,
-                                             bool afterFirstToken,
-                                             bool afterNonWhitespaceOnLine,
-                                             std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept;
+    Ptr<SyntaxNode> lexSingleDirective(bool isActive,
+                                       bool endIsActive,
+                                       bool afterFirstToken,
+                                       bool afterNonWhitespaceOnLine,
+                                       std::vector<Ptr<SyntaxNode>>& triviaList) noexcept;
 
     void lexExludedDirectivesAndTrivia(bool endIsActive) noexcept;
-    SharedPtr<SyntaxToken> lexDirectiveToken() noexcept;
+    Ptr<SyntaxToken> lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
     void lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept;
-    SharedPtr<SyntaxNode> lexDirectiveTrivia() noexcept;
+    Ptr<SyntaxNode> lexDirectiveTrivia() noexcept;
 
 private:
     SharedPtr<DelphiSyntaxFacts> _ptrSyntaxFacts;

@@ -17,17 +17,17 @@ public:
     DelphiPackageModuleSyntax() noexcept;
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
-    inline const SharedPtr<DelphiPackageHeadingSyntax>& heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(SharedPtr<DelphiPackageHeadingSyntax> heading) noexcept { _ptrHeading = std::move(heading); }
-    inline const SharedPtr<DelphiPackageRequiresClauseSyntax>& requiresClause() const noexcept { return _ptrRequiresClause; }
-    inline void setRequiresClause(SharedPtr<DelphiPackageRequiresClauseSyntax> requiresClause) noexcept { _ptrRequiresClause = std::move(requiresClause); }
-    inline const SharedPtr<DelphiPackageContainsClauseSyntax>& containsClause() const noexcept { return _ptrContainsClause; }
-    inline void setContainsClause(SharedPtr<DelphiPackageContainsClauseSyntax> containsClause) noexcept { _ptrContainsClause = std::move(containsClause); }
+    inline const Ptr<DelphiPackageHeadingSyntax> heading() const noexcept { return _ptrHeading; }
+    inline void setHeading(Ptr<DelphiPackageHeadingSyntax> heading) noexcept { _ptrHeading = heading; }
+    inline const Ptr<DelphiPackageRequiresClauseSyntax> requiresClause() const noexcept { return _ptrRequiresClause; }
+    inline void setRequiresClause(Ptr<DelphiPackageRequiresClauseSyntax> requiresClause) noexcept { _ptrRequiresClause = requiresClause; }
+    inline const Ptr<DelphiPackageContainsClauseSyntax>& containsClause() const noexcept { return _ptrContainsClause; }
+    inline void setContainsClause(Ptr<DelphiPackageContainsClauseSyntax> containsClause) noexcept { _ptrContainsClause = containsClause; }
 
 private:
-    SharedPtr<DelphiPackageHeadingSyntax> _ptrHeading;
-    SharedPtr<DelphiPackageRequiresClauseSyntax> _ptrRequiresClause;
-    SharedPtr<DelphiPackageContainsClauseSyntax> _ptrContainsClause;
+    Ptr<DelphiPackageHeadingSyntax> _ptrHeading;
+    Ptr<DelphiPackageRequiresClauseSyntax> _ptrRequiresClause;
+    Ptr<DelphiPackageContainsClauseSyntax> _ptrContainsClause;
 };
 
 using DelphiPackageModuleSyntaxPtr = std::shared_ptr<DelphiPackageModuleSyntax>;

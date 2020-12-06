@@ -14,16 +14,16 @@ class POLYGLOT_API LiteralExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit LiteralExpressionSyntax(SyntaxKind syntaxKind,
-                                     SharedPtr<SyntaxToken> token) noexcept;
+                                     Ptr<SyntaxToken> token) noexcept;
 
     virtual ~LiteralExpressionSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& token() const noexcept { return _ptrToken; }
+    inline virtual const Ptr<SyntaxToken> token() const noexcept { return _ptrToken; }
 
-    static SharedPtr<LiteralExpressionSyntax> create(SyntaxKind syntaxKind,
-                                                     SharedPtr<SyntaxToken> token) noexcept;
+    static Ptr<LiteralExpressionSyntax> create(SyntaxKind syntaxKind,
+                                               Ptr<SyntaxToken> token) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrToken;
+    Ptr<SyntaxToken> _ptrToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

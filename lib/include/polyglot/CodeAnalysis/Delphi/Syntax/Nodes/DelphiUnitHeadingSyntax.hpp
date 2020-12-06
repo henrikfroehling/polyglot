@@ -13,19 +13,19 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitHeadingSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitHeadingSyntax(SharedPtr<SyntaxToken> unitKeyword,
-                                     SharedPtr<NameExpressionSyntax> name,
-                                     SharedPtr<SyntaxToken> semiColonToken) noexcept;
+    explicit DelphiUnitHeadingSyntax(Ptr<SyntaxToken> unitKeyword,
+                                     Ptr<NameExpressionSyntax> name,
+                                     Ptr<SyntaxToken> semiColonToken) noexcept;
 
     virtual ~DelphiUnitHeadingSyntax() noexcept = default;
-    const SharedPtr<SyntaxToken>& unitKeyword() const noexcept { return _ptrUnitKeyword; }
-    const SharedPtr<NameExpressionSyntax>& name() const noexcept { return _ptrName; }
-    const SharedPtr<SyntaxToken>& semiColonToken() const noexcept { return _ptrSemiColonToken; }
+    const Ptr<SyntaxToken> unitKeyword() const noexcept { return _ptrUnitKeyword; }
+    const Ptr<NameExpressionSyntax> name() const noexcept { return _ptrName; }
+    const Ptr<SyntaxToken> semiColonToken() const noexcept { return _ptrSemiColonToken; }
 
 private:
-    SharedPtr<SyntaxToken> _ptrUnitKeyword;
-    SharedPtr<NameExpressionSyntax> _ptrName;
-    SharedPtr<SyntaxToken> _ptrSemiColonToken;
+    Ptr<SyntaxToken> _ptrUnitKeyword;
+    Ptr<NameExpressionSyntax> _ptrName;
+    Ptr<SyntaxToken> _ptrSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

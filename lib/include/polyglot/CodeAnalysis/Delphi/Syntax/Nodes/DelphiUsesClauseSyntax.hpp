@@ -14,26 +14,26 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUsesClauseSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUsesClauseSyntax(SharedPtr<SyntaxToken> usesKeyword,
-                                    std::vector<SharedPtr<DelphiUnitReferenceDeclarationSyntax>> unitReferences,
-                                    SharedPtr<SyntaxToken> semiColonToken) noexcept;
+    explicit DelphiUsesClauseSyntax(Ptr<SyntaxToken> usesKeyword,
+                                    std::vector<Ptr<DelphiUnitReferenceDeclarationSyntax>> unitReferences,
+                                    Ptr<SyntaxToken> semiColonToken) noexcept;
 
     virtual ~DelphiUsesClauseSyntax() noexcept = default;
 
-    inline const SharedPtr<SyntaxToken>& usesKeyword() const noexcept { return _ptrUsesKeyword; }
-    inline const std::vector<SharedPtr<DelphiUnitReferenceDeclarationSyntax>>& unitReferences() const noexcept { return _unitReferences; }
+    inline const Ptr<SyntaxToken> usesKeyword() const noexcept { return _ptrUsesKeyword; }
+    inline const std::vector<Ptr<DelphiUnitReferenceDeclarationSyntax>>& unitReferences() const noexcept { return _unitReferences; }
 
-    inline void addUnitReference(SharedPtr<DelphiUnitReferenceDeclarationSyntax> unitReference) noexcept
+    inline void addUnitReference(Ptr<DelphiUnitReferenceDeclarationSyntax> unitReference) noexcept
     {
-        _unitReferences.push_back(std::move(unitReference));
+        _unitReferences.push_back(unitReference);
     }
 
-    inline const SharedPtr<SyntaxToken>& semiColonToken() const noexcept { return _ptrSemiColonToken; }
+    inline const Ptr<SyntaxToken>& semiColonToken() const noexcept { return _ptrSemiColonToken; }
 
 private:
-    SharedPtr<SyntaxToken> _ptrUsesKeyword;
-    std::vector<SharedPtr<DelphiUnitReferenceDeclarationSyntax>> _unitReferences;
-    SharedPtr<SyntaxToken> _ptrSemiColonToken;
+    Ptr<SyntaxToken> _ptrUsesKeyword;
+    std::vector<Ptr<DelphiUnitReferenceDeclarationSyntax>> _unitReferences;
+    Ptr<SyntaxToken> _ptrSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

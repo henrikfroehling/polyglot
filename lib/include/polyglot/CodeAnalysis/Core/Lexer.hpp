@@ -33,33 +33,33 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    inline SharedPtr<SyntaxToken> lex() noexcept { return lex(_mode); }
+    inline Ptr<SyntaxToken> lex() noexcept { return lex(_mode); }
     inline const TextWindow& textWindow() const noexcept { return _textWindow; }
     void preLex() noexcept;
-    const SharedPtr<SyntaxToken>& currentToken() noexcept;
-    SharedPtr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
-    SharedPtr<SyntaxToken> takeToken() noexcept;
-    SharedPtr<SyntaxToken> takeContextualToken(SyntaxKind syntaxKind) noexcept;
-    const SharedPtr<SyntaxToken>& peekToken(pg_size n) noexcept;
+    const Ptr<SyntaxToken> currentToken() noexcept;
+    Ptr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
+    Ptr<SyntaxToken> takeToken() noexcept;
+    Ptr<SyntaxToken> takeContextualToken(SyntaxKind syntaxKind) noexcept;
+    const Ptr<SyntaxToken> peekToken(pg_size n) noexcept;
     void advance() noexcept;
     inline void setMode(LexerMode mode) noexcept { _mode = mode; }
 
 protected:
     explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
-    virtual SharedPtr<SyntaxToken> lex(LexerMode mode) noexcept = 0;
-    void addLexedToken(SharedPtr<SyntaxToken> token) noexcept;
+    virtual Ptr<SyntaxToken> lex(LexerMode mode) noexcept = 0;
+    void addLexedToken(Ptr<SyntaxToken> token) noexcept;
 
 protected:
     TextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<SharedPtr<SyntaxNode>> _leadingTrivia;
-    std::vector<SharedPtr<SyntaxNode>> _trailingTrivia;
-    std::vector<SharedPtr<SyntaxToken>> _lexedTokens;
+    std::vector<Ptr<SyntaxNode>> _leadingTrivia;
+    std::vector<Ptr<SyntaxNode>> _trailingTrivia;
+    std::vector<Ptr<SyntaxToken>> _lexedTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
-    SharedPtr<SyntaxToken> _ptrCurrentToken;
+    Ptr<SyntaxToken> _ptrCurrentToken;
     DirectiveStack _directives;
 };
 

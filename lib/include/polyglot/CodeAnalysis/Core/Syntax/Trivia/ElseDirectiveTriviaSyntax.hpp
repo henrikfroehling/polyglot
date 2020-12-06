@@ -14,29 +14,29 @@ class POLYGLOT_API ElseDirectiveTriviaSyntax : public BranchingDirectiveTriviaSy
 {
 public:
     explicit ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                       SharedPtr<SyntaxToken> startToken,
-                                       SharedPtr<SyntaxToken> elseKeyword,
-                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                       Ptr<SyntaxToken> startToken,
+                                       Ptr<SyntaxToken> elseKeyword,
+                                       Ptr<SyntaxToken> endOfDirectiveToken,
                                        bool isActive,
                                        bool isBranchTaken) noexcept;
 
     virtual ~ElseDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const SharedPtr<SyntaxToken>& elseKeyword() const noexcept { return _ptrElseKeyword; }
-    inline virtual const SharedPtr<SyntaxToken>& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual const Ptr<SyntaxToken> elseKeyword() const noexcept { return _ptrElseKeyword; }
+    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
 
-    static SharedPtr<ElseDirectiveTriviaSyntax> create(SharedPtr<SyntaxToken> startToken,
-                                                       SharedPtr<SyntaxToken> elseKeyword,
-                                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                       bool isActive,
-                                                       bool isBranchTaken) noexcept;
+    static Ptr<ElseDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
+                                                 Ptr<SyntaxToken> elseKeyword,
+                                                 Ptr<SyntaxToken> endOfDirectiveToken,
+                                                 bool isActive,
+                                                 bool isBranchTaken) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrStartToken;
-    SharedPtr<SyntaxToken> _ptrElseKeyword;
-    SharedPtr<SyntaxToken> _ptrEndOfDirectiveToken;
+    Ptr<SyntaxToken> _ptrStartToken;
+    Ptr<SyntaxToken> _ptrElseKeyword;
+    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
 };

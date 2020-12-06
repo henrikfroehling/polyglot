@@ -12,17 +12,17 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API SyntaxTree
 {
 public:
-    SyntaxTree() noexcept = default;
+    SyntaxTree() noexcept;
     virtual ~SyntaxTree() noexcept = default;
-    inline const SharedPtr<SyntaxNode>& root() const noexcept { return _ptrRoot; }
+    inline const Ptr<SyntaxNode> root() const noexcept { return _ptrRoot; }
 
 protected:
     explicit SyntaxTree(SharedPtr<SourceText> sourceText,
-                        SharedPtr<SyntaxNode> root) noexcept;
+                        Ptr<SyntaxNode> root) noexcept;
 
 protected:
     SharedPtr<SourceText> _ptrSourceText;
-    SharedPtr<SyntaxNode> _ptrRoot;
+    Ptr<SyntaxNode> _ptrRoot;
 };
 
 } // end namespace polyglot::CodeAnalysis

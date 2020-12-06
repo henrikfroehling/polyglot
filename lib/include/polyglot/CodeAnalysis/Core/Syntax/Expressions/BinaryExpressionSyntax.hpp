@@ -14,24 +14,24 @@ class POLYGLOT_API BinaryExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit BinaryExpressionSyntax(SyntaxKind syntaxKind,
-                                    SharedPtr<ExpressionSyntax> leftExpression,
-                                    SharedPtr<SyntaxToken> operatorToken,
-                                    SharedPtr<ExpressionSyntax> rightExpression) noexcept;
+                                    Ptr<ExpressionSyntax> leftExpression,
+                                    Ptr<SyntaxToken> operatorToken,
+                                    Ptr<ExpressionSyntax> rightExpression) noexcept;
 
     virtual ~BinaryExpressionSyntax() noexcept = default;
-    inline virtual const SharedPtr<ExpressionSyntax>& leftExpression() const noexcept { return _ptrLeftExpression; }
-    inline virtual const SharedPtr<SyntaxToken>& operatorToken() const noexcept { return _ptrOperatorToken; }
-    inline virtual const SharedPtr<ExpressionSyntax>& rightExpression() const noexcept { return _ptrRightExpression; }
+    inline virtual const Ptr<ExpressionSyntax>& leftExpression() const noexcept { return _ptrLeftExpression; }
+    inline virtual const Ptr<SyntaxToken>& operatorToken() const noexcept { return _ptrOperatorToken; }
+    inline virtual const Ptr<ExpressionSyntax>& rightExpression() const noexcept { return _ptrRightExpression; }
 
-    static SharedPtr<BinaryExpressionSyntax> create(SyntaxKind syntaxKind,
-                                                    SharedPtr<ExpressionSyntax> leftExpression,
-                                                    SharedPtr<SyntaxToken> operatorToken,
-                                                    SharedPtr<ExpressionSyntax> rightExpression) noexcept;
+    static Ptr<BinaryExpressionSyntax> create(SyntaxKind syntaxKind,
+                                              Ptr<ExpressionSyntax> leftExpression,
+                                              Ptr<SyntaxToken> operatorToken,
+                                              Ptr<ExpressionSyntax> rightExpression) noexcept;
 
 private:
-    SharedPtr<ExpressionSyntax> _ptrLeftExpression;
-    SharedPtr<SyntaxToken> _ptrOperatorToken;
-    SharedPtr<ExpressionSyntax> _ptrRightExpression;
+    Ptr<ExpressionSyntax> _ptrLeftExpression;
+    Ptr<SyntaxToken> _ptrOperatorToken;
+    Ptr<ExpressionSyntax> _ptrRightExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

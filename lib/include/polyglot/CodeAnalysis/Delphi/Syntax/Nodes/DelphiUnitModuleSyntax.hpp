@@ -17,34 +17,34 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
 {
 public:
-    explicit DelphiUnitModuleSyntax(SharedPtr<DelphiUnitHeadingSyntax> heading,
-                                    SharedPtr<DelphiUnitInterfaceSectionSyntax> interfaceSection,
-                                    SharedPtr<DelphiUnitImplementationSectionSyntax> implementationSection,
-                                    SharedPtr<SyntaxToken> endKeyword,
-                                    SharedPtr<SyntaxToken> dotToken) noexcept;
+    explicit DelphiUnitModuleSyntax(Ptr<DelphiUnitHeadingSyntax> heading,
+                                    Ptr<DelphiUnitInterfaceSectionSyntax> interfaceSection,
+                                    Ptr<DelphiUnitImplementationSectionSyntax> implementationSection,
+                                    Ptr<SyntaxToken> endKeyword,
+                                    Ptr<SyntaxToken> dotToken) noexcept;
 
     virtual ~DelphiUnitModuleSyntax() noexcept = default;
     inline bool isUnitModule() const noexcept override { return true; }
-    inline const SharedPtr<DelphiUnitHeadingSyntax>& heading() const noexcept { return _ptrHeading; }
-    inline const SharedPtr<DelphiUnitInterfaceSectionSyntax>& interfaceSection() const noexcept { return _ptrInterfaceSection; }
-    inline const SharedPtr<DelphiUnitImplementationSectionSyntax>& implementationSection() const noexcept { return _ptrImplementationSection; }
-    inline const SharedPtr<DelphiUnitInitializationSectionSyntax>& initializationSection() const noexcept { return _ptrInitializationSection; }
-    inline void setInitializationSection(SharedPtr<DelphiUnitInitializationSectionSyntax> initializationSection) noexcept { _ptrInitializationSection = std::move(initializationSection); }
-    inline const SharedPtr<DelphiUnitFinalizationSectionSyntax>& finalizationSection() const noexcept { return _ptrFinalizationSection; }
-    inline void setFinalizationSection(SharedPtr<DelphiUnitFinalizationSectionSyntax> finalizationSection) noexcept { _ptrFinalizationSection = std::move(finalizationSection); }
+    inline const Ptr<DelphiUnitHeadingSyntax> heading() const noexcept { return _ptrHeading; }
+    inline const Ptr<DelphiUnitInterfaceSectionSyntax> interfaceSection() const noexcept { return _ptrInterfaceSection; }
+    inline const Ptr<DelphiUnitImplementationSectionSyntax> implementationSection() const noexcept { return _ptrImplementationSection; }
+    inline const Ptr<DelphiUnitInitializationSectionSyntax> initializationSection() const noexcept { return _ptrInitializationSection; }
+    inline void setInitializationSection(Ptr<DelphiUnitInitializationSectionSyntax> initializationSection) noexcept { _ptrInitializationSection = initializationSection; }
+    inline const Ptr<DelphiUnitFinalizationSectionSyntax> finalizationSection() const noexcept { return _ptrFinalizationSection; }
+    inline void setFinalizationSection(Ptr<DelphiUnitFinalizationSectionSyntax> finalizationSection) noexcept { _ptrFinalizationSection = finalizationSection; }
     inline bool hasInitializationSection() const noexcept { return _ptrInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _ptrFinalizationSection != nullptr; }
-    inline const SharedPtr<SyntaxToken>& endKeyword() const noexcept { return _ptrEndKeyword; }
-    inline const SharedPtr<SyntaxToken>& dotToken() const noexcept { return _ptrDotToken; }
+    inline const Ptr<SyntaxToken> endKeyword() const noexcept { return _ptrEndKeyword; }
+    inline const Ptr<SyntaxToken> dotToken() const noexcept { return _ptrDotToken; }
 
 private:
-    SharedPtr<DelphiUnitHeadingSyntax> _ptrHeading;
-    SharedPtr<DelphiUnitInterfaceSectionSyntax> _ptrInterfaceSection;
-    SharedPtr<DelphiUnitImplementationSectionSyntax> _ptrImplementationSection;
-    SharedPtr<DelphiUnitInitializationSectionSyntax> _ptrInitializationSection; // optional
-    SharedPtr<DelphiUnitFinalizationSectionSyntax> _ptrFinalizationSection; // optional
-    SharedPtr<SyntaxToken> _ptrEndKeyword;
-    SharedPtr<SyntaxToken> _ptrDotToken;
+    Ptr<DelphiUnitHeadingSyntax> _ptrHeading;
+    Ptr<DelphiUnitInterfaceSectionSyntax> _ptrInterfaceSection;
+    Ptr<DelphiUnitImplementationSectionSyntax> _ptrImplementationSection;
+    Ptr<DelphiUnitInitializationSectionSyntax> _ptrInitializationSection; // optional
+    Ptr<DelphiUnitFinalizationSectionSyntax> _ptrFinalizationSection; // optional
+    Ptr<SyntaxToken> _ptrEndKeyword;
+    Ptr<SyntaxToken> _ptrDotToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

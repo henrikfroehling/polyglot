@@ -35,24 +35,24 @@ private:
     SharedPtr<DelphiSyntaxFacts> _ptrSyntaxFacts;
 
 private:
-    SharedPtr<SyntaxNode> parseRoot() noexcept override;
-    SharedPtr<DelphiCompilationUnitSyntax> parseCompilationUnit() noexcept;
-    SharedPtr<DelphiUnitModuleSyntax> parseUnitModule() noexcept;
-    SharedPtr<DelphiUnitHeadingSyntax> parseUnitHeading() noexcept;
-    SharedPtr<DelphiUnitInterfaceSectionSyntax> parseUnitInterfaceSection() noexcept;
-    SharedPtr<DelphiUnitImplementationSectionSyntax> parseUnitImplementationSection() noexcept;
-    SharedPtr<DelphiUnitInitializationSectionSyntax> parseUnitInitializationSection() noexcept;
-    SharedPtr<DelphiUnitFinalizationSectionSyntax> parseUnitFinalizationSection() noexcept;
-    SharedPtr<DelphiPackageModuleSyntax> parsePackageModule() noexcept;
-    SharedPtr<DelphiProgramModuleSyntax> parseProgramModule() noexcept;
-    SharedPtr<DelphiUsesClauseSyntax> parseUsesClause() noexcept;
-    SharedPtr<DelphiUnitReferenceDeclarationSyntax> parseUnitReference() noexcept;
-    SharedPtr<NameExpressionSyntax> parseQualifiedName() noexcept;
+    Ptr<SyntaxNode> parseRoot() noexcept override;
+    Ptr<DelphiCompilationUnitSyntax> parseCompilationUnit() noexcept;
+    Ptr<DelphiUnitModuleSyntax> parseUnitModule() noexcept;
+    Ptr<DelphiUnitHeadingSyntax> parseUnitHeading() noexcept;
+    Ptr<DelphiUnitInterfaceSectionSyntax> parseUnitInterfaceSection() noexcept;
+    Ptr<DelphiUnitImplementationSectionSyntax> parseUnitImplementationSection() noexcept;
+    Ptr<DelphiUnitInitializationSectionSyntax> parseUnitInitializationSection() noexcept;
+    Ptr<DelphiUnitFinalizationSectionSyntax> parseUnitFinalizationSection() noexcept;
+    Ptr<DelphiPackageModuleSyntax> parsePackageModule() noexcept;
+    Ptr<DelphiProgramModuleSyntax> parseProgramModule() noexcept;
+    Ptr<DelphiUsesClauseSyntax> parseUsesClause() noexcept;
+    Ptr<DelphiUnitReferenceDeclarationSyntax> parseUnitReference() noexcept;
+    Ptr<NameExpressionSyntax> parseQualifiedName() noexcept;
 
-    SharedPtr<NameExpressionSyntax> parseQualifiedNameRight(SharedPtr<NameExpressionSyntax> left,
-                                                            SharedPtr<SyntaxToken> dotToken) noexcept;
+    Ptr<NameExpressionSyntax> parseQualifiedNameRight(Ptr<NameExpressionSyntax> left,
+                                                      Ptr<SyntaxToken> dotToken) noexcept;
 
-    SharedPtr<IdentifierNameExpressionSyntax> parseIdentifierName() noexcept;
+    Ptr<IdentifierNameExpressionSyntax> parseIdentifierName() noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

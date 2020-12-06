@@ -14,26 +14,26 @@ class POLYGLOT_API EndIfDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                        SharedPtr<SyntaxToken> startToken,
-                                        SharedPtr<SyntaxToken> endIfKeyword,
-                                        SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                        Ptr<SyntaxToken> startToken,
+                                        Ptr<SyntaxToken> endIfKeyword,
+                                        Ptr<SyntaxToken> endOfDirectiveToken,
                                         bool isActive) noexcept;
 
     virtual ~EndIfDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const SharedPtr<SyntaxToken>& endIfKeyword() const noexcept { return _ptrEndIfKeyword; }
-    inline virtual const SharedPtr<SyntaxToken>& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual const Ptr<SyntaxToken> endIfKeyword() const noexcept { return _ptrEndIfKeyword; }
+    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static SharedPtr<EndIfDirectiveTriviaSyntax> create(SharedPtr<SyntaxToken> startToken,
-                                                        SharedPtr<SyntaxToken> endIFKeyword,
-                                                        SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                        bool isActive) noexcept;
+    static Ptr<EndIfDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
+                                                  Ptr<SyntaxToken> endIFKeyword,
+                                                  Ptr<SyntaxToken> endOfDirectiveToken,
+                                                  bool isActive) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrStartToken;
-    SharedPtr<SyntaxToken> _ptrEndIfKeyword;
-    SharedPtr<SyntaxToken> _ptrEndOfDirectiveToken;
+    Ptr<SyntaxToken> _ptrStartToken;
+    Ptr<SyntaxToken> _ptrEndIfKeyword;
+    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
     bool _isActive;
 };
 

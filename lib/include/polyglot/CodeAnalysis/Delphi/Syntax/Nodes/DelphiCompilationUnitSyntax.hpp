@@ -18,11 +18,11 @@ public:
     inline virtual bool isUnitModule() const noexcept { return false; }
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
-    inline const SharedPtr<SyntaxToken>& EOFToken() const noexcept { return _ptrEOFToken; }
-    inline void setEOFToken(SharedPtr<SyntaxToken> eofToken) noexcept { _ptrEOFToken = std::move(eofToken); }
+    inline const Ptr<SyntaxToken> EOFToken() const noexcept { return _ptrEOFToken; }
+    inline void setEOFToken(Ptr<SyntaxToken> eofToken) noexcept { _ptrEOFToken = eofToken; }
 
 private:
-    SharedPtr<SyntaxToken> _ptrEOFToken;
+    Ptr<SyntaxToken> _ptrEOFToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

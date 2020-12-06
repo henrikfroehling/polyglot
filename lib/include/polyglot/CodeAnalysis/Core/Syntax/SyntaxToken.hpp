@@ -26,8 +26,8 @@ public:
     inline bool isToken() const noexcept override { return true; }
     virtual inline std::string_view text() const noexcept { return _text; }
     inline virtual void setText(std::string_view text) noexcept { _text = text; }
-    void setLeadingTrivia(std::vector<SharedPtr<SyntaxNode>>&& leadingTrivia) noexcept;
-    void setTrailingTrivia(std::vector<SharedPtr<SyntaxNode>>&& trailingTrivia) noexcept;
+    void setLeadingTrivia(std::vector<Ptr<SyntaxNode>>&& leadingTrivia) noexcept;
+    void setTrailingTrivia(std::vector<Ptr<SyntaxNode>>&& trailingTrivia) noexcept;
     inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
     inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
     inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
@@ -36,8 +36,8 @@ public:
 
 protected:
     std::string_view _text;
-    std::vector<SharedPtr<SyntaxNode>> _leadingTrivia;
-    std::vector<SharedPtr<SyntaxNode>> _trailingTrivia;
+    std::vector<Ptr<SyntaxNode>> _leadingTrivia;
+    std::vector<Ptr<SyntaxNode>> _trailingTrivia;
     SyntaxKind _contextualKind;
 };
 

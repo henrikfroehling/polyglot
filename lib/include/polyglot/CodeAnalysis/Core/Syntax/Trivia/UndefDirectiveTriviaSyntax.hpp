@@ -14,30 +14,30 @@ class POLYGLOT_API UndefDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                        SharedPtr<SyntaxToken> startToken,
-                                        SharedPtr<SyntaxToken> undefKeyword,
-                                        SharedPtr<SyntaxToken> name,
-                                        SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                        Ptr<SyntaxToken> startToken,
+                                        Ptr<SyntaxToken> undefKeyword,
+                                        Ptr<SyntaxToken> name,
+                                        Ptr<SyntaxToken> endOfDirectiveToken,
                                         bool isActive) noexcept;
 
     virtual ~UndefDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const SharedPtr<SyntaxToken>& undefKeyword() const noexcept { return _ptrUndefKeyword; }
-    inline virtual const SharedPtr<SyntaxToken>& name() const noexcept { return _ptrName; }
-    inline virtual const SharedPtr<SyntaxToken>& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual const Ptr<SyntaxToken> undefKeyword() const noexcept { return _ptrUndefKeyword; }
+    inline virtual const Ptr<SyntaxToken> name() const noexcept { return _ptrName; }
+    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static SharedPtr<UndefDirectiveTriviaSyntax> create(SharedPtr<SyntaxToken> startToken,
-                                                        SharedPtr<SyntaxToken> undefKeyword,
-                                                        SharedPtr<SyntaxToken> name,
-                                                        SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                        bool isActive) noexcept;
+    static Ptr<UndefDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
+                                                  Ptr<SyntaxToken> undefKeyword,
+                                                  Ptr<SyntaxToken> name,
+                                                  Ptr<SyntaxToken> endOfDirectiveToken,
+                                                  bool isActive) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrStartToken;
-    SharedPtr<SyntaxToken> _ptrUndefKeyword;
-    SharedPtr<SyntaxToken> _ptrName;
-    SharedPtr<SyntaxToken> _ptrEndOfDirectiveToken;
+    Ptr<SyntaxToken> _ptrStartToken;
+    Ptr<SyntaxToken> _ptrUndefKeyword;
+    Ptr<SyntaxToken> _ptrName;
+    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
     bool _isActive;
 };
 

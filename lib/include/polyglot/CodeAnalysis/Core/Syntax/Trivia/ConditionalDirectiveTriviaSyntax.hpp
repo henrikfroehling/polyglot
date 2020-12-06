@@ -15,7 +15,7 @@ class POLYGLOT_API ConditionalDirectiveTriviaSyntax : public BranchingDirectiveT
 public:
     explicit ConditionalDirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~ConditionalDirectiveTriviaSyntax() noexcept = default;
-    virtual const SharedPtr<ExpressionSyntax>& condition() const noexcept = 0;
+    virtual const Ptr<ExpressionSyntax> condition() const noexcept = 0;
     virtual bool conditionValue() const noexcept = 0;
 };
 

@@ -15,36 +15,36 @@ class POLYGLOT_API ElseIfDirectiveTriviaSyntax : public ConditionalDirectiveTriv
 {
 public:
     explicit ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         SharedPtr<SyntaxToken> startToken,
-                                         SharedPtr<SyntaxToken> elseIfKeyword,
-                                         SharedPtr<ExpressionSyntax> condition,
-                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                         Ptr<SyntaxToken> startToken,
+                                         Ptr<SyntaxToken> elseIfKeyword,
+                                         Ptr<ExpressionSyntax> condition,
+                                         Ptr<SyntaxToken> endOfDirectiveToken,
                                          bool isActive,
                                          bool isBranchTaken,
                                          bool conditionValue) noexcept;
 
     virtual ~ElseIfDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const SharedPtr<SyntaxToken>& elseIfKeywword() const noexcept { return _ptrElseIfKeyword; }
-    inline virtual const SharedPtr<SyntaxToken>& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual const Ptr<SyntaxToken> elseIfKeywword() const noexcept { return _ptrElseIfKeyword; }
+    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
-    inline virtual const SharedPtr<ExpressionSyntax>& condition() const noexcept override { return _ptrCondition; }
+    inline virtual const Ptr<ExpressionSyntax> condition() const noexcept override { return _ptrCondition; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
 
-    static SharedPtr<ElseIfDirectiveTriviaSyntax> create(SharedPtr<SyntaxToken> startToken,
-                                                         SharedPtr<SyntaxToken> elseIfKeyword,
-                                                         SharedPtr<ExpressionSyntax> condition,
-                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                         bool isActive,
-                                                         bool isBranchTaken,
-                                                         bool conditionValue) noexcept;
+    static Ptr<ElseIfDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
+                                                   Ptr<SyntaxToken> elseIfKeyword,
+                                                   Ptr<ExpressionSyntax> condition,
+                                                   Ptr<SyntaxToken> endOfDirectiveToken,
+                                                   bool isActive,
+                                                   bool isBranchTaken,
+                                                   bool conditionValue) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrStartToken;
-    SharedPtr<SyntaxToken> _ptrElseIfKeyword;
-    SharedPtr<ExpressionSyntax> _ptrCondition;
-    SharedPtr<SyntaxToken> _ptrEndOfDirectiveToken;
+    Ptr<SyntaxToken> _ptrStartToken;
+    Ptr<SyntaxToken> _ptrElseIfKeyword;
+    Ptr<ExpressionSyntax> _ptrCondition;
+    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
     bool _conditionValue;

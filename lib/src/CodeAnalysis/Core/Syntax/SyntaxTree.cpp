@@ -3,10 +3,15 @@
 namespace polyglot::CodeAnalysis
 {
 
+SyntaxTree::SyntaxTree() noexcept
+    : _ptrSourceText{nullptr},
+      _ptrRoot{nullptr}
+{}
+
 SyntaxTree::SyntaxTree(SharedPtr<SourceText> sourceText,
-                       SharedPtr<SyntaxNode> root) noexcept
+                       Ptr<SyntaxNode> root) noexcept
     : _ptrSourceText{std::move(sourceText)},
-      _ptrRoot{std::move(root)}
+      _ptrRoot{root}
 {}
 
 } // end namespace polyglot::CodeAnalysis

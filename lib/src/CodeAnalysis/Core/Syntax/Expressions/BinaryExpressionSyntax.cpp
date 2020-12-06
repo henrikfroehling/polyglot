@@ -1,30 +1,31 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
 BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
-                                               SharedPtr<ExpressionSyntax> leftExpression,
-                                               SharedPtr<SyntaxToken> operatorToken,
-                                               SharedPtr<ExpressionSyntax> rightExpression) noexcept
+                                               Ptr<ExpressionSyntax> leftExpression,
+                                               Ptr<SyntaxToken> operatorToken,
+                                               Ptr<ExpressionSyntax> rightExpression) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrLeftExpression{std::move(leftExpression)},
-      _ptrOperatorToken{std::move(operatorToken)},
-      _ptrRightExpression{std::move(rightExpression)}
+      _ptrLeftExpression{leftExpression},
+      _ptrOperatorToken{operatorToken},
+      _ptrRightExpression{rightExpression}
 {}
 
-SharedPtr<BinaryExpressionSyntax> BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                                 SharedPtr<ExpressionSyntax> leftExpression,
-                                                                 SharedPtr<SyntaxToken> operatorToken,
-                                                                 SharedPtr<ExpressionSyntax> rightExpression) noexcept
+Ptr<BinaryExpressionSyntax> BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                           Ptr<ExpressionSyntax> leftExpression,
+                                                           Ptr<SyntaxToken> operatorToken,
+                                                           Ptr<ExpressionSyntax> rightExpression) noexcept
 {
     assert(leftExpression != nullptr);
     assert(operatorToken != nullptr);
     assert(rightExpression != nullptr);
 
-    return std::make_shared<BinaryExpressionSyntax>(syntaxKind, std::move(leftExpression),
-                                                    std::move(operatorToken), std::move(rightExpression));
+    auto ptrBinaryExpression = std::make_unique<BinaryExpressionSyntax>(syntaxKind, leftExpression, operatorToken, rightExpression);
+    return static_cast<BinaryExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrBinaryExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

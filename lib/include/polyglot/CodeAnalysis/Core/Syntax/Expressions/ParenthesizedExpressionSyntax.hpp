@@ -14,23 +14,23 @@ class POLYGLOT_API ParenthesizedExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                           SharedPtr<SyntaxToken> openParenthesisToken,
-                                           SharedPtr<ExpressionSyntax> expression,
-                                           SharedPtr<SyntaxToken> closeParenthesisToken) noexcept;
+                                           Ptr<SyntaxToken> openParenthesisToken,
+                                           Ptr<ExpressionSyntax> expression,
+                                           Ptr<SyntaxToken> closeParenthesisToken) noexcept;
 
     virtual ~ParenthesizedExpressionSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& openParenthesisToken() const noexcept { return _ptrOpenParenthesisToken; }
-    inline virtual const SharedPtr<ExpressionSyntax>& expression() const noexcept { return _ptrExpression; }
-    inline virtual const SharedPtr<SyntaxToken>& closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
+    inline virtual const Ptr<SyntaxToken> openParenthesisToken() const noexcept { return _ptrOpenParenthesisToken; }
+    inline virtual const Ptr<ExpressionSyntax> expression() const noexcept { return _ptrExpression; }
+    inline virtual const Ptr<SyntaxToken> closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
 
-    static SharedPtr<ParenthesizedExpressionSyntax> create(SharedPtr<SyntaxToken> openParenthesisToken,
-                                                           SharedPtr<ExpressionSyntax> expression,
-                                                           SharedPtr<SyntaxToken> closeParenthesisToken) noexcept;
+    static Ptr<ParenthesizedExpressionSyntax> create(Ptr<SyntaxToken> openParenthesisToken,
+                                                     Ptr<ExpressionSyntax> expression,
+                                                     Ptr<SyntaxToken> closeParenthesisToken) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrOpenParenthesisToken;
-    SharedPtr<ExpressionSyntax> _ptrExpression;
-    SharedPtr<SyntaxToken> _ptrCloseParenthesisToken;
+    Ptr<SyntaxToken> _ptrOpenParenthesisToken;
+    Ptr<ExpressionSyntax> _ptrExpression;
+    Ptr<SyntaxToken> _ptrCloseParenthesisToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

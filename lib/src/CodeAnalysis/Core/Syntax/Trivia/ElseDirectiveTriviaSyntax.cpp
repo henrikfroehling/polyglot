@@ -1,28 +1,29 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
 ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                     SharedPtr<SyntaxToken> startToken,
-                                                     SharedPtr<SyntaxToken> elseKeyword,
-                                                     SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                     Ptr<SyntaxToken> startToken,
+                                                     Ptr<SyntaxToken> elseKeyword,
+                                                     Ptr<SyntaxToken> endOfDirectiveToken,
                                                      bool isActive,
                                                      bool isBranchTaken) noexcept
     : BranchingDirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{std::move(startToken)},
-      _ptrElseKeyword{std::move(elseKeyword)},
-      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _ptrStartToken{startToken},
+      _ptrElseKeyword{elseKeyword},
+      _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive},
       _isBranchTaken{isBranchTaken}
 {}
 
-SharedPtr<ElseDirectiveTriviaSyntax> ElseDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
-                                                                       SharedPtr<SyntaxToken> elseKeyword,
-                                                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                                       bool isActive,
-                                                                       bool isBranchTaken) noexcept
+Ptr<ElseDirectiveTriviaSyntax> ElseDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
+                                                                 Ptr<SyntaxToken> elseKeyword,
+                                                                 Ptr<SyntaxToken> endOfDirectiveToken,
+                                                                 bool isActive,
+                                                                 bool isBranchTaken) noexcept
 {
     assert(startToken != nullptr);
     assert(elseKeyword != nullptr);
@@ -30,9 +31,11 @@ SharedPtr<ElseDirectiveTriviaSyntax> ElseDirectiveTriviaSyntax::create(SharedPtr
     assert(endOfDirectiveToken != nullptr);
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
-    return std::make_shared<ElseDirectiveTriviaSyntax>(SyntaxKind::ElseDirectiveTrivia, std::move(startToken),
-                                                       std::move(elseKeyword), std::move(endOfDirectiveToken),
-                                                       isActive, isBranchTaken);
+    auto ptrElseDirectiveTrivia = std::make_unique<ElseDirectiveTriviaSyntax>(SyntaxKind::ElseDirectiveTrivia, startToken,
+                                                                              elseKeyword, endOfDirectiveToken,
+                                                                              isActive, isBranchTaken);
+
+    return static_cast<ElseDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrElseDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

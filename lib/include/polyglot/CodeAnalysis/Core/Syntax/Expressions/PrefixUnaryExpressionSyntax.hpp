@@ -14,20 +14,20 @@ class POLYGLOT_API PrefixUnaryExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                         SharedPtr<SyntaxToken> operatorToken,
-                                         SharedPtr<ExpressionSyntax> operandExpression) noexcept;
+                                         Ptr<SyntaxToken> operatorToken,
+                                         Ptr<ExpressionSyntax> operandExpression) noexcept;
 
     virtual ~PrefixUnaryExpressionSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& operatorToken() const noexcept { return _ptrOperatorToken; }
-    inline virtual const SharedPtr<ExpressionSyntax>& operandExpression() const noexcept { return _ptrOperandExpression; }
+    inline virtual const Ptr<SyntaxToken> operatorToken() const noexcept { return _ptrOperatorToken; }
+    inline virtual const Ptr<ExpressionSyntax> operandExpression() const noexcept { return _ptrOperandExpression; }
 
-    static SharedPtr<PrefixUnaryExpressionSyntax> create(SyntaxKind syntaxKind,
-                                                         SharedPtr<SyntaxToken> operatorToken,
-                                                         SharedPtr<ExpressionSyntax> operandExpression) noexcept;
+    static Ptr<PrefixUnaryExpressionSyntax> create(SyntaxKind syntaxKind,
+                                                   Ptr<SyntaxToken> operatorToken,
+                                                   Ptr<ExpressionSyntax> operandExpression) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> _ptrOperatorToken;
-    SharedPtr<ExpressionSyntax> _ptrOperandExpression;
+    Ptr<SyntaxToken> _ptrOperatorToken;
+    Ptr<ExpressionSyntax> _ptrOperandExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

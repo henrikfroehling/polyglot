@@ -13,14 +13,14 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitInterfaceSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitInterfaceSectionSyntax(SharedPtr<SyntaxToken> interfaceKeyword) noexcept;
+    explicit DelphiUnitInterfaceSectionSyntax(Ptr<SyntaxToken> interfaceKeyword) noexcept;
     virtual ~DelphiUnitInterfaceSectionSyntax() noexcept = default;
-    virtual const SharedPtr<DelphiUsesClauseSyntax>& uses() const noexcept { return _ptrUses; }
-    virtual void setUses(SharedPtr<DelphiUsesClauseSyntax> uses) noexcept { _ptrUses = std::move(uses); }
+    virtual const Ptr<DelphiUsesClauseSyntax> uses() const noexcept { return _ptrUses; }
+    virtual void setUses(Ptr<DelphiUsesClauseSyntax> uses) noexcept { _ptrUses = uses; }
 
 private:
-    SharedPtr<SyntaxToken> _ptrInterfaceKeyword;
-    SharedPtr<DelphiUsesClauseSyntax> _ptrUses; // optional
+    Ptr<SyntaxToken> _ptrInterfaceKeyword;
+    Ptr<DelphiUsesClauseSyntax> _ptrUses; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis

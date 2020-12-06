@@ -1,25 +1,27 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
 PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                                         SharedPtr<SyntaxToken> operatorToken,
-                                                         SharedPtr<ExpressionSyntax> operandExpression) noexcept
+                                                         Ptr<SyntaxToken> operatorToken,
+                                                         Ptr<ExpressionSyntax> operandExpression) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrOperatorToken{std::move(operatorToken)},
-      _ptrOperandExpression{std::move(operandExpression)}
+      _ptrOperatorToken{operatorToken},
+      _ptrOperandExpression{operandExpression}
 {}
 
-SharedPtr<PrefixUnaryExpressionSyntax> PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                                           SharedPtr<SyntaxToken> operatorToken,
-                                                                           SharedPtr<ExpressionSyntax> operandExpression) noexcept
+Ptr<PrefixUnaryExpressionSyntax> PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                                     Ptr<SyntaxToken> operatorToken,
+                                                                     Ptr<ExpressionSyntax> operandExpression) noexcept
 {
     assert(operatorToken != nullptr);
     assert(operandExpression != nullptr);
 
-    return std::make_shared<PrefixUnaryExpressionSyntax>(syntaxKind, std::move(operatorToken), std::move(operandExpression));
+    auto ptrPrefixUnaryExpression = std::make_unique<PrefixUnaryExpressionSyntax>(syntaxKind, operatorToken, operandExpression);
+    return static_cast<PrefixUnaryExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrPrefixUnaryExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

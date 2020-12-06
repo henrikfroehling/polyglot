@@ -14,26 +14,26 @@ class POLYGLOT_API RegionDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         SharedPtr<SyntaxToken> startToken,
-                                         SharedPtr<SyntaxToken> regionKeyword,
-                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                         Ptr<SyntaxToken> startToken,
+                                         Ptr<SyntaxToken> regionKeyword,
+                                         Ptr<SyntaxToken> endOfDirectiveToken,
                                          bool isActive) noexcept;
 
     virtual ~RegionDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const SharedPtr<SyntaxToken>& startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const SharedPtr<SyntaxToken>& regionKeyword() const noexcept { return _ptrRegionKeyword; }
-    inline virtual const SharedPtr<SyntaxToken>& endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual const Ptr<SyntaxToken> regionKeyword() const noexcept { return _ptrRegionKeyword; }
+    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static SharedPtr<RegionDirectiveTriviaSyntax> create(SharedPtr<SyntaxToken> startToken,
-                                                         SharedPtr<SyntaxToken> regionKeyword,
-                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                         bool isActive) noexcept;
-                                       
+    static Ptr<RegionDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
+                                                   Ptr<SyntaxToken> regionKeyword,
+                                                   Ptr<SyntaxToken> endOfDirectiveToken,
+                                                   bool isActive) noexcept;
+
 private:
-    SharedPtr<SyntaxToken> _ptrStartToken;
-    SharedPtr<SyntaxToken> _ptrRegionKeyword;
-    SharedPtr<SyntaxToken> _ptrEndOfDirectiveToken;
+    Ptr<SyntaxToken> _ptrStartToken;
+    Ptr<SyntaxToken> _ptrRegionKeyword;
+    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
     bool _isActive;
 };
 
