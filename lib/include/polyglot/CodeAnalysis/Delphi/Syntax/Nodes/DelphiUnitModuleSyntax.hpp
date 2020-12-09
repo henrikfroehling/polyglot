@@ -2,17 +2,17 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITMODULESYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class DelphiUnitFinalizationSectionSyntax;
+class DelphiUnitHeadingSyntax;
+class DelphiUnitImplementationSectionSyntax;
+class DelphiUnitInitializationSectionSyntax;
+class DelphiUnitInterfaceSectionSyntax;
+class SyntaxToken;
 
 class POLYGLOT_API DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
 {

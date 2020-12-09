@@ -2,13 +2,13 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SIMPLENAMEEXPRESSIONSYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class SyntaxToken;
 
 class POLYGLOT_API SimpleNameExpressionSyntax : public NameExpressionSyntax
 {

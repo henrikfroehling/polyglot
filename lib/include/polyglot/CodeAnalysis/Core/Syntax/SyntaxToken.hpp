@@ -4,7 +4,6 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 

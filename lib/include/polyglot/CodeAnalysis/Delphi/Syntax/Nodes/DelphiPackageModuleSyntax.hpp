@@ -2,14 +2,14 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIPACKAGEMODULESYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageHeadingSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class DelphiPackageContainsClauseSyntax;
+class DelphiPackageHeadingSyntax;
+class DelphiPackageRequiresClauseSyntax;
 
 class POLYGLOT_API DelphiPackageModuleSyntax : public DelphiCompilationUnitSyntax
 {

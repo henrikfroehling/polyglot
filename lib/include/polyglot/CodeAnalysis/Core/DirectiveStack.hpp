@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_DIRECTIVESTACK_H
 #define POLYGLOT_CODEANALYSIS_CORE_DIRECTIVESTACK_H
 
+#include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Directive.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveList.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -14,6 +14,8 @@ enum class DefineState
     Undefined,
     Unspecified
 };
+
+class Directive;
 
 class DirectiveStack
 {

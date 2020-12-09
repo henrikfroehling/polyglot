@@ -3,10 +3,11 @@
 
 #include <memory>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Directive.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class Directive;
 
 class DirectiveList : public std::enable_shared_from_this<DirectiveList>
 {

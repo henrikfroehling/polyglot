@@ -2,14 +2,14 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ELSEIFDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class ExpressionSyntax;
+class SyntaxToken;
 
 class POLYGLOT_API ElseIfDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSyntax
 {

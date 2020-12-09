@@ -2,18 +2,20 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIDIRECTIVEPARSER_H
 
 #include <string_view>
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxFacts.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class DirectiveStack;
+class DirectiveTriviaSyntax;
+class ExpressionSyntax;
+class SyntaxNode;
+class SyntaxToken;
 
 class POLYGLOT_API DelphiDirectiveParser final : public DirectiveParser
 {

@@ -8,8 +8,6 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
@@ -21,6 +19,9 @@ enum class LexerMode
     Syntax,
     Directive
 };
+
+class SyntaxNode;
+class SyntaxToken;
 
 class POLYGLOT_API Lexer : public std::enable_shared_from_this<Lexer>
 {

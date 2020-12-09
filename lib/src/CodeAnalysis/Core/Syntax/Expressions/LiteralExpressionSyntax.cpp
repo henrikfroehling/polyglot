@@ -1,6 +1,7 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
+#include <memory>
 
 namespace polyglot::CodeAnalysis
 {
