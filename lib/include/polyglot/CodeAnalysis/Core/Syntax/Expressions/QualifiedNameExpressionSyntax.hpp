@@ -13,16 +13,16 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API QualifiedNameExpressionSyntax : public NameExpressionSyntax
 {
 public:
-    explicit QualifiedNameExpressionSyntax(Ptr<NameExpressionSyntax> leftExpression,
-                                           Ptr<SyntaxToken> dotToken,
-                                           Ptr<SimpleNameExpressionSyntax> rightExpression) noexcept;
+    explicit QualifiedNameExpressionSyntax(NameExpressionSyntax* leftExpression,
+                                           SyntaxToken* dotToken,
+                                           SimpleNameExpressionSyntax* rightExpression) noexcept;
 
     virtual ~QualifiedNameExpressionSyntax() noexcept = default;
 
 private:
-    Ptr<NameExpressionSyntax> _ptrLeftExpression;
-    Ptr<SyntaxToken> _ptrDotToken;
-    Ptr<SimpleNameExpressionSyntax> _ptrRightExpression;
+    NameExpressionSyntax* _ptrLeftExpression;
+    SyntaxToken* _ptrDotToken;
+    SimpleNameExpressionSyntax* _ptrRightExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -13,21 +13,21 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitReferenceDeclarationSyntax(Ptr<NameExpressionSyntax> unitName) noexcept;
+    explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName) noexcept;
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept = default;
-    inline const Ptr<NameExpressionSyntax> unitName() const noexcept { return _ptrUnitName; }
-    inline const Ptr<SyntaxToken> inKeyword() const noexcept { return _ptrInKeyword; }
-    inline void setInKeyword(Ptr<SyntaxToken> inKeyword) noexcept { _ptrInKeyword = inKeyword; }
-    inline const Ptr<SyntaxToken> sourceFile() const noexcept { return _ptrSourceFile; }
-    inline void setSourceFile(Ptr<SyntaxToken> sourceFile) noexcept { _ptrSourceFile = sourceFile; }
-    inline const Ptr<SyntaxToken> commaToken() const noexcept { return _ptrCommaToken; }
-    inline void setCommaToken(Ptr<SyntaxToken> commaToken) noexcept { _ptrCommaToken = commaToken; }
+    inline NameExpressionSyntax* unitName() const noexcept { return _ptrUnitName; }
+    inline SyntaxToken* inKeyword() const noexcept { return _ptrInKeyword; }
+    inline void setInKeyword(SyntaxToken* inKeyword) noexcept { _ptrInKeyword = inKeyword; }
+    inline SyntaxToken* sourceFile() const noexcept { return _ptrSourceFile; }
+    inline void setSourceFile(SyntaxToken* sourceFile) noexcept { _ptrSourceFile = sourceFile; }
+    inline SyntaxToken* commaToken() const noexcept { return _ptrCommaToken; }
+    inline void setCommaToken(SyntaxToken* commaToken) noexcept { _ptrCommaToken = commaToken; }
 
 private:
-    Ptr<NameExpressionSyntax> _ptrUnitName;
-    Ptr<SyntaxToken> _ptrInKeyword; // optional
-    Ptr<SyntaxToken> _ptrSourceFile; // optional
-    Ptr<SyntaxToken> _ptrCommaToken; // optional
+    NameExpressionSyntax* _ptrUnitName;
+    SyntaxToken* _ptrInKeyword; // optional
+    SyntaxToken* _ptrSourceFile; // optional
+    SyntaxToken* _ptrCommaToken; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis

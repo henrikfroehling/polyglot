@@ -13,19 +13,19 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitHeadingSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitHeadingSyntax(Ptr<SyntaxToken> unitKeyword,
-                                     Ptr<NameExpressionSyntax> name,
-                                     Ptr<SyntaxToken> semiColonToken) noexcept;
+    explicit DelphiUnitHeadingSyntax(SyntaxToken* unitKeyword,
+                                     NameExpressionSyntax* name,
+                                     SyntaxToken* semiColonToken) noexcept;
 
     virtual ~DelphiUnitHeadingSyntax() noexcept = default;
-    const Ptr<SyntaxToken> unitKeyword() const noexcept { return _ptrUnitKeyword; }
-    const Ptr<NameExpressionSyntax> name() const noexcept { return _ptrName; }
-    const Ptr<SyntaxToken> semiColonToken() const noexcept { return _ptrSemiColonToken; }
+    SyntaxToken* unitKeyword() const noexcept { return _ptrUnitKeyword; }
+    NameExpressionSyntax* name() const noexcept { return _ptrName; }
+    SyntaxToken* semiColonToken() const noexcept { return _ptrSemiColonToken; }
 
 private:
-    Ptr<SyntaxToken> _ptrUnitKeyword;
-    Ptr<NameExpressionSyntax> _ptrName;
-    Ptr<SyntaxToken> _ptrSemiColonToken;
+    SyntaxToken* _ptrUnitKeyword;
+    NameExpressionSyntax* _ptrName;
+    SyntaxToken* _ptrSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

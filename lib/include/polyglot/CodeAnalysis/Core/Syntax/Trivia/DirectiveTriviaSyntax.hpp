@@ -15,8 +15,8 @@ class POLYGLOT_API DirectiveTriviaSyntax : public StructuredTriviaSyntax
 public:
     explicit DirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~DirectiveTriviaSyntax() noexcept = default;
-    virtual const Ptr<SyntaxToken> startToken() const noexcept = 0;
-    virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept = 0;
+    virtual SyntaxToken* startToken() const noexcept = 0;
+    virtual SyntaxToken* endOfDirectiveToken() const noexcept = 0;
     virtual bool isActive() const noexcept = 0;
 };
 

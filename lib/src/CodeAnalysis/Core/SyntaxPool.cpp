@@ -4,39 +4,39 @@
 namespace polyglot::CodeAnalysis
 {
 
-Ptr<SyntaxNode> SyntaxPool::createSyntaxNode() noexcept
+SyntaxNode* SyntaxPool::createSyntaxNode() noexcept
 {
     _syntaxNodes.push_back(std::make_unique<SyntaxNode>());
     return _syntaxNodes.back().get();
 }
 
-Ptr<SyntaxToken> SyntaxPool::createSyntaxToken() noexcept
+SyntaxToken* SyntaxPool::createSyntaxToken() noexcept
 {
     _syntaxTokens.push_back(std::make_unique<SyntaxToken>());
     return _syntaxTokens.back().get();
 }
 
-Ptr<SyntaxTrivia> SyntaxPool::createSyntaxTrivia() noexcept
+SyntaxTrivia* SyntaxPool::createSyntaxTrivia() noexcept
 {
     _syntaxTrivia.push_back(std::make_unique<SyntaxTrivia>());
     return _syntaxTrivia.back().get();
 }
 
-Ptr<SyntaxNode> SyntaxPool::addSyntaxNode(UniquePtr<SyntaxNode> syntaxNode) noexcept
+SyntaxNode* SyntaxPool::addSyntaxNode(UniquePtr<SyntaxNode> syntaxNode) noexcept
 {
     assert(syntaxNode != nullptr);
     _syntaxNodes.push_back(std::move(syntaxNode));
     return _syntaxNodes.back().get();
 }
 
-Ptr<SyntaxToken> SyntaxPool::addSyntaxToken(UniquePtr<SyntaxToken> syntaxToken) noexcept
+SyntaxToken* SyntaxPool::addSyntaxToken(UniquePtr<SyntaxToken> syntaxToken) noexcept
 {
     assert(syntaxToken != nullptr);
     _syntaxTokens.push_back(std::move(syntaxToken));
     return _syntaxTokens.back().get();
 }
 
-Ptr<SyntaxTrivia> SyntaxPool::addSyntaxTrivia(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept
+SyntaxTrivia* SyntaxPool::addSyntaxTrivia(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept
 {
     assert(syntaxTrivia != nullptr);
     _syntaxTrivia.push_back(std::move(syntaxTrivia));

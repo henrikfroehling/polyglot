@@ -15,36 +15,36 @@ class POLYGLOT_API IfDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSy
 {
 public:
     explicit IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                     Ptr<SyntaxToken> startToken,
-                                     Ptr<SyntaxToken> ifKeyword,
-                                     Ptr<ExpressionSyntax> condition,
-                                     Ptr<SyntaxToken> endOfDirectiveToken,
+                                     SyntaxToken* startToken,
+                                     SyntaxToken* ifKeyword,
+                                     ExpressionSyntax* condition,
+                                     SyntaxToken* endOfDirectiveToken,
                                      bool isActive,
                                      bool isBranchTaken,
                                      bool conditionValue) noexcept;
 
     virtual ~IfDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const Ptr<SyntaxToken> ifKeywword() const noexcept { return _ptrIfKeyword; }
-    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual SyntaxToken* ifKeywword() const noexcept { return _ptrIfKeyword; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
-    inline virtual const Ptr<ExpressionSyntax> condition() const noexcept override { return _ptrCondition; }
+    inline virtual ExpressionSyntax* condition() const noexcept override { return _ptrCondition; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
 
-    static Ptr<IfDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
-                                               Ptr<SyntaxToken> ifKeyword,
-                                               Ptr<ExpressionSyntax> condition,
-                                               Ptr<SyntaxToken> endOfDirectiveToken,
-                                               bool isActive,
-                                               bool isBranchTaken,
-                                               bool conditionValue) noexcept;
+    static IfDirectiveTriviaSyntax* create(SyntaxToken* startToken,
+                                           SyntaxToken* ifKeyword,
+                                           ExpressionSyntax* condition,
+                                           SyntaxToken* endOfDirectiveToken,
+                                           bool isActive,
+                                           bool isBranchTaken,
+                                           bool conditionValue) noexcept;
 
 private:
-    Ptr<SyntaxToken> _ptrStartToken;
-    Ptr<SyntaxToken> _ptrIfKeyword;
-    Ptr<ExpressionSyntax> _ptrCondition;
-    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
+    SyntaxToken* _ptrStartToken;
+    SyntaxToken* _ptrIfKeyword;
+    ExpressionSyntax* _ptrCondition;
+    SyntaxToken* _ptrEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
     bool _conditionValue;

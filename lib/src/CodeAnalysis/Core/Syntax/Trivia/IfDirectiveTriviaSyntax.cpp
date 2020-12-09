@@ -6,10 +6,10 @@ namespace polyglot::CodeAnalysis
 {
 
 IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                 Ptr<SyntaxToken> startToken,
-                                                 Ptr<SyntaxToken> ifKeyword,
-                                                 Ptr<ExpressionSyntax> condition,
-                                                 Ptr<SyntaxToken> endOfDirectiveToken,
+                                                 SyntaxToken* startToken,
+                                                 SyntaxToken* ifKeyword,
+                                                 ExpressionSyntax* condition,
+                                                 SyntaxToken* endOfDirectiveToken,
                                                  bool isActive,
                                                  bool isBranchTaken,
                                                  bool conditionValue) noexcept
@@ -23,13 +23,13 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _conditionValue{conditionValue}
 {}
 
-Ptr<IfDirectiveTriviaSyntax> IfDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                             Ptr<SyntaxToken> ifKeyword,
-                                                             Ptr<ExpressionSyntax> condition,
-                                                             Ptr<SyntaxToken> endOfDirectiveToken,
-                                                             bool isActive,
-                                                             bool isBranchTaken,
-                                                             bool conditionValue) noexcept
+IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                         SyntaxToken* ifKeyword,
+                                                         ExpressionSyntax* condition,
+                                                         SyntaxToken* endOfDirectiveToken,
+                                                         bool isActive,
+                                                         bool isBranchTaken,
+                                                         bool conditionValue) noexcept
 {
     assert(startToken != nullptr);
     assert(ifKeyword != nullptr);

@@ -6,10 +6,10 @@ namespace polyglot::CodeAnalysis
 {
 
 UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       Ptr<SyntaxToken> startToken,
-                                                       Ptr<SyntaxToken> undefKeyword,
-                                                       Ptr<SyntaxToken> name,
-                                                       Ptr<SyntaxToken> endOfDirectiveToken,
+                                                       SyntaxToken* startToken,
+                                                       SyntaxToken* undefKeyword,
+                                                       SyntaxToken* name,
+                                                       SyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _ptrStartToken{startToken},
@@ -19,11 +19,11 @@ UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {}
 
-Ptr<UndefDirectiveTriviaSyntax> UndefDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                                   Ptr<SyntaxToken> undefKeyword,
-                                                                   Ptr<SyntaxToken> name,
-                                                                   Ptr<SyntaxToken> endOfDirectiveToken,
-                                                                   bool isActive) noexcept
+UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                               SyntaxToken* undefKeyword,
+                                                               SyntaxToken* name,
+                                                               SyntaxToken* endOfDirectiveToken,
+                                                               bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(undefKeyword != nullptr);

@@ -6,19 +6,19 @@ namespace polyglot::CodeAnalysis
 {
 
 BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
-                                               Ptr<ExpressionSyntax> leftExpression,
-                                               Ptr<SyntaxToken> operatorToken,
-                                               Ptr<ExpressionSyntax> rightExpression) noexcept
+                                               ExpressionSyntax* leftExpression,
+                                               SyntaxToken* operatorToken,
+                                               ExpressionSyntax* rightExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _ptrLeftExpression{leftExpression},
       _ptrOperatorToken{operatorToken},
       _ptrRightExpression{rightExpression}
 {}
 
-Ptr<BinaryExpressionSyntax> BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                           Ptr<ExpressionSyntax> leftExpression,
-                                                           Ptr<SyntaxToken> operatorToken,
-                                                           Ptr<ExpressionSyntax> rightExpression) noexcept
+BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                       ExpressionSyntax* leftExpression,
+                                                       SyntaxToken* operatorToken,
+                                                       ExpressionSyntax* rightExpression) noexcept
 {
     assert(leftExpression != nullptr);
     assert(operatorToken != nullptr);

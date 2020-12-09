@@ -9,7 +9,7 @@ SyntaxTree::SyntaxTree() noexcept
 {}
 
 SyntaxTree::SyntaxTree(SharedPtr<SourceText> sourceText,
-                       Ptr<SyntaxNode> root) noexcept
+                       SyntaxNode* root) noexcept
     : _ptrSourceText{std::move(sourceText)},
       _ptrRoot{root}
 {}

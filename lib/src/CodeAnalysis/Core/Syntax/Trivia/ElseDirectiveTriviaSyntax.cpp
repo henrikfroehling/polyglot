@@ -6,9 +6,9 @@ namespace polyglot::CodeAnalysis
 {
 
 ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                     Ptr<SyntaxToken> startToken,
-                                                     Ptr<SyntaxToken> elseKeyword,
-                                                     Ptr<SyntaxToken> endOfDirectiveToken,
+                                                     SyntaxToken* startToken,
+                                                     SyntaxToken* elseKeyword,
+                                                     SyntaxToken* endOfDirectiveToken,
                                                      bool isActive,
                                                      bool isBranchTaken) noexcept
     : BranchingDirectiveTriviaSyntax{syntaxKind},
@@ -19,11 +19,11 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isBranchTaken{isBranchTaken}
 {}
 
-Ptr<ElseDirectiveTriviaSyntax> ElseDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                                 Ptr<SyntaxToken> elseKeyword,
-                                                                 Ptr<SyntaxToken> endOfDirectiveToken,
-                                                                 bool isActive,
-                                                                 bool isBranchTaken) noexcept
+ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                             SyntaxToken* elseKeyword,
+                                                             SyntaxToken* endOfDirectiveToken,
+                                                             bool isActive,
+                                                             bool isBranchTaken) noexcept
 {
     assert(startToken != nullptr);
     assert(elseKeyword != nullptr);

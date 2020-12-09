@@ -7,9 +7,6 @@
 using pg_size = std::size_t;
 
 template <typename T>
-using Ptr = T*;
-
-template <typename T>
 using UniquePtr = std::unique_ptr<T>;
 
 template <typename T>

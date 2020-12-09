@@ -16,14 +16,14 @@ public:
     DelphiProgramModuleSyntax() noexcept;
     virtual ~DelphiProgramModuleSyntax() noexcept = default;
     inline bool isProgramModule() const noexcept override { return true; }
-    inline const Ptr<DelphiProgramHeadingSyntax> heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(Ptr<DelphiProgramHeadingSyntax> heading) noexcept { _ptrHeading = heading; }
-    inline const Ptr<DelphiUsesClauseSyntax> uses() const noexcept { return _ptrUses; }
-    inline void setUses(Ptr<DelphiUsesClauseSyntax> uses) noexcept { _ptrUses = uses; }
+    inline DelphiProgramHeadingSyntax* heading() const noexcept { return _ptrHeading; }
+    inline void setHeading(DelphiProgramHeadingSyntax* heading) noexcept { _ptrHeading = heading; }
+    inline DelphiUsesClauseSyntax* uses() const noexcept { return _ptrUses; }
+    inline void setUses(DelphiUsesClauseSyntax* uses) noexcept { _ptrUses = uses; }
 
 private:
-    Ptr<DelphiProgramHeadingSyntax> _ptrHeading;
-    Ptr<DelphiUsesClauseSyntax> _ptrUses;
+    DelphiProgramHeadingSyntax* _ptrHeading;
+    DelphiUsesClauseSyntax* _ptrUses;
 };
 
 } // end namespace polyglot::CodeAnalysis

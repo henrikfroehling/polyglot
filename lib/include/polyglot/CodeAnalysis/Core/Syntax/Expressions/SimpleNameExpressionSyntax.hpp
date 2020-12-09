@@ -15,7 +15,7 @@ class POLYGLOT_API SimpleNameExpressionSyntax : public NameExpressionSyntax
 public:
     explicit SimpleNameExpressionSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~SimpleNameExpressionSyntax() noexcept = default;
-    virtual const Ptr<SyntaxToken> identifier() const noexcept = 0;
+    virtual SyntaxToken* identifier() const noexcept = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -6,16 +6,16 @@ namespace polyglot::CodeAnalysis
 {
 
 PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                                         Ptr<SyntaxToken> operatorToken,
-                                                         Ptr<ExpressionSyntax> operandExpression) noexcept
+                                                         SyntaxToken* operatorToken,
+                                                         ExpressionSyntax* operandExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _ptrOperatorToken{operatorToken},
       _ptrOperandExpression{operandExpression}
 {}
 
-Ptr<PrefixUnaryExpressionSyntax> PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                                     Ptr<SyntaxToken> operatorToken,
-                                                                     Ptr<ExpressionSyntax> operandExpression) noexcept
+PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
+                                                                 SyntaxToken* operatorToken,
+                                                                 ExpressionSyntax* operandExpression) noexcept
 {
     assert(operatorToken != nullptr);
     assert(operandExpression != nullptr);

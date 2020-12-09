@@ -19,16 +19,16 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    Ptr<SyntaxNode> parse() noexcept;
+    SyntaxNode* parse() noexcept;
 
 protected:
     explicit Parser(std::shared_ptr<Lexer> lexer) noexcept;
-    virtual Ptr<SyntaxNode> parseRoot() noexcept = 0;
-    inline const Ptr<SyntaxToken> currentToken() noexcept { return _ptrLexer->currentToken(); }
-    inline Ptr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
-    inline Ptr<SyntaxToken> takeToken() noexcept { return _ptrLexer->takeToken(); }
-    inline Ptr<SyntaxToken> takeContextualToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeContextualToken(syntaxKind); }
-    inline const Ptr<SyntaxToken> peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
+    virtual SyntaxNode* parseRoot() noexcept = 0;
+    inline SyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
+    inline SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
+    inline SyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
+    inline SyntaxToken* takeContextualToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeContextualToken(syntaxKind); }
+    inline SyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
     inline void advance() noexcept { _ptrLexer->advance(); }
 
 protected:

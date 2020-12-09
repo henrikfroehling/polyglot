@@ -6,10 +6,10 @@ namespace polyglot::CodeAnalysis
 {
 
 ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         Ptr<SyntaxToken> startToken,
-                                                         Ptr<SyntaxToken> elseIfKeyword,
-                                                         Ptr<ExpressionSyntax> condition,
-                                                         Ptr<SyntaxToken> endOfDirectiveToken,
+                                                         SyntaxToken* startToken,
+                                                         SyntaxToken* elseIfKeyword,
+                                                         ExpressionSyntax* condition,
+                                                         SyntaxToken* endOfDirectiveToken,
                                                          bool isActive,
                                                          bool isBranchTaken,
                                                          bool conditionValue) noexcept
@@ -23,13 +23,13 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _conditionValue{conditionValue}
 {}
 
-Ptr<ElseIfDirectiveTriviaSyntax> ElseIfDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                                     Ptr<SyntaxToken> elseIfKeyword,
-                                                                     Ptr<ExpressionSyntax> condition,
-                                                                     Ptr<SyntaxToken> endOfDirectiveToken,
-                                                                     bool isActive,
-                                                                     bool isBranchTaken,
-                                                                     bool conditionValue) noexcept
+ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                                 SyntaxToken* elseIfKeyword,
+                                                                 ExpressionSyntax* condition,
+                                                                 SyntaxToken* endOfDirectiveToken,
+                                                                 bool isActive,
+                                                                 bool isBranchTaken,
+                                                                 bool conditionValue) noexcept
 {
     assert(startToken != nullptr);
     assert(elseIfKeyword != nullptr);

@@ -6,13 +6,13 @@
 namespace polyglot::CodeAnalysis
 {
 
-Directive::Directive(Ptr<DirectiveTriviaSyntax> node) noexcept
+Directive::Directive(DirectiveTriviaSyntax* node) noexcept
     : _node{node}
 {}
 
 bool Directive::isBranchTaken() const noexcept
 {
-    Ptr<BranchingDirectiveTriviaSyntax> ptrBranching = static_cast<BranchingDirectiveTriviaSyntax*>(_node);
+    BranchingDirectiveTriviaSyntax* ptrBranching = static_cast<BranchingDirectiveTriviaSyntax*>(_node);
 
     if (ptrBranching != nullptr)
         return ptrBranching->isBranchTaken();

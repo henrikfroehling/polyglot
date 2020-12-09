@@ -16,7 +16,7 @@ public:
     DelphiSyntaxTree() noexcept = default;
 
     explicit DelphiSyntaxTree(SharedPtr<SourceText> sourceText,
-                              Ptr<SyntaxNode> root) noexcept;
+                              SyntaxNode* root) noexcept;
 
     static SharedPtr<DelphiSyntaxTree> parseSourceText(SharedPtr<SourceText> sourceText) noexcept;
 };

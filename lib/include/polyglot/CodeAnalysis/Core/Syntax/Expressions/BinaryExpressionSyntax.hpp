@@ -14,24 +14,24 @@ class POLYGLOT_API BinaryExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit BinaryExpressionSyntax(SyntaxKind syntaxKind,
-                                    Ptr<ExpressionSyntax> leftExpression,
-                                    Ptr<SyntaxToken> operatorToken,
-                                    Ptr<ExpressionSyntax> rightExpression) noexcept;
+                                    ExpressionSyntax* leftExpression,
+                                    SyntaxToken* operatorToken,
+                                    ExpressionSyntax* rightExpression) noexcept;
 
     virtual ~BinaryExpressionSyntax() noexcept = default;
-    inline virtual const Ptr<ExpressionSyntax>& leftExpression() const noexcept { return _ptrLeftExpression; }
-    inline virtual const Ptr<SyntaxToken>& operatorToken() const noexcept { return _ptrOperatorToken; }
-    inline virtual const Ptr<ExpressionSyntax>& rightExpression() const noexcept { return _ptrRightExpression; }
+    inline virtual ExpressionSyntax* leftExpression() const noexcept { return _ptrLeftExpression; }
+    inline virtual SyntaxToken* operatorToken() const noexcept { return _ptrOperatorToken; }
+    inline virtual ExpressionSyntax* rightExpression() const noexcept { return _ptrRightExpression; }
 
-    static Ptr<BinaryExpressionSyntax> create(SyntaxKind syntaxKind,
-                                              Ptr<ExpressionSyntax> leftExpression,
-                                              Ptr<SyntaxToken> operatorToken,
-                                              Ptr<ExpressionSyntax> rightExpression) noexcept;
+    static BinaryExpressionSyntax* create(SyntaxKind syntaxKind,
+                                          ExpressionSyntax* leftExpression,
+                                          SyntaxToken* operatorToken,
+                                          ExpressionSyntax* rightExpression) noexcept;
 
 private:
-    Ptr<ExpressionSyntax> _ptrLeftExpression;
-    Ptr<SyntaxToken> _ptrOperatorToken;
-    Ptr<ExpressionSyntax> _ptrRightExpression;
+    ExpressionSyntax* _ptrLeftExpression;
+    SyntaxToken* _ptrOperatorToken;
+    ExpressionSyntax* _ptrRightExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

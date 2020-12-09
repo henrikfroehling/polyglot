@@ -13,14 +13,14 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API DelphiUnitInterfaceSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitInterfaceSectionSyntax(Ptr<SyntaxToken> interfaceKeyword) noexcept;
+    explicit DelphiUnitInterfaceSectionSyntax(SyntaxToken* interfaceKeyword) noexcept;
     virtual ~DelphiUnitInterfaceSectionSyntax() noexcept = default;
-    virtual const Ptr<DelphiUsesClauseSyntax> uses() const noexcept { return _ptrUses; }
-    virtual void setUses(Ptr<DelphiUsesClauseSyntax> uses) noexcept { _ptrUses = uses; }
+    virtual DelphiUsesClauseSyntax* uses() const noexcept { return _ptrUses; }
+    virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept { _ptrUses = uses; }
 
 private:
-    Ptr<SyntaxToken> _ptrInterfaceKeyword;
-    Ptr<DelphiUsesClauseSyntax> _ptrUses; // optional
+    SyntaxToken* _ptrInterfaceKeyword;
+    DelphiUsesClauseSyntax* _ptrUses; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis

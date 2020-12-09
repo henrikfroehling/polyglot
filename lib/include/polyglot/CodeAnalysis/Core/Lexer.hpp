@@ -33,33 +33,33 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    inline Ptr<SyntaxToken> lex() noexcept { return lex(_mode); }
+    inline SyntaxToken* lex() noexcept { return lex(_mode); }
     inline const TextWindow& textWindow() const noexcept { return _textWindow; }
     void preLex() noexcept;
-    const Ptr<SyntaxToken> currentToken() noexcept;
-    Ptr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept;
-    Ptr<SyntaxToken> takeToken() noexcept;
-    Ptr<SyntaxToken> takeContextualToken(SyntaxKind syntaxKind) noexcept;
-    const Ptr<SyntaxToken> peekToken(pg_size n) noexcept;
+    SyntaxToken* currentToken() noexcept;
+    SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept;
+    SyntaxToken* takeToken() noexcept;
+    SyntaxToken* takeContextualToken(SyntaxKind syntaxKind) noexcept;
+    SyntaxToken* peekToken(pg_size n) noexcept;
     void advance() noexcept;
     inline void setMode(LexerMode mode) noexcept { _mode = mode; }
 
 protected:
     explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
-    virtual Ptr<SyntaxToken> lex(LexerMode mode) noexcept = 0;
-    void addLexedToken(Ptr<SyntaxToken> token) noexcept;
+    virtual SyntaxToken* lex(LexerMode mode) noexcept = 0;
+    void addLexedToken(SyntaxToken* token) noexcept;
 
 protected:
     TextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<Ptr<SyntaxNode>> _leadingTrivia;
-    std::vector<Ptr<SyntaxNode>> _trailingTrivia;
-    std::vector<Ptr<SyntaxToken>> _lexedTokens;
+    std::vector<SyntaxNode*> _leadingTrivia;
+    std::vector<SyntaxNode*> _trailingTrivia;
+    std::vector<SyntaxToken*> _lexedTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
-    Ptr<SyntaxToken> _ptrCurrentToken;
+    SyntaxToken* _ptrCurrentToken;
     DirectiveStack _directives;
 };
 

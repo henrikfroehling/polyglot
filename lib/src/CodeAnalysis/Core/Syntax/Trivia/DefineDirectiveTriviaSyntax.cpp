@@ -6,10 +6,10 @@ namespace polyglot::CodeAnalysis
 {
 
 DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         Ptr<SyntaxToken> startToken,
-                                                         Ptr<SyntaxToken> defineKeyword,
-                                                         Ptr<SyntaxToken> name,
-                                                         Ptr<SyntaxToken> endOfDirectiveToken,
+                                                         SyntaxToken* startToken,
+                                                         SyntaxToken* defineKeyword,
+                                                         SyntaxToken* name,
+                                                         SyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _ptrStartToken{startToken},
@@ -19,11 +19,11 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {}
 
-Ptr<DefineDirectiveTriviaSyntax> DefineDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                                     Ptr<SyntaxToken> defineKeyword,
-                                                                     Ptr<SyntaxToken> name,
-                                                                     Ptr<SyntaxToken> endOfDirectiveToken,
-                                                                     bool isActive) noexcept
+DefineDirectiveTriviaSyntax* DefineDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                                 SyntaxToken* defineKeyword,
+                                                                 SyntaxToken* name,
+                                                                 SyntaxToken* endOfDirectiveToken,
+                                                                 bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(defineKeyword != nullptr);

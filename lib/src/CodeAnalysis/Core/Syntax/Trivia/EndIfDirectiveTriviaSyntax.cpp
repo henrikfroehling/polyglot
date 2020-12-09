@@ -6,9 +6,9 @@ namespace polyglot::CodeAnalysis
 {
 
 EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       Ptr<SyntaxToken> startToken,
-                                                       Ptr<SyntaxToken> endIfKeyword,
-                                                       Ptr<SyntaxToken> endOfDirectiveToken,
+                                                       SyntaxToken* startToken,
+                                                       SyntaxToken* endIfKeyword,
+                                                       SyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _ptrStartToken{startToken},
@@ -17,10 +17,10 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {}
 
-Ptr<EndIfDirectiveTriviaSyntax> EndIfDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                                   Ptr<SyntaxToken> endIfKeyword,
-                                                                   Ptr<SyntaxToken> endOfDirectiveToken,
-                                                                   bool isActive) noexcept
+EndIfDirectiveTriviaSyntax* EndIfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                               SyntaxToken* endIfKeyword,
+                                                               SyntaxToken* endOfDirectiveToken,
+                                                               bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(endIfKeyword != nullptr);

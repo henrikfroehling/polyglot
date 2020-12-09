@@ -14,23 +14,23 @@ class POLYGLOT_API ParenthesizedExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                           Ptr<SyntaxToken> openParenthesisToken,
-                                           Ptr<ExpressionSyntax> expression,
-                                           Ptr<SyntaxToken> closeParenthesisToken) noexcept;
+                                           SyntaxToken* openParenthesisToken,
+                                           ExpressionSyntax* expression,
+                                           SyntaxToken* closeParenthesisToken) noexcept;
 
     virtual ~ParenthesizedExpressionSyntax() noexcept = default;
-    inline virtual const Ptr<SyntaxToken> openParenthesisToken() const noexcept { return _ptrOpenParenthesisToken; }
-    inline virtual const Ptr<ExpressionSyntax> expression() const noexcept { return _ptrExpression; }
-    inline virtual const Ptr<SyntaxToken> closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
+    inline virtual SyntaxToken* openParenthesisToken() const noexcept { return _ptrOpenParenthesisToken; }
+    inline virtual ExpressionSyntax* expression() const noexcept { return _ptrExpression; }
+    inline virtual SyntaxToken* closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
 
-    static Ptr<ParenthesizedExpressionSyntax> create(Ptr<SyntaxToken> openParenthesisToken,
-                                                     Ptr<ExpressionSyntax> expression,
-                                                     Ptr<SyntaxToken> closeParenthesisToken) noexcept;
+    static ParenthesizedExpressionSyntax* create(SyntaxToken* openParenthesisToken,
+                                                 ExpressionSyntax* expression,
+                                                 SyntaxToken* closeParenthesisToken) noexcept;
 
 private:
-    Ptr<SyntaxToken> _ptrOpenParenthesisToken;
-    Ptr<ExpressionSyntax> _ptrExpression;
-    Ptr<SyntaxToken> _ptrCloseParenthesisToken;
+    SyntaxToken* _ptrOpenParenthesisToken;
+    ExpressionSyntax* _ptrExpression;
+    SyntaxToken* _ptrCloseParenthesisToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

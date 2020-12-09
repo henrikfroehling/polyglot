@@ -6,9 +6,9 @@ namespace polyglot::CodeAnalysis
 {
 
 RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         Ptr<SyntaxToken> startToken,
-                                                         Ptr<SyntaxToken> regionKeyword,
-                                                         Ptr<SyntaxToken> endOfDirectiveToken,
+                                                         SyntaxToken* startToken,
+                                                         SyntaxToken* regionKeyword,
+                                                         SyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _ptrStartToken{startToken},
@@ -17,10 +17,10 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {}
 
-Ptr<RegionDirectiveTriviaSyntax> RegionDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                                     Ptr<SyntaxToken> regionKeyword,
-                                                                     Ptr<SyntaxToken> endOfDirectiveToken,
-                                                                     bool isActive) noexcept
+RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                                 SyntaxToken* regionKeyword,
+                                                                 SyntaxToken* endOfDirectiveToken,
+                                                                 bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(regionKeyword != nullptr);

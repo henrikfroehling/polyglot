@@ -13,12 +13,12 @@ namespace polyglot::CodeAnalysis
 class SyntaxPool final
 {
 public:
-    static Ptr<SyntaxNode> createSyntaxNode() noexcept;
-    static Ptr<SyntaxToken> createSyntaxToken() noexcept;
-    static Ptr<SyntaxTrivia> createSyntaxTrivia() noexcept;
-    static Ptr<SyntaxNode> addSyntaxNode(UniquePtr<SyntaxNode> syntaxNode) noexcept;
-    static Ptr<SyntaxToken> addSyntaxToken(UniquePtr<SyntaxToken> syntaxToken) noexcept;
-    static Ptr<SyntaxTrivia> addSyntaxTrivia(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept;
+    static SyntaxNode* createSyntaxNode() noexcept;
+    static SyntaxToken* createSyntaxToken() noexcept;
+    static SyntaxTrivia* createSyntaxTrivia() noexcept;
+    static SyntaxNode* addSyntaxNode(UniquePtr<SyntaxNode> syntaxNode) noexcept;
+    static SyntaxToken* addSyntaxToken(UniquePtr<SyntaxToken> syntaxToken) noexcept;
+    static SyntaxTrivia* addSyntaxTrivia(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept;
 
 private:
     static inline std::vector<UniquePtr<SyntaxNode>> _syntaxNodes{};

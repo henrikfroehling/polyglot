@@ -4,7 +4,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(Ptr<SyntaxToken> implementationKeyword) noexcept
+DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(SyntaxToken* implementationKeyword) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitImplementationSection},
       _ptrImplementationKeyword{implementationKeyword},
       _ptrUses{nullptr}

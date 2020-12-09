@@ -14,29 +14,29 @@ class POLYGLOT_API ElseDirectiveTriviaSyntax : public BranchingDirectiveTriviaSy
 {
 public:
     explicit ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                       Ptr<SyntaxToken> startToken,
-                                       Ptr<SyntaxToken> elseKeyword,
-                                       Ptr<SyntaxToken> endOfDirectiveToken,
+                                       SyntaxToken* startToken,
+                                       SyntaxToken* elseKeyword,
+                                       SyntaxToken* endOfDirectiveToken,
                                        bool isActive,
                                        bool isBranchTaken) noexcept;
 
     virtual ~ElseDirectiveTriviaSyntax() noexcept = default;
-    inline virtual const Ptr<SyntaxToken> startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual const Ptr<SyntaxToken> elseKeyword() const noexcept { return _ptrElseKeyword; }
-    inline virtual const Ptr<SyntaxToken> endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
+    inline virtual SyntaxToken* elseKeyword() const noexcept { return _ptrElseKeyword; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
 
-    static Ptr<ElseDirectiveTriviaSyntax> create(Ptr<SyntaxToken> startToken,
-                                                 Ptr<SyntaxToken> elseKeyword,
-                                                 Ptr<SyntaxToken> endOfDirectiveToken,
-                                                 bool isActive,
-                                                 bool isBranchTaken) noexcept;
-
+    static ElseDirectiveTriviaSyntax* create(SyntaxToken* startToken,
+                                             SyntaxToken* elseKeyword,
+                                             SyntaxToken* endOfDirectiveToken,
+                                             bool isActive,
+                                             bool isBranchTaken) noexcept;
+    
 private:
-    Ptr<SyntaxToken> _ptrStartToken;
-    Ptr<SyntaxToken> _ptrElseKeyword;
-    Ptr<SyntaxToken> _ptrEndOfDirectiveToken;
+    SyntaxToken* _ptrStartToken;
+    SyntaxToken* _ptrElseKeyword;
+    SyntaxToken* _ptrEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
 };

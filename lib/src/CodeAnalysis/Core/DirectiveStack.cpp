@@ -11,7 +11,7 @@ DirectiveStack::DirectiveStack(SharedPtr<DirectiveList> directives) noexcept
     : _directives{std::move(directives)}
 {}
 
-DirectiveStack DirectiveStack::add(Ptr<Directive> directive) noexcept
+DirectiveStack DirectiveStack::add(Directive* directive) noexcept
 {
     switch (directive->syntaxKind())
     {

@@ -43,7 +43,7 @@ void Lexer::preLex() noexcept
 
     for (pg_size i = 0; i < size; i++)
     {
-        Ptr<SyntaxToken> ptrToken = lex();
+        SyntaxToken* ptrToken = lex();
         assert(ptrToken != nullptr);
         _lexedTokens.push_back(ptrToken);
         _tokenCount++;
@@ -56,7 +56,7 @@ void Lexer::preLex() noexcept
     _tokenOffset = currentTokenOffset;
 }
 
-const Ptr<SyntaxToken> Lexer::currentToken() noexcept
+SyntaxToken* Lexer::currentToken() noexcept
 {
     if (_tokenOffset >= _tokenCount)
         addLexedToken(lex());
@@ -64,42 +64,42 @@ const Ptr<SyntaxToken> Lexer::currentToken() noexcept
     return _lexedTokens[_tokenOffset];
 }
 
-Ptr<SyntaxToken> Lexer::takeToken(SyntaxKind syntaxKind) noexcept
+SyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
 {
-    auto ptrCurrentToken = currentToken();
+    _ptrCurrentToken = currentToken();
 
-    if (ptrCurrentToken->syntaxKind() == syntaxKind)
+    if (_ptrCurrentToken->syntaxKind() == syntaxKind)
     {
         _tokenOffset++;
-        return ptrCurrentToken;
+        return _ptrCurrentToken;
     }
 
     // TODO Create missing replacement token
     return nullptr;
 }
 
-Ptr<SyntaxToken> Lexer::takeToken() noexcept
+SyntaxToken* Lexer::takeToken() noexcept
 {
-    auto ptrCurrentToken = currentToken();
+    _ptrCurrentToken = currentToken();
     _tokenOffset++;
-    return ptrCurrentToken;
+    return _ptrCurrentToken;
 }
 
-Ptr<SyntaxToken> Lexer::takeContextualToken(SyntaxKind syntaxKind) noexcept
+SyntaxToken* Lexer::takeContextualToken(SyntaxKind syntaxKind) noexcept
 {
-    auto ptrCurrentToken = currentToken();
+    _ptrCurrentToken = currentToken();
 
-    if (ptrCurrentToken->contextualKind() == syntaxKind)
+    if (_ptrCurrentToken->contextualKind() == syntaxKind)
     {
         _tokenOffset++;
-        return ptrCurrentToken;
+        return _ptrCurrentToken;
     }
 
     // TODO create missing replacement token / error handling
     return nullptr;
 }
 
-const Ptr<SyntaxToken> Lexer::peekToken(pg_size n) noexcept
+SyntaxToken* Lexer::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);
 
@@ -114,7 +114,7 @@ void Lexer::advance() noexcept
     _tokenOffset++;
 }
 
-void Lexer::addLexedToken(Ptr<SyntaxToken> token) noexcept
+void Lexer::addLexedToken(SyntaxToken* token) noexcept
 {
     assert(token != nullptr);
     pg_size newSize{2};

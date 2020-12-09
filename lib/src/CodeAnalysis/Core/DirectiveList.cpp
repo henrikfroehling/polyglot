@@ -14,7 +14,7 @@ DirectiveList::DirectiveList() noexcept
       _ptrTail{nullptr}
 {}
 
-DirectiveList::DirectiveList(Ptr<Directive> head,
+DirectiveList::DirectiveList(Directive* head,
                              SharedPtr<DirectiveList> tail) noexcept
     : _ptrHead{head},
       _ptrTail{std::move(tail)}
@@ -32,7 +32,7 @@ SharedPtr<DirectiveList> DirectiveList::empty() noexcept
     return EMPTY;
 }
 
-SharedPtr<DirectiveList> DirectiveList::create(Ptr<Directive> directive,
+SharedPtr<DirectiveList> DirectiveList::create(Directive* directive,
                                                SharedPtr<DirectiveList> tail) noexcept
 {
     return std::make_shared<DirectiveList>(directive, std::move(tail));

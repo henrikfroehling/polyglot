@@ -17,20 +17,18 @@ public:
     DelphiPackageModuleSyntax() noexcept;
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
-    inline const Ptr<DelphiPackageHeadingSyntax> heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(Ptr<DelphiPackageHeadingSyntax> heading) noexcept { _ptrHeading = heading; }
-    inline const Ptr<DelphiPackageRequiresClauseSyntax> requiresClause() const noexcept { return _ptrRequiresClause; }
-    inline void setRequiresClause(Ptr<DelphiPackageRequiresClauseSyntax> requiresClause) noexcept { _ptrRequiresClause = requiresClause; }
-    inline const Ptr<DelphiPackageContainsClauseSyntax>& containsClause() const noexcept { return _ptrContainsClause; }
-    inline void setContainsClause(Ptr<DelphiPackageContainsClauseSyntax> containsClause) noexcept { _ptrContainsClause = containsClause; }
+    inline DelphiPackageHeadingSyntax* heading() const noexcept { return _ptrHeading; }
+    inline void setHeading(DelphiPackageHeadingSyntax* heading) noexcept { _ptrHeading = heading; }
+    inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _ptrRequiresClause; }
+    inline void setRequiresClause(DelphiPackageRequiresClauseSyntax* requiresClause) noexcept { _ptrRequiresClause = requiresClause; }
+    inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _ptrContainsClause; }
+    inline void setContainsClause(DelphiPackageContainsClauseSyntax* containsClause) noexcept { _ptrContainsClause = containsClause; }
 
 private:
-    Ptr<DelphiPackageHeadingSyntax> _ptrHeading;
-    Ptr<DelphiPackageRequiresClauseSyntax> _ptrRequiresClause;
-    Ptr<DelphiPackageContainsClauseSyntax> _ptrContainsClause;
+    DelphiPackageHeadingSyntax* _ptrHeading;
+    DelphiPackageRequiresClauseSyntax* _ptrRequiresClause;
+    DelphiPackageContainsClauseSyntax* _ptrContainsClause;
 };
-
-using DelphiPackageModuleSyntaxPtr = std::shared_ptr<DelphiPackageModuleSyntax>;
 
 } // polyglot::CodeAnalysis
 

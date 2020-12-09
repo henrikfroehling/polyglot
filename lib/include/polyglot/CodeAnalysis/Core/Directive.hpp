@@ -13,7 +13,7 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API Directive
 {
 public:
-    explicit Directive(Ptr<DirectiveTriviaSyntax> node) noexcept;
+    explicit Directive(DirectiveTriviaSyntax* node) noexcept;
     virtual ~Directive() noexcept = default;
     inline SyntaxKind syntaxKind() const noexcept { return _node->syntaxKind(); }
     inline bool isActive() const noexcept { return _node->isActive(); }
@@ -27,7 +27,7 @@ public:
                            const Directive& rhs) noexcept;
 
 private:
-    Ptr<DirectiveTriviaSyntax> _node;
+    DirectiveTriviaSyntax* _node;
 };
 
 } // end namespace polyglot::CodeAnalysis

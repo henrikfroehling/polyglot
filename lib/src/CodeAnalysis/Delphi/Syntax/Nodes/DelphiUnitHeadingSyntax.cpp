@@ -4,9 +4,9 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(Ptr<SyntaxToken> unitKeyword,
-                                                 Ptr<NameExpressionSyntax> name,
-                                                 Ptr<SyntaxToken> semiColonToken) noexcept
+DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(SyntaxToken* unitKeyword,
+                                                 NameExpressionSyntax* name,
+                                                 SyntaxToken* semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitHeading},
       _ptrUnitKeyword{unitKeyword},
       _ptrName{name},

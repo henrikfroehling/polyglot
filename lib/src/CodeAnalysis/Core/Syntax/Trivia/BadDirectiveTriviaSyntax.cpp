@@ -6,9 +6,9 @@ namespace polyglot::CodeAnalysis
 {
 
 BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                   Ptr<SyntaxToken> startToken,
-                                                   Ptr<SyntaxToken> identifier,
-                                                   Ptr<SyntaxToken> endOfDirectiveToken,
+                                                   SyntaxToken* startToken,
+                                                   SyntaxToken* identifier,
+                                                   SyntaxToken* endOfDirectiveToken,
                                                    bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _ptrStartToken{startToken},
@@ -17,10 +17,10 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {}
 
-Ptr<BadDirectiveTriviaSyntax> BadDirectiveTriviaSyntax::create(Ptr<SyntaxToken> startToken,
-                                                               Ptr<SyntaxToken> identifier,
-                                                               Ptr<SyntaxToken> endOfDirectiveToken,
-                                                               bool isActive) noexcept
+BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                           SyntaxToken* identifier,
+                                                           SyntaxToken* endOfDirectiveToken,
+                                                           bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(identifier != nullptr);
