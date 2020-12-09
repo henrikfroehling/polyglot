@@ -1,34 +1,37 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include <cassert>
+#include <memory>
 
 namespace polyglot::CodeAnalysis
 {
 
 IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                 SharedPtr<SyntaxToken> startToken,
-                                                 SharedPtr<SyntaxToken> ifKeyword,
-                                                 SharedPtr<ExpressionSyntax> condition,
-                                                 SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                 SyntaxToken* startToken,
+                                                 SyntaxToken* ifKeyword,
+                                                 ExpressionSyntax* condition,
+                                                 SyntaxToken* endOfDirectiveToken,
                                                  bool isActive,
                                                  bool isBranchTaken,
                                                  bool conditionValue) noexcept
     : ConditionalDirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{std::move(startToken)},
-      _ptrIfKeyword{std::move(ifKeyword)},
-      _ptrCondition{std::move(condition)},
-      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _ptrStartToken{startToken},
+      _ptrIfKeyword{ifKeyword},
+      _ptrCondition{condition},
+      _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive},
       _isBranchTaken{isBranchTaken},
       _conditionValue{conditionValue}
 {}
 
-SharedPtr<IfDirectiveTriviaSyntax> IfDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
-                                                                   SharedPtr<SyntaxToken> ifKeyword,
-                                                                   SharedPtr<ExpressionSyntax> condition,
-                                                                   SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                                   bool isActive,
-                                                                   bool isBranchTaken,
-                                                                   bool conditionValue) noexcept
+IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                         SyntaxToken* ifKeyword,
+                                                         ExpressionSyntax* condition,
+                                                         SyntaxToken* endOfDirectiveToken,
+                                                         bool isActive,
+                                                         bool isBranchTaken,
+                                                         bool conditionValue) noexcept
 {
     assert(startToken != nullptr);
     assert(ifKeyword != nullptr);
@@ -37,10 +40,11 @@ SharedPtr<IfDirectiveTriviaSyntax> IfDirectiveTriviaSyntax::create(SharedPtr<Syn
     assert(endOfDirectiveToken != nullptr);
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
-    return std::make_shared<IfDirectiveTriviaSyntax>(SyntaxKind::IfDirectiveTrivia, std::move(startToken),
-                                                     std::move(ifKeyword), std::move(condition),
-                                                     std::move(endOfDirectiveToken), isActive,
-                                                     isBranchTaken, conditionValue);
+    auto ptrIfDirectiveTrivia = std::make_unique<IfDirectiveTriviaSyntax>(SyntaxKind::IfDirectiveTrivia, startToken,
+                                                                          ifKeyword, condition, endOfDirectiveToken,
+                                                                          isActive, isBranchTaken, conditionValue);
+
+    return static_cast<IfDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrIfDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

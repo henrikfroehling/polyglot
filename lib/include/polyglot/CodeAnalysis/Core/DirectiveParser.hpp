@@ -3,14 +3,15 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxFacts.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class DirectiveStack;
+class SyntaxNode;
 
 class POLYGLOT_API DirectiveParser : public Parser
 {
@@ -18,10 +19,10 @@ public:
     DirectiveParser() = delete;
     virtual ~DirectiveParser() noexcept = default;
 
-    virtual SharedPtr<SyntaxNode> parseDirective(bool isActive,
-                                                 bool endIsActive,
-                                                 bool isFirstAfterTokenInFile,
-                                                 bool isAfterNonWhitespaceOnLine) noexcept = 0;
+    virtual SyntaxNode* parseDirective(bool isActive,
+                                       bool endIsActive,
+                                       bool isFirstAfterTokenInFile,
+                                       bool isAfterNonWhitespaceOnLine) noexcept = 0;
 
 protected:
     explicit DirectiveParser(SharedPtr<Lexer> lexer,
@@ -33,7 +34,7 @@ protected:
     SharedPtr<SyntaxFacts> _ptrSyntaxFacts;
 
 private:
-    inline SharedPtr<SyntaxNode> parseRoot() noexcept override { return nullptr; }
+    inline SyntaxNode* parseRoot() noexcept override { return nullptr; }
 };
 
 } // end namespace polyglot::CodeAnalysis

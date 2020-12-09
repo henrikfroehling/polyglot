@@ -1,4 +1,6 @@
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
+#include "polyglot/CodeAnalysis/Core/Directive.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -11,7 +13,7 @@ DirectiveStack::DirectiveStack(SharedPtr<DirectiveList> directives) noexcept
     : _directives{std::move(directives)}
 {}
 
-DirectiveStack DirectiveStack::add(SharedPtr<Directive> directive) noexcept
+DirectiveStack DirectiveStack::add(Directive* directive) noexcept
 {
     switch (directive->syntaxKind())
     {
@@ -36,7 +38,7 @@ DirectiveStack DirectiveStack::add(SharedPtr<Directive> directive) noexcept
         }
         default:
 defaultCase:
-            return DirectiveStack{DirectiveList::create(std::move(directive), _directives != nullptr ? std::move(_directives) : DirectiveList::empty())};
+            return DirectiveStack{ DirectiveList::create(directive, _directives != nullptr ? std::move(_directives) : DirectiveList::empty()) };
     }
 }
 

@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_DIRECTIVESTACK_H
 #define POLYGLOT_CODEANALYSIS_CORE_DIRECTIVESTACK_H
 
+#include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Directive.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveList.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -15,6 +15,8 @@ enum class DefineState
     Unspecified
 };
 
+class Directive;
+
 class DirectiveStack
 {
 public:
@@ -23,7 +25,7 @@ public:
     DirectiveStack(DirectiveStack&&) noexcept = default;
     DirectiveStack& operator=(const DirectiveStack&) noexcept = default;
     DirectiveStack& operator=(DirectiveStack&&) noexcept = default;
-    DirectiveStack add(SharedPtr<Directive> directive) noexcept;
+    DirectiveStack add(Directive* directive) noexcept;
     inline bool isEmpty() const noexcept { return _directives != nullptr && _directives->head() == nullptr && _directives->tail() == nullptr; }
     bool isPreviousBranchTaken() const noexcept;
     bool hasUnfinishedIf() const noexcept;

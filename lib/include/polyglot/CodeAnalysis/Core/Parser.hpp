@@ -4,11 +4,13 @@
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class SyntaxNode;
+class SyntaxToken;
 
 class POLYGLOT_API Parser
 {
@@ -19,16 +21,16 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    SharedPtr<SyntaxNode> parse() noexcept;
+    SyntaxNode* parse() noexcept;
 
 protected:
     explicit Parser(std::shared_ptr<Lexer> lexer) noexcept;
-    virtual SharedPtr<SyntaxNode> parseRoot() noexcept = 0;
-    inline const SharedPtr<SyntaxToken>& currentToken() noexcept { return _ptrLexer->currentToken(); }
-    inline SharedPtr<SyntaxToken> takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
-    inline SharedPtr<SyntaxToken> takeToken() noexcept { return _ptrLexer->takeToken(); }
-    inline SharedPtr<SyntaxToken> takeContextualToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeContextualToken(syntaxKind); }
-    inline const SharedPtr<SyntaxToken>& peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
+    virtual SyntaxNode* parseRoot() noexcept = 0;
+    inline SyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
+    inline SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
+    inline SyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
+    inline SyntaxToken* takeContextualToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeContextualToken(syntaxKind); }
+    inline SyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
     inline void advance() noexcept { _ptrLexer->advance(); }
 
 protected:

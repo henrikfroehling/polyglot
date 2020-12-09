@@ -4,9 +4,9 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(SharedPtr<NameExpressionSyntax> unitName) noexcept
+DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitReference},
-      _ptrUnitName{std::move(unitName)},
+      _ptrUnitName{unitName},
       _ptrInKeyword{nullptr},
       _ptrSourceFile{nullptr},
       _ptrCommaToken{nullptr}

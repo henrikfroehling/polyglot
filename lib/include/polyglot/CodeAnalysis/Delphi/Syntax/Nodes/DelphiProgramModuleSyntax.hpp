@@ -2,13 +2,13 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramHeadingSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class DelphiProgramHeadingSyntax;
+class DelphiUsesClauseSyntax;
 
 class POLYGLOT_API DelphiProgramModuleSyntax : public DelphiCompilationUnitSyntax
 {
@@ -16,14 +16,14 @@ public:
     DelphiProgramModuleSyntax() noexcept;
     virtual ~DelphiProgramModuleSyntax() noexcept = default;
     inline bool isProgramModule() const noexcept override { return true; }
-    inline const SharedPtr<DelphiProgramHeadingSyntax>& heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(SharedPtr<DelphiProgramHeadingSyntax> heading) noexcept { _ptrHeading = std::move(heading); }
-    inline const SharedPtr<DelphiUsesClauseSyntax>& uses() const noexcept { return _ptrUses; }
-    inline void setUses(SharedPtr<DelphiUsesClauseSyntax> uses) noexcept { _ptrUses = std::move(uses); }
+    inline DelphiProgramHeadingSyntax* heading() const noexcept { return _ptrHeading; }
+    inline void setHeading(DelphiProgramHeadingSyntax* heading) noexcept { _ptrHeading = heading; }
+    inline DelphiUsesClauseSyntax* uses() const noexcept { return _ptrUses; }
+    inline void setUses(DelphiUsesClauseSyntax* uses) noexcept { _ptrUses = uses; }
 
 private:
-    SharedPtr<DelphiProgramHeadingSyntax> _ptrHeading;
-    SharedPtr<DelphiUsesClauseSyntax> _ptrUses;
+    DelphiProgramHeadingSyntax* _ptrHeading;
+    DelphiUsesClauseSyntax* _ptrUses;
 };
 
 } // end namespace polyglot::CodeAnalysis

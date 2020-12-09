@@ -1,33 +1,38 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include <cassert>
+#include <memory>
 
 namespace polyglot::CodeAnalysis
 {
 
 BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                   SharedPtr<SyntaxToken> startToken,
-                                                   SharedPtr<SyntaxToken> identifier,
-                                                   SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                   SyntaxToken* startToken,
+                                                   SyntaxToken* identifier,
+                                                   SyntaxToken* endOfDirectiveToken,
                                                    bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{std::move(startToken)},
-      _ptrIdentifier{std::move(identifier)},
-      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _ptrStartToken{startToken},
+      _ptrIdentifier{identifier},
+      _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
 {}
 
-SharedPtr<BadDirectiveTriviaSyntax> BadDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
-                                                                     SharedPtr<SyntaxToken> identifier,
-                                                                     SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                                     bool isActive) noexcept
+BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                           SyntaxToken* identifier,
+                                                           SyntaxToken* endOfDirectiveToken,
+                                                           bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(identifier != nullptr);
     assert(endOfDirectiveToken != nullptr);
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
-    return std::make_shared<BadDirectiveTriviaSyntax>(SyntaxKind::BadDirectiveTrivia, std::move(startToken),
-                                                      std::move(identifier), std::move(endOfDirectiveToken), isActive);
+    auto ptrBadDirectiveTrivia = std::make_unique<BadDirectiveTriviaSyntax>(SyntaxKind::BadDirectiveTrivia, startToken,
+                                                                            identifier, endOfDirectiveToken, isActive);
+
+    return static_cast<BadDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

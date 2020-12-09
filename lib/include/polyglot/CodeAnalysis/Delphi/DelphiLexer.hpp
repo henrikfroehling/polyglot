@@ -7,13 +7,14 @@
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class SyntaxToken;
+class SyntaxTrivia;
 
 class POLYGLOT_API DelphiLexer final : public Lexer
 {
@@ -21,19 +22,19 @@ public:
     explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
-    SharedPtr<SyntaxToken> lex(LexerMode mode) noexcept override;
+    SyntaxToken* lex(LexerMode mode) noexcept override;
     TokenInfo quickScanSyntaxToken() noexcept;
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
-                         std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept;
+                         std::vector<SyntaxNode*>& triviaList) noexcept;
 
-    SharedPtr<SyntaxTrivia> scanWhitespace() noexcept;
+    SyntaxTrivia* scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
     void scanMultiLineComment(bool& isTerminated) noexcept;
-    SharedPtr<SyntaxTrivia> scanEndOfLine() noexcept;
+    SyntaxTrivia* scanEndOfLine() noexcept;
     void scanSyntaxToken(TokenInfo& tokenInfo) noexcept;
     void scanStringLiteral(TokenInfo& tokenInfo) noexcept;
     void scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept;
@@ -46,19 +47,19 @@ private:
 
     void lexDirectiveAndExcludedTrivia(bool afterFirstToken,
                                        bool afterNonWhitespaceOnLine,
-                                       std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept;
+                                       std::vector<SyntaxNode*>& triviaList) noexcept;
 
-    SharedPtr<SyntaxNode> lexSingleDirective(bool isActive,
-                                             bool endIsActive,
-                                             bool afterFirstToken,
-                                             bool afterNonWhitespaceOnLine,
-                                             std::vector<SharedPtr<SyntaxNode>>& triviaList) noexcept;
+    SyntaxNode* lexSingleDirective(bool isActive,
+                                   bool endIsActive,
+                                   bool afterFirstToken,
+                                   bool afterNonWhitespaceOnLine,
+                                   std::vector<SyntaxNode*>& triviaList) noexcept;
 
     void lexExludedDirectivesAndTrivia(bool endIsActive) noexcept;
-    SharedPtr<SyntaxToken> lexDirectiveToken() noexcept;
+    SyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
     void lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept;
-    SharedPtr<SyntaxNode> lexDirectiveTrivia() noexcept;
+    SyntaxNode* lexDirectiveTrivia() noexcept;
 
 private:
     SharedPtr<DelphiSyntaxFacts> _ptrSyntaxFacts;

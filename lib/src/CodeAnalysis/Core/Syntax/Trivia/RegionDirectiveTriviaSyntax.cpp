@@ -1,25 +1,28 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include <cassert>
+#include <memory>
 
 namespace polyglot::CodeAnalysis
 {
 
 RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         SharedPtr<SyntaxToken> startToken,
-                                                         SharedPtr<SyntaxToken> regionKeyword,
-                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                         SyntaxToken* startToken,
+                                                         SyntaxToken* regionKeyword,
+                                                         SyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{std::move(startToken)},
-      _ptrRegionKeyword{std::move(regionKeyword)},
-      _ptrEndOfDirectiveToken{std::move(endOfDirectiveToken)},
+      _ptrStartToken{startToken},
+      _ptrRegionKeyword{regionKeyword},
+      _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
 {}
 
-SharedPtr<RegionDirectiveTriviaSyntax> RegionDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
-                                                                           SharedPtr<SyntaxToken> regionKeyword,
-                                                                           SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                                           bool isActive) noexcept
+RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                                 SyntaxToken* regionKeyword,
+                                                                 SyntaxToken* endOfDirectiveToken,
+                                                                 bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(regionKeyword != nullptr);
@@ -27,8 +30,10 @@ SharedPtr<RegionDirectiveTriviaSyntax> RegionDirectiveTriviaSyntax::create(Share
     assert(endOfDirectiveToken != nullptr);
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
-    return std::make_shared<RegionDirectiveTriviaSyntax>(SyntaxKind::RegionDirectiveTrivia, std::move(startToken),
-                                                         std::move(regionKeyword), std::move(endOfDirectiveToken), isActive);
+    auto ptrRegionDirectiveTrivia = std::make_unique<RegionDirectiveTriviaSyntax>(SyntaxKind::RegionDirectiveTrivia, startToken,
+                                                                                  regionKeyword, endOfDirectiveToken, isActive);
+
+    return static_cast<RegionDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -1,28 +1,30 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
 UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       SharedPtr<SyntaxToken> startToken,
-                                                       SharedPtr<SyntaxToken> undefKeyword,
-                                                       SharedPtr<SyntaxToken> name,
-                                                       SharedPtr<SyntaxToken> endOfDirectiveToken,
+                                                       SyntaxToken* startToken,
+                                                       SyntaxToken* undefKeyword,
+                                                       SyntaxToken* name,
+                                                       SyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
-    : DirectiveTriviaSyntax{ syntaxKind },
-      _ptrStartToken{ std::move(startToken) },
-      _ptrUndefKeyword{ std::move(undefKeyword) },
-      _ptrName{ std::move(name) },
-      _ptrEndOfDirectiveToken{ std::move(endOfDirectiveToken) },
-      _isActive{ isActive }
+    : DirectiveTriviaSyntax{syntaxKind},
+      _ptrStartToken{startToken},
+      _ptrUndefKeyword{undefKeyword},
+      _ptrName{name},
+      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _isActive{isActive}
 {}
 
-SharedPtr<UndefDirectiveTriviaSyntax> UndefDirectiveTriviaSyntax::create(SharedPtr<SyntaxToken> startToken,
-                                                                         SharedPtr<SyntaxToken> undefKeyword,
-                                                                         SharedPtr<SyntaxToken> name,
-                                                                         SharedPtr<SyntaxToken> endOfDirectiveToken,
-                                                                         bool isActive) noexcept
+UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(SyntaxToken* startToken,
+                                                               SyntaxToken* undefKeyword,
+                                                               SyntaxToken* name,
+                                                               SyntaxToken* endOfDirectiveToken,
+                                                               bool isActive) noexcept
 {
     assert(startToken != nullptr);
     assert(undefKeyword != nullptr);
@@ -31,9 +33,10 @@ SharedPtr<UndefDirectiveTriviaSyntax> UndefDirectiveTriviaSyntax::create(SharedP
     assert(endOfDirectiveToken != nullptr);
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
-    return std::make_shared<UndefDirectiveTriviaSyntax>(SyntaxKind::UndefDirectiveTrivia, std::move(startToken),
-                                                        std::move(undefKeyword), std::move(name),
-                                                        std::move(endOfDirectiveToken), isActive);
+    auto ptrUndefDirectiveTrivia = std::make_unique<UndefDirectiveTriviaSyntax>(SyntaxKind::UndefDirectiveTrivia, startToken,
+                                                                                undefKeyword, name, endOfDirectiveToken, isActive);
+
+    return static_cast<UndefDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrUndefDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis
