@@ -7,18 +7,13 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
+#include "polyglot/CodeAnalysis/Core/LexerMode.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
-
-enum class LexerMode
-{
-    Syntax,
-    Directive
-};
 
 class SyntaxNode;
 class SyntaxToken;

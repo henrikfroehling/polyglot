@@ -41,6 +41,7 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveStack.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/LexerMode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
