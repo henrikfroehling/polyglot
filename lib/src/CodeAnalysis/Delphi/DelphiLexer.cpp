@@ -503,7 +503,7 @@ void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
         tokenInfo.kind = SyntaxKind::IdentifierToken;
     else
     {
-        const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(chars);
+        const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(chars, _mode);
 
         if (syntaxKind == SyntaxKind::None)
             tokenInfo.kind = SyntaxKind::IdentifierToken;
@@ -673,7 +673,6 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     triviaList.push_back(syntaxTrivia);
 
                     onlyWhitespaceOnLine = false;
-                    break;
                 }
                 else
                 {
@@ -681,7 +680,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     lexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
                 }
 
-                return;
+                break;
             case '(':
                 character = _textWindow.peekCharacter(1);
 
@@ -702,7 +701,6 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     triviaList.push_back(syntaxTrivia);
 
                     onlyWhitespaceOnLine = false;
-                    break;
                 }
                 else
                 {
@@ -710,7 +708,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     lexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
                 }
 
-                return;
+                break;
             case '\r':
             case '\n':
             {
@@ -949,7 +947,7 @@ SyntaxNode* DelphiLexer::lexSingleDirective(bool isActive,
     if (character == '\t' || character == '\v' || character == '\f' || character == '\r' || character == '\n')
     {
         start();
-        triviaList.emplace_back(scanWhitespace());
+        triviaList.push_back(scanWhitespace());
     }
 
     LexerMode saveMode = _mode;
@@ -1053,6 +1051,11 @@ newLine:
 
             break;
         }
+        case '}':
+            _textWindow.advanceCharacter();
+            tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
+            tokenInfo.text = _textWindow.lexemeText();
+            break;
         case '(':
         {
             _textWindow.advanceCharacter();
@@ -1127,7 +1130,7 @@ newLine:
             {
                 case ')':
                     _textWindow.advanceCharacter();
-                    tokenInfo.kind = SyntaxKind::AsteriskCloseParenthesisToken;
+                    tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
                     tokenInfo.text = _textWindow.lexemeText();
                     break;
                 default:
@@ -1193,6 +1196,8 @@ void DelphiLexer::lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept
             }
             else
                 _textWindow.reset(position);
+
+            break;
         }
         else
         {

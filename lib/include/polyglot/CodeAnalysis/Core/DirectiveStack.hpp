@@ -37,7 +37,7 @@ public:
 private:
     explicit DirectiveStack(SharedPtr<DirectiveList> directives) noexcept;
     SharedPtr<DirectiveList> previousIf() const noexcept;
-    SharedPtr<DirectiveList> previousIfElseIfElseOrRegion() const noexcept;
+    SharedPtr<DirectiveList> previousIfOrElseIfOrElseOrRegion() const noexcept;
     SharedPtr<DirectiveList> previousRegion() const noexcept;
 
     SharedPtr<DirectiveList> completeIf(SharedPtr<DirectiveList> stack,

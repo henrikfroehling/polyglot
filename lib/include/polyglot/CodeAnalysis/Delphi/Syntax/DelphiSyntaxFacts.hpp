@@ -3,6 +3,7 @@
 
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/LexerMode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -17,7 +18,9 @@ public:
     static SyntaxKind literalExpressionKind(SyntaxKind syntaxKind) noexcept;
     static bool isKeyword(SyntaxKind syntaxKind) noexcept;
     static bool isModuleStart(SyntaxKind syntaxKind) noexcept;
-    static SyntaxKind keywordKind(std::string_view text) noexcept;
+
+    static SyntaxKind keywordKind(std::string_view text,
+                                  LexerMode mode = LexerMode::Syntax) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -11,7 +11,9 @@ namespace polyglot::CodeAnalysis
 IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(SyntaxToken* identfier) noexcept
     : SimpleNameExpressionSyntax{SyntaxKind::IdentifierNameExpression},
       _ptrIdentifier{identfier}
-{}
+{
+    _position = _ptrIdentifier->position();
+}
 
 IdentifierNameExpressionSyntax* IdentifierNameExpressionSyntax::create(SyntaxToken* identifier) noexcept
 {

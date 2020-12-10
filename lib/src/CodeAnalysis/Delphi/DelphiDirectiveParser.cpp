@@ -80,7 +80,7 @@ SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
             break;
     }
 
-    return std::move(result);
+    return result;
 }
 
 DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDirective(SyntaxToken* openBraceDollarToken,
@@ -293,14 +293,15 @@ ExpressionSyntax* DelphiDirectiveParser::parseLogicalAnd() noexcept
 ExpressionSyntax* DelphiDirectiveParser::parseEquality() noexcept
 {
     ExpressionSyntax* leftExpression = parseLogicalNot();
+    SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
 
-    while (currentToken()->syntaxKind() == SyntaxKind::EqualToken
-           || currentToken()->syntaxKind() == SyntaxKind::LessThanGreaterThanToken)
+    while (currentSyntaxKind == SyntaxKind::EqualToken || currentSyntaxKind == SyntaxKind::LessThanGreaterThanToken)
     {
         SyntaxToken* operatorToken = takeToken();
         ExpressionSyntax* rightExpression = parseEquality();
         SyntaxKind expressionKind = DelphiSyntaxFacts::binaryExpressionKind(operatorToken->syntaxKind());
         leftExpression = BinaryExpressionSyntax::create(expressionKind, leftExpression, operatorToken, rightExpression);
+        currentSyntaxKind = currentToken()->syntaxKind();
     }
 
     return leftExpression;

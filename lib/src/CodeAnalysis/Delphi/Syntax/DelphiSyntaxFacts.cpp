@@ -89,6 +89,7 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "final", SyntaxKind::FinalKeyword },
     { "forward", SyntaxKind::ForwardKeyword },
     { "helper", SyntaxKind::HelperKeyword },
+    { "if", SyntaxKind::IfKeyword },
     { "implements", SyntaxKind::ImplementsKeyword },
     { "index", SyntaxKind::IndexKeyword },
     { "local", SyntaxKind::LocalKeyword },
@@ -199,7 +200,8 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "remove", SyntaxKind::RemoveKeyword },
     { "assembly", SyntaxKind::AssemblyKeyword },
     { "break", SyntaxKind::BreakKeyword },
-    { "continue", SyntaxKind::ContinueKeyword }
+    { "continue", SyntaxKind::ContinueKeyword },
+    { "endif", SyntaxKind::EndIfDirectiveKeyword }
 };
 
 bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) noexcept
@@ -509,13 +511,31 @@ bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text) noexcept
+SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text,
+                                          LexerMode mode) noexcept
 {
     std::string lowerCaseText{text};
     std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), static_cast<int(*)(int)>(std::tolower));
 
     if (SYNTAXKEYWORDS.find(lowerCaseText) != SYNTAXKEYWORDS.end())
-        return SYNTAXKEYWORDS.at(lowerCaseText);
+    {
+        SyntaxKind syntaxKind = SYNTAXKEYWORDS.at(lowerCaseText);
+
+        if (mode == LexerMode::Directive)
+        {
+            switch (syntaxKind)
+            {
+                case SyntaxKind::IfKeyword:
+                    syntaxKind = SyntaxKind::IfDirectiveKeyword;
+                    break;
+                case SyntaxKind::ElseKeyword:
+                    syntaxKind = SyntaxKind::ElseDirectiveKeyword;
+                    break;
+            }
+        }
+
+        return syntaxKind;
+    }
 
     return SyntaxKind::None;
 }

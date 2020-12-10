@@ -23,7 +23,9 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive},
       _isBranchTaken{isBranchTaken},
       _conditionValue{conditionValue}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                          SyntaxToken* ifKeyword,

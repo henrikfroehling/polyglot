@@ -57,13 +57,13 @@ bool DirectiveStack::isPreviousBranchTaken() const noexcept
 
 bool DirectiveStack::hasUnfinishedIf() const noexcept
 {
-    SharedPtr<DirectiveList> previous = previousIfElseIfElseOrRegion();
+    SharedPtr<DirectiveList> previous = previousIfOrElseIfOrElseOrRegion();
     return previous != nullptr && previous->any() && previous->head()->syntaxKind() != SyntaxKind::RegionDirectiveTrivia;
 }
 
 bool DirectiveStack::hasPreviousIfOrElseIf() const noexcept
 {
-    SharedPtr<DirectiveList> previous = previousIfElseIfElseOrRegion();
+    SharedPtr<DirectiveList> previous = previousIfOrElseIfOrElseOrRegion();
 
     if (previous != nullptr && previous->any())
     {
@@ -76,7 +76,7 @@ bool DirectiveStack::hasPreviousIfOrElseIf() const noexcept
 
 bool DirectiveStack::hasUnfinishedRegion() const noexcept
 {
-    SharedPtr<DirectiveList> previous = previousIfElseIfElseOrRegion();
+    SharedPtr<DirectiveList> previous = previousIfOrElseIfOrElseOrRegion();
     return previous != nullptr && previous->any() && previous->head()->syntaxKind() == SyntaxKind::RegionDirectiveTrivia;
 }
 
@@ -135,7 +135,7 @@ SharedPtr<DirectiveList> DirectiveStack::previousIf() const noexcept
     return current;
 }
 
-SharedPtr<DirectiveList> DirectiveStack::previousIfElseIfElseOrRegion() const noexcept
+SharedPtr<DirectiveList> DirectiveStack::previousIfOrElseIfOrElseOrRegion() const noexcept
 {
     SharedPtr<DirectiveList> current = _directives;
 

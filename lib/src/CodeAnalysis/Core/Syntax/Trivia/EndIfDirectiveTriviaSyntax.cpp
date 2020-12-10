@@ -17,7 +17,9 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _ptrEndIfKeyword{endIfKeyword},
       _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 EndIfDirectiveTriviaSyntax* EndIfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                                SyntaxToken* endIfKeyword,
