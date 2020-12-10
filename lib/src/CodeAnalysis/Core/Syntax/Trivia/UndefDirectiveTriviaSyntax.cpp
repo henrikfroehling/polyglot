@@ -18,7 +18,9 @@ UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _ptrName{name},
       _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                                SyntaxToken* undefKeyword,

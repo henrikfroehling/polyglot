@@ -17,7 +17,9 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _ptrIdentifier{identifier},
       _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                            SyntaxToken* identifier,

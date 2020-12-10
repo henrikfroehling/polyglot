@@ -19,7 +19,9 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive},
       _isBranchTaken{isBranchTaken}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                              SyntaxToken* elseKeyword,

@@ -19,7 +19,9 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _ptrName{name},
       _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 DefineDirectiveTriviaSyntax* DefineDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                                  SyntaxToken* defineKeyword,

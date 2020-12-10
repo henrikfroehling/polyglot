@@ -17,7 +17,9 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _ptrRegionKeyword{regionKeyword},
       _ptrEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
-{}
+{
+    _position = _ptrStartToken->position();
+}
 
 RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxToken* startToken,
                                                                  SyntaxToken* regionKeyword,
