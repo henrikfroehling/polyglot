@@ -6,6 +6,7 @@
 #include "polyglot/CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
 
@@ -17,7 +18,6 @@ static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
 DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText) noexcept
     : Lexer{std::move(sourceText)},
-      _ptrSyntaxFacts{std::make_shared<DelphiSyntaxFacts>()},
       _currentTriviaPosition{}
 {}
 
@@ -40,7 +40,6 @@ SyntaxToken* DelphiLexer::lex(LexerMode mode) noexcept
 
             SyntaxToken* syntaxToken = SyntaxPool::createSyntaxToken();
             syntaxToken->setSyntaxKind(tokenInfo.kind);
-            syntaxToken->setContextualKind(tokenInfo.contextualKind);
             syntaxToken->setText(tokenInfo.text);
             syntaxToken->setPosition(tokenPosition);
             syntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
@@ -504,7 +503,7 @@ void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
         tokenInfo.kind = SyntaxKind::IdentifierToken;
     else
     {
-        const SyntaxKind syntaxKind = _ptrSyntaxFacts->keywordKind(chars);
+        const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(chars);
 
         if (syntaxKind == SyntaxKind::None)
             tokenInfo.kind = SyntaxKind::IdentifierToken;
@@ -782,7 +781,7 @@ space:
             TokenInfo tokenInfo = _lexerCache.lookupTrivia(_textWindow.lexemeText(), hashCode,
                 [&]()
                 {
-                    return TokenInfo{SyntaxKind::WhitespaceTrivia, SyntaxKind::None, _textWindow.lexemeText()};
+                    return TokenInfo{SyntaxKind::WhitespaceTrivia, _textWindow.lexemeText()};
                 });
 
             SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
@@ -954,7 +953,7 @@ SyntaxNode* DelphiLexer::lexSingleDirective(bool isActive,
     }
 
     LexerMode saveMode = _mode;
-    DelphiDirectiveParser directiveParser{shared_from_this(), _directives, _ptrSyntaxFacts};
+    DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
     SyntaxNode* directive = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(directive);
 
@@ -981,7 +980,6 @@ SyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
 
     SyntaxToken* syntaxToken = SyntaxPool::createSyntaxToken();
     syntaxToken->setSyntaxKind(tokenInfo.kind);
-    syntaxToken->setContextualKind(tokenInfo.contextualKind);
     syntaxToken->setText(tokenInfo.text);
     syntaxToken->setPosition(tokenPosition);
     return syntaxToken;

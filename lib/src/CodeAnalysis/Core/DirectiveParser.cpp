@@ -4,11 +4,9 @@ namespace polyglot::CodeAnalysis
 {
 
 DirectiveParser::DirectiveParser(SharedPtr<Lexer> lexer,
-                                 const DirectiveStack& context,
-                                 SharedPtr<SyntaxFacts> syntaxFacts) noexcept
+                                 const DirectiveStack& context) noexcept
     : Parser{lexer},
-      _context{context},
-      _ptrSyntaxFacts{std::move(syntaxFacts)}
+      _context{context}
 {
     lexer->setMode(LexerMode::Directive);
 }

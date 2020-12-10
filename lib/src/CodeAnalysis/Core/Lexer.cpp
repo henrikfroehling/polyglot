@@ -88,20 +88,6 @@ SyntaxToken* Lexer::takeToken() noexcept
     return _ptrCurrentToken;
 }
 
-SyntaxToken* Lexer::takeContextualToken(SyntaxKind syntaxKind) noexcept
-{
-    _ptrCurrentToken = currentToken();
-
-    if (_ptrCurrentToken->contextualKind() == syntaxKind)
-    {
-        _tokenOffset++;
-        return _ptrCurrentToken;
-    }
-
-    // TODO create missing replacement token / error handling
-    return nullptr;
-}
-
 SyntaxToken* Lexer::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);

@@ -5,7 +5,6 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxFacts.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -26,12 +25,10 @@ public:
 
 protected:
     explicit DirectiveParser(SharedPtr<Lexer> lexer,
-                             const DirectiveStack& context,
-                             SharedPtr<SyntaxFacts> syntaxFacts) noexcept;
+                             const DirectiveStack& context) noexcept;
 
 protected:
     const DirectiveStack& _context;
-    SharedPtr<SyntaxFacts> _ptrSyntaxFacts;
 
 private:
     inline SyntaxNode* parseRoot() noexcept override { return nullptr; }

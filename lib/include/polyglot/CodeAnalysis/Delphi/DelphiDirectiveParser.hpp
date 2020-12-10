@@ -6,7 +6,6 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxFacts.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -21,8 +20,7 @@ class POLYGLOT_API DelphiDirectiveParser final : public DirectiveParser
 {
 public:
     explicit DelphiDirectiveParser(SharedPtr<Lexer> lexer,
-                                   const DirectiveStack& context,
-                                   SharedPtr<SyntaxFacts> syntaxFacts) noexcept;
+                                   const DirectiveStack& context) noexcept;
 
     SyntaxNode* parseDirective(bool isActive,
                                bool endIsActive,

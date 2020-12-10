@@ -202,7 +202,7 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "continue", SyntaxKind::ContinueKeyword }
 };
 
-bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) const noexcept
+bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -237,7 +237,7 @@ bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) const noexcept
     return false;
 }
 
-bool DelphiSyntaxFacts::isCompoundPunctuation(SyntaxKind syntaxKind) const noexcept
+bool DelphiSyntaxFacts::isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -262,7 +262,7 @@ bool DelphiSyntaxFacts::isCompoundPunctuation(SyntaxKind syntaxKind) const noexc
     return false;
 }
 
-SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) const noexcept
+SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -275,7 +275,7 @@ SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) const 
     return SyntaxKind::None;
 }
 
-SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) const noexcept
+SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -293,7 +293,7 @@ SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) const
     return SyntaxKind::None;
 }
 
-bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) const noexcept
+bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -496,7 +496,7 @@ bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) const noexcept
     return false;
 }
 
-bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) const noexcept
+bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -509,7 +509,7 @@ bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) const noexcept
     return false;
 }
 
-SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text) const noexcept
+SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text) noexcept
 {
     std::string lowerCaseText{text};
     std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), static_cast<int(*)(int)>(std::tolower));

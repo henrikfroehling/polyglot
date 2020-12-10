@@ -40,7 +40,6 @@ public:
     SyntaxToken* currentToken() noexcept;
     SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept;
     SyntaxToken* takeToken() noexcept;
-    SyntaxToken* takeContextualToken(SyntaxKind syntaxKind) noexcept;
     SyntaxToken* peekToken(pg_size n) noexcept;
     void advance() noexcept;
     inline void setMode(LexerMode mode) noexcept { _mode = mode; }

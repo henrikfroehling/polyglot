@@ -29,15 +29,12 @@ public:
     void setTrailingTrivia(std::vector<SyntaxNode*>&& trailingTrivia) noexcept;
     inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
     inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
-    inline SyntaxKind contextualKind() const noexcept { return _contextualKind; }
-    inline void setContextualKind(SyntaxKind contextualKind) noexcept { _contextualKind = contextualKind; }
     virtual bool value() const noexcept; // TODO use variant / any as return type
 
 protected:
     std::string_view _text;
     std::vector<SyntaxNode*> _leadingTrivia;
     std::vector<SyntaxNode*> _trailingTrivia;
-    SyntaxKind _contextualKind;
 };
 
 } // end namespace polyglot::CodeAnalysis

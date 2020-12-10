@@ -7,8 +7,7 @@ SyntaxToken::SyntaxToken() noexcept
     : SyntaxNode{SyntaxKind::None},
       _text{},
       _leadingTrivia{},
-      _trailingTrivia{},
-      _contextualKind{SyntaxKind::None}
+      _trailingTrivia{}
 {}
 
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
@@ -16,8 +15,7 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
     : SyntaxNode{syntaxKind},
       _text{text},
       _leadingTrivia{},
-      _trailingTrivia{},
-      _contextualKind{SyntaxKind::None}
+      _trailingTrivia{}
 {}
 
 void SyntaxToken::setLeadingTrivia(std::vector<SyntaxNode*>&& leadingTrivia) noexcept

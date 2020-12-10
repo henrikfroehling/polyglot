@@ -8,7 +8,6 @@
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -62,7 +61,6 @@ private:
     SyntaxNode* lexDirectiveTrivia() noexcept;
 
 private:
-    SharedPtr<DelphiSyntaxFacts> _ptrSyntaxFacts;
     pg_size _currentTriviaPosition;
 };
 

@@ -29,7 +29,6 @@ protected:
     inline SyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
     inline SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
     inline SyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
-    inline SyntaxToken* takeContextualToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeContextualToken(syntaxKind); }
     inline SyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
     inline void advance() noexcept { _ptrLexer->advance(); }
 
