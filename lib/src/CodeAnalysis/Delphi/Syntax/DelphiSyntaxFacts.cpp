@@ -31,7 +31,6 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "for", SyntaxKind::ForKeyword },
     { "function", SyntaxKind::FunctionKeyword },
     { "goto", SyntaxKind::GoToKeyword },
-    { "else if", SyntaxKind::IfKeyword },
     { "implementation", SyntaxKind::ImplementationKeyword },
     { "in", SyntaxKind::InKeyword },
     { "inherited", SyntaxKind::InheritedKeyword },
@@ -201,7 +200,15 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "assembly", SyntaxKind::AssemblyKeyword },
     { "break", SyntaxKind::BreakKeyword },
     { "continue", SyntaxKind::ContinueKeyword },
-    { "endif", SyntaxKind::EndIfDirectiveKeyword }
+    { "endif", SyntaxKind::EndIfDirectiveKeyword },
+    { "ifdef", SyntaxKind::IfDefDirectiveKeyword },
+    { "ifndef", SyntaxKind::IfNDefDirectiveKeyword },
+    { "ifend", SyntaxKind::IfEndDirectiveKeyword },
+    { "elseif", SyntaxKind::ElseIfDirectiveKeyword },
+    { "define", SyntaxKind::DefineDirectiveKeyword },
+    { "undef", SyntaxKind::UndefDirectiveKeyword },
+    { "region", SyntaxKind::RegionDirectiveKeyword },
+    { "endregion", SyntaxKind::EndRegionDirectiveKeyword }
 };
 
 bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) noexcept
@@ -268,10 +275,16 @@ SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) noexce
 {
     switch (syntaxKind)
     {
-        case SyntaxKind::AndKeyword: return SyntaxKind::LogicalAndExpression;
-        case SyntaxKind::OrKeyword: return SyntaxKind::LogicalOrExpression;
-        case SyntaxKind::EqualToken: return SyntaxKind::EqualsExpression;
-        case SyntaxKind::LessThanGreaterThanToken: return SyntaxKind::NotEqualsExpression;
+        case SyntaxKind::AndKeyword:
+            return SyntaxKind::LogicalAndExpression;
+        case SyntaxKind::OrKeyword:
+            return SyntaxKind::LogicalOrExpression;
+        case SyntaxKind::EqualToken:
+            return SyntaxKind::EqualsExpression;
+        case SyntaxKind::LessThanEqualToken:
+        case SyntaxKind::GreaterThanEqualToken:
+        case SyntaxKind::LessThanGreaterThanToken:
+            return SyntaxKind::NotEqualsExpression;
     }
 
     return SyntaxKind::None;
@@ -293,6 +306,20 @@ SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexc
     }
 
     return SyntaxKind::None;
+}
+
+bool DelphiSyntaxFacts::isComparisonSyntaxKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::EqualToken:
+        case SyntaxKind::LessThanEqualToken:
+        case SyntaxKind::GreaterThanEqualToken:
+        case SyntaxKind::LessThanGreaterThanToken:
+            return true;
+    }
+
+    return false;
 }
 
 bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) noexcept

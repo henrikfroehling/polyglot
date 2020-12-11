@@ -262,6 +262,9 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::EndOfLineTrivia: return "EndOfLineTrivia";
         case SyntaxKind::BadDirectiveTrivia: return "BadDirectiveTrivia";
         case SyntaxKind::IfDirectiveTrivia: return "IfDirectiveTrivia";
+        case SyntaxKind::IfDefDirectiveTrivia: return "IfDefDirectiveTrivia";
+        case SyntaxKind::IfNDefDirectiveTrivia: return "IfNDefDirectiveTrivia";
+        case SyntaxKind::IfEndDirectiveTrivia: return "IfEndDirectiveTrivia";
         case SyntaxKind::ElseIfDirectiveTrivia: return "ElseIfDirectiveTrivia";
         case SyntaxKind::ElseDirectiveTrivia: return "ElseDirectiveTrivia";
         case SyntaxKind::EndIfDirectiveTrivia: return "EndIfDirectiveTrivia";

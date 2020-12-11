@@ -12,7 +12,10 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
@@ -46,26 +49,35 @@ SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
     switch (syntaxKind)
     {
         case SyntaxKind::IfDirectiveKeyword:
-            result = parseIfDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive);
+            result = parseIfDirective(openBraceDollarToken, takeToken(syntaxKind), isActive);
+            break;
+        case SyntaxKind::IfDefDirectiveKeyword:
+            result = parseIfDefDirective(openBraceDollarToken, takeToken(syntaxKind), isActive);
+            break;
+        case SyntaxKind::IfNDefDirectiveKeyword:
+            result = parseIfNDefDirective(openBraceDollarToken, takeToken(syntaxKind), isActive);
+            break;
+        case SyntaxKind::IfEndDirectiveKeyword:
+            result = parseIfEndDirective(openBraceDollarToken, takeToken(syntaxKind), isActive, endIsActive);
             break;
         case SyntaxKind::ElseDirectiveKeyword:
-            result = parseElseDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive, endIsActive);
+            result = parseElseDirective(openBraceDollarToken, takeToken(syntaxKind), isActive, endIsActive);
             break;
         case SyntaxKind::ElseIfDirectiveKeyword:
-            result = parseElseIfDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive, endIsActive);
+            result = parseElseIfDirective(openBraceDollarToken, takeToken(syntaxKind), isActive, endIsActive);
             break;
         case SyntaxKind::EndIfDirectiveKeyword:
-            result = parseEndIfDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive, endIsActive);
+            result = parseEndIfDirective(openBraceDollarToken, takeToken(syntaxKind), isActive, endIsActive);
             break;
         case SyntaxKind::DefineDirectiveKeyword:
         case SyntaxKind::UndefDirectiveKeyword:
-            result = parseDefineOrUndefDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive, endIsActive);
+            result = parseDefineOrUndefDirective(openBraceDollarToken, takeToken(syntaxKind), isActive, endIsActive);
             break;
         case SyntaxKind::RegionDirectiveKeyword:
-            result = parseRegionDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive);
+            result = parseRegionDirective(openBraceDollarToken, takeToken(syntaxKind), isActive);
             break;
         case SyntaxKind::EndRegionDirectiveKeyword:
-            result = parseEndRegionDirective(std::move(openBraceDollarToken), takeToken(syntaxKind), isActive);
+            result = parseEndRegionDirective(openBraceDollarToken, takeToken(syntaxKind), isActive);
             break;
         default:
             SyntaxToken* identifierToken = takeToken(SyntaxKind::IdentifierToken);
@@ -92,6 +104,33 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDirective(SyntaxToken* open
     const bool isTrue = evaluateBool(expression);
     const bool isBranchTaken = isActive && isTrue;
     return IfDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, expression, endOfDirective, isActive, isBranchTaken, isTrue);
+}
+
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDefDirective(SyntaxToken* openBraceDollarToken,
+                                                                  SyntaxToken* keyword,
+                                                                  bool isActive) noexcept
+{
+    SyntaxToken* identifier = takeToken(SyntaxKind::IdentifierToken);
+    SyntaxToken* endOfDirective = parseEndOfDirective();
+    return IfDefDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, identifier, endOfDirective, isActive);
+}
+
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfNDefDirective(SyntaxToken* openBraceDollarToken,
+                                                                   SyntaxToken* keyword,
+                                                                   bool isActive) noexcept
+{
+    SyntaxToken* identifier = takeToken(SyntaxKind::IdentifierToken);
+    SyntaxToken* endOfDirective = parseEndOfDirective();
+    return IfNDefDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, identifier, endOfDirective, isActive);
+}
+
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfEndDirective(SyntaxToken* openBraceDollarToken,
+                                                                  SyntaxToken* keyword,
+                                                                  bool isActive,
+                                                                  bool endIsActive) noexcept
+{
+    SyntaxToken* endOfDirective = parseEndOfDirective();
+    return IfEndDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, endOfDirective, isActive);
 }
 
 DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseDirective(SyntaxToken* openBraceDollarToken,
@@ -295,7 +334,7 @@ ExpressionSyntax* DelphiDirectiveParser::parseEquality() noexcept
     ExpressionSyntax* leftExpression = parseLogicalNot();
     SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
 
-    while (currentSyntaxKind == SyntaxKind::EqualToken || currentSyntaxKind == SyntaxKind::LessThanGreaterThanToken)
+    while (DelphiSyntaxFacts::isComparisonSyntaxKind(currentSyntaxKind))
     {
         SyntaxToken* operatorToken = takeToken();
         ExpressionSyntax* rightExpression = parseEquality();
@@ -333,6 +372,8 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
         }
         case SyntaxKind::IdentifierToken:
             return IdentifierNameExpressionSyntax::create(takeToken());
+        case SyntaxKind::NumberLiteralToken:
+            return LiteralExpressionSyntax::create(SyntaxKind::NumericLiteralExpression, takeToken());
         case SyntaxKind::TrueKeyword:
         case SyntaxKind::FalseKeyword:
             return LiteralExpressionSyntax::create(DelphiSyntaxFacts::literalExpressionKind(syntaxKind), takeToken());
@@ -391,7 +432,7 @@ bool DelphiDirectiveParser::isDefined(std::string_view id) const noexcept
     {
         case DefineState::Defined:
             return true;
-        case DefineState::Undefined:
+        case DefineState::Undefined: // TODO lookup preprocessor symbols in compilation options
         case DefineState::Unspecified:
         default:
             return false;

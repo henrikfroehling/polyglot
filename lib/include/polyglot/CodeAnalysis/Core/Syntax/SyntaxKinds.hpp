@@ -264,6 +264,9 @@ enum class SyntaxKind : unsigned short
     EndOfLineTrivia,
     BadDirectiveTrivia,
     IfDirectiveTrivia,
+    IfDefDirectiveTrivia,
+    IfNDefDirectiveTrivia,
+    IfEndDirectiveTrivia,
     ElseIfDirectiveTrivia,
     ElseDirectiveTrivia,
     EndIfDirectiveTrivia,
@@ -291,6 +294,9 @@ enum class SyntaxKind : unsigned short
 
     // directives
     IfDirectiveKeyword = 3000, // IF
+    IfDefDirectiveKeyword, // IFDEF
+    IfNDefDirectiveKeyword, // IFNDEF
+    IfEndDirectiveKeyword, // IFEND
     ElseIfDirectiveKeyword, // ELSEIF
     ElseDirectiveKeyword, // ELSE
     EndIfDirectiveKeyword, // ENDIF

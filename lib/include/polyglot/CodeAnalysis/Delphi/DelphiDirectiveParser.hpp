@@ -32,6 +32,19 @@ private:
                                             SyntaxToken* keyword,
                                             bool isActive) noexcept;
 
+    DirectiveTriviaSyntax* parseIfDefDirective(SyntaxToken* openBraceDollarToken,
+                                               SyntaxToken* keyword,
+                                               bool isActive) noexcept;
+
+    DirectiveTriviaSyntax* parseIfNDefDirective(SyntaxToken* openBraceDollarToken,
+                                                SyntaxToken* keyword,
+                                                bool isActive) noexcept;
+
+    DirectiveTriviaSyntax* parseIfEndDirective(SyntaxToken* openBraceDollarToken,
+                                               SyntaxToken* keyword,
+                                               bool isActive,
+                                               bool endIsActive) noexcept;
+
     DirectiveTriviaSyntax* parseElseDirective(SyntaxToken* openBraceDollarToken,
                                               SyntaxToken* keyword,
                                               bool isActive,

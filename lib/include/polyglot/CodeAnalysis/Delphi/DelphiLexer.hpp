@@ -57,8 +57,12 @@ private:
     void lexExludedDirectivesAndTrivia(bool endIsActive) noexcept;
     SyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
-    void lexDirectiveTrailingTrivia(bool includeEndOfLine) noexcept;
+
+    void lexDirectiveTrailingTrivia(std::vector<SyntaxNode*>& triviaList,
+                                    bool includeEndOfLine) noexcept;
+
     SyntaxNode* lexDirectiveTrivia() noexcept;
+    SyntaxTrivia* scanDirectiveWhitespace() noexcept;
 
 private:
     pg_size _currentTriviaPosition;

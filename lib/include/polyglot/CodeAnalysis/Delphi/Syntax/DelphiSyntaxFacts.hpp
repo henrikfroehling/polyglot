@@ -16,6 +16,7 @@ public:
     static bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept;
     static SyntaxKind binaryExpressionKind(SyntaxKind syntaxKind) noexcept;
     static SyntaxKind literalExpressionKind(SyntaxKind syntaxKind) noexcept;
+    static bool isComparisonSyntaxKind(SyntaxKind syntaxKind) noexcept;
     static bool isKeyword(SyntaxKind syntaxKind) noexcept;
     static bool isModuleStart(SyntaxKind syntaxKind) noexcept;
 
