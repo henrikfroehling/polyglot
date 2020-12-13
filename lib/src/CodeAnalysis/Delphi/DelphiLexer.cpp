@@ -629,7 +629,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
 
         if (character == ' ')
         {
-            triviaList.emplace_back(scanWhitespace());
+            triviaList.push_back(scanWhitespace());
             continue;
         }
         else if (character > 127)
@@ -647,7 +647,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
             case '\v':
             case '\f':
             {
-                triviaList.emplace_back(scanWhitespace());
+                triviaList.push_back(scanWhitespace());
                 break;
             }
             case '/':
@@ -727,7 +727,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
             case '\r':
             case '\n':
             {
-                triviaList.emplace_back(scanEndOfLine());
+                triviaList.push_back(scanEndOfLine());
 
                 if (isTrailing)
                     return;
