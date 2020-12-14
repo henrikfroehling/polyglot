@@ -966,7 +966,7 @@ SyntaxNode* DelphiLexer::lexSingleDirective(bool isActive,
         triviaList.push_back(scanWhitespace());
     }
 
-    LexerMode saveMode = _mode;
+    const LexerMode saveMode = _mode;
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
     SyntaxNode* directive = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(directive);
@@ -974,7 +974,7 @@ SyntaxNode* DelphiLexer::lexSingleDirective(bool isActive,
     // TODO apply directives
     // _directives = ptrDirective->applyDirectives(_directives);
 
-    _mode = saveMode;
+    setMode(saveMode);
     return directive;
 }
 

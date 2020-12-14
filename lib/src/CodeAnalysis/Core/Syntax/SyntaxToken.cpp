@@ -1,4 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
@@ -26,6 +27,12 @@ void SyntaxToken::setLeadingTrivia(std::vector<SyntaxNode*>&& leadingTrivia) noe
 void SyntaxToken::setTrailingTrivia(std::vector<SyntaxNode*>&& trailingTrivia) noexcept
 {
     _trailingTrivia = std::move(trailingTrivia);
+}
+
+void SyntaxToken::addLeadingTrivia(SyntaxNode* leadingTrivia) noexcept
+{
+    assert(leadingTrivia != nullptr);
+    _leadingTrivia.push_back(leadingTrivia);
 }
 
 bool SyntaxToken::value() const noexcept

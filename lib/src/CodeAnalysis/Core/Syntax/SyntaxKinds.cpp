@@ -272,6 +272,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UndefDirectiveTrivia: return "UndefDirectiveTrivia";
         case SyntaxKind::RegionDirectiveTrivia: return "RegionDirectiveTrivia";
         case SyntaxKind::EndRegionDirectiveTrivia: return "EndRegionDirectiveTrivia";
+        case SyntaxKind::SkippedTokensTrivia: return "SkippedTokensTrivia";
 
         case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
         case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";

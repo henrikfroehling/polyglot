@@ -18,10 +18,14 @@ Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
       _leadingTrivia{},
       _trailingTrivia{},
       _lexedTokens{},
+      _lexedDirectiveTriviaTokens{},
       _tokenCount{},
       _tokenOffset{},
       _ptrCurrentToken{nullptr},
-      _directives{}
+      _directives{},
+      _directiveTriviaTokenCount{},
+      _directiveTriviaTokenOffset{},
+      _ptrCurrentDirectiveTriviaToken{nullptr}
 {}
 
 Lexer::~Lexer()
@@ -35,21 +39,18 @@ void Lexer::start() noexcept
 void Lexer::preLex() noexcept
 {
     const pg_size currentTokenOffset = _tokenOffset;
-    _lexedTokens.clear();
     _tokenOffset = _tokenCount;
 
     const pg_size size = std::min(static_cast<pg_size>(MAX_LEXED_TOKENS_COUNT),
                                   std::max(static_cast<pg_size>(MIN_LEXED_TOKENS_COUNT),
-                                           textWindow().content().length() / 2));
+                                           _textWindow.content().length() / 2));
 
     _lexedTokens.reserve(size);
 
     for (pg_size i = 0; i < size; i++)
     {
         SyntaxToken* ptrToken = lex();
-        assert(ptrToken != nullptr);
-        _lexedTokens.push_back(ptrToken);
-        _tokenCount++;
+        addLexedToken(ptrToken);
         _tokenOffset++;
 
         if (ptrToken->syntaxKind() == SyntaxKind::EndOfFileToken)
@@ -61,57 +62,155 @@ void Lexer::preLex() noexcept
 
 SyntaxToken* Lexer::currentToken() noexcept
 {
-    if (_tokenOffset >= _tokenCount)
-        addLexedToken(lex());
+    switch (_mode)
+    {
+        case LexerMode::Syntax:
+        {
+            if (_tokenOffset >= _tokenCount)
+                addLexedToken(lex());
 
-    return _lexedTokens[_tokenOffset];
+            return _lexedTokens[_tokenOffset];
+        }
+        case LexerMode::Directive:
+        {
+            if (_directiveTriviaTokenOffset >= _directiveTriviaTokenCount)
+                addLexedToken(lex());
+
+            return _lexedDirectiveTriviaTokens[_directiveTriviaTokenOffset];
+        }
+    }
+
+    return nullptr;
 }
 
 SyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
 {
-    _ptrCurrentToken = currentToken();
-
-    if (_ptrCurrentToken->syntaxKind() == syntaxKind)
+    switch (_mode)
     {
-        _tokenOffset++;
-        return _ptrCurrentToken;
+        case LexerMode::Syntax:
+        {
+            _ptrCurrentToken = currentToken();
+
+            if (_ptrCurrentToken->syntaxKind() == syntaxKind)
+            {
+                _tokenOffset++;
+                return _ptrCurrentToken;
+            }
+
+            // TODO Create missing replacement token
+            return nullptr;
+        }
+        case LexerMode::Directive:
+        {
+            _ptrCurrentDirectiveTriviaToken = currentToken();
+
+            if (_ptrCurrentDirectiveTriviaToken->syntaxKind() == syntaxKind)
+            {
+                _directiveTriviaTokenOffset++;
+                return _ptrCurrentDirectiveTriviaToken;
+            }
+
+            // TODO Create missing replacement token
+            return nullptr;
+        }
     }
 
-    // TODO Create missing replacement token
     return nullptr;
 }
 
 SyntaxToken* Lexer::takeToken() noexcept
 {
-    _ptrCurrentToken = currentToken();
-    _tokenOffset++;
-    return _ptrCurrentToken;
+    switch (_mode)
+    {
+        case LexerMode::Syntax:
+        {
+            _ptrCurrentToken = currentToken();
+            _tokenOffset++;
+            return _ptrCurrentToken;
+        }
+        case LexerMode::Directive:
+        {
+            _ptrCurrentDirectiveTriviaToken = currentToken();
+            _directiveTriviaTokenOffset++;
+            return _ptrCurrentDirectiveTriviaToken;
+        }
+    }
+
+    return nullptr;
 }
 
 SyntaxToken* Lexer::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);
 
-    while (_tokenOffset + n >= _tokenCount)
-        addLexedToken(lex());
+    switch (_mode)
+    {
+        case LexerMode::Syntax:
+        {
+            while (_tokenOffset + n >= _tokenCount)
+                addLexedToken(lex());
 
-    return _lexedTokens[_tokenOffset + n];
+            return _lexedTokens[_tokenOffset + n];
+        }
+        case LexerMode::Directive:
+        {
+            while (_directiveTriviaTokenOffset + n >= _directiveTriviaTokenCount)
+                addLexedToken(lex());
+
+            return _lexedDirectiveTriviaTokens[_directiveTriviaTokenOffset + n];
+        }
+    }
+
+    return nullptr;
 }
 
 void Lexer::advance() noexcept
 {
-    _tokenOffset++;
+    switch (_mode)
+    {
+        case LexerMode::Syntax:
+            _tokenOffset++;
+            break;
+        case LexerMode::Directive:
+            _directiveTriviaTokenOffset++;
+            break;
+    }
+}
+
+void Lexer::setMode(LexerMode mode) noexcept
+{
+    _lexedDirectiveTriviaTokens.clear();
+    _directiveTriviaTokenCount = 0;
+    _directiveTriviaTokenOffset = 0;
+    _ptrCurrentDirectiveTriviaToken = nullptr;
+    _mode = mode;
 }
 
 void Lexer::addLexedToken(SyntaxToken* token) noexcept
 {
     assert(token != nullptr);
 
-    if (_tokenCount == _lexedTokens.size())
-        _lexedTokens.resize(_tokenCount + 2);
+    switch (_mode)
+    {
+        case LexerMode::Syntax:
+        {
+            if (_tokenOffset >= _lexedTokens.size())
+                _lexedTokens.resize(_lexedTokens.size() + 2);
 
-    _lexedTokens[_tokenCount] = token;
-    _tokenCount++;
+            _lexedTokens[_tokenCount] = token;
+            _tokenCount++;
+            break;
+        }
+        case LexerMode::Directive:
+        {
+            if (_directiveTriviaTokenOffset >= _lexedDirectiveTriviaTokens.size())
+                _lexedDirectiveTriviaTokens.resize(_lexedDirectiveTriviaTokens.size() + 2);
+
+            _lexedDirectiveTriviaTokens[_directiveTriviaTokenCount] = token;
+            _directiveTriviaTokenCount++;
+            break;
+        }
+    }
 }
 
 } // end namespace polyglot::CodeAnalysis

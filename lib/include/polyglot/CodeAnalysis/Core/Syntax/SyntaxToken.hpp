@@ -27,6 +27,7 @@ public:
     inline virtual void setText(std::string_view text) noexcept { _text = text; }
     void setLeadingTrivia(std::vector<SyntaxNode*>&& leadingTrivia) noexcept;
     void setTrailingTrivia(std::vector<SyntaxNode*>&& trailingTrivia) noexcept;
+    void addLeadingTrivia(SyntaxNode* leadingTrivia) noexcept;
     inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
     inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
     virtual bool value() const noexcept; // TODO use variant / any as return type

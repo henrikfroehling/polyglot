@@ -17,6 +17,7 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
@@ -268,7 +269,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndRegionDirective(SyntaxToke
 
 SyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
-    std::vector<SyntaxToken*> skippedTokens{};
+    std::vector<SyntaxNode*> skippedTokens{};
 
     if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
         && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
@@ -290,6 +291,13 @@ SyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
     {
         auto ptrEndOfDirective = std::make_unique<SyntaxToken>(SyntaxKind::EndOfDirectiveToken);
         endOfDirective = SyntaxPool::addSyntaxToken(std::move(ptrEndOfDirective));
+    }
+
+    if (skippedTokens.size() > 0)
+    {
+        auto ptrSkippedTokensTrivia = std::make_unique<SkippedTokensTriviaSyntax>(SyntaxKind::SkippedTokensTrivia, std::move(skippedTokens));
+        SkippedTokensTriviaSyntax* skippedTokensTrivia = static_cast<SkippedTokensTriviaSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrSkippedTokensTrivia)));
+        endOfDirective->addLeadingTrivia(skippedTokensTrivia);
     }
 
     // TODO create skipped tokens trivia

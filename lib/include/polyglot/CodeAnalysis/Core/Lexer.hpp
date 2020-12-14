@@ -37,7 +37,7 @@ public:
     SyntaxToken* takeToken() noexcept;
     SyntaxToken* peekToken(pg_size n) noexcept;
     void advance() noexcept;
-    inline void setMode(LexerMode mode) noexcept { _mode = mode; }
+    void setMode(LexerMode mode) noexcept;
 
 protected:
     explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
@@ -52,10 +52,14 @@ protected:
     std::vector<SyntaxNode*> _leadingTrivia;
     std::vector<SyntaxNode*> _trailingTrivia;
     std::vector<SyntaxToken*> _lexedTokens;
+    std::vector<SyntaxToken*> _lexedDirectiveTriviaTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
     SyntaxToken* _ptrCurrentToken;
     DirectiveStack _directives;
+    pg_size _directiveTriviaTokenCount;
+    pg_size _directiveTriviaTokenOffset;
+    SyntaxToken* _ptrCurrentDirectiveTriviaToken;
 };
 
 } // end namespace polyglot::CodeAnalysis
