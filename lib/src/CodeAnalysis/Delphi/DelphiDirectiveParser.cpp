@@ -19,6 +19,7 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
@@ -85,7 +86,12 @@ SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
             result = parseMessageDirective(openBraceDollarToken, takeToken(syntaxKind));
             break;
         default:
-            SyntaxToken* identifierToken = takeToken(SyntaxKind::IdentifierToken);
+            SyntaxToken* identifier = takeToken(SyntaxKind::IdentifierToken);
+            SyntaxToken* nextToken = peekToken(1);
+
+            if (nextToken->syntaxKind() == SyntaxKind::OnDirectiveKeyword || nextToken->syntaxKind() == SyntaxKind::OffDirectiveKeyword)
+                return parseSwitchDirective(openBraceDollarToken, identifier, takeToken());
+
             SyntaxToken* endOfDirectiveToken = parseEndOfDirective();
 
             if (!isAfterNonWhitespaceOnLine)
@@ -93,7 +99,7 @@ SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
                 // TODO error handling
             }
 
-            result = BadDirectiveTriviaSyntax::create(openBraceDollarToken, identifierToken, endOfDirectiveToken, isActive);
+            result = BadDirectiveTriviaSyntax::create(openBraceDollarToken, identifier, endOfDirectiveToken, isActive);
             break;
     }
 
@@ -282,7 +288,15 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseMessageDirective(SyntaxToken*
     SyntaxToken* message = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
     SyntaxToken* endOfDirective = parseEndOfDirective();
 
-    return MessageDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, messageType, message, endOfDirective);;
+    return MessageDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, messageType, message, endOfDirective);
+}
+
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(SyntaxToken* openBraceDollarToken,
+                                                                   SyntaxToken* identifier,
+                                                                   SyntaxToken* onOffToken) noexcept
+{
+    SyntaxToken* endOfDirective = parseEndOfDirective();
+    return SwitchDirectiveTriviaSyntax::create(openBraceDollarToken, identifier, onOffToken, endOfDirective);
 }
 
 SyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept

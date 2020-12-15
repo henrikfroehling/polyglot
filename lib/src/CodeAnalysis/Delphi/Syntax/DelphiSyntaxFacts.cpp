@@ -208,7 +208,9 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "define", SyntaxKind::DefineDirectiveKeyword },
     { "undef", SyntaxKind::UndefDirectiveKeyword },
     { "region", SyntaxKind::RegionDirectiveKeyword },
-    { "endregion", SyntaxKind::EndRegionDirectiveKeyword }
+    { "endregion", SyntaxKind::EndRegionDirectiveKeyword },
+    { "on", SyntaxKind::OnDirectiveKeyword },
+    { "off", SyntaxKind::OffDirectiveKeyword }
 };
 
 bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) noexcept

@@ -76,6 +76,10 @@ private:
     DirectiveTriviaSyntax* parseMessageDirective(SyntaxToken* openBraceDollarToken,
                                                  SyntaxToken* keyword) noexcept;
 
+    DirectiveTriviaSyntax* parseSwitchDirective(SyntaxToken* openBraceDollarToken,
+                                                SyntaxToken* identifier,
+                                                SyntaxToken* onOffToken) noexcept;
+
     SyntaxToken* parseEndOfDirective() noexcept;
     ExpressionSyntax* parseExpression() noexcept;
     ExpressionSyntax* parseLogicalOr() noexcept;
