@@ -1,5 +1,6 @@
 #include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include <cassert>
 #include <algorithm>
 #include <limits>
 
@@ -33,6 +34,18 @@ void TextWindow::reset(const pg_size position) noexcept
 bool TextWindow::isAtEnd() const noexcept
 {
     return position() >= _textEnd;
+}
+
+std::string_view TextWindow::substring(const pg_size start,
+                                       const pg_size length) const noexcept
+{
+    return _ptrSourceText->content().substr(start, length);
+}
+
+std::string_view TextWindow::substringUntilCurrentPosition(const pg_size start) const noexcept
+{
+    assert(start <= position());
+    return _ptrSourceText->content().substr(start, position() - start);
 }
 
 char TextWindow::nextCharacter() noexcept

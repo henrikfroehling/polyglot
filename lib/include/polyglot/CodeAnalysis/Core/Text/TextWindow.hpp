@@ -28,6 +28,11 @@ public:
     void reset(const pg_size position) noexcept;
     bool isAtEnd() const noexcept;
     inline std::string_view content() const noexcept { return _ptrSourceText->content(); }
+
+    std::string_view substring(const pg_size start,
+                               const pg_size length) const noexcept;
+
+    std::string_view substringUntilCurrentPosition(const pg_size start) const noexcept;
     inline void advanceCharacter(const pg_size n = 1) noexcept { _offset += n; }
     char nextCharacter() noexcept;
     char peekCharacter() noexcept;

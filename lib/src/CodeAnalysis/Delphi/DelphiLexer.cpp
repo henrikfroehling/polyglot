@@ -656,10 +656,11 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 if (character == '/')
                 {
                     scanToEndOfLine();
+                    const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
 
                     SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
                     syntaxTrivia->setSyntaxKind(SyntaxKind::SingleLineCommentTrivia);
-                    syntaxTrivia->setText(_textWindow.lexemeText());
+                    syntaxTrivia->setText(text);
                     syntaxTrivia->setPosition(_currentTriviaPosition);
                     triviaList.push_back(syntaxTrivia);
 
@@ -681,9 +682,11 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                         // TODO error handling
                     }
 
+                    const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
+
                     SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
                     syntaxTrivia->setSyntaxKind(SyntaxKind::MultiLineCommentTrivia);
-                    syntaxTrivia->setText(_textWindow.lexemeText());
+                    syntaxTrivia->setText(text);
                     syntaxTrivia->setPosition(_currentTriviaPosition);
                     triviaList.push_back(syntaxTrivia);
 
@@ -709,9 +712,11 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                         // TODO error handling
                     }
 
+                    const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
+
                     SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
                     syntaxTrivia->setSyntaxKind(SyntaxKind::MultiLineCommentTrivia);
-                    syntaxTrivia->setText(_textWindow.lexemeText());
+                    syntaxTrivia->setText(text);
                     syntaxTrivia->setPosition(_currentTriviaPosition);
                     triviaList.push_back(syntaxTrivia);
 
