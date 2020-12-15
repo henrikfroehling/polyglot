@@ -274,6 +274,7 @@ enum class SyntaxKind : unsigned short
     UndefDirectiveTrivia,
     RegionDirectiveTrivia,
     EndRegionDirectiveTrivia,
+    MessageDirectiveTrivia,
     SkippedTokensTrivia,
 
     SingleQuotationStringLiteralToken = 2500,
@@ -305,6 +306,7 @@ enum class SyntaxKind : unsigned short
     UndefDirectiveKeyword, // UNDEF
     RegionDirectiveKeyword, // REGION
     EndRegionDirectiveKeyword, // ENDREGION
+    MessageDirectiveKeyword, // MESSAGE
     EndOfDirectiveToken,
 
     PackageRequiresClause,

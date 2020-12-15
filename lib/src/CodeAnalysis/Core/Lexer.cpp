@@ -147,17 +147,17 @@ SyntaxToken* Lexer::peekToken(pg_size n) noexcept
     {
         case LexerMode::Syntax:
         {
-            while (_tokenOffset + n >= _tokenCount)
+            while (_tokenOffset + n > _tokenCount)
                 addLexedToken(lex());
 
-            return _lexedTokens[_tokenOffset + n];
+            return _lexedTokens[_tokenOffset + n - 1];
         }
         case LexerMode::Directive:
         {
-            while (_directiveTriviaTokenOffset + n >= _directiveTriviaTokenCount)
+            while (_directiveTriviaTokenOffset + n > _directiveTriviaTokenCount)
                 addLexedToken(lex());
 
-            return _lexedDirectiveTriviaTokens[_directiveTriviaTokenOffset + n];
+            return _lexedDirectiveTriviaTokens[_directiveTriviaTokenOffset + n - 1];
         }
     }
 

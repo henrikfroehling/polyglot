@@ -73,6 +73,9 @@ private:
                                                    SyntaxToken* keyword,
                                                    bool isActive) noexcept;
 
+    DirectiveTriviaSyntax* parseMessageDirective(SyntaxToken* openBraceDollarToken,
+                                                 SyntaxToken* keyword) noexcept;
+
     SyntaxToken* parseEndOfDirective() noexcept;
     ExpressionSyntax* parseExpression() noexcept;
     ExpressionSyntax* parseLogicalOr() noexcept;

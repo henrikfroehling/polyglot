@@ -272,6 +272,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UndefDirectiveTrivia: return "UndefDirectiveTrivia";
         case SyntaxKind::RegionDirectiveTrivia: return "RegionDirectiveTrivia";
         case SyntaxKind::EndRegionDirectiveTrivia: return "EndRegionDirectiveTrivia";
+        case SyntaxKind::MessageDirectiveTrivia: return "MessageDirectiveTrivia";
         case SyntaxKind::SkippedTokensTrivia: return "SkippedTokensTrivia";
 
         case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
@@ -300,6 +301,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UndefDirectiveKeyword: return "UndefDirectiveKeyword";
         case SyntaxKind::RegionDirectiveKeyword: return "RegionDirectiveKeyword";
         case SyntaxKind::EndRegionDirectiveKeyword: return "EndRegionDirectiveKeyword";
+        case SyntaxKind::MessageDirectiveKeyword: return "MessageDirectiveKeyword";
         case SyntaxKind::EndOfDirectiveToken: return "EndOfDirectiveToken";
 
         case SyntaxKind::PackageRequiresClause: return "PackageRequiresClause";

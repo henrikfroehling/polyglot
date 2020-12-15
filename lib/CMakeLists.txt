@@ -72,6 +72,7 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp

@@ -16,6 +16,7 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
@@ -79,6 +80,9 @@ SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
             break;
         case SyntaxKind::EndRegionDirectiveKeyword:
             result = parseEndRegionDirective(openBraceDollarToken, takeToken(syntaxKind), isActive);
+            break;
+        case SyntaxKind::MessageDirectiveKeyword:
+            result = parseMessageDirective(openBraceDollarToken, takeToken(syntaxKind));
             break;
         default:
             SyntaxToken* identifierToken = takeToken(SyntaxKind::IdentifierToken);
@@ -265,6 +269,20 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndRegionDirective(SyntaxToke
         // TODO error handling
         return BadDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, endOfDirective, isActive);
     }
+}
+
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseMessageDirective(SyntaxToken* openBraceDollarToken,
+                                                                    SyntaxToken* keyword) noexcept
+{
+    SyntaxToken* messageType{nullptr};
+
+    if (peekToken(1)->syntaxKind() == SyntaxKind::IdentifierToken)
+        messageType = takeToken();
+
+    SyntaxToken* message = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
+    SyntaxToken* endOfDirective = parseEndOfDirective();
+
+    return MessageDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, messageType, message, endOfDirective);;
 }
 
 SyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
