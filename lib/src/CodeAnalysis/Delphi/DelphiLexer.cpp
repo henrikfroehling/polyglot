@@ -721,14 +721,12 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     triviaList.push_back(syntaxTrivia);
 
                     onlyWhitespaceOnLine = false;
+                    break;
                 }
                 else
-                {
                     _textWindow.reset(_textWindow.position() - 1);
-                    lexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
-                }
 
-                break;
+                return;
             case '\r':
             case '\n':
             {

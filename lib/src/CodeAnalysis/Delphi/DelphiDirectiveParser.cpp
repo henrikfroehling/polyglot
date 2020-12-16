@@ -444,6 +444,8 @@ bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noe
 {
     switch (expression->syntaxKind())
     {
+        case SyntaxKind::CallExpression:
+            return evaluateBool(static_cast<CallExpressionSyntax*>(expression)->argumentExpression());
         case SyntaxKind::LogicalNotExpression:
             return !evaluateBool(static_cast<PrefixUnaryExpressionSyntax*>(expression)->operandExpression());
         case SyntaxKind::LogicalOrExpression:
@@ -469,7 +471,7 @@ bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noe
             break;
         }
         case SyntaxKind::ParenthesizedExpression:
-            return evaluateBool(static_cast<ParenthesizedExpressionSyntax*>(expression));
+            return evaluateBool(static_cast<ParenthesizedExpressionSyntax*>(expression)->expression());
         case SyntaxKind::TrueLiteralExpression:
         case SyntaxKind::FalseLiteralExpression:
             return static_cast<LiteralExpressionSyntax*>(expression)->token()->value();
