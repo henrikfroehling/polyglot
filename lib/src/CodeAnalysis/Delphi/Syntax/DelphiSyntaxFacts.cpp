@@ -563,6 +563,9 @@ SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text,
                 case SyntaxKind::MessageKeyword:
                     syntaxKind = SyntaxKind::MessageDirectiveKeyword;
                     break;
+                case SyntaxKind::AssemblerKeyword:
+                    syntaxKind = SyntaxKind::IdentifierToken;
+                    break;
             }
         }
 

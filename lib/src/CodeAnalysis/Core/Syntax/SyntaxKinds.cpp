@@ -325,6 +325,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::FalseLiteralExpression: return "FalseLiteralExpression";
         case SyntaxKind::IdentifierNameExpression: return "IdentifierNameExpression";
         case SyntaxKind::QualifiedNameExpression: return "QualifiedNameExpression";
+        case SyntaxKind::CallExpression: return "CallExpression";
     }
 
     return "";

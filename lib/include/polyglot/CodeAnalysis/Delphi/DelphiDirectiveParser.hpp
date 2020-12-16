@@ -87,6 +87,7 @@ private:
     ExpressionSyntax* parseEquality() noexcept;
     ExpressionSyntax* parseLogicalNot() noexcept;
     ExpressionSyntax* parsePrimary() noexcept;
+    ExpressionSyntax* parseCallExpression(SyntaxToken* identifier) noexcept;
     bool evaluateBool(ExpressionSyntax* expression) const noexcept;
     bool isDefined(std::string_view id) const noexcept;
 };

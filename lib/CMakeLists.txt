@@ -51,6 +51,7 @@ set(SOURCES_CODEANALYSIS_CORE
 
 set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.cpp

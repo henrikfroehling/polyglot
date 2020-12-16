@@ -2,6 +2,7 @@
 #include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
@@ -388,7 +389,7 @@ ExpressionSyntax* DelphiDirectiveParser::parseEquality() noexcept
 
 ExpressionSyntax* DelphiDirectiveParser::parseLogicalNot() noexcept
 {
-    if (currentToken()->syntaxKind() == SyntaxKind::ExclamationMarkToken)
+    if (currentToken()->syntaxKind() == SyntaxKind::NotKeyword)
     {
         SyntaxToken* operatorToken = takeToken();
         return PrefixUnaryExpressionSyntax::create(SyntaxKind::LogicalNotExpression, operatorToken, parseLogicalNot());
@@ -411,7 +412,14 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
             return ParenthesizedExpressionSyntax::create(openParenthesisToken, expression, closeParenthesisToken);
         }
         case SyntaxKind::IdentifierToken:
-            return IdentifierNameExpressionSyntax::create(takeToken());
+        {
+            SyntaxToken* identifier = takeToken();
+
+            if (peekToken(1)->syntaxKind() == SyntaxKind::OpenParenthesisToken)
+                return parseCallExpression(identifier);
+
+            return IdentifierNameExpressionSyntax::create(identifier);
+        }
         case SyntaxKind::NumberLiteralToken:
             return LiteralExpressionSyntax::create(SyntaxKind::NumericLiteralExpression, takeToken());
         case SyntaxKind::TrueKeyword:
@@ -422,6 +430,14 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
     }
 
     return nullptr;
+}
+
+ExpressionSyntax* DelphiDirectiveParser::parseCallExpression(SyntaxToken* identifier) noexcept
+{
+    SyntaxToken* openParenthesisToken = takeToken(SyntaxKind::OpenParenthesisToken);
+    ExpressionSyntax* expression = parseExpression();
+    SyntaxToken* closeParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
+    return CallExpressionSyntax::create(SyntaxKind::CallExpression, identifier, openParenthesisToken, expression, closeParenthesisToken);
 }
 
 bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noexcept
