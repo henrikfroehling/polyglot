@@ -1209,12 +1209,13 @@ void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<SyntaxNode*>& triviaLis
 
         if (trivia->syntaxKind() == SyntaxKind::EndOfLineTrivia)
         {
-            if (includeEndOfLine)
+            if (!includeEndOfLine)
                 triviaList.push_back(trivia);
             else
+            {
                 _textWindow.reset(position);
-
-            break;
+                break;
+            }
         }
         else
             triviaList.push_back(trivia);
