@@ -5,7 +5,6 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -31,9 +30,6 @@ class POLYGLOT_API DelphiParser final : public Parser
 public:
     DelphiParser() = delete;
     explicit DelphiParser(SharedPtr<SourceText> sourceText) noexcept;
-
-private:
-    SharedPtr<DelphiSyntaxFacts> _ptrSyntaxFacts;
 
 private:
     SyntaxNode* parseRoot() noexcept override;

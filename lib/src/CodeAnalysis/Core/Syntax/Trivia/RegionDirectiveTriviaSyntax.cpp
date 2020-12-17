@@ -13,12 +13,12 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                          SyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrRegionKeyword{regionKeyword},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _pStartToken{startToken},
+      _pRegionKeyword{regionKeyword},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxToken* startToken,

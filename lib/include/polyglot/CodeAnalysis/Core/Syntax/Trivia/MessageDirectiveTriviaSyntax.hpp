@@ -21,11 +21,11 @@ public:
                                           SyntaxToken* endOfDirectiveToken) noexcept;
 
     virtual ~MessageDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual SyntaxToken* messageKeyword() const noexcept { return _ptrMessageKeyword; }
-    inline virtual SyntaxToken* messageTypeToken() const noexcept { return _ptrMessageTypeToken; }
-    inline virtual SyntaxToken* messageLiteralToken() const noexcept { return _ptrMessageLiteralToken; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual SyntaxToken* messageKeyword() const noexcept { return _pMessageKeyword; }
+    inline virtual SyntaxToken* messageTypeToken() const noexcept { return _pMessageTypeToken; }
+    inline virtual SyntaxToken* messageLiteralToken() const noexcept { return _pMessageLiteralToken; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return false; }
 
     static MessageDirectiveTriviaSyntax* create(SyntaxToken* startToken,
@@ -35,11 +35,11 @@ public:
                                                 SyntaxToken* endOfDirectiveToken) noexcept;
 
 private:
-    SyntaxToken* _ptrStartToken;
-    SyntaxToken* _ptrMessageKeyword;
-    SyntaxToken* _ptrMessageTypeToken; // optional
-    SyntaxToken* _ptrMessageLiteralToken;
-    SyntaxToken* _ptrEndOfDirectiveToken;
+    SyntaxToken* _pStartToken;
+    SyntaxToken* _pMessageKeyword;
+    SyntaxToken* _pMessageTypeToken; // optional
+    SyntaxToken* _pMessageLiteralToken;
+    SyntaxToken* _pEndOfDirectiveToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

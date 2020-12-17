@@ -12,12 +12,12 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
                                            ExpressionSyntax* argumentExpression,
                                            SyntaxToken* closeParenthesisToken) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrIdentifier{identifier},
-      _ptrOpenParenthesisToken{openParenthesisToken},
-      _ptrArgumentExpression{argumentExpression},
-      _ptrCloseParenthesisToken{closeParenthesisToken}
+      _pIdentifier{identifier},
+      _pOpenParenthesisToken{openParenthesisToken},
+      _pArgumentExpression{argumentExpression},
+      _pCloseParenthesisToken{closeParenthesisToken}
 {
-    _position = _ptrIdentifier->position();
+    _position = _pIdentifier->position();
 }
 
 CallExpressionSyntax* CallExpressionSyntax::create(SyntaxKind syntaxKind,

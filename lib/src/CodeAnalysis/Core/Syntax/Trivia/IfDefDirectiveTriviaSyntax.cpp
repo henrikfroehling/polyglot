@@ -14,13 +14,13 @@ IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                        SyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrIfDefKeyword{ifDefKeyword},
-      _ptrName{name},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _pStartToken{startToken},
+      _pIfDefKeyword{ifDefKeyword},
+      _pName{name},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(SyntaxToken* startToken,

@@ -14,13 +14,13 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                      bool isActive,
                                                      bool isBranchTaken) noexcept
     : BranchingDirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrElseKeyword{elseKeyword},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _pStartToken{startToken},
+      _pElseKeyword{elseKeyword},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive},
       _isBranchTaken{isBranchTaken}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxToken* startToken,

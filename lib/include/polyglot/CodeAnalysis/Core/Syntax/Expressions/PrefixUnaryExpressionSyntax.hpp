@@ -18,16 +18,16 @@ public:
                                          ExpressionSyntax* operandExpression) noexcept;
 
     virtual ~PrefixUnaryExpressionSyntax() noexcept = default;
-    inline virtual SyntaxToken* operatorToken() const noexcept { return _ptrOperatorToken; }
-    inline virtual ExpressionSyntax* operandExpression() const noexcept { return _ptrOperandExpression; }
+    inline virtual SyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
+    inline virtual ExpressionSyntax* operandExpression() const noexcept { return _pOperandExpression; }
 
     static PrefixUnaryExpressionSyntax* create(SyntaxKind syntaxKind,
                                                SyntaxToken* operatorToken,
                                                ExpressionSyntax* operandExpression) noexcept;
 
 private:
-    SyntaxToken* _ptrOperatorToken;
-    ExpressionSyntax* _ptrOperandExpression;
+    SyntaxToken* _pOperatorToken;
+    ExpressionSyntax* _pOperandExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

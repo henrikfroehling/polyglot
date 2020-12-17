@@ -9,9 +9,9 @@ namespace polyglot::CodeAnalysis
 LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
                                                  SyntaxToken* token) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrToken{token}
+      _pToken{token}
 {
-    _position = _ptrToken->position();
+    _position = _pToken->position();
 }
 
 LiteralExpressionSyntax* LiteralExpressionSyntax::create(SyntaxKind syntaxKind,

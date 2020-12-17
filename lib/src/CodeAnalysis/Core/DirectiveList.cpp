@@ -11,13 +11,13 @@ static SharedPtr<DirectiveList> EMPTY = []()
 }();
 
 DirectiveList::DirectiveList() noexcept
-    : _ptrHead{nullptr},
+    : _pHead{nullptr},
       _ptrTail{nullptr}
 {}
 
 DirectiveList::DirectiveList(Directive* head,
                              SharedPtr<DirectiveList> tail) noexcept
-    : _ptrHead{head},
+    : _pHead{head},
       _ptrTail{std::move(tail)}
 {
     assert(_ptrTail != nullptr);
@@ -42,8 +42,8 @@ SharedPtr<DirectiveList> DirectiveList::create(Directive* directive,
 bool operator==(const DirectiveList& lhs,
                 const DirectiveList& rhs) noexcept
 {
-    if (lhs._ptrHead != nullptr && rhs._ptrHead != nullptr)
-        return *(lhs._ptrHead) == *(rhs._ptrHead) && *(lhs._ptrTail) == *(rhs._ptrTail);
+    if (lhs._pHead != nullptr && rhs._pHead != nullptr)
+        return *(lhs._pHead) == *(rhs._pHead) && *(lhs._ptrTail) == *(rhs._ptrTail);
 
     return false;
 }

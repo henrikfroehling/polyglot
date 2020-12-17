@@ -8,12 +8,12 @@ namespace polyglot::CodeAnalysis
 {
 
 Directive::Directive(DirectiveTriviaSyntax* node) noexcept
-    : _node{node}
+    : _pNode{node}
 {}
 
 bool Directive::isBranchTaken() const noexcept
 {
-    BranchingDirectiveTriviaSyntax* ptrBranching = static_cast<BranchingDirectiveTriviaSyntax*>(_node);
+    BranchingDirectiveTriviaSyntax* ptrBranching = static_cast<BranchingDirectiveTriviaSyntax*>(_pNode);
 
     if (ptrBranching != nullptr)
         return ptrBranching->isBranchTaken();
@@ -23,12 +23,12 @@ bool Directive::isBranchTaken() const noexcept
 
 std::string_view Directive::identifier() const noexcept
 {
-    switch (_node->syntaxKind())
+    switch (_pNode->syntaxKind())
     {
         case SyntaxKind::DefineDirectiveTrivia:
-            return static_cast<DefineDirectiveTriviaSyntax*>(_node)->name()->text();
+            return static_cast<DefineDirectiveTriviaSyntax*>(_pNode)->name()->text();
         case SyntaxKind::UndefDirectiveTrivia:
-            return static_cast<UndefDirectiveTriviaSyntax*>(_node)->name()->text();
+            return static_cast<UndefDirectiveTriviaSyntax*>(_pNode)->name()->text();
         default:
             return std::string_view{};
     }

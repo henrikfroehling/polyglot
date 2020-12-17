@@ -6,8 +6,8 @@ namespace polyglot::CodeAnalysis
 
 DelphiProgramModuleSyntax::DelphiProgramModuleSyntax() noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::ProgramModule},
-      _ptrHeading{nullptr},
-      _ptrUses{nullptr}
+      _pHeading{nullptr},
+      _pUses{nullptr}
 {}
 
 } // end namespace polyglot::CodeAnalysis

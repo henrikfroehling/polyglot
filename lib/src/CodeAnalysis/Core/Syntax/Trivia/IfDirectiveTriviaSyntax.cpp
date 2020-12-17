@@ -16,15 +16,15 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                  bool isBranchTaken,
                                                  bool conditionValue) noexcept
     : ConditionalDirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrIfKeyword{ifKeyword},
-      _ptrCondition{condition},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _pStartToken{startToken},
+      _pIfKeyword{ifKeyword},
+      _pCondition{condition},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive},
       _isBranchTaken{isBranchTaken},
       _conditionValue{conditionValue}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxToken* startToken,

@@ -13,12 +13,12 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                          SyntaxToken* onOffToken,
                                                          SyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrIdentifier{identifier},
-      _ptrOnOffToken{onOffToken},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken}
+      _pStartToken{startToken},
+      _pIdentifier{identifier},
+      _pOnOffToken{onOffToken},
+      _pEndOfDirectiveToken{endOfDirectiveToken}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(SyntaxToken* startToken,

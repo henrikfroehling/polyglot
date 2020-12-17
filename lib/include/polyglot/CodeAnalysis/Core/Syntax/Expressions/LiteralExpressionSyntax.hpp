@@ -17,13 +17,13 @@ public:
                                      SyntaxToken* token) noexcept;
 
     virtual ~LiteralExpressionSyntax() noexcept = default;
-    inline virtual SyntaxToken* token() const noexcept { return _ptrToken; }
+    inline virtual SyntaxToken* token() const noexcept { return _pToken; }
 
     static LiteralExpressionSyntax* create(SyntaxKind syntaxKind,
                                            SyntaxToken* token) noexcept;
 
 private:
-    SyntaxToken* _ptrToken;
+    SyntaxToken* _pToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

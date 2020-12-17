@@ -14,12 +14,12 @@ class POLYGLOT_API IdentifierNameExpressionSyntax : public SimpleNameExpressionS
 public:
     explicit IdentifierNameExpressionSyntax(SyntaxToken* identifier) noexcept;
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
-    virtual SyntaxToken* identifier() const noexcept override { return _ptrIdentifier; }
+    virtual SyntaxToken* identifier() const noexcept override { return _pIdentifier; }
 
     static IdentifierNameExpressionSyntax* create(SyntaxToken* identifier) noexcept;
 
 protected:
-    SyntaxToken* _ptrIdentifier;
+    SyntaxToken* _pIdentifier;
 };
 
 } // end namespace polyglot::CodeAnalysis

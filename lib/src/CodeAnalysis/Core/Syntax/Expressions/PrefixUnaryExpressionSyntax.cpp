@@ -10,10 +10,10 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
                                                          SyntaxToken* operatorToken,
                                                          ExpressionSyntax* operandExpression) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrOperatorToken{operatorToken},
-      _ptrOperandExpression{operandExpression}
+      _pOperatorToken{operatorToken},
+      _pOperandExpression{operandExpression}
 {
-    _position = _ptrOperatorToken->position();
+    _position = _pOperatorToken->position();
 }
 
 PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,

@@ -15,7 +15,7 @@ class POLYGLOT_API SyntaxTree
 public:
     SyntaxTree() noexcept;
     virtual ~SyntaxTree() noexcept = default;
-    inline SyntaxNode* root() const noexcept { return _ptrRoot; }
+    inline SyntaxNode* root() const noexcept { return _pRoot; }
 
 protected:
     explicit SyntaxTree(SharedPtr<SourceText> sourceText,
@@ -23,7 +23,7 @@ protected:
 
 protected:
     SharedPtr<SourceText> _ptrSourceText;
-    SyntaxNode* _ptrRoot;
+    SyntaxNode* _pRoot;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -5,7 +5,7 @@ namespace polyglot::CodeAnalysis
 
 DelphiCompilationUnitSyntax::DelphiCompilationUnitSyntax(SyntaxKind syntaxKind) noexcept
     : DelphiSyntaxNode{syntaxKind},
-      _ptrEOFToken{nullptr}
+      _pEOFToken{nullptr}
 {}
 
 } // end namespace polyglot::CodeAnalysis

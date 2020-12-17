@@ -20,9 +20,9 @@ public:
                                             bool isActive) noexcept;
 
     virtual ~EndRegionDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual SyntaxToken* endRegionKeyword() const noexcept { return _ptrEndRegionKeyword; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual SyntaxToken* endRegionKeyword() const noexcept { return _pEndRegionKeyword; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
     static EndRegionDirectiveTriviaSyntax* create(SyntaxToken* startToken,
@@ -31,9 +31,9 @@ public:
                                                   bool isActive) noexcept;
 
 private:
-    SyntaxToken* _ptrStartToken;
-    SyntaxToken* _ptrEndRegionKeyword;
-    SyntaxToken* _ptrEndOfDirectiveToken;
+    SyntaxToken* _pStartToken;
+    SyntaxToken* _pEndRegionKeyword;
+    SyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

@@ -13,12 +13,12 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                        SyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrEndIfKeyword{endIfKeyword},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _pStartToken{startToken},
+      _pEndIfKeyword{endIfKeyword},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 EndIfDirectiveTriviaSyntax* EndIfDirectiveTriviaSyntax::create(SyntaxToken* startToken,

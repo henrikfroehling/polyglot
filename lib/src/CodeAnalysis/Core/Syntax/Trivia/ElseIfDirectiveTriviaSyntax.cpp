@@ -16,15 +16,15 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                          bool isBranchTaken,
                                                          bool conditionValue) noexcept
     : ConditionalDirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrElseIfKeyword{elseIfKeyword},
-      _ptrCondition{condition},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken},
+      _pStartToken{startToken},
+      _pElseIfKeyword{elseIfKeyword},
+      _pCondition{condition},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
       _isActive{isActive},
       _isBranchTaken{isBranchTaken},
       _conditionValue{conditionValue}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(SyntaxToken* startToken,

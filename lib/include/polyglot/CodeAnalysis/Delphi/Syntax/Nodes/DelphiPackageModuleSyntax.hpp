@@ -17,17 +17,17 @@ public:
     DelphiPackageModuleSyntax() noexcept;
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
-    inline DelphiPackageHeadingSyntax* heading() const noexcept { return _ptrHeading; }
-    inline void setHeading(DelphiPackageHeadingSyntax* heading) noexcept { _ptrHeading = heading; }
-    inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _ptrRequiresClause; }
-    inline void setRequiresClause(DelphiPackageRequiresClauseSyntax* requiresClause) noexcept { _ptrRequiresClause = requiresClause; }
-    inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _ptrContainsClause; }
-    inline void setContainsClause(DelphiPackageContainsClauseSyntax* containsClause) noexcept { _ptrContainsClause = containsClause; }
+    inline DelphiPackageHeadingSyntax* heading() const noexcept { return _pHeading; }
+    inline void setHeading(DelphiPackageHeadingSyntax* heading) noexcept { _pHeading = heading; }
+    inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _pRequiresClause; }
+    inline void setRequiresClause(DelphiPackageRequiresClauseSyntax* requiresClause) noexcept { _pRequiresClause = requiresClause; }
+    inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
+    inline void setContainsClause(DelphiPackageContainsClauseSyntax* containsClause) noexcept { _pContainsClause = containsClause; }
 
 private:
-    DelphiPackageHeadingSyntax* _ptrHeading;
-    DelphiPackageRequiresClauseSyntax* _ptrRequiresClause;
-    DelphiPackageContainsClauseSyntax* _ptrContainsClause;
+    DelphiPackageHeadingSyntax* _pHeading;
+    DelphiPackageRequiresClauseSyntax* _pRequiresClause;
+    DelphiPackageContainsClauseSyntax* _pContainsClause;
 };
 
 } // polyglot::CodeAnalysis

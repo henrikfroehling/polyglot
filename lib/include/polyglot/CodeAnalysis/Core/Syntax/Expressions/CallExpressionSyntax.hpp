@@ -20,10 +20,10 @@ public:
                                   SyntaxToken* closeParenthesisToken) noexcept;
 
     virtual ~CallExpressionSyntax() noexcept = default;
-    inline virtual SyntaxToken* identifier() const noexcept { return _ptrIdentifier; }
-    inline virtual SyntaxToken* openParenthesisToken() const noexcept { return _ptrOpenParenthesisToken; }
-    inline virtual ExpressionSyntax* argumentExpression() const noexcept { return _ptrArgumentExpression; }
-    inline virtual SyntaxToken* closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
+    inline virtual SyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual SyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
+    inline virtual ExpressionSyntax* argumentExpression() const noexcept { return _pArgumentExpression; }
+    inline virtual SyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
 
     static CallExpressionSyntax* create(SyntaxKind syntaxKind,
                                         SyntaxToken* identifier,
@@ -32,10 +32,10 @@ public:
                                         SyntaxToken* closeParenthesisToken) noexcept;
 
 private:
-    SyntaxToken* _ptrIdentifier;
-    SyntaxToken* _ptrOpenParenthesisToken;
-    ExpressionSyntax* _ptrArgumentExpression;
-    SyntaxToken* _ptrCloseParenthesisToken;
+    SyntaxToken* _pIdentifier;
+    SyntaxToken* _pOpenParenthesisToken;
+    ExpressionSyntax* _pArgumentExpression;
+    SyntaxToken* _pCloseParenthesisToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

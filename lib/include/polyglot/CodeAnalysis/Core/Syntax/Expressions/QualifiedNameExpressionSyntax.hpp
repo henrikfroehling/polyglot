@@ -18,11 +18,14 @@ public:
                                            SimpleNameExpressionSyntax* rightExpression) noexcept;
 
     virtual ~QualifiedNameExpressionSyntax() noexcept = default;
+    inline virtual NameExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
+    inline virtual SyntaxToken* dotToken() const noexcept { return _pDotToken; }
+    inline virtual SimpleNameExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
 
 private:
-    NameExpressionSyntax* _ptrLeftExpression;
-    SyntaxToken* _ptrDotToken;
-    SimpleNameExpressionSyntax* _ptrRightExpression;
+    NameExpressionSyntax* _pLeftExpression;
+    SyntaxToken* _pDotToken;
+    SimpleNameExpressionSyntax* _pRightExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

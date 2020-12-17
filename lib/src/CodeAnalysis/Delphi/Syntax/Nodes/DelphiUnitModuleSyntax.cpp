@@ -10,13 +10,13 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
                                                SyntaxToken* endKeyword,
                                                SyntaxToken* dotToken) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::UnitModule},
-      _ptrHeading{heading},
-      _ptrInterfaceSection{interfaceSection},
-      _ptrImplementationSection{implementationSection},
-      _ptrInitializationSection{nullptr},
-      _ptrFinalizationSection{nullptr},
-      _ptrEndKeyword{endKeyword},
-      _ptrDotToken{dotToken}
+      _pHeading{heading},
+      _pInterfaceSection{interfaceSection},
+      _pImplementationSection{implementationSection},
+      _pInitializationSection{nullptr},
+      _pFinalizationSection{nullptr},
+      _pEndKeyword{endKeyword},
+      _pDotToken{dotToken}
 {}
 
 } // end namespace polyglot::CodeAnalysis

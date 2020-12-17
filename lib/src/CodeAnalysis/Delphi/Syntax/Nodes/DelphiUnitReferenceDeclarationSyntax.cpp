@@ -6,10 +6,10 @@ namespace polyglot::CodeAnalysis
 
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitReference},
-      _ptrUnitName{unitName},
-      _ptrInKeyword{nullptr},
-      _ptrSourceFile{nullptr},
-      _ptrCommaToken{nullptr}
+      _pUnitName{unitName},
+      _pInKeyword{nullptr},
+      _pSourceFile{nullptr},
+      _pCommaToken{nullptr}
 {}
 
 } // end namespace polyglot::CodeAnalysis

@@ -6,8 +6,6 @@ namespace polyglot::CodeAnalysis
 
 DirectiveTriviaSyntax::DirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept
     : StructuredTriviaSyntax{syntaxKind}
-{
-    _flags |= SyntaxNodeFlags::ContainsDirectives;
-}
+{}
 
 } // end namespace polyglot::CodeAnalysis

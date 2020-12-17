@@ -20,7 +20,7 @@ public:
 
     virtual ~DelphiUsesClauseSyntax() noexcept = default;
 
-    inline SyntaxToken* usesKeyword() const noexcept { return _ptrUsesKeyword; }
+    inline SyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
     inline const std::vector<DelphiUnitReferenceDeclarationSyntax*>& unitReferences() const noexcept { return _unitReferences; }
 
     inline void addUnitReference(DelphiUnitReferenceDeclarationSyntax* unitReference) noexcept
@@ -28,12 +28,12 @@ public:
         _unitReferences.push_back(unitReference);
     }
 
-    inline SyntaxToken* semiColonToken() const noexcept { return _ptrSemiColonToken; }
+    inline SyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
 private:
-    SyntaxToken* _ptrUsesKeyword;
+    SyntaxToken* _pUsesKeyword;
     std::vector<DelphiUnitReferenceDeclarationSyntax*> _unitReferences;
-    SyntaxToken* _ptrSemiColonToken;
+    SyntaxToken* _pSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

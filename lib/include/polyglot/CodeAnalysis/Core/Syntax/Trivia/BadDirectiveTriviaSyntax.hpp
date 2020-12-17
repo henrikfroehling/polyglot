@@ -20,9 +20,9 @@ public:
                                       bool isActive) noexcept;
 
     virtual ~BadDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual SyntaxToken* identifier() const noexcept { return _ptrIdentifier; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual SyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
     static BadDirectiveTriviaSyntax* create(SyntaxToken* startToken,
@@ -31,9 +31,9 @@ public:
                                             bool isActive) noexcept;
 
 private:
-    SyntaxToken* _ptrStartToken;
-    SyntaxToken* _ptrIdentifier;
-    SyntaxToken* _ptrEndOfDirectiveToken;
+    SyntaxToken* _pStartToken;
+    SyntaxToken* _pIdentifier;
+    SyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

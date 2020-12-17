@@ -12,11 +12,11 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
                                                              ExpressionSyntax* expression,
                                                              SyntaxToken* closeParenthesisToken) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrOpenParenthesisToken{openParenthesisToken},
-      _ptrExpression{expression},
-      _ptrCloseParenthesisToken{closeParenthesisToken}
+      _pOpenParenthesisToken{openParenthesisToken},
+      _pExpression{expression},
+      _pCloseParenthesisToken{closeParenthesisToken}
 {
-    _position = _ptrOpenParenthesisToken->position();
+    _position = _pOpenParenthesisToken->position();
 }
 
 ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(SyntaxToken* openParenthesisToken,

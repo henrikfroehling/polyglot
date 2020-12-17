@@ -17,7 +17,7 @@ public:
     explicit DirectiveList(Directive* head,
                            SharedPtr<DirectiveList> tail) noexcept;
 
-    inline Directive* head() const noexcept { return _ptrHead; }
+    inline Directive* head() const noexcept { return _pHead; }
     inline const SharedPtr<DirectiveList>& tail() const noexcept { return _ptrTail; }
     inline SharedPtr<DirectiveList> push(Directive* value) noexcept { return std::make_shared<DirectiveList>(value, shared_from_this()); }
     bool any() const noexcept;
@@ -33,7 +33,7 @@ public:
                            const DirectiveList& rhs) noexcept;
 
 private:
-    Directive* _ptrHead;
+    Directive* _pHead;
     SharedPtr<DirectiveList> _ptrTail;
 };
 

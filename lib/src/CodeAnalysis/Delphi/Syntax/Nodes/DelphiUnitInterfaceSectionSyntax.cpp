@@ -6,8 +6,8 @@ namespace polyglot::CodeAnalysis
 
 DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(SyntaxToken* interfaceKeyword) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitInterfaceSection},
-      _ptrInterfaceKeyword{interfaceKeyword},
-      _ptrUses{nullptr}
+      _pInterfaceKeyword{interfaceKeyword},
+      _pUses{nullptr}
 {}
 
 } // end namespace polyglot::CodeAnalysis

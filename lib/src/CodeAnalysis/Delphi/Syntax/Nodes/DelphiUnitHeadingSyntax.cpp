@@ -8,9 +8,9 @@ DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(SyntaxToken* unitKeyword,
                                                  NameExpressionSyntax* name,
                                                  SyntaxToken* semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitHeading},
-      _ptrUnitKeyword{unitKeyword},
-      _ptrName{name},
-      _ptrSemiColonToken{semiColonToken}
+      _pUnitKeyword{unitKeyword},
+      _pName{name},
+      _pSemiColonToken{semiColonToken}
 {}
 
 } // end namespace polyglot::CodeAnalysis

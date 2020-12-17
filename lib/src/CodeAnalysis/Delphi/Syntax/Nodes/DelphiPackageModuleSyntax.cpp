@@ -6,9 +6,9 @@ namespace polyglot::CodeAnalysis
 
 DelphiPackageModuleSyntax::DelphiPackageModuleSyntax() noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::PackageModule},
-      _ptrHeading{nullptr},
-      _ptrRequiresClause{nullptr},
-      _ptrContainsClause{nullptr}
+      _pHeading{nullptr},
+      _pRequiresClause{nullptr},
+      _pContainsClause{nullptr}
 {}
 
 } // end namespace polyglot::CodeAnalysis

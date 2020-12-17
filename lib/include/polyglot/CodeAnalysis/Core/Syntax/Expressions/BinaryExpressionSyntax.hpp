@@ -19,9 +19,9 @@ public:
                                     ExpressionSyntax* rightExpression) noexcept;
 
     virtual ~BinaryExpressionSyntax() noexcept = default;
-    inline virtual ExpressionSyntax* leftExpression() const noexcept { return _ptrLeftExpression; }
-    inline virtual SyntaxToken* operatorToken() const noexcept { return _ptrOperatorToken; }
-    inline virtual ExpressionSyntax* rightExpression() const noexcept { return _ptrRightExpression; }
+    inline virtual ExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
+    inline virtual SyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
+    inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
 
     static BinaryExpressionSyntax* create(SyntaxKind syntaxKind,
                                           ExpressionSyntax* leftExpression,
@@ -29,9 +29,9 @@ public:
                                           ExpressionSyntax* rightExpression) noexcept;
 
 private:
-    ExpressionSyntax* _ptrLeftExpression;
-    SyntaxToken* _ptrOperatorToken;
-    ExpressionSyntax* _ptrRightExpression;
+    ExpressionSyntax* _pLeftExpression;
+    SyntaxToken* _pOperatorToken;
+    ExpressionSyntax* _pRightExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

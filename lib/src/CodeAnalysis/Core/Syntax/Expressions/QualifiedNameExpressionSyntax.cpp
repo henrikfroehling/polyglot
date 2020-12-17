@@ -8,11 +8,11 @@ QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSynta
                                                              SyntaxToken* dotToken,
                                                              SimpleNameExpressionSyntax* rightExpression) noexcept
     : NameExpressionSyntax{SyntaxKind::QualifiedNameExpression},
-      _ptrLeftExpression{leftExpression},
-      _ptrDotToken{dotToken},
-      _ptrRightExpression{rightExpression}
+      _pLeftExpression{leftExpression},
+      _pDotToken{dotToken},
+      _pRightExpression{rightExpression}
 {
-    _position = _ptrLeftExpression->position();
+    _position = _pLeftExpression->position();
 }
 
 } // end namespace polyglot::CodeAnalysis

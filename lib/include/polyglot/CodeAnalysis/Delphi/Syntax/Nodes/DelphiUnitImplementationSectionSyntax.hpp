@@ -15,12 +15,12 @@ class POLYGLOT_API DelphiUnitImplementationSectionSyntax : public DelphiSyntaxNo
 public:
     explicit DelphiUnitImplementationSectionSyntax(SyntaxToken* implementationKeyword) noexcept;
     virtual ~DelphiUnitImplementationSectionSyntax() noexcept = default;
-    virtual DelphiUsesClauseSyntax* uses() const noexcept { return _ptrUses; }
-    virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept { _ptrUses = uses; }
+    virtual DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
+    virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept { _pUses = uses; }
 
 private:
-    SyntaxToken* _ptrImplementationKeyword;
-    DelphiUsesClauseSyntax* _ptrUses; // optional
+    SyntaxToken* _pImplementationKeyword;
+    DelphiUsesClauseSyntax* _pUses; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis

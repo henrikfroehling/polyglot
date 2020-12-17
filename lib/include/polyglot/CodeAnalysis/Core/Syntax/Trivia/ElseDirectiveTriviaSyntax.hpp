@@ -21,9 +21,9 @@ public:
                                        bool isBranchTaken) noexcept;
 
     virtual ~ElseDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual SyntaxToken* elseKeyword() const noexcept { return _ptrElseKeyword; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual SyntaxToken* elseKeyword() const noexcept { return _pElseKeyword; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
 
@@ -34,9 +34,9 @@ public:
                                              bool isBranchTaken) noexcept;
     
 private:
-    SyntaxToken* _ptrStartToken;
-    SyntaxToken* _ptrElseKeyword;
-    SyntaxToken* _ptrEndOfDirectiveToken;
+    SyntaxToken* _pStartToken;
+    SyntaxToken* _pElseKeyword;
+    SyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
 };

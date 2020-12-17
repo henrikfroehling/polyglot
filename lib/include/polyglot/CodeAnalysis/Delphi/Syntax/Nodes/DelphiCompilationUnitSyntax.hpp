@@ -18,11 +18,11 @@ public:
     inline virtual bool isUnitModule() const noexcept { return false; }
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
-    inline SyntaxToken* EOFToken() const noexcept { return _ptrEOFToken; }
-    inline void setEOFToken(SyntaxToken* eofToken) noexcept { _ptrEOFToken = eofToken; }
+    inline SyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
+    inline void setEOFToken(SyntaxToken* eofToken) noexcept { _pEOFToken = eofToken; }
 
 private:
-    SyntaxToken* _ptrEOFToken;
+    SyntaxToken* _pEOFToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

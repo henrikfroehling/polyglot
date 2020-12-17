@@ -18,14 +18,14 @@ public:
                                      SyntaxToken* semiColonToken) noexcept;
 
     virtual ~DelphiUnitHeadingSyntax() noexcept = default;
-    SyntaxToken* unitKeyword() const noexcept { return _ptrUnitKeyword; }
-    NameExpressionSyntax* name() const noexcept { return _ptrName; }
-    SyntaxToken* semiColonToken() const noexcept { return _ptrSemiColonToken; }
+    SyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
+    NameExpressionSyntax* name() const noexcept { return _pName; }
+    SyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
 private:
-    SyntaxToken* _ptrUnitKeyword;
-    NameExpressionSyntax* _ptrName;
-    SyntaxToken* _ptrSemiColonToken;
+    SyntaxToken* _pUnitKeyword;
+    NameExpressionSyntax* _pName;
+    SyntaxToken* _pSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

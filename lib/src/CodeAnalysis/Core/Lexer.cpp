@@ -21,11 +21,11 @@ Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
       _lexedDirectiveTriviaTokens{},
       _tokenCount{},
       _tokenOffset{},
-      _ptrCurrentToken{nullptr},
+      _pCurrentToken{nullptr},
       _directives{},
       _directiveTriviaTokenCount{},
       _directiveTriviaTokenOffset{},
-      _ptrCurrentDirectiveTriviaToken{nullptr}
+      _pCurrentDirectiveTriviaToken{nullptr}
 {}
 
 Lexer::~Lexer()
@@ -89,12 +89,12 @@ SyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
     {
         case LexerMode::Syntax:
         {
-            _ptrCurrentToken = currentToken();
+            _pCurrentToken = currentToken();
 
-            if (_ptrCurrentToken->syntaxKind() == syntaxKind)
+            if (_pCurrentToken->syntaxKind() == syntaxKind)
             {
                 _tokenOffset++;
-                return _ptrCurrentToken;
+                return _pCurrentToken;
             }
 
             // TODO Create missing replacement token
@@ -102,12 +102,12 @@ SyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
         }
         case LexerMode::Directive:
         {
-            _ptrCurrentDirectiveTriviaToken = currentToken();
+            _pCurrentDirectiveTriviaToken = currentToken();
 
-            if (_ptrCurrentDirectiveTriviaToken->syntaxKind() == syntaxKind)
+            if (_pCurrentDirectiveTriviaToken->syntaxKind() == syntaxKind)
             {
                 _directiveTriviaTokenOffset++;
-                return _ptrCurrentDirectiveTriviaToken;
+                return _pCurrentDirectiveTriviaToken;
             }
 
             // TODO Create missing replacement token
@@ -124,15 +124,15 @@ SyntaxToken* Lexer::takeToken() noexcept
     {
         case LexerMode::Syntax:
         {
-            _ptrCurrentToken = currentToken();
+            _pCurrentToken = currentToken();
             _tokenOffset++;
-            return _ptrCurrentToken;
+            return _pCurrentToken;
         }
         case LexerMode::Directive:
         {
-            _ptrCurrentDirectiveTriviaToken = currentToken();
+            _pCurrentDirectiveTriviaToken = currentToken();
             _directiveTriviaTokenOffset++;
-            return _ptrCurrentDirectiveTriviaToken;
+            return _pCurrentDirectiveTriviaToken;
         }
     }
 
@@ -182,7 +182,7 @@ void Lexer::setMode(LexerMode mode) noexcept
     _lexedDirectiveTriviaTokens.clear();
     _directiveTriviaTokenCount = 0;
     _directiveTriviaTokenOffset = 0;
-    _ptrCurrentDirectiveTriviaToken = nullptr;
+    _pCurrentDirectiveTriviaToken = nullptr;
     _mode = mode;
 }
 

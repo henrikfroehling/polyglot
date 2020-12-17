@@ -20,10 +20,10 @@ public:
                                          SyntaxToken* endOfDirectiveToken) noexcept;
 
     virtual ~SwitchDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual SyntaxToken* identifier() const noexcept { return _ptrIdentifier; }
-    inline virtual SyntaxToken* onOffToken() const noexcept { return _ptrOnOffToken; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual SyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual SyntaxToken* onOffToken() const noexcept { return _pOnOffToken; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return false; }
 
     static SwitchDirectiveTriviaSyntax* create(SyntaxToken* startToken,
@@ -32,10 +32,10 @@ public:
                                                SyntaxToken* endOfDirectiveToken) noexcept;
 
 private:
-    SyntaxToken* _ptrStartToken;
-    SyntaxToken* _ptrIdentifier;
-    SyntaxToken* _ptrOnOffToken;
-    SyntaxToken* _ptrEndOfDirectiveToken;
+    SyntaxToken* _pStartToken;
+    SyntaxToken* _pIdentifier;
+    SyntaxToken* _pOnOffToken;
+    SyntaxToken* _pEndOfDirectiveToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

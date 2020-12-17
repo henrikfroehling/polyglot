@@ -19,18 +19,18 @@ public:
                                            SyntaxToken* closeParenthesisToken) noexcept;
 
     virtual ~ParenthesizedExpressionSyntax() noexcept = default;
-    inline virtual SyntaxToken* openParenthesisToken() const noexcept { return _ptrOpenParenthesisToken; }
-    inline virtual ExpressionSyntax* expression() const noexcept { return _ptrExpression; }
-    inline virtual SyntaxToken* closeParenthesisToken() const noexcept { return _ptrCloseParenthesisToken; }
+    inline virtual SyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
+    inline virtual ExpressionSyntax* expression() const noexcept { return _pExpression; }
+    inline virtual SyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
 
     static ParenthesizedExpressionSyntax* create(SyntaxToken* openParenthesisToken,
                                                  ExpressionSyntax* expression,
                                                  SyntaxToken* closeParenthesisToken) noexcept;
 
 private:
-    SyntaxToken* _ptrOpenParenthesisToken;
-    ExpressionSyntax* _ptrExpression;
-    SyntaxToken* _ptrCloseParenthesisToken;
+    SyntaxToken* _pOpenParenthesisToken;
+    ExpressionSyntax* _pExpression;
+    SyntaxToken* _pCloseParenthesisToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

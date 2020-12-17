@@ -21,10 +21,10 @@ public:
                                         bool isActive) noexcept;
 
     virtual ~IfDefDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _ptrStartToken; }
-    inline virtual SyntaxToken* ifDefKeyword() const noexcept { return _ptrIfDefKeyword; }
-    inline virtual SyntaxToken* name() const noexcept { return _ptrName; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _ptrEndOfDirectiveToken; }
+    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual SyntaxToken* ifDefKeyword() const noexcept { return _pIfDefKeyword; }
+    inline virtual SyntaxToken* name() const noexcept { return _pName; }
+    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
     static IfDefDirectiveTriviaSyntax* create(SyntaxToken* startToken,
@@ -34,10 +34,10 @@ public:
                                               bool isActive) noexcept;
 
 private:
-    SyntaxToken* _ptrStartToken;
-    SyntaxToken* _ptrIfDefKeyword;
-    SyntaxToken* _ptrName;
-    SyntaxToken* _ptrEndOfDirectiveToken;
+    SyntaxToken* _pStartToken;
+    SyntaxToken* _pIfDefKeyword;
+    SyntaxToken* _pName;
+    SyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

@@ -11,11 +11,11 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
                                                SyntaxToken* operatorToken,
                                                ExpressionSyntax* rightExpression) noexcept
     : ExpressionSyntax{syntaxKind},
-      _ptrLeftExpression{leftExpression},
-      _ptrOperatorToken{operatorToken},
-      _ptrRightExpression{rightExpression}
+      _pLeftExpression{leftExpression},
+      _pOperatorToken{operatorToken},
+      _pRightExpression{rightExpression}
 {
-    _position = _ptrLeftExpression->position();
+    _position = _pLeftExpression->position();
 }
 
 BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,

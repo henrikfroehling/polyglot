@@ -55,11 +55,11 @@ protected:
     std::vector<SyntaxToken*> _lexedDirectiveTriviaTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
-    SyntaxToken* _ptrCurrentToken;
+    SyntaxToken* _pCurrentToken;
     DirectiveStack _directives;
     pg_size _directiveTriviaTokenCount;
     pg_size _directiveTriviaTokenOffset;
-    SyntaxToken* _ptrCurrentDirectiveTriviaToken;
+    SyntaxToken* _pCurrentDirectiveTriviaToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

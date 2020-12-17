@@ -14,13 +14,13 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
                                                            SyntaxToken* messageLiteralToken,
                                                            SyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
-      _ptrStartToken{startToken},
-      _ptrMessageKeyword{messageKeyword},
-      _ptrMessageTypeToken{messageTypeToken},
-      _ptrMessageLiteralToken{messageLiteralToken},
-      _ptrEndOfDirectiveToken{endOfDirectiveToken}
+      _pStartToken{startToken},
+      _pMessageKeyword{messageKeyword},
+      _pMessageTypeToken{messageTypeToken},
+      _pMessageLiteralToken{messageLiteralToken},
+      _pEndOfDirectiveToken{endOfDirectiveToken}
 {
-    _position = _ptrStartToken->position();
+    _position = _pStartToken->position();
 }
 
 MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxToken* startToken,

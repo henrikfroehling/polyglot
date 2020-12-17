@@ -19,8 +19,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
-    : Parser{std::make_shared<DelphiLexer>(sourceText)},
-      _ptrSyntaxFacts{std::make_shared<DelphiSyntaxFacts>()}
+    : Parser{std::make_shared<DelphiLexer>(sourceText)}
 {}
 
 SyntaxNode* DelphiParser::parseRoot() noexcept
