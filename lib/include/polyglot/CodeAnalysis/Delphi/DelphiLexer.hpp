@@ -44,17 +44,12 @@ private:
     bool scanIdentifier(TokenInfo& token) noexcept;
     void scanNumericLiteral(TokenInfo& tokenInfo) noexcept;
 
-    void lexDirectiveAndExcludedTrivia(bool afterFirstToken,
-                                       bool afterNonWhitespaceOnLine,
-                                       std::vector<SyntaxNode*>& triviaList) noexcept;
+    void lexSingleDirective(bool isActive,
+                            bool endIsActive,
+                            bool afterFirstToken,
+                            bool afterNonWhitespaceOnLine,
+                            std::vector<SyntaxNode*>& triviaList) noexcept;
 
-    SyntaxNode* lexSingleDirective(bool isActive,
-                                   bool endIsActive,
-                                   bool afterFirstToken,
-                                   bool afterNonWhitespaceOnLine,
-                                   std::vector<SyntaxNode*>& triviaList) noexcept;
-
-    void lexExludedDirectivesAndTrivia(bool endIsActive) noexcept;
     SyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
 

@@ -695,7 +695,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 else
                 {
                     _textWindow.reset(_textWindow.position() - 1);
-                    lexDirectiveAndExcludedTrivia(afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
+                    lexSingleDirective(true, true, afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
                 }
 
                 break;
@@ -945,21 +945,11 @@ SyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
     }
 }
 
-void DelphiLexer::lexDirectiveAndExcludedTrivia(bool afterFirstToken,
-                                                bool afterNonWhitespaceOnLine,
-                                                std::vector<SyntaxNode*>& triviaList) noexcept
-{
-    SyntaxNode* directive = lexSingleDirective(true, true, afterFirstToken, afterNonWhitespaceOnLine, triviaList);
-
-    // TODO
-    lexExludedDirectivesAndTrivia(true /* endIsActive */);
-}
-
-SyntaxNode* DelphiLexer::lexSingleDirective(bool isActive,
-                                            bool endIsActive,
-                                            bool afterFirstToken,
-                                            bool afterNonWhitespaceOnLine,
-                                            std::vector<SyntaxNode*>& triviaList) noexcept
+void DelphiLexer::lexSingleDirective(bool isActive,
+                                     bool endIsActive,
+                                     bool afterFirstToken,
+                                     bool afterNonWhitespaceOnLine,
+                                     std::vector<SyntaxNode*>& triviaList) noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -978,12 +968,6 @@ SyntaxNode* DelphiLexer::lexSingleDirective(bool isActive,
     // _directives = ptrDirective->applyDirectives(_directives);
 
     setMode(saveMode);
-    return directive;
-}
-
-void DelphiLexer::lexExludedDirectivesAndTrivia(bool endIsActive) noexcept
-{
-
 }
 
 SyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
