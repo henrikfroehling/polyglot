@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include <streambuf>
 #include <string>
 #include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
@@ -13,6 +14,10 @@ int main(int argc,
 
     const std::string sourceText = readFile(argv[1]);
     auto ptrSyntaxTree = Delphi::parseSourceText(argv[1], sourceText);
+
+    std::string str;
+    std::getline(std::cin, str);
+
     return 0;
 }
 
