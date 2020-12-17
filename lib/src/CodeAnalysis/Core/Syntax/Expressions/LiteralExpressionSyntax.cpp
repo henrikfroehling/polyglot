@@ -10,7 +10,9 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
                                                  SyntaxToken* token) noexcept
     : ExpressionSyntax{syntaxKind},
       _ptrToken{token}
-{}
+{
+    _position = _ptrToken->position();
+}
 
 LiteralExpressionSyntax* LiteralExpressionSyntax::create(SyntaxKind syntaxKind,
                                                          SyntaxToken* token) noexcept

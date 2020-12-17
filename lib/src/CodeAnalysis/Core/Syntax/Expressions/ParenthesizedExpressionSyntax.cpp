@@ -15,7 +15,9 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
       _ptrOpenParenthesisToken{openParenthesisToken},
       _ptrExpression{expression},
       _ptrCloseParenthesisToken{closeParenthesisToken}
-{}
+{
+    _position = _ptrOpenParenthesisToken->position();
+}
 
 ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(SyntaxToken* openParenthesisToken,
                                                                      ExpressionSyntax* expression,

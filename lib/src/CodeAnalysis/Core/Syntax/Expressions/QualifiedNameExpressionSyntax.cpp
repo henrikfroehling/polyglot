@@ -11,6 +11,8 @@ QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSynta
       _ptrLeftExpression{leftExpression},
       _ptrDotToken{dotToken},
       _ptrRightExpression{rightExpression}
-{}
+{
+    _position = _ptrLeftExpression->position();
+}
 
 } // end namespace polyglot::CodeAnalysis

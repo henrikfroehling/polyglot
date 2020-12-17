@@ -12,7 +12,9 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
     : ExpressionSyntax{syntaxKind},
       _ptrOperatorToken{operatorToken},
       _ptrOperandExpression{operandExpression}
-{}
+{
+    _position = _ptrOperatorToken->position();
+}
 
 PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
                                                                  SyntaxToken* operatorToken,

@@ -14,7 +14,9 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
       _ptrLeftExpression{leftExpression},
       _ptrOperatorToken{operatorToken},
       _ptrRightExpression{rightExpression}
-{}
+{
+    _position = _ptrLeftExpression->position();
+}
 
 BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
                                                        ExpressionSyntax* leftExpression,
