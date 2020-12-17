@@ -3,6 +3,7 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
+#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
@@ -24,7 +25,9 @@ DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
 
 SyntaxNode* DelphiParser::parseRoot() noexcept
 {
-    if (_ptrSyntaxFacts->isModuleStart(currentToken()->syntaxKind()))
+    return nullptr;
+
+    if (DelphiSyntaxFacts::isModuleStart(currentToken()->syntaxKind()))
         return parseCompilationUnit();
     else
     {
