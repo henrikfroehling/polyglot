@@ -25,8 +25,6 @@ DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
 
 SyntaxNode* DelphiParser::parseRoot() noexcept
 {
-    return nullptr;
-
     if (DelphiSyntaxFacts::isModuleStart(currentToken()->syntaxKind()))
         return parseCompilationUnit();
     else
@@ -96,7 +94,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
                 break;
             case SyntaxKind::EndKeyword:
             {
-                if (peekToken(1)->syntaxKind() == SyntaxKind::DotToken)
+                if (peekToken(2)->syntaxKind() == SyntaxKind::DotToken)
                     goto endOfUnit;
 
                 break;
