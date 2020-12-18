@@ -1,11 +1,11 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_TEXTKEYEDCACHE_H
 #define POLYGLOT_CODEANALYSIS_CORE_TEXTKEYEDCACHE_H
 
-#include <memory>
 #include <random>
 #include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -53,8 +53,8 @@ private:
     static constexpr long SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
 
 private:
-    std::vector<std::shared_ptr<CacheEntry>> _localTable;
-    std::vector<std::shared_ptr<CacheEntry>> _sharedTable;
+    std::vector<SharedPtr<CacheEntry>> _localTable;
+    std::vector<SharedPtr<CacheEntry>> _sharedTable;
 
 public:
     TextKeyedCache() noexcept
@@ -80,11 +80,11 @@ private:
         return generator();
     }
 
-    std::shared_ptr<CacheEntry> lookupSharedEntry(std::string_view chars,
-                                                  long hashCode) noexcept;
+    SharedPtr<CacheEntry> lookupSharedEntry(std::string_view chars,
+                                            long hashCode) noexcept;
 
     void addSharedItem(long hashCode,
-                       const std::shared_ptr<CacheEntry>& cacheEntry) noexcept;
+                       const SharedPtr<CacheEntry>& cacheEntry) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

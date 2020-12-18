@@ -15,7 +15,6 @@ struct TokenInfo final
     TokenInfo& operator=(TokenInfo&&) noexcept = default;
 
     SyntaxKind kind;
-    SyntaxKind contextualKind;
     std::string_view text;
 
     friend bool operator==(const TokenInfo& lhs,

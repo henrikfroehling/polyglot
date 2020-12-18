@@ -1,4 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
@@ -7,16 +8,7 @@ SyntaxToken::SyntaxToken() noexcept
     : SyntaxNode{SyntaxKind::None},
       _text{},
       _leadingTrivia{},
-      _trailingTrivia{},
-      _contextualKind{SyntaxKind::None}
-{}
-
-SyntaxToken::SyntaxToken(SyntaxKind syntaxKind) noexcept
-    : SyntaxNode{syntaxKind},
-      _text{},
-      _leadingTrivia{},
-      _trailingTrivia{},
-      _contextualKind{SyntaxKind::None}
+      _trailingTrivia{}
 {}
 
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
@@ -24,18 +16,34 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
     : SyntaxNode{syntaxKind},
       _text{text},
       _leadingTrivia{},
-      _trailingTrivia{},
-      _contextualKind{SyntaxKind::None}
+      _trailingTrivia{}
 {}
 
-void SyntaxToken::setLeadingTrivia(std::vector<SyntaxTriviaPtr>&& leadingTrivia) noexcept
+void SyntaxToken::setLeadingTrivia(std::vector<SyntaxNode*>&& leadingTrivia) noexcept
 {
     _leadingTrivia = std::move(leadingTrivia);
 }
 
-void SyntaxToken::setTrailingTrivia(std::vector<SyntaxTriviaPtr>&& trailingTrivia) noexcept
+void SyntaxToken::setTrailingTrivia(std::vector<SyntaxNode*>&& trailingTrivia) noexcept
 {
     _trailingTrivia = std::move(trailingTrivia);
+}
+
+void SyntaxToken::addLeadingTrivia(SyntaxNode* leadingTrivia) noexcept
+{
+    assert(leadingTrivia != nullptr);
+    _leadingTrivia.push_back(leadingTrivia);
+}
+
+bool SyntaxToken::value() const noexcept
+{
+    switch (_syntaxKind)
+    {
+        case SyntaxKind::TrueKeyword: return true;
+        case SyntaxKind::FalseKeyword: return false;
+    }
+
+    return false;
 }
 
 } // end namespace polyglot::CodeAnalysis

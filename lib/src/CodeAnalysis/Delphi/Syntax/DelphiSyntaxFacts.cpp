@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <unordered_map>
 
-namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+namespace polyglot::CodeAnalysis
 {
 
 static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
@@ -31,7 +31,6 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "for", SyntaxKind::ForKeyword },
     { "function", SyntaxKind::FunctionKeyword },
     { "goto", SyntaxKind::GoToKeyword },
-    { "else if", SyntaxKind::IfKeyword },
     { "implementation", SyntaxKind::ImplementationKeyword },
     { "in", SyntaxKind::InKeyword },
     { "inherited", SyntaxKind::InheritedKeyword },
@@ -89,6 +88,7 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "final", SyntaxKind::FinalKeyword },
     { "forward", SyntaxKind::ForwardKeyword },
     { "helper", SyntaxKind::HelperKeyword },
+    { "if", SyntaxKind::IfKeyword },
     { "implements", SyntaxKind::ImplementsKeyword },
     { "index", SyntaxKind::IndexKeyword },
     { "local", SyntaxKind::LocalKeyword },
@@ -199,10 +199,21 @@ static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
     { "remove", SyntaxKind::RemoveKeyword },
     { "assembly", SyntaxKind::AssemblyKeyword },
     { "break", SyntaxKind::BreakKeyword },
-    { "continue", SyntaxKind::ContinueKeyword }
+    { "continue", SyntaxKind::ContinueKeyword },
+    { "endif", SyntaxKind::EndIfDirectiveKeyword },
+    { "ifdef", SyntaxKind::IfDefDirectiveKeyword },
+    { "ifndef", SyntaxKind::IfNDefDirectiveKeyword },
+    { "ifend", SyntaxKind::IfEndDirectiveKeyword },
+    { "elseif", SyntaxKind::ElseIfDirectiveKeyword },
+    { "define", SyntaxKind::DefineDirectiveKeyword },
+    { "undef", SyntaxKind::UndefDirectiveKeyword },
+    { "region", SyntaxKind::RegionDirectiveKeyword },
+    { "endregion", SyntaxKind::EndRegionDirectiveKeyword },
+    { "on", SyntaxKind::OnDirectiveKeyword },
+    { "off", SyntaxKind::OffDirectiveKeyword }
 };
 
-bool isPunctuation(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -237,7 +248,7 @@ bool isPunctuation(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -254,14 +265,66 @@ bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::OpenParenthesisDotToken:
         case SyntaxKind::DotCloseParenthesisToken:
         case SyntaxKind::OpenBraceDollarToken:
+        case SyntaxKind::OpenParenthesisDollarToken:
         case SyntaxKind::AtAtToken:
+        return true;
+    }
+
+    return false;
+}
+
+SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::AndKeyword:
+            return SyntaxKind::LogicalAndExpression;
+        case SyntaxKind::OrKeyword:
+            return SyntaxKind::LogicalOrExpression;
+        case SyntaxKind::EqualToken:
+            return SyntaxKind::EqualsExpression;
+        case SyntaxKind::LessThanEqualToken:
+        case SyntaxKind::GreaterThanEqualToken:
+        case SyntaxKind::LessThanGreaterThanToken:
+            return SyntaxKind::NotEqualsExpression;
+    }
+
+    return SyntaxKind::None;
+}
+
+SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+            return SyntaxKind::StringLiteralExpression;
+        case SyntaxKind::NumberLiteralToken:
+            return SyntaxKind::NumericLiteralExpression;
+        case SyntaxKind::TrueKeyword:
+            return SyntaxKind::TrueLiteralExpression;
+        case SyntaxKind::FalseKeyword:
+            return SyntaxKind::FalseLiteralExpression;
+    }
+
+    return SyntaxKind::None;
+}
+
+bool DelphiSyntaxFacts::isComparisonSyntaxKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::EqualToken:
+        case SyntaxKind::LessThanEqualToken:
+        case SyntaxKind::GreaterThanEqualToken:
+        case SyntaxKind::LessThanGreaterThanToken:
             return true;
     }
 
     return false;
 }
 
-bool isKeyword(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -464,7 +527,7 @@ bool isKeyword(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-bool isModuleStart(SyntaxKind syntaxKind) noexcept
+bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
     {
@@ -477,15 +540,108 @@ bool isModuleStart(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-SyntaxKind keywordKind(std::string_view text) noexcept
+SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text,
+                                          LexerMode mode) noexcept
 {
     std::string lowerCaseText{text};
     std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), static_cast<int(*)(int)>(std::tolower));
 
     if (SYNTAXKEYWORDS.find(lowerCaseText) != SYNTAXKEYWORDS.end())
-        return SYNTAXKEYWORDS.at(lowerCaseText);
+    {
+        SyntaxKind syntaxKind = SYNTAXKEYWORDS.at(lowerCaseText);
+
+        if (mode == LexerMode::Directive)
+        {
+            switch (syntaxKind)
+            {
+                case SyntaxKind::IfKeyword:
+                    syntaxKind = SyntaxKind::IfDirectiveKeyword;
+                    break;
+                case SyntaxKind::ElseKeyword:
+                    syntaxKind = SyntaxKind::ElseDirectiveKeyword;
+                    break;
+                case SyntaxKind::MessageKeyword:
+                    syntaxKind = SyntaxKind::MessageDirectiveKeyword;
+                    break;
+                case SyntaxKind::AssemblerKeyword:
+                case SyntaxKind::ByteKeyword:
+                case SyntaxKind::ShortIntKeyword:
+                case SyntaxKind::WordKeyword:
+                case SyntaxKind::SmallIntKeyword:
+                case SyntaxKind::CardinalKeyword:
+                case SyntaxKind::LongWordKeyword:
+                case SyntaxKind::FixedUIntKeyword:
+                case SyntaxKind::IntegerKeyword:
+                case SyntaxKind::LongIntKeyword:
+                case SyntaxKind::FixedIntKeyword:
+                case SyntaxKind::UInt64Keyword:
+                case SyntaxKind::Int64Keyword:
+                case SyntaxKind::NativeUIntKeyword:
+                case SyntaxKind::NativeIntKeyword:
+                case SyntaxKind::BytePointerKeyword:
+                case SyntaxKind::ShortIntPointerKeyword:
+                case SyntaxKind::WordPointerKeyword:
+                case SyntaxKind::SmallIntPointerKeyword:
+                case SyntaxKind::CardinalPointerKeyword:
+                case SyntaxKind::LongWordPointerKeyword:
+                case SyntaxKind::FixedUIntPointerKeyword:
+                case SyntaxKind::IntegerPointerKeyword:
+                case SyntaxKind::LongIntPointerKeyword:
+                case SyntaxKind::FixedIntPointerKeyword:
+                case SyntaxKind::UInt64PointerKeyword:
+                case SyntaxKind::Int64PointerKeyword:
+                case SyntaxKind::NativeUIntPointerKeyword:
+                case SyntaxKind::NativeIntPointerKeyword:
+                case SyntaxKind::SingleKeyword:
+                case SyntaxKind::DoubleKeyword:
+                case SyntaxKind::ExtendedKeyword:
+                case SyntaxKind::RealKeyword:
+                case SyntaxKind::SinglePointerKeyword:
+                case SyntaxKind::DoublePointerKeyword:
+                case SyntaxKind::ExtendedPointerKeyword:
+                case SyntaxKind::AnsiCharKeyword:
+                case SyntaxKind::CharKeyword:
+                case SyntaxKind::WideCharKeyword:
+                case SyntaxKind::AnsiStringKeyword:
+                case SyntaxKind::RawByteStringKeyword:
+                case SyntaxKind::UnicodeStringKeyword:
+                case SyntaxKind::ShortStringKeyword:
+                case SyntaxKind::WideStringKeyword:
+                case SyntaxKind::AnsiCharPointerKeyword:
+                case SyntaxKind::CharPointerKeyword:
+                case SyntaxKind::WideCharPointerKeyword:
+                case SyntaxKind::AnsiStringPointerKeyword:
+                case SyntaxKind::RawByteStringPointerKeyword:
+                case SyntaxKind::UnicodeStringPointerKeyword:
+                case SyntaxKind::StringPointerKeyword:
+                case SyntaxKind::ShortStringPointerKeyword:
+                case SyntaxKind::WideStringPointerKeyword:
+                case SyntaxKind::BooleanKeyword:
+                case SyntaxKind::ByteBoolKeyword:
+                case SyntaxKind::WordBoolKeyword:
+                case SyntaxKind::LongBoolKeyword:
+                case SyntaxKind::BooleanPointerKeyword:
+                case SyntaxKind::WordBoolPointerKeyword:
+                case SyntaxKind::LongBoolPointerKeyword:
+                case SyntaxKind::PointerKeyword:
+                case SyntaxKind::VariantKeyword:
+                case SyntaxKind::CurrencyKeyword:
+                case SyntaxKind::PointerPointerKeyword:
+                case SyntaxKind::VariantPointerKeyword:
+                case SyntaxKind::CurrencyPointerKeyword:
+                case SyntaxKind::Real48Keyword:
+                case SyntaxKind::UTF8StringKeyword:
+                case SyntaxKind::OleVariantKeyword:
+                case SyntaxKind::OleVariantPointerKeyword:
+                    syntaxKind = SyntaxKind::IdentifierToken;
+                    break;
+            }
+        }
+
+        return syntaxKind;
+    }
 
     return SyntaxKind::None;
 }
 
-} // end namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+} // end namespace polyglot::CodeAnalysis

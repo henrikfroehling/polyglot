@@ -2,12 +2,12 @@
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTLINECOLLECTION_H
 
 #include <vector>
+#include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/LinePosition.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/LinePositionSpan.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextLine.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
-#include "polyglot/Core/Types.hpp"
-#include "polyglot/polyglot_global.hpp"
 
 namespace polyglot::CodeAnalysis
 {

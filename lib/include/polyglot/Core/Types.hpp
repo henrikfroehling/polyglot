@@ -2,11 +2,14 @@
 #define POLYGLOT_CORE_TYPES_H
 
 #include <cstddef>
-
-namespace polyglot {
+#include <memory>
 
 using pg_size = std::size_t;
 
-} // end namespace polyglot
+template <typename T>
+using UniquePtr = std::unique_ptr<T>;
+
+template <typename T>
+using SharedPtr = std::shared_ptr<T>;
 
 #endif // POLYGLOT_CORE_TYPES_H

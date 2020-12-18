@@ -3,17 +3,27 @@
 
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/LexerMode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
-namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+namespace polyglot::CodeAnalysis
 {
 
-bool POLYGLOT_API isPunctuation(SyntaxKind syntaxKind) noexcept;
-bool POLYGLOT_API isCompoundPunctuation(SyntaxKind syntaxKind) noexcept;
-bool POLYGLOT_API isKeyword(SyntaxKind syntaxKind) noexcept;
-bool POLYGLOT_API isModuleStart(SyntaxKind syntaxKind) noexcept;
-SyntaxKind POLYGLOT_API keywordKind(std::string_view text) noexcept;
+class POLYGLOT_API DelphiSyntaxFacts
+{
+public:
+    static bool isPunctuation(SyntaxKind syntaxKind) noexcept;
+    static bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept;
+    static SyntaxKind binaryExpressionKind(SyntaxKind syntaxKind) noexcept;
+    static SyntaxKind literalExpressionKind(SyntaxKind syntaxKind) noexcept;
+    static bool isComparisonSyntaxKind(SyntaxKind syntaxKind) noexcept;
+    static bool isKeyword(SyntaxKind syntaxKind) noexcept;
+    static bool isModuleStart(SyntaxKind syntaxKind) noexcept;
 
-} // end namespace polyglot::CodeAnalysis::DelphiSyntaxFacts
+    static SyntaxKind keywordKind(std::string_view text,
+                                  LexerMode mode = LexerMode::Syntax) noexcept;
+};
+
+} // end namespace polyglot::CodeAnalysis
 
 #endif // POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H

@@ -2,13 +2,10 @@
 #define POLYGLOT_CODEANALYSIS_CORE_LEXERCACHE_H
 
 #include <functional>
-#include <memory>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/TextKeyedCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {

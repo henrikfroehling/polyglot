@@ -5,16 +5,20 @@
 #include <memory>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
+#include "polyglot/CodeAnalysis/Core/LexerMode.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SlidingTextWindow.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API Lexer
+class SyntaxNode;
+class SyntaxToken;
+
+class POLYGLOT_API Lexer : public std::enable_shared_from_this<Lexer>
 {
 public:
     static constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();
@@ -25,19 +29,37 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    virtual SyntaxTokenPtr nextToken() noexcept = 0;
-    inline const SlidingTextWindow& textWindow() const noexcept { return _textWindow; }
+    inline SyntaxToken* lex() noexcept { return lex(_mode); }
+    inline const TextWindow& textWindow() const noexcept { return _textWindow; }
+    void preLex() noexcept;
+    SyntaxToken* currentToken() noexcept;
+    SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept;
+    SyntaxToken* takeToken() noexcept;
+    SyntaxToken* peekToken(pg_size n) noexcept;
+    void advance() noexcept;
+    void setMode(LexerMode mode) noexcept;
 
 protected:
-    explicit Lexer(SourceTextPtr sourceText) noexcept;
+    explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
-    virtual TokenInfo quickScanSyntaxToken() noexcept { return TokenInfo{}; }
+    virtual SyntaxToken* lex(LexerMode mode) noexcept = 0;
+    void addLexedToken(SyntaxToken* token) noexcept;
 
 protected:
-    SlidingTextWindow _textWindow;
+    TextWindow _textWindow;
+    LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<SyntaxTriviaPtr> _leadingTrivia;
-    std::vector<SyntaxTriviaPtr> _trailingTrivia;
+    std::vector<SyntaxNode*> _leadingTrivia;
+    std::vector<SyntaxNode*> _trailingTrivia;
+    std::vector<SyntaxToken*> _lexedTokens;
+    std::vector<SyntaxToken*> _lexedDirectiveTriviaTokens;
+    pg_size _tokenCount;
+    pg_size _tokenOffset;
+    SyntaxToken* _pCurrentToken;
+    DirectiveStack _directives;
+    pg_size _directiveTriviaTokenCount;
+    pg_size _directiveTriviaTokenOffset;
+    SyntaxToken* _pCurrentDirectiveTriviaToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

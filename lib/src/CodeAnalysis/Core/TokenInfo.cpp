@@ -6,7 +6,7 @@ namespace polyglot::CodeAnalysis
 bool operator==(const TokenInfo& lhs,
                 const TokenInfo& rhs) noexcept
 {
-    return lhs.kind == rhs.kind && lhs.contextualKind == rhs.contextualKind && lhs.text == rhs.text;
+    return lhs.kind == rhs.kind && lhs.text == rhs.text;
 }
 
 bool operator!=(const TokenInfo& lhs,

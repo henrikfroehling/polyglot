@@ -35,28 +35,72 @@ set(SOURCES_CORE
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/CharFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Directive.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveList.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveStack.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/LexerMode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TokenInfo.cpp
+)
+
+set(SOURCES_CODEANALYSIS_CORE_SYNTAX
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/TypeExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
+)
+
+set(SOURCES_CODEANALYSIS_CORE_TEXT
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SlidingTextWindow.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLine.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLineCollection.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextSpan.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextUtilities.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_CORE
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiDirectiveParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
@@ -64,35 +108,24 @@ set(SOURCES_CODEANALYSIS_DELPHI_CORE
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageHeadingSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramHeadingSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSimpleNameSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageHeadingSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramHeadingSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiTypeSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitHeadingSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
-)
-
-set(SOURCES_CODEANALYSIS_DELPHI
-  ${SOURCES_CODEANALYSIS_DELPHI_CORE}
-  ${SOURCES_CODEANALYSIS_DELPHI_SYNTAX}
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -103,7 +136,10 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES}
   ${SOURCES_CORE}
   ${SOURCES_CODEANALYSIS_CORE}
-  ${SOURCES_CODEANALYSIS_DELPHI}
+  ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
+  ${SOURCES_CODEANALYSIS_CORE_TEXT}
+  ${SOURCES_CODEANALYSIS_DELPHI_CORE}
+  ${SOURCES_CODEANALYSIS_DELPHI_SYNTAX}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)

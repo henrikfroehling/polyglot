@@ -57,6 +57,7 @@ enum class SyntaxKind : unsigned short
     OpenParenthesisDotToken, // (.
     DotCloseParenthesisToken, // .)
     OpenBraceDollarToken, // {$
+    OpenParenthesisDollarToken, // ($
     AtAtToken, // @@
 
     // keywords
@@ -253,12 +254,29 @@ enum class SyntaxKind : unsigned short
     AssemblyKeyword, // assembly
     BreakKeyword, // break
     ContinueKeyword, // continue
+    TrueKeyword, // true
+    FalseKeyword, // false
 
     // trivia
     WhitespaceTrivia = 2000,
     SingleLineCommentTrivia,
     MultiLineCommentTrivia,
     EndOfLineTrivia,
+    BadDirectiveTrivia,
+    IfDirectiveTrivia,
+    IfDefDirectiveTrivia,
+    IfNDefDirectiveTrivia,
+    IfEndDirectiveTrivia,
+    ElseIfDirectiveTrivia,
+    ElseDirectiveTrivia,
+    EndIfDirectiveTrivia,
+    DefineDirectiveTrivia,
+    UndefDirectiveTrivia,
+    RegionDirectiveTrivia,
+    EndRegionDirectiveTrivia,
+    MessageDirectiveTrivia,
+    SwitchDirectiveTrivia,
+    SkippedTokensTrivia,
 
     SingleQuotationStringLiteralToken = 2500,
     DoubleQuotationStringLiteralToken,
@@ -277,13 +295,42 @@ enum class SyntaxKind : unsigned short
     ProgramModule,
     ProgramHeading,
 
+    // directives
+    IfDirectiveKeyword = 3000, // IF
+    IfDefDirectiveKeyword, // IFDEF
+    IfNDefDirectiveKeyword, // IFNDEF
+    IfEndDirectiveKeyword, // IFEND
+    ElseIfDirectiveKeyword, // ELSEIF
+    ElseDirectiveKeyword, // ELSE
+    EndIfDirectiveKeyword, // ENDIF
+    DefineDirectiveKeyword, // DEFINE
+    UndefDirectiveKeyword, // UNDEF
+    RegionDirectiveKeyword, // REGION
+    EndRegionDirectiveKeyword, // ENDREGION
+    MessageDirectiveKeyword, // MESSAGE
+    OnDirectiveKeyword, // ON
+    OffDirectiveKeyword, // OFF
+    EndOfDirectiveToken,
+
     PackageRequiresClause,
     PackageContainsClause,
     UsesClause,
+    UnitReference,
 
-    IdentifierName,
-    QualifiedName,
-    UnitReference
+    // expressions
+    LogicalNotExpression = 3500,
+    LogicalOrExpression,
+    LogicalAndExpression,
+    EqualsExpression,
+    NotEqualsExpression,
+    ParenthesizedExpression,
+    StringLiteralExpression,
+    NumericLiteralExpression,
+    TrueLiteralExpression,
+    FalseLiteralExpression,
+    IdentifierNameExpression,
+    QualifiedNameExpression,
+    CallExpression
 };
 
 std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
