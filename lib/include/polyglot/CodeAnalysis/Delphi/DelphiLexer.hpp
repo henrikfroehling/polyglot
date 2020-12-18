@@ -21,7 +21,7 @@ public:
     explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
-    SyntaxToken* lex(LexerMode mode) noexcept override;
+    SyntaxToken* lexToken() noexcept override;
     TokenInfo quickScanSyntaxToken() noexcept;
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;

@@ -29,7 +29,7 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    inline SyntaxToken* lex() noexcept { return lex(_mode); }
+    inline SyntaxToken* lex() noexcept { return lexToken(); }
     inline const TextWindow& textWindow() const noexcept { return _textWindow; }
     void preLex() noexcept;
     SyntaxToken* currentToken() noexcept;
@@ -42,7 +42,7 @@ public:
 protected:
     explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
-    virtual SyntaxToken* lex(LexerMode mode) noexcept = 0;
+    virtual SyntaxToken* lexToken() noexcept = 0;
     void addLexedToken(SyntaxToken* token) noexcept;
 
 protected:

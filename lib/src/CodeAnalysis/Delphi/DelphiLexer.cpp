@@ -21,7 +21,7 @@ DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText) noexcept
       _currentTriviaPosition{}
 {}
 
-SyntaxToken* DelphiLexer::lex(LexerMode mode) noexcept
+SyntaxToken* DelphiLexer::lexToken() noexcept
 {
     switch (_mode)
     {
