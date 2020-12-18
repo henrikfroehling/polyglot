@@ -66,7 +66,7 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
     for (; offset < _textWindow.content().length(); offset++)
     {
         char currentCharacter = content[offset];
-        int c = static_cast<int>(currentCharacter);
+        const int c = static_cast<int>(currentCharacter);
 
         flags = c < CHAR_PROPERTIES_LENGTH ? CHAR_PROPERTIES[c] : CharFlags::Complex;
         previousState = state;

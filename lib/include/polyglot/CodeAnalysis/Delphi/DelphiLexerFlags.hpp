@@ -139,7 +139,7 @@ static constexpr CharFlags CHAR_PROPERTIES[255]
     CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex
 };
 
-static constexpr auto CHAR_PROPERTIES_LENGTH = sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]);
+static constexpr auto CHAR_PROPERTIES_LENGTH = static_cast<int>(sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]));
 
 } // end namespace polyglot::CodeAnalysis
 
