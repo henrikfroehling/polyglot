@@ -101,7 +101,7 @@ exitFor:
                 }
             });
 
-        return std::move(tokenInfo);
+        return tokenInfo;
     }
     else
     {
@@ -115,7 +115,7 @@ TokenInfo DelphiLexer::lexSyntaxToken() noexcept
     TokenInfo tokenInfo{};
     start();
     scanSyntaxToken(tokenInfo);
-    return std::move(tokenInfo);
+    return tokenInfo;
 }
 
 TokenInfo DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
@@ -123,7 +123,7 @@ TokenInfo DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
     TokenInfo tokenInfo{};
     scanIdentifierOrKeyword(chars, tokenInfo);
     tokenInfo.text = chars;
-    return std::move(tokenInfo);
+    return tokenInfo;
 }
 
 void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
