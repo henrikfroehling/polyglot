@@ -68,7 +68,6 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
         char currentCharacter = content[offset];
         int c = static_cast<int>(currentCharacter);
 
-        const CharFlags previousFlags = flags;
         flags = c < CHAR_PROPERTIES_LENGTH ? CHAR_PROPERTIES[c] : CharFlags::Complex;
         previousState = state;
         state = STATE_TRANSITIONS[static_cast<int>(state)][static_cast<int>(flags)];
@@ -87,8 +86,6 @@ exitFor:
 
     if (state == QuickScanState::Done)
     {
-        const pg_size lexemeRelativeStart = _textWindow.lexemeRelativeStart();
-
         TokenInfo tokenInfo = _lexerCache.lookupToken(_textWindow.lexemeText(), hashCode,
             [&](std::string_view chars)
             {
