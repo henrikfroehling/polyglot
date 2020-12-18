@@ -124,7 +124,8 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDefDirective(SyntaxToken* o
 {
     SyntaxToken* identifier = takeToken(SyntaxKind::IdentifierToken);
     SyntaxToken* endOfDirective = parseEndOfDirective();
-    return IfDefDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, identifier, endOfDirective, isActive);
+    const bool isBranchTaken = isActive && isDefined(identifier->text());
+    return IfDefDirectiveTriviaSyntax::create(openBraceDollarToken, keyword, identifier, endOfDirective, isActive, isBranchTaken);
 }
 
 DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfNDefDirective(SyntaxToken* openBraceDollarToken,

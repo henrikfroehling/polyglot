@@ -12,13 +12,15 @@ IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                        SyntaxToken* ifDefKeyword,
                                                        SyntaxToken* name,
                                                        SyntaxToken* endOfDirectiveToken,
-                                                       bool isActive) noexcept
-    : DirectiveTriviaSyntax{syntaxKind},
+                                                       bool isActive,
+                                                       bool isBranchTaken) noexcept
+    : ConditionalDirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pIfDefKeyword{ifDefKeyword},
       _pName{name},
       _pEndOfDirectiveToken{endOfDirectiveToken},
-      _isActive{isActive}
+      _isActive{isActive},
+      _isBranchTaken{isBranchTaken}
 {
     _position = _pStartToken->position();
 }
@@ -27,7 +29,8 @@ IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(SyntaxToken* star
                                                                SyntaxToken* ifDefKeyword,
                                                                SyntaxToken* name,
                                                                SyntaxToken* endOfDirectiveToken,
-                                                               bool isActive) noexcept
+                                                               bool isActive,
+                                                               bool isBranchTaken) noexcept
 {
     assert(startToken != nullptr);
     assert(ifDefKeyword != nullptr);
@@ -37,7 +40,8 @@ IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(SyntaxToken* star
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
     auto ptrIfDefDirectiveTrivia = std::make_unique<IfDefDirectiveTriviaSyntax>(SyntaxKind::IfDefDirectiveTrivia, startToken,
-                                                                                ifDefKeyword, name, endOfDirectiveToken, isActive);
+                                                                                ifDefKeyword, name, endOfDirectiveToken,
+                                                                                isActive, isBranchTaken);
 
     return static_cast<IfDefDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrIfDefDirectiveTrivia)));
 }

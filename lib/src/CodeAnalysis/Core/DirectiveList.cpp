@@ -11,13 +11,13 @@ static SharedPtr<DirectiveList> EMPTY = []()
 }();
 
 DirectiveList::DirectiveList() noexcept
-    : _pHead{nullptr},
+    : _ptrHead{nullptr},
       _ptrTail{nullptr}
 {}
 
-DirectiveList::DirectiveList(Directive* head,
+DirectiveList::DirectiveList(SharedPtr<Directive> head,
                              SharedPtr<DirectiveList> tail) noexcept
-    : _pHead{head},
+    : _ptrHead{std::move(head)},
       _ptrTail{std::move(tail)}
 {
     assert(_ptrTail != nullptr);
@@ -33,17 +33,17 @@ SharedPtr<DirectiveList> DirectiveList::empty() noexcept
     return EMPTY;
 }
 
-SharedPtr<DirectiveList> DirectiveList::create(Directive* directive,
+SharedPtr<DirectiveList> DirectiveList::create(SharedPtr<Directive> directive,
                                                SharedPtr<DirectiveList> tail) noexcept
 {
-    return std::make_shared<DirectiveList>(directive, std::move(tail));
+    return std::make_shared<DirectiveList>(std::move(directive), std::move(tail));
 }
 
 bool operator==(const DirectiveList& lhs,
                 const DirectiveList& rhs) noexcept
 {
-    if (lhs._pHead != nullptr && rhs._pHead != nullptr)
-        return *(lhs._pHead) == *(rhs._pHead) && *(lhs._ptrTail) == *(rhs._ptrTail);
+    if (lhs._ptrHead != nullptr && rhs._ptrHead != nullptr)
+        return *(lhs._ptrHead) == *(rhs._ptrHead) && *(lhs._ptrTail) == *(rhs._ptrTail);
 
     return false;
 }

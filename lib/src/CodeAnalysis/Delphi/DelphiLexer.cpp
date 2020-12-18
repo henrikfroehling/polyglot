@@ -963,10 +963,7 @@ void DelphiLexer::lexSingleDirective(bool isActive,
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
     SyntaxNode* directive = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(directive);
-
-    // TODO apply directives
-    // _directives = ptrDirective->applyDirectives(_directives);
-
+    _directives = directive->applyDirectives(_directives);
     setMode(saveMode);
 }
 

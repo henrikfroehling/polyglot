@@ -25,7 +25,7 @@ public:
     DirectiveStack(DirectiveStack&&) noexcept = default;
     DirectiveStack& operator=(const DirectiveStack&) noexcept = default;
     DirectiveStack& operator=(DirectiveStack&&) noexcept = default;
-    DirectiveStack add(Directive* directive) noexcept;
+    DirectiveStack add(SharedPtr<Directive> directive) noexcept;
     inline bool isEmpty() const noexcept { return _directives != nullptr && _directives->head() == nullptr && _directives->tail() == nullptr; }
     bool isPreviousBranchTaken() const noexcept;
     bool hasUnfinishedIf() const noexcept;
