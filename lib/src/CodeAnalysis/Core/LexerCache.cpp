@@ -1,5 +1,5 @@
-#include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
-#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include "CodeAnalysis/Core/LexerCache.hpp"
+#include "CodeAnalysis/Core/Lexer.hpp"
 
 namespace polyglot::CodeAnalysis
 {

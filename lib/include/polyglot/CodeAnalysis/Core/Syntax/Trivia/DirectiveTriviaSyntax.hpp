@@ -2,9 +2,9 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_TRIVIA_DIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {

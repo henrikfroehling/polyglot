@@ -2,8 +2,8 @@
 #define POLYGLOT_CODEANALYSIS_CORE_DELPHIDIRECTIVEPARSER_H
 
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/Parser.hpp"
+#include "CodeAnalysis/Core/Lexer.hpp"
+#include "CodeAnalysis/Core/Parser.hpp"
 
 namespace polyglot::CodeAnalysis
 {

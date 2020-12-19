@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/QuickScanState.hpp"
+#include "CodeAnalysis/Core/QuickScanState.hpp"

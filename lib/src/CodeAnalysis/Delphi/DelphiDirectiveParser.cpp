@@ -1,5 +1,3 @@
-#include "polyglot/CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
@@ -22,7 +20,9 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <vector>
 

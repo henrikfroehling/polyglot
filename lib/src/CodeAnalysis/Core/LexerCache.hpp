@@ -3,8 +3,8 @@
 
 #include <functional>
 #include <string_view>
-#include "polyglot/CodeAnalysis/Core/TextKeyedCache.hpp"
-#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
+#include "CodeAnalysis/Core/TextKeyedCache.hpp"
+#include "CodeAnalysis/Core/TokenInfo.hpp"
 
 namespace polyglot::CodeAnalysis
 {

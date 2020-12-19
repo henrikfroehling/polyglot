@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
-#include "polyglot/CodeAnalysis/Core/Directive.hpp"
+#include "CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/Directive.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -1,6 +1,6 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 

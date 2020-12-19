@@ -3,10 +3,10 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
+#include "CodeAnalysis/Core/Lexer.hpp"
+#include "CodeAnalysis/Core/TokenInfo.hpp"
+#include "CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {

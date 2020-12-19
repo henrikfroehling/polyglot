@@ -2,8 +2,8 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Parser.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
+#include "CodeAnalysis/Core/Parser.hpp"
+#include "CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {

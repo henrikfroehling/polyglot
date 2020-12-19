@@ -1,12 +1,12 @@
-#include "polyglot/CodeAnalysis/Delphi/DelphiLexer.hpp"
-#include "polyglot/Core/Hashing.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
-#include "polyglot/CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
-#include "polyglot/CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
-#include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/DelphiLexer.hpp"
+#include "Core/Hashing.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
+#include "CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
+#include "CodeAnalysis/Delphi/DelphiLexerStates.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
 

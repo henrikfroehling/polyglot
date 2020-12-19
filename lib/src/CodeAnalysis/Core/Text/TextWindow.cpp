@@ -1,5 +1,5 @@
-#include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
-#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include "CodeAnalysis/Core/Text/TextWindow.hpp"
+#include "CodeAnalysis/Core/Lexer.hpp"
 #include <cassert>
 #include <algorithm>
 #include <limits>

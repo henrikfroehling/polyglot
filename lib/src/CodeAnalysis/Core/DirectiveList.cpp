@@ -1,5 +1,5 @@
-#include "polyglot/CodeAnalysis/Core/DirectiveList.hpp"
-#include "polyglot/CodeAnalysis/Core/Directive.hpp"
+#include "CodeAnalysis/Core/DirectiveList.hpp"
+#include "CodeAnalysis/Core/Directive.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis

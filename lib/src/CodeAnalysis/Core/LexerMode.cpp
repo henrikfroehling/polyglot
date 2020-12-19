@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/LexerMode.hpp"
+#include "CodeAnalysis/Core/LexerMode.hpp"

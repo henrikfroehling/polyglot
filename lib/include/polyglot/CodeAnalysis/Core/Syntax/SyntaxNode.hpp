@@ -3,9 +3,9 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"
+#include "CodeAnalysis/Core/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {

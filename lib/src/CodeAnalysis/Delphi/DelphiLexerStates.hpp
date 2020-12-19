@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXERSTATES_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXERSTATES_H
 
-#include "polyglot/CodeAnalysis/Core/QuickScanState.hpp"
+#include "CodeAnalysis/Core/QuickScanState.hpp"
 
 namespace polyglot::CodeAnalysis
 {

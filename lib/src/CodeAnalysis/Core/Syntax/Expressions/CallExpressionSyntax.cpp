@@ -1,5 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 

@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <algorithm>
 #include <unordered_map>
 

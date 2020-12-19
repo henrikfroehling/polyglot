@@ -3,8 +3,8 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
-#include "polyglot/CodeAnalysis/Core/Lexer.hpp"
+#include "CodeAnalysis/Core/DirectiveParser.hpp"
+#include "CodeAnalysis/Core/Lexer.hpp"
 
 namespace polyglot::CodeAnalysis
 {

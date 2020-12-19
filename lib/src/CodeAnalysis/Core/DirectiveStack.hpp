@@ -3,7 +3,7 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/DirectiveList.hpp"
+#include "CodeAnalysis/Core/DirectiveList.hpp"
 
 namespace polyglot::CodeAnalysis
 {

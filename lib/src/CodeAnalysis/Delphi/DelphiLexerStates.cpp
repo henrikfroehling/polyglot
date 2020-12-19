@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Delphi/DelphiLexerStates.hpp"
+#include "CodeAnalysis/Delphi/DelphiLexerStates.hpp"

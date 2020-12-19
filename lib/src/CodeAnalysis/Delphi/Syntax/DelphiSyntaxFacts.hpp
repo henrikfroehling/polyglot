@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H
 
 #include <string_view>
-#include "polyglot/CodeAnalysis/Core/LexerMode.hpp"
+#include "CodeAnalysis/Core/LexerMode.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis

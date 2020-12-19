@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Parser.hpp"
+#include "CodeAnalysis/Core/Parser.hpp"
 
 namespace polyglot::CodeAnalysis
 {

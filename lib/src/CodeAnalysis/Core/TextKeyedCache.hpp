@@ -6,7 +6,7 @@
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
+#include "CodeAnalysis/Core/TokenInfo.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis

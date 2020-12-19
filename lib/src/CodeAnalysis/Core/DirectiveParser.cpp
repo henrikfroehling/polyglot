@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
+#include "CodeAnalysis/Core/DirectiveParser.hpp"
 
 namespace polyglot::CodeAnalysis
 {

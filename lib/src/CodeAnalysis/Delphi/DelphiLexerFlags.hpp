@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXERFLAGS_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXERFLAGS_H
 
-#include "polyglot/CodeAnalysis/Core/CharFlags.hpp"
+#include "CodeAnalysis/Core/CharFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
+#include "CodeAnalysis/Core/TokenInfo.hpp"
 
 namespace polyglot::CodeAnalysis
 {

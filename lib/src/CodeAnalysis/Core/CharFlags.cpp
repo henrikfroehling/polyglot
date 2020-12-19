@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/CharFlags.hpp"
+#include "CodeAnalysis/Core/CharFlags.hpp"
