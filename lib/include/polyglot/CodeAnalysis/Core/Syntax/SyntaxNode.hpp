@@ -21,6 +21,10 @@ public:
     SyntaxNode& operator=(SyntaxNode&&) noexcept = default;
     inline virtual bool isToken() const noexcept { return false; }
     inline virtual bool isTrivia() const noexcept { return false; }
+    inline virtual bool isStructuredTrivia() const noexcept { return false; }
+    inline virtual bool isDirective() const noexcept { return false; }
+    inline virtual bool isSkippedTokensTrivia() const noexcept { return false; }
+    inline virtual bool isExpression() const noexcept { return false; }
     inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
     inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
     inline pg_size position() const noexcept { return _position; }

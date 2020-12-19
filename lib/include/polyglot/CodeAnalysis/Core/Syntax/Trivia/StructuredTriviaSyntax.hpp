@@ -13,6 +13,7 @@ class POLYGLOT_API StructuredTriviaSyntax : public SyntaxTrivia
 public:
     explicit StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~StructuredTriviaSyntax() noexcept = default;
+    inline bool isStructuredTrivia() const noexcept override { return true; }
 };
 
 } // end namespace polyglot::CodeAnalysis

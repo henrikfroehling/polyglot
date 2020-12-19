@@ -20,6 +20,7 @@ public:
     virtual SyntaxToken* endOfDirectiveToken() const noexcept = 0;
     virtual bool isActive() const noexcept = 0;
     virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept override;
+    inline bool isDirective() const noexcept override { return true; }
 };
 
 } // end namespace polyglot::CodeAnalysis

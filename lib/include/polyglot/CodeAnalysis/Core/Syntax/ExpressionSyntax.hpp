@@ -13,6 +13,7 @@ class POLYGLOT_API ExpressionSyntax : public SyntaxNode
 public:
     explicit ExpressionSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~ExpressionSyntax() noexcept = default;
+    inline bool isExpression() const noexcept override { return true; }
 };
 
 } // end namespace polyglot::CodeAnalysis
