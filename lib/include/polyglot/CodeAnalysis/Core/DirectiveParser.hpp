@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_DELPHIDIRECTIVEPARSER_H
 #define POLYGLOT_CODEANALYSIS_CORE_DELPHIDIRECTIVEPARSER_H
 
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
@@ -12,7 +11,7 @@ namespace polyglot::CodeAnalysis
 class DirectiveStack;
 class SyntaxNode;
 
-class POLYGLOT_API DirectiveParser : public Parser
+class DirectiveParser : public Parser
 {
 public:
     DirectiveParser() = delete;

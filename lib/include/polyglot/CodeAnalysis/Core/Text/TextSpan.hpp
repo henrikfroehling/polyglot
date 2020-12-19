@@ -1,13 +1,12 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTSPAN_H
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTSPAN_H
 
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API TextSpan final
+class TextSpan final
 {
 public:
     TextSpan() noexcept = default;

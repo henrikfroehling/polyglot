@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTLINECOLLECTION_H
 
 #include <vector>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/LinePosition.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/LinePositionSpan.hpp"
@@ -14,7 +13,7 @@ namespace polyglot::CodeAnalysis
 
 class SourceText;
 
-class POLYGLOT_API TextLineCollection final
+class TextLineCollection final
 {
 public:
     TextLineCollection() = delete;

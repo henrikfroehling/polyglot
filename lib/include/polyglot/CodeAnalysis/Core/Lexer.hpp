@@ -3,7 +3,6 @@
 
 #include <limits>
 #include <memory>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveStack.hpp"
 #include "polyglot/CodeAnalysis/Core/LexerCache.hpp"
@@ -18,7 +17,7 @@ namespace polyglot::CodeAnalysis
 class SyntaxNode;
 class SyntaxToken;
 
-class POLYGLOT_API Lexer : public std::enable_shared_from_this<Lexer>
+class Lexer : public std::enable_shared_from_this<Lexer>
 {
 public:
     static constexpr char INVALID_CHARACTER = std::numeric_limits<char>::max();

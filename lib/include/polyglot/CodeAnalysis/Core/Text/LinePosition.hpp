@@ -1,13 +1,12 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITION_H
 #define POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITION_H
 
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API LinePosition final
+class LinePosition final
 {
 public:
     LinePosition() noexcept = default;

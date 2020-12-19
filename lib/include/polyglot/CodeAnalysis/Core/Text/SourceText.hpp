@@ -6,7 +6,6 @@
 #include <string>
 #include <string_view>
 #include <vector>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextLineCollection.hpp"
 
@@ -15,7 +14,7 @@ namespace polyglot::CodeAnalysis
 
 class TextSpan;
 
-class POLYGLOT_API SourceText final
+class SourceText final
 {
 public:
     SourceText() = delete;

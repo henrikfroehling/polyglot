@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHILEXER_H
 
 #include <string_view>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
@@ -15,7 +14,7 @@ namespace polyglot::CodeAnalysis
 class SyntaxToken;
 class SyntaxTrivia;
 
-class POLYGLOT_API DelphiLexer final : public Lexer
+class DelphiLexer final : public Lexer
 {
 public:
     explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;

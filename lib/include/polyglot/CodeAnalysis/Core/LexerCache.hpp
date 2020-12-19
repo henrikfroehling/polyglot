@@ -3,7 +3,6 @@
 
 #include <functional>
 #include <string_view>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/TextKeyedCache.hpp"
 #include "polyglot/CodeAnalysis/Core/TokenInfo.hpp"
 
@@ -12,7 +11,7 @@ namespace polyglot::CodeAnalysis
 
 class Lexer;
 
-class POLYGLOT_API LexerCache
+class LexerCache
 {
 public:
     static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;

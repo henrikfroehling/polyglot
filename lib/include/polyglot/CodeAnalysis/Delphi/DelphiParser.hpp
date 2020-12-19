@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIPARSER_H
 
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Parser.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
@@ -25,7 +24,7 @@ class NameExpressionSyntax;
 class SyntaxNode;
 class SyntaxToken;
 
-class POLYGLOT_API DelphiParser final : public Parser
+class DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;

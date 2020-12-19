@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_DELPHIDIRECTIVEPARSER_H
 
 #include <string_view>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/DirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/Lexer.hpp"
@@ -16,7 +15,7 @@ class ExpressionSyntax;
 class SyntaxNode;
 class SyntaxToken;
 
-class POLYGLOT_API DelphiDirectiveParser final : public DirectiveParser
+class DelphiDirectiveParser final : public DirectiveParser
 {
 public:
     explicit DelphiDirectiveParser(SharedPtr<Lexer> lexer,

@@ -3,14 +3,13 @@
 
 #include <string_view>
 #include <vector>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API TextWindow final
+class TextWindow final
 {
 public:
     TextWindow() = delete;

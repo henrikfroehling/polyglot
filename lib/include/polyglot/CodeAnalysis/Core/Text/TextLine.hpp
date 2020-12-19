@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <ostream>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 
@@ -12,7 +11,7 @@ namespace polyglot::CodeAnalysis
 
 class SourceText;
 
-class POLYGLOT_API TextLine final
+class TextLine final
 {
 public:
     TextLine() noexcept;
