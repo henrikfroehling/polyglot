@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Text/LinePositionSpan.hpp"
+#include "CodeAnalysis/Core/Text/LinePositionSpan.hpp"
 #include <cassert>
 #include <utility>
 

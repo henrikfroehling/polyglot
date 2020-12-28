@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Text/LinePosition.hpp"
+#include "CodeAnalysis/Core/Text/LinePosition.hpp"
 #include <utility>
 
 namespace polyglot::CodeAnalysis

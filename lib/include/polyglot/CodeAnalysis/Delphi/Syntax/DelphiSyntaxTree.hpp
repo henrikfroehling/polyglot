@@ -3,7 +3,7 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
+#include "CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {

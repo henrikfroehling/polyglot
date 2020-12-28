@@ -1,5 +1,5 @@
-#include "polyglot/CodeAnalysis/Core/Text/TextUtilities.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
+#include "CodeAnalysis/Core/Text/TextUtilities.hpp"
+#include "CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {

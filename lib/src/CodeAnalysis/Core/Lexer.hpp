@@ -4,12 +4,12 @@
 #include <limits>
 #include <memory>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/TextWindow.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/SourceText.hpp"
 #include "CodeAnalysis/Core/DirectiveStack.hpp"
 #include "CodeAnalysis/Core/LexerCache.hpp"
 #include "CodeAnalysis/Core/LexerMode.hpp"
 #include "CodeAnalysis/Core/TokenInfo.hpp"
+#include "CodeAnalysis/Core/Text/TextWindow.hpp"
+#include "CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -92,8 +92,6 @@ set(SOURCES_CODEANALYSIS_CORE_TEXT
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLine.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextLineCollection.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextSpan.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextUtilities.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
