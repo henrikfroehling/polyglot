@@ -1,5 +1,4 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"
 #include "CodeAnalysis/Core/Directive.hpp"
 
 namespace polyglot::CodeAnalysis

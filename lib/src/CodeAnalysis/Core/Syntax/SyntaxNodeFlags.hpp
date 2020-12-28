@@ -3,7 +3,7 @@
 
 #include <type_traits>
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::CodeAnalysis::_impl
 {
 
 enum class SyntaxNodeFlags : unsigned char
@@ -72,6 +72,6 @@ inline SyntaxNodeFlags& operator^=(SyntaxNodeFlags& lhs,
     return lhs;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::CodeAnalysis::_impl
 
 #endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXNODEFLAGS_H

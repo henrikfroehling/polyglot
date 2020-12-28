@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"

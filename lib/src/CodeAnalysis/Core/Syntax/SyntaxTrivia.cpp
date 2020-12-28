@@ -17,7 +17,7 @@ SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
                            std::string_view text,
                            pg_size position) noexcept
     : SyntaxNode{syntaxKind, position},
-      _text{std::move(text)}
+      _text{text}
 {}
 
 SyntaxTrivia::~SyntaxTrivia() noexcept

@@ -1,4 +1,4 @@
-#include "CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 #include <algorithm>
 
 namespace polyglot::CodeAnalysis

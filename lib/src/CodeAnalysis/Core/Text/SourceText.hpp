@@ -7,9 +7,9 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 #include "LinePosition.hpp"
 #include "LinePositionSpan.hpp"
-#include "TextSpan.hpp"
 
 namespace polyglot::CodeAnalysis
 {
