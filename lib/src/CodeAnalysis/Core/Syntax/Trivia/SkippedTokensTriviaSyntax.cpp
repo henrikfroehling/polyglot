@@ -8,6 +8,8 @@ SkippedTokensTriviaSyntax::SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
     : StructuredTriviaSyntax{syntaxKind},
       _skippedTokens{std::move(skippedTokens)}
 {
+    _flags |= _impl::SyntaxNodeFlags::ContainsSkippedText;
+
     if (_skippedTokens.size() > 0)
         _position = _skippedTokens[0]->position();
 }

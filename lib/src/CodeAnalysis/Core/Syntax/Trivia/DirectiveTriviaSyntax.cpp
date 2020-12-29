@@ -6,7 +6,9 @@ namespace polyglot::CodeAnalysis
 
 DirectiveTriviaSyntax::DirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept
     : StructuredTriviaSyntax{syntaxKind}
-{}
+{
+    _flags |= _impl::SyntaxNodeFlags::ContainsDirectives;
+}
 
 DirectiveStack DirectiveTriviaSyntax::applyDirectives(DirectiveStack stack) const noexcept
 {

@@ -10,7 +10,9 @@ enum class SyntaxNodeFlags : unsigned char
 {
     None = 0,
     ContainsTrivia = 1 << 0,
-    ContainsDirectives = 1 << 1
+    ContainsStructuredTrivia = 1 << 1,
+    ContainsSkippedText = 1 << 2,
+    ContainsDirectives = 1 << 3
 };
 
 inline SyntaxNodeFlags operator|(SyntaxNodeFlags lhs,
