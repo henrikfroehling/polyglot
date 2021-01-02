@@ -3,7 +3,7 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -44,6 +44,8 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerMode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/TokenInfo.cpp
@@ -80,9 +82,7 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
@@ -103,6 +103,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_CORE
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxFacts.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
@@ -121,7 +122,6 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
 )

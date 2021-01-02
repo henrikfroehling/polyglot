@@ -2,8 +2,8 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_EXPRESSIONS_BINARYEXPRESSIONSYNTAX_H
 
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {

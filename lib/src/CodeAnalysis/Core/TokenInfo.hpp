@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_TOKENINFO_H
 
 #include <string_view>
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {

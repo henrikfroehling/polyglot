@@ -1,4 +1,4 @@
-#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/DelphiSyntaxFacts.hpp"
 #include <algorithm>
 #include <unordered_map>
 

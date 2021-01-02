@@ -6,7 +6,7 @@
 #include "CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "CodeAnalysis/Delphi/DelphiLexerStates.hpp"
-#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
 

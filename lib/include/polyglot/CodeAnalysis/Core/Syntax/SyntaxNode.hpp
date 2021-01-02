@@ -5,10 +5,10 @@
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/DirectiveStack.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"
+#include "CodeAnalysis/Core/SyntaxNodeFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {
