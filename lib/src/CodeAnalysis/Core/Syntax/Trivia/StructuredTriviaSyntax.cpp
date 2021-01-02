@@ -6,10 +6,10 @@ namespace polyglot::CodeAnalysis
 StructuredTriviaSyntax::StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept
     : SyntaxTrivia{syntaxKind}
 {
-    _flags |= _impl::SyntaxNodeFlags::ContainsStructuredTrivia;
+    _flags |= SyntaxNodeFlags::ContainsStructuredTrivia;
 
     if (syntaxKind == SyntaxKind::SkippedTokensTrivia)
-        _flags |= _impl::SyntaxNodeFlags::ContainsSkippedText;
+        _flags |= SyntaxNodeFlags::ContainsSkippedText;
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -7,7 +7,7 @@ namespace polyglot::CodeAnalysis
 SyntaxNode::SyntaxNode() noexcept
     : _syntaxKind{SyntaxKind::None},
       _position{},
-      _flags{_impl::SyntaxNodeFlags::None},
+      _flags{SyntaxNodeFlags::None},
       _leadingTrivia{},
       _trailingTrivia{},
       _fullWidth{},
@@ -20,7 +20,7 @@ SyntaxNode::~SyntaxNode() noexcept
 SyntaxNode::SyntaxNode(SyntaxKind syntaxKind) noexcept
     : _syntaxKind{syntaxKind},
       _position{},
-      _flags{_impl::SyntaxNodeFlags::None},
+      _flags{SyntaxNodeFlags::None},
       _leadingTrivia{},
       _trailingTrivia{},
       _fullWidth{},
@@ -31,7 +31,7 @@ SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
                        pg_size position) noexcept
     : _syntaxKind{syntaxKind},
       _position{position},
-      _flags{_impl::SyntaxNodeFlags::None},
+      _flags{SyntaxNodeFlags::None},
       _leadingTrivia{},
       _trailingTrivia{},
       _fullWidth{},

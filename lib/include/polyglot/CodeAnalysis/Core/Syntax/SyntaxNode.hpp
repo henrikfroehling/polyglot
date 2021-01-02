@@ -32,7 +32,7 @@ public:
     inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
     inline pg_size position() const noexcept { return _position; }
     inline void setPosition(const pg_size position) noexcept { _position = position; }
-    inline bool containsDirectives() const noexcept { return (_flags & _impl::SyntaxNodeFlags::ContainsDirectives) != _impl::SyntaxNodeFlags::None; }
+    inline bool containsDirectives() const noexcept { return (_flags & SyntaxNodeFlags::ContainsDirectives) != SyntaxNodeFlags::None; }
     inline virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept { return std::move(stack); }
     virtual inline std::string_view text() const noexcept { return ""; }
     inline virtual void setText(std::string_view text) noexcept {}
@@ -61,7 +61,7 @@ protected:
 protected:
     SyntaxKind _syntaxKind;
     pg_size _position;
-    _impl::SyntaxNodeFlags _flags;
+    SyntaxNodeFlags _flags;
     std::vector<SyntaxNode*> _leadingTrivia;
     std::vector<SyntaxNode*> _trailingTrivia;
     pg_size _fullWidth;
