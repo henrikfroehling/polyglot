@@ -6,6 +6,7 @@
 #include "CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "CodeAnalysis/Delphi/DelphiLexerStates.hpp"
+#include "CodeAnalysis/Delphi/DelphiSyntaxFactory.hpp"
 #include "CodeAnalysis/Delphi/DelphiSyntaxFacts.hpp"
 #include <cassert>
 #include <algorithm>
@@ -38,12 +39,7 @@ SyntaxToken* DelphiLexer::lexToken() noexcept
             _trailingTrivia = std::vector<SyntaxNode*>{};
             lexSyntaxTrivia(true, true, _trailingTrivia);
 
-            SyntaxToken* syntaxToken = SyntaxPool::createSyntaxToken();
-            syntaxToken->setSyntaxKind(tokenInfo.kind);
-            syntaxToken->setText(tokenInfo.text);
-            syntaxToken->setPosition(tokenPosition);
-            syntaxToken->setLeadingTrivia(std::move(_leadingTrivia));
-            syntaxToken->setTrailingTrivia(std::move(_trailingTrivia));
+            SyntaxToken* syntaxToken = DelphiSyntaxFactory::createTokenWithTrivia(tokenInfo, tokenPosition, std::move(_leadingTrivia), std::move(_trailingTrivia));
             return syntaxToken;
         }
         case LexerMode::Directive:
@@ -654,11 +650,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 {
                     scanToEndOfLine();
                     const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
-
-                    SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-                    syntaxTrivia->setSyntaxKind(SyntaxKind::SingleLineCommentTrivia);
-                    syntaxTrivia->setText(text);
-                    syntaxTrivia->setPosition(_currentTriviaPosition);
+                    SyntaxTrivia* syntaxTrivia = DelphiSyntaxFactory::createTrivia(SyntaxKind::SingleLineCommentTrivia, text, _currentTriviaPosition);
                     triviaList.push_back(syntaxTrivia);
 
                     onlyWhitespaceOnLine = false;
@@ -680,11 +672,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     }
 
                     const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
-
-                    SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-                    syntaxTrivia->setSyntaxKind(SyntaxKind::MultiLineCommentTrivia);
-                    syntaxTrivia->setText(text);
-                    syntaxTrivia->setPosition(_currentTriviaPosition);
+                    SyntaxTrivia* syntaxTrivia = DelphiSyntaxFactory::createTrivia(SyntaxKind::MultiLineCommentTrivia, text, _currentTriviaPosition);
                     triviaList.push_back(syntaxTrivia);
 
                     onlyWhitespaceOnLine = false;
@@ -710,11 +698,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     }
 
                     const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
-
-                    SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-                    syntaxTrivia->setSyntaxKind(SyntaxKind::MultiLineCommentTrivia);
-                    syntaxTrivia->setText(text);
-                    syntaxTrivia->setPosition(_currentTriviaPosition);
+                    SyntaxTrivia* syntaxTrivia = DelphiSyntaxFactory::createTrivia(SyntaxKind::MultiLineCommentTrivia, text, _currentTriviaPosition);
                     triviaList.push_back(syntaxTrivia);
 
                     onlyWhitespaceOnLine = false;
@@ -781,37 +765,21 @@ space:
     const std::string_view text = _textWindow.content().substr(_currentTriviaPosition, width);
 
     if (width == 1 && onlySpaces)
-    {
-        SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-        syntaxTrivia->setSyntaxKind(SyntaxKind::WhitespaceTrivia);
-        syntaxTrivia->setText(text);
-        syntaxTrivia->setPosition(_currentTriviaPosition);
-        return syntaxTrivia;
-    }
+        return DelphiSyntaxFactory::createTrivia(SyntaxKind::WhitespaceTrivia, text, _currentTriviaPosition);
     else
     {
-        if (width < LexerCache::MAX_CACHED_TOKEN_SIZE)
-        {
-            TokenInfo tokenInfo = _lexerCache.lookupTrivia(text, hashCode,
-                [&]()
-                {
-                    return TokenInfo{SyntaxKind::WhitespaceTrivia, text };
-                });
+        //if (width < LexerCache::MAX_CACHED_TOKEN_SIZE)
+        //{
+        //    TokenInfo tokenInfo = _lexerCache.lookupTrivia(text, hashCode,
+        //        [&]()
+        //        {
+        //            return TokenInfo{SyntaxKind::WhitespaceTrivia, text };
+        //        });
 
-            SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-            syntaxTrivia->setSyntaxKind(tokenInfo.kind);
-            syntaxTrivia->setText(text);
-            syntaxTrivia->setPosition(_currentTriviaPosition);
-            return syntaxTrivia;
-        }
-        else
-        {
-            SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-            syntaxTrivia->setSyntaxKind(SyntaxKind::WhitespaceTrivia);
-            syntaxTrivia->setText(text);
-            syntaxTrivia->setPosition(_currentTriviaPosition);
-            return syntaxTrivia;
-        }
+        //    return DelphiSyntaxFactory::createTrivia(SyntaxKind::WhitespaceTrivia, text, _currentTriviaPosition);
+        //}
+        //else
+        return DelphiSyntaxFactory::createTrivia(SyntaxKind::WhitespaceTrivia, text, _currentTriviaPosition);
     }
 }
 
@@ -896,41 +864,22 @@ SyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
             if (_textWindow.peekCharacter() == '\n')
             {
                 _textWindow.advanceCharacter();
-
-                SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-                syntaxTrivia->setSyntaxKind(SyntaxKind::EndOfLineTrivia);
-                syntaxTrivia->setText("\r\n");
-                syntaxTrivia->setPosition(_currentTriviaPosition);
-                return syntaxTrivia;
+                return DelphiSyntaxFactory::createTrivia(SyntaxKind::EndOfLineTrivia, "\r\n", _currentTriviaPosition);
             }
 
-            SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-            syntaxTrivia->setSyntaxKind(SyntaxKind::EndOfLineTrivia);
-            syntaxTrivia->setText("\r");
-            syntaxTrivia->setPosition(_currentTriviaPosition);
-            return syntaxTrivia;
+            return DelphiSyntaxFactory::createTrivia(SyntaxKind::EndOfLineTrivia, "\r", _currentTriviaPosition);
         }
         case '\n':
         {
             _textWindow.advanceCharacter();
-
-            SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-            syntaxTrivia->setSyntaxKind(SyntaxKind::EndOfLineTrivia);
-            syntaxTrivia->setText("\n");
-            syntaxTrivia->setPosition(_currentTriviaPosition);
-            return syntaxTrivia;
+            return DelphiSyntaxFactory::createTrivia(SyntaxKind::EndOfLineTrivia, "\n", _currentTriviaPosition);
         }
         default:
         {
             if (character == '\r' || character == '\n')
             {
                 _textWindow.advanceCharacter();
-
-                SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-                syntaxTrivia->setSyntaxKind(SyntaxKind::EndOfLineTrivia);
-                syntaxTrivia->setText(std::string{ character });
-                syntaxTrivia->setPosition(_currentTriviaPosition);
-                return syntaxTrivia;
+                return DelphiSyntaxFactory::createTrivia(SyntaxKind::EndOfLineTrivia, std::string{character}, _currentTriviaPosition);
             }
         }
 
@@ -971,13 +920,7 @@ SyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
     scanDirectiveToken(tokenInfo);
     std::vector<SyntaxNode*> trailingTrivia{};
     lexDirectiveTrailingTrivia(trailingTrivia, tokenInfo.kind == SyntaxKind::EndOfDirectiveToken);
-
-    SyntaxToken* syntaxToken = SyntaxPool::createSyntaxToken();
-    syntaxToken->setSyntaxKind(tokenInfo.kind);
-    syntaxToken->setText(tokenInfo.text);
-    syntaxToken->setPosition(_textWindow.lexemeStartPosition());
-    syntaxToken->setTrailingTrivia(std::move(trailingTrivia));
-    return syntaxToken;
+    return DelphiSyntaxFactory::createTokenWithTrailingTrivia(tokenInfo, _textWindow.lexemeStartPosition(), std::move(trailingTrivia));
 }
 
 void DelphiLexer::scanDirectiveToken(TokenInfo& tokenInfo) noexcept
@@ -1221,12 +1164,7 @@ SyntaxNode* DelphiLexer::lexDirectiveTrivia() noexcept
             if (character == '/')
             {
                 scanToEndOfLine();
-
-                SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-                syntaxTrivia->setSyntaxKind(SyntaxKind::SingleLineCommentTrivia);
-                syntaxTrivia->setText(_textWindow.lexemeText());
-                syntaxTrivia->setPosition(_currentTriviaPosition);
-                return syntaxTrivia;
+                return DelphiSyntaxFactory::createTrivia(SyntaxKind::SingleLineCommentTrivia, _textWindow.lexemeText(), _currentTriviaPosition);
             }
 
             break;
@@ -1258,11 +1196,9 @@ SyntaxTrivia* DelphiLexer::scanDirectiveWhitespace() noexcept
     }
 
 endOfWhitespace:
-    SyntaxTrivia* syntaxTrivia = SyntaxPool::createSyntaxTrivia();
-    syntaxTrivia->setSyntaxKind(SyntaxKind::WhitespaceTrivia);
-    syntaxTrivia->setText(_textWindow.content().substr(startPosition, _textWindow.position() - startPosition));
-    syntaxTrivia->setPosition(startPosition);
-    return syntaxTrivia;
+    return DelphiSyntaxFactory::createTrivia(SyntaxKind::WhitespaceTrivia,
+                                             _textWindow.content().substr(startPosition, _textWindow.position() - startPosition),
+                                             startPosition);
 }
 
 } // end namespace polyglot::CodeAnalysis
