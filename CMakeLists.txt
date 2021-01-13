@@ -10,6 +10,15 @@ endif()
 
 set(OUTPUT_DIR ${CMAKE_BINARY_DIR}/output)
 
+option(BUILD_LIBRARY_DRIVER "Enable building library driver" OFF)
+option(BUILD_LIBRARY_SANDBOX "Enable building library sandbox" OFF)
+
 add_subdirectory(lib)
-add_subdirectory(driver)
-add_subdirectory(sandbox)
+
+if(BUILD_LIBRARY_DRIVER)
+  add_subdirectory(driver)
+endif()
+
+if(BUILD_LIBRARY_SANDBOX)
+  add_subdirectory(sandbox)
+endif()
