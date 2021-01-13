@@ -4,20 +4,26 @@ namespace polyglot::CodeAnalysis
 {
 
 SyntaxTrivia::SyntaxTrivia() noexcept
-    : SyntaxNode{},
-      _text{}
+    : _syntaxKind{SyntaxKind::None},
+      _position{},
+      _text{},
+      _pParent{nullptr}
 {}
 
 SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind) noexcept
-    : SyntaxNode{syntaxKind},
-      _text{}
+    : _syntaxKind{syntaxKind},
+      _position{},
+      _text{},
+      _pParent{nullptr}
 {}
 
 SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
                            std::string_view text,
                            pg_size position) noexcept
-    : SyntaxNode{syntaxKind, position},
-      _text{text}
+    : _syntaxKind{syntaxKind},
+      _position{position},
+      _text{text},
+      _pParent{nullptr}
 {}
 
 SyntaxTrivia::~SyntaxTrivia() noexcept

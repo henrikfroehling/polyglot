@@ -28,18 +28,18 @@ SyntaxToken* DelphiLexer::lexToken() noexcept
     {
         case LexerMode::Syntax:
         {
-            _leadingTrivia = std::vector<SyntaxNode*>{};
-            lexSyntaxTrivia(_textWindow.position() > 0, false, _leadingTrivia);
+            std::vector<SyntaxTrivia*> leadingTrivia{};
+            lexSyntaxTrivia(_textWindow.position() > 0, false, leadingTrivia);
             TokenInfo tokenInfo = quickScanSyntaxToken();
 
             if (tokenInfo == EMPTY_TOKEN_INFO)
                 tokenInfo = lexSyntaxToken();
 
             const pg_size tokenPosition = _textWindow.lexemeStartPosition();
-            _trailingTrivia = std::vector<SyntaxNode*>{};
-            lexSyntaxTrivia(true, true, _trailingTrivia);
+            std::vector<SyntaxTrivia*> trailingTrivia{};
+            lexSyntaxTrivia(true, true, trailingTrivia);
 
-            SyntaxToken* syntaxToken = DelphiSyntaxFactory::createTokenWithTrivia(tokenInfo, tokenPosition, std::move(_leadingTrivia), std::move(_trailingTrivia));
+            SyntaxToken* syntaxToken = DelphiSyntaxFactory::createTokenWithTrivia(tokenInfo, tokenPosition, std::move(leadingTrivia), std::move(trailingTrivia));
             return syntaxToken;
         }
         case LexerMode::Directive:
@@ -611,7 +611,7 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
 
 void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                                   bool isTrailing,
-                                  std::vector<SyntaxNode*>& triviaList) noexcept
+                                  std::vector<SyntaxTrivia*>& triviaList) noexcept
 {
     bool onlyWhitespaceOnLine = !isTrailing;
 
@@ -895,7 +895,7 @@ void DelphiLexer::lexSingleDirective(bool isActive,
                                      bool endIsActive,
                                      bool afterFirstToken,
                                      bool afterNonWhitespaceOnLine,
-                                     std::vector<SyntaxNode*>& triviaList) noexcept
+                                     std::vector<SyntaxTrivia*>& triviaList) noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -907,7 +907,7 @@ void DelphiLexer::lexSingleDirective(bool isActive,
 
     const LexerMode saveMode = _mode;
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
-    SyntaxNode* directive = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
+    SyntaxTrivia* directive = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(directive);
     _directives = directive->applyDirectives(_directives);
     setMode(saveMode);
@@ -918,7 +918,7 @@ SyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
     start();
     TokenInfo tokenInfo{};
     scanDirectiveToken(tokenInfo);
-    std::vector<SyntaxNode*> trailingTrivia{};
+    std::vector<SyntaxTrivia*> trailingTrivia{};
     lexDirectiveTrailingTrivia(trailingTrivia, tokenInfo.kind == SyntaxKind::EndOfDirectiveToken);
     return DelphiSyntaxFactory::createTokenWithTrailingTrivia(tokenInfo, _textWindow.lexemeStartPosition(), std::move(trailingTrivia));
 }
@@ -1116,14 +1116,14 @@ defaultCase:
     }
 }
 
-void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<SyntaxNode*>& triviaList,
+void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<SyntaxTrivia*>& triviaList,
                                              bool includeEndOfLine) noexcept
 {
     while (true)
     {
         const pg_size position = _textWindow.position();
         _currentTriviaPosition = position;
-        SyntaxNode* trivia = lexDirectiveTrivia();
+        SyntaxTrivia* trivia = lexDirectiveTrivia();
 
         if (trivia == nullptr)
             break;
@@ -1143,7 +1143,7 @@ void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<SyntaxNode*>& triviaLis
     }
 }
 
-SyntaxNode* DelphiLexer::lexDirectiveTrivia() noexcept
+SyntaxTrivia* DelphiLexer::lexDirectiveTrivia() noexcept
 {
     char character = _textWindow.peekCharacter();
 

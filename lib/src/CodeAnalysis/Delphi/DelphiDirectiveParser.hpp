@@ -12,8 +12,8 @@ namespace polyglot::CodeAnalysis
 class DirectiveStack;
 class DirectiveTriviaSyntax;
 class ExpressionSyntax;
-class SyntaxNode;
 class SyntaxToken;
+class SyntaxTrivia;
 
 class DelphiDirectiveParser final : public DirectiveParser
 {
@@ -21,10 +21,10 @@ public:
     explicit DelphiDirectiveParser(SharedPtr<Lexer> lexer,
                                    const DirectiveStack& context) noexcept;
 
-    SyntaxNode* parseDirective(bool isActive,
-                               bool endIsActive,
-                               bool isFirstAfterTokenInFile,
-                               bool isAfterNonWhitespaceOnLine) noexcept override final;
+    SyntaxTrivia* parseDirective(bool isActive,
+                                 bool endIsActive,
+                                 bool isFirstAfterTokenInFile,
+                                 bool isAfterNonWhitespaceOnLine) noexcept override final;
 
 private:
     DirectiveTriviaSyntax* parseIfDirective(SyntaxToken* openBraceDollarToken,

@@ -3,7 +3,6 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "CodeAnalysis/Core/Lexer.hpp"
 #include "CodeAnalysis/Core/TokenInfo.hpp"
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
@@ -27,7 +26,7 @@ private:
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
-                         std::vector<SyntaxNode*>& triviaList) noexcept;
+                         std::vector<SyntaxTrivia*>& triviaList) noexcept;
 
     SyntaxTrivia* scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
@@ -47,15 +46,15 @@ private:
                             bool endIsActive,
                             bool afterFirstToken,
                             bool afterNonWhitespaceOnLine,
-                            std::vector<SyntaxNode*>& triviaList) noexcept;
+                            std::vector<SyntaxTrivia*>& triviaList) noexcept;
 
     SyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
 
-    void lexDirectiveTrailingTrivia(std::vector<SyntaxNode*>& triviaList,
+    void lexDirectiveTrailingTrivia(std::vector<SyntaxTrivia*>& triviaList,
                                     bool includeEndOfLine) noexcept;
 
-    SyntaxNode* lexDirectiveTrivia() noexcept;
+    SyntaxTrivia* lexDirectiveTrivia() noexcept;
     SyntaxTrivia* scanDirectiveWhitespace() noexcept;
 
 private:

@@ -9,7 +9,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class DirectiveStack;
-class SyntaxNode;
+class SyntaxTrivia;
 
 class DirectiveParser : public Parser
 {
@@ -17,10 +17,10 @@ public:
     DirectiveParser() = delete;
     virtual ~DirectiveParser() noexcept = default;
 
-    virtual SyntaxNode* parseDirective(bool isActive,
-                                       bool endIsActive,
-                                       bool isFirstAfterTokenInFile,
-                                       bool isAfterNonWhitespaceOnLine) noexcept = 0;
+    virtual SyntaxTrivia* parseDirective(bool isActive,
+                                         bool endIsActive,
+                                         bool isFirstAfterTokenInFile,
+                                         bool isAfterNonWhitespaceOnLine) noexcept = 0;
 
 protected:
     explicit DirectiveParser(SharedPtr<Lexer> lexer,

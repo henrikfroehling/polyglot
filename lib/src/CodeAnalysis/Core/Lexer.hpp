@@ -48,8 +48,6 @@ protected:
     TextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<SyntaxNode*> _leadingTrivia;
-    std::vector<SyntaxNode*> _trailingTrivia;
     std::vector<SyntaxToken*> _lexedTokens;
     std::vector<SyntaxToken*> _lexedDirectiveTriviaTokens;
     pg_size _tokenCount;

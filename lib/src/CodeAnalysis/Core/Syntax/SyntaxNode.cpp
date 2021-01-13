@@ -8,8 +8,6 @@ SyntaxNode::SyntaxNode() noexcept
     : _syntaxKind{SyntaxKind::None},
       _position{},
       _flags{SyntaxNodeFlags::None},
-      _leadingTrivia{},
-      _trailingTrivia{},
       _fullWidth{},
       _pParent{nullptr}
 {}
@@ -21,8 +19,6 @@ SyntaxNode::SyntaxNode(SyntaxKind syntaxKind) noexcept
     : _syntaxKind{syntaxKind},
       _position{},
       _flags{SyntaxNodeFlags::None},
-      _leadingTrivia{},
-      _trailingTrivia{},
       _fullWidth{},
       _pParent{nullptr}
 {}
@@ -32,27 +28,9 @@ SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
     : _syntaxKind{syntaxKind},
       _position{position},
       _flags{SyntaxNodeFlags::None},
-      _leadingTrivia{},
-      _trailingTrivia{},
       _fullWidth{},
       _pParent{nullptr}
 {}
-
-void SyntaxNode::setLeadingTrivia(std::vector<SyntaxNode*>&& leadingTrivia) noexcept
-{
-    _leadingTrivia = std::move(leadingTrivia);
-}
-
-void SyntaxNode::setTrailingTrivia(std::vector<SyntaxNode*>&& trailingTrivia) noexcept
-{
-    _trailingTrivia = std::move(trailingTrivia);
-}
-
-void SyntaxNode::addLeadingTrivia(SyntaxNode* leadingTrivia) noexcept
-{
-    assert(leadingTrivia != nullptr);
-    _leadingTrivia.push_back(leadingTrivia);
-}
 
 TextSpan SyntaxNode::span() const noexcept
 {

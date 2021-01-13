@@ -9,7 +9,6 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxNode;
 class SyntaxToken;
 class SyntaxTrivia;
 class TokenInfo;
@@ -22,16 +21,16 @@ public:
 
     static SyntaxToken* createTokenWithTrivia(TokenInfo& tokenInfo,
                                               pg_size position,
-                                              std::vector<SyntaxNode*>&& leadingTrivia,
-                                              std::vector<SyntaxNode*>&& trailingTrivia) noexcept;
+                                              std::vector<SyntaxTrivia*>&& leadingTrivia,
+                                              std::vector<SyntaxTrivia*>&& trailingTrivia) noexcept;
 
     static SyntaxToken* createTokenWithLeadingTrivia(TokenInfo& tokenInfo,
                                                      pg_size position,
-                                                     std::vector<SyntaxNode*>&& leadingTrivia) noexcept;
+                                                     std::vector<SyntaxTrivia*>&& leadingTrivia) noexcept;
 
     static SyntaxToken* createTokenWithTrailingTrivia(TokenInfo& tokenInfo,
                                                       pg_size position,
-                                                      std::vector<SyntaxNode*>&& trailingTrivia) noexcept;
+                                                      std::vector<SyntaxTrivia*>&& trailingTrivia) noexcept;
 
     static SyntaxTrivia* createTrivia(SyntaxKind syntaxKind,
                                       std::string_view text,

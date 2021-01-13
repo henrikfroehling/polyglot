@@ -18,8 +18,8 @@ SyntaxToken* DelphiSyntaxFactory::createToken(TokenInfo& tokenInfo,
 
 SyntaxToken* DelphiSyntaxFactory::createTokenWithTrivia(TokenInfo& tokenInfo,
                                                         pg_size position,
-                                                        std::vector<SyntaxNode*>&& leadingTrivia,
-                                                        std::vector<SyntaxNode*>&& trailingTrivia) noexcept
+                                                        std::vector<SyntaxTrivia*>&& leadingTrivia,
+                                                        std::vector<SyntaxTrivia*>&& trailingTrivia) noexcept
 {
     SyntaxToken* syntaxToken = createToken(tokenInfo, position);
     syntaxToken->setLeadingTrivia(std::move(leadingTrivia));
@@ -29,7 +29,7 @@ SyntaxToken* DelphiSyntaxFactory::createTokenWithTrivia(TokenInfo& tokenInfo,
 
 SyntaxToken* DelphiSyntaxFactory::createTokenWithLeadingTrivia(TokenInfo& tokenInfo,
                                                                pg_size position,
-                                                               std::vector<SyntaxNode*>&& leadingTrivia) noexcept
+                                                               std::vector<SyntaxTrivia*>&& leadingTrivia) noexcept
 {
     SyntaxToken* syntaxToken = createToken(tokenInfo, position);
     syntaxToken->setLeadingTrivia(std::move(leadingTrivia));
@@ -38,7 +38,7 @@ SyntaxToken* DelphiSyntaxFactory::createTokenWithLeadingTrivia(TokenInfo& tokenI
 
 SyntaxToken* DelphiSyntaxFactory::createTokenWithTrailingTrivia(TokenInfo& tokenInfo,
                                                                 pg_size position,
-                                                                std::vector<SyntaxNode*>&& trailingTrivia) noexcept
+                                                                std::vector<SyntaxTrivia*>&& trailingTrivia) noexcept
 {
     SyntaxToken* syntaxToken = createToken(tokenInfo, position);
     syntaxToken->setTrailingTrivia(std::move(trailingTrivia));

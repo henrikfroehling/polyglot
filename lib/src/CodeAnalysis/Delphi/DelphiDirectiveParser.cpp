@@ -34,10 +34,10 @@ DelphiDirectiveParser::DelphiDirectiveParser(SharedPtr<Lexer> lexer,
     : DirectiveParser{lexer, context}
 {}
 
-SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
-                                                  bool endIsActive,
-                                                  bool isFirstAfterTokenInFile,
-                                                  bool isAfterNonWhitespaceOnLine) noexcept
+SyntaxTrivia* DelphiDirectiveParser::parseDirective(bool isActive,
+                                                    bool endIsActive,
+                                                    bool isFirstAfterTokenInFile,
+                                                    bool isAfterNonWhitespaceOnLine) noexcept
 {
     SyntaxToken* openBraceDollarToken = takeToken(SyntaxKind::OpenBraceDollarToken);
     assert(openBraceDollarToken != nullptr);
@@ -47,7 +47,7 @@ SyntaxNode* DelphiDirectiveParser::parseDirective(bool isActive,
         // TODO error handling
     }
 
-    SyntaxNode* result{nullptr};
+    SyntaxTrivia* result{nullptr};
     SyntaxKind syntaxKind = currentToken()->syntaxKind();
 
     switch (syntaxKind)
@@ -303,7 +303,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(SyntaxToken* 
 
 SyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
-    std::vector<SyntaxNode*> skippedTokens{};
+    std::vector<SyntaxToken*> skippedTokens{};
 
     if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
         && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
@@ -330,11 +330,10 @@ SyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
     if (skippedTokens.size() > 0)
     {
         auto ptrSkippedTokensTrivia = std::make_unique<SkippedTokensTriviaSyntax>(SyntaxKind::SkippedTokensTrivia, std::move(skippedTokens));
-        SkippedTokensTriviaSyntax* skippedTokensTrivia = static_cast<SkippedTokensTriviaSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrSkippedTokensTrivia)));
+        SkippedTokensTriviaSyntax* skippedTokensTrivia = static_cast<SkippedTokensTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrSkippedTokensTrivia)));
         endOfDirective->addLeadingTrivia(skippedTokensTrivia);
     }
 
-    // TODO create skipped tokens trivia
     return endOfDirective;
 }
 

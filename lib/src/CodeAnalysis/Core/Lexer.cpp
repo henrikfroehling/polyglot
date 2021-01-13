@@ -15,8 +15,6 @@ Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
     : _textWindow{std::move(sourceText)},
       _mode{LexerMode::Syntax},
       _lexerCache{this},
-      _leadingTrivia{},
-      _trailingTrivia{},
       _lexedTokens{},
       _lexedDirectiveTriviaTokens{},
       _tokenCount{},
