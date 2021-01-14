@@ -9,19 +9,21 @@ namespace polyglot::CodeAnalysis
 
 struct TokenInfo final
 {
+    TokenInfo() noexcept = default;
+
     TokenInfo(const TokenInfo&) noexcept = default;
     TokenInfo(TokenInfo&&) noexcept = default;
     TokenInfo& operator=(const TokenInfo&) noexcept = default;
     TokenInfo& operator=(TokenInfo&&) noexcept = default;
-
-    SyntaxKind kind;
-    std::string_view text;
 
     friend bool operator==(const TokenInfo& lhs,
                            const TokenInfo& rhs) noexcept;
 
     friend bool operator!=(const TokenInfo& lhs,
                            const TokenInfo& rhs) noexcept;
+
+    SyntaxKind kind;
+    std::string_view text;
 };
 
 } // end namespace polyglot::CodeAnalysis

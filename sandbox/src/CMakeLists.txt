@@ -25,7 +25,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES}
 )
 
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PRIVATE ${CPP_STANDARD})
 target_link_libraries(${PROJECT_NAME} PRIVATE polyglot Qt6::Widgets)
 
 target_compile_definitions(${PROJECT_NAME}

@@ -9,6 +9,7 @@ if(EXISTS ${LOC_PATH})
 endif()
 
 set(OUTPUT_DIR ${CMAKE_BINARY_DIR}/output)
+set(CPP_STANDARD cxx_std_20)
 
 option(BUILD_LIBRARY_DRIVER "Enable building library driver" OFF)
 option(BUILD_LIBRARY_SANDBOX "Enable building library sandbox" OFF)
