@@ -44,6 +44,7 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerMode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
@@ -103,7 +104,6 @@ set(SOURCES_CODEANALYSIS_DELPHI_CORE
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxFacts.cpp
 )
 
