@@ -24,11 +24,17 @@ configure_file(
   ${PROJECT_BINARY_DIR}/include/polyglot/Version.hpp
 )
 
+configure_file(
+  ${PROJECT_SOURCE_DIR}/VersionInformation.rc.in
+  ${PROJECT_BINARY_DIR}/VersionInformation.rc
+)
+
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 set(SOURCES
   ${SOURCE_DIR}/Polyglot.cpp
   ${SOURCE_DIR}/Version.cpp
+  ${PROJECT_BINARY_DIR}/VersionInformation.rc
 )
 
 set(SOURCES_CORE
