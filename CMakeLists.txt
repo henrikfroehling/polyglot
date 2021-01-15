@@ -14,6 +14,10 @@ set(CPP_STANDARD cxx_std_20)
 option(BUILD_LIBRARY_DRIVER "Enable building library driver" OFF)
 option(BUILD_LIBRARY_SANDBOX "Enable building library sandbox" OFF)
 
+set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
+set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")
+set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header files")
+
 add_subdirectory(lib)
 
 if(BUILD_LIBRARY_DRIVER)
