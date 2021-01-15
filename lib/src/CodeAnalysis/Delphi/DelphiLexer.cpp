@@ -14,7 +14,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-static constexpr TokenInfo EMPTY_TOKEN_INFO{};
+static const TokenInfo EMPTY_TOKEN_INFO{};
 static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
 DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText) noexcept
