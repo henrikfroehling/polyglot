@@ -38,5 +38,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2.2.2
       with:
-        name: develop-ci-${{matrix.os}}-$GITHUB_RUN_NUMBER
+        name: develop-ci-${{matrix.os}}-${{github.run_id}}
         path: ${{runner.workspace}}/build/**/output/
