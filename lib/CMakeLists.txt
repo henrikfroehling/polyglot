@@ -5,7 +5,11 @@ set(POLYGLOT_VERSION_SUFFIX " pre alpha 1")
 set(POLYGLOT_VERSION "${POLYGLOT_VERSION_MAJOR}.${POLYGLOT_VERSION_MINOR}.${POLYGLOT_VERSION_PATCH}")
 set(POLYGLOT_VERSION_WITH_SUFFIX "${POLYGLOT_VERSION}${POLYGLOT_VERSION_SUFFIX}")
 
-project(polyglot VERSION ${POLYGLOT_VERSION} LANGUAGES CXX)
+project(polyglot VERSION ${POLYGLOT_VERSION}
+                 DESCRIPTION "A multi language static analysis library."
+                 LANGUAGES CXX
+)
+
 message(STATUS "Project: ${PROJECT_NAME} ${POLYGLOT_VERSION_WITH_SUFFIX}")
 
 # Require out-of-source builds
