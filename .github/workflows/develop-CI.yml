@@ -39,4 +39,4 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with:
         name: develop-ci-${{matrix.os}}-$GITHUB_RUN_NUMBER
-        path: ${{runner.workspace}}/build/$BUILD_TYPE/output/
+        path: ${{runner.workspace}}/build/**/output/
