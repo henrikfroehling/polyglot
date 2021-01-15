@@ -21,13 +21,13 @@ jobs:
     - name: Configure CMake Windows
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_LIBRARY_DRIVER=ON
       if: ${{ matrix.os == 'windows-latest' }}
 
     - name: Configure CMake Ubuntu or MacOS
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_LIBRARY_DRIVER=ON -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
       if: ${{ matrix.os != 'windows-latest' }}
 
     - name: Build
