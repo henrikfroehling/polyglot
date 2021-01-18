@@ -72,60 +72,60 @@ pg_size SyntaxNode::trailingTriviaWidth() const noexcept
 
 SyntaxNode* SyntaxNode::firstTerminal() const noexcept
 {
-    SyntaxNode* node = const_cast<SyntaxNode*>(this);
+    SyntaxNode* pNode = const_cast<SyntaxNode*>(this);
 
     if (childCount() > 0)
     {
         do
         {
-            SyntaxNode* firstChild{ nullptr };
+            SyntaxNode* pFirstChild{ nullptr };
 
-            for (pg_size i = 0, n = node->childCount(); i < n; i++)
+            for (pg_size i = 0, n = pNode->childCount(); i < n; i++)
             {
                 SyntaxNode* pChild = child(i);
 
                 if (pChild != nullptr)
                 {
-                    firstChild = pChild;
+                    pFirstChild = pChild;
                     break;
                 }
             }
 
-            node = firstChild;
+            pNode = pFirstChild;
         }
-        while (node != nullptr && node->childCount() > 0);
+        while (pNode != nullptr && pNode->childCount() > 0);
     }
 
-    return node;
+    return pNode;
 }
 
 SyntaxNode* SyntaxNode::lastTerminal() const noexcept
 {
-    SyntaxNode* node = const_cast<SyntaxNode*>(this);
+    SyntaxNode* pNode = const_cast<SyntaxNode*>(this);
 
     if (childCount() > 0)
     {
         do
         {
-            SyntaxNode* lastChild{ nullptr };
+            SyntaxNode* pLastChild{ nullptr };
 
-            for (pg_size i = node->childCount() - 1; i > -1; i--)
+            for (pg_size i = pNode->childCount() - 1; i > -1; i--)
             {
                 SyntaxNode* pChild = child(i);
 
                 if (pChild != nullptr)
                 {
-                    lastChild = pChild;
+                    pLastChild = pChild;
                     break;
                 }
             }
 
-            node = lastChild;
+            pNode = pLastChild;
         }
-        while (node != nullptr && node->childCount() > 0);
+        while (pNode != nullptr && pNode->childCount() > 0);
     }
 
-    return node;
+    return pNode;
 }
 
 } // end namespace polyglot::CodeAnalysis

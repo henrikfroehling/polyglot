@@ -22,8 +22,8 @@ struct TokenInfo final
     friend bool operator!=(const TokenInfo& lhs,
                            const TokenInfo& rhs) noexcept;
 
-    SyntaxKind kind;
-    std::string_view text;
+    SyntaxKind kind = SyntaxKind::None;
+    std::string_view text{};
 };
 
 } // end namespace polyglot::CodeAnalysis

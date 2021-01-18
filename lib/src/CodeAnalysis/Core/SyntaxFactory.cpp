@@ -18,28 +18,28 @@ SyntaxToken* SyntaxFactory::tokenWithTrivia(TokenInfo& tokenInfo,
                                             std::vector<SyntaxTrivia*>&& trailingTrivia,
                                             pg_size position) noexcept
 {
-    SyntaxToken* syntaxToken = token(tokenInfo, position);
-    syntaxToken->setLeadingTrivia(std::move(leadingTrivia));
-    syntaxToken->setTrailingTrivia(std::move(trailingTrivia));
-    return syntaxToken;
+    SyntaxToken* pSyntaxToken = token(tokenInfo, position);
+    pSyntaxToken->setLeadingTrivia(std::move(leadingTrivia));
+    pSyntaxToken->setTrailingTrivia(std::move(trailingTrivia));
+    return pSyntaxToken;
 }
 
 SyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(TokenInfo& tokenInfo,
                                                    std::vector<SyntaxTrivia*>&& leadingTrivia,
                                                    pg_size position) noexcept
 {
-    SyntaxToken* syntaxToken = token(tokenInfo, position);
-    syntaxToken->setLeadingTrivia(std::move(leadingTrivia));
-    return syntaxToken;
+    SyntaxToken* pSyntaxToken = token(tokenInfo, position);
+    pSyntaxToken->setLeadingTrivia(std::move(leadingTrivia));
+    return pSyntaxToken;
 }
 
 SyntaxToken* SyntaxFactory::tokenWithTrailingTrivia(TokenInfo& tokenInfo,
                                                     std::vector<SyntaxTrivia*>&& trailingTrivia,
                                                     pg_size position) noexcept
 {
-    SyntaxToken* syntaxToken = token(tokenInfo, position);
-    syntaxToken->setTrailingTrivia(std::move(trailingTrivia));
-    return syntaxToken;
+    SyntaxToken* pSyntaxToken = token(tokenInfo, position);
+    pSyntaxToken->setTrailingTrivia(std::move(trailingTrivia));
+    return pSyntaxToken;
 }
                                              
 SyntaxTrivia* SyntaxFactory::endOfLine(std::string_view text,

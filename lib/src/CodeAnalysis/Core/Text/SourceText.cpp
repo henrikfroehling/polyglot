@@ -14,16 +14,16 @@ namespace polyglot::CodeAnalysis
 
 TextLine::TextLine() noexcept
     : _start{},
-    _endIncludingLineBreak{},
-    _pSourceText{ nullptr }
+      _endIncludingLineBreak{},
+      _pSourceText{nullptr}
 {}
 
 TextLine::TextLine(SourceText* sourceText,
                    const pg_size start,
                    const pg_size endIncludingLineBreak) noexcept
-    : _start{ start },
-    _endIncludingLineBreak{ endIncludingLineBreak },
-    _pSourceText{ sourceText }
+    : _start{start},
+      _endIncludingLineBreak{endIncludingLineBreak},
+      _pSourceText{sourceText}
 {}
 
 pg_size TextLine::lineNumber() const noexcept
@@ -56,9 +56,9 @@ TextLine TextLine::fromSpan(SourceText* sourceText,
     if (sourceText->length() > 0)
     {
         if (textSpan.start() > 0 && !isAnyLineBreakCharacter((*sourceText)[textSpan.start() - 1]))
-            throw std::out_of_range{ "textSpan" };
+            throw std::out_of_range{"textSpan"};
 
-        bool endIncludingLineBreak{ false };
+        bool endIncludingLineBreak{false};
 
         if (textSpan.end() > textSpan.start())
             endIncludingLineBreak = isAnyLineBreakCharacter((*sourceText)[textSpan.start() - 1]);
@@ -70,17 +70,17 @@ TextLine TextLine::fromSpan(SourceText* sourceText,
             if (lineBreakLength > 0)
             {
                 endIncludingLineBreak = true;
-                textSpan = TextSpan{ textSpan.start(), textSpan.length() + lineBreakLength };
+                textSpan = TextSpan{textSpan.start(), textSpan.length() + lineBreakLength};
             }
         }
 
         if (textSpan.end() < sourceText->length() && !endIncludingLineBreak)
-            throw std::out_of_range{ "textSpan" };
+            throw std::out_of_range{"textSpan"};
 
-        return TextLine{ sourceText, textSpan.start(), textSpan.end() };
+        return TextLine{sourceText, textSpan.start(), textSpan.end()};
     }
 
-    return TextLine{ sourceText, 0, 0 };
+    return TextLine{sourceText, 0, 0};
 }
 
 pg_size TextLine::lineBreakLength() const noexcept
@@ -120,8 +120,8 @@ std::ostream& operator<<(std::ostream& os,
 
 TextLineCollection::TextLineCollection(SourceText* sourceText) noexcept
     : _lineStarts{},
-    _pSourceText{ sourceText },
-    _lastLineNumber{}
+      _pSourceText{sourceText},
+      _lastLineNumber{}
 {}
 
 pg_size binarySearch(const std::vector<pg_size>& container,
@@ -134,7 +134,6 @@ pg_size binarySearch(const std::vector<pg_size>& container,
     {
         pg_size middle = low + ((high - low) >> 1);
         pg_size middleValue = container[middle];
-
 
         if (middleValue == value)
             return middle;
@@ -151,7 +150,7 @@ pg_size TextLineCollection::indexOf(const pg_size position) const noexcept
 {
     assert(position <= _pSourceText->length());
     pg_size lineNumber{};
-    pg_size lastLineNumber{ _lastLineNumber };
+    pg_size lastLineNumber{_lastLineNumber};
 
     if (position >= _lineStarts[lastLineNumber])
     {
@@ -203,14 +202,14 @@ TextLine TextLineCollection::textLineFrom(const pg_size position) const noexcept
 LinePosition TextLineCollection::linePositionFrom(const pg_size position) const noexcept
 {
     const TextLine textLine = textLineFrom(position);
-    return LinePosition{ textLine.lineNumber(), position - textLine.start() };
+    return LinePosition{textLine.lineNumber(), position - textLine.start()};
 }
 
 LinePositionSpan TextLineCollection::linePositionSpanFrom(const TextSpan& textSpan) const noexcept
 {
     LinePosition start = linePositionFrom(textSpan.start());
     LinePosition end = linePositionFrom(textSpan.end());
-    return LinePositionSpan{ std::move(start), std::move(end) };
+    return LinePositionSpan{std::move(start), std::move(end)};
 }
 
 pg_size TextLineCollection::positionFrom(const LinePosition& linePosition) const noexcept
@@ -234,7 +233,7 @@ void TextLineCollection::parseLineStarts() noexcept
     if (_pSourceText->length() == 0)
         return;
 
-    bool lastWasCR{ false };
+    bool lastWasCR{false};
     pg_size position{};
     const pg_size length = _pSourceText->length();
     auto ptrCharBuffer = std::make_unique<std::vector<char>>(CHAR_BUFFER_SIZE);

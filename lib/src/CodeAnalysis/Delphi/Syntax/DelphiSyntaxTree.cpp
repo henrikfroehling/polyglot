@@ -12,8 +12,8 @@ DelphiSyntaxTree::DelphiSyntaxTree(SharedPtr<SourceText> sourceText,
 SharedPtr<DelphiSyntaxTree> DelphiSyntaxTree::parseSourceText(SharedPtr<SourceText> sourceText) noexcept
 {
     DelphiParser parser{sourceText};
-    SyntaxNode* syntaxTreeRoot = parser.parse();
-    return std::make_shared<DelphiSyntaxTree>(std::move(sourceText), syntaxTreeRoot);
+    SyntaxNode* pSyntaxTreeRoot = parser.parse();
+    return std::make_shared<DelphiSyntaxTree>(std::move(sourceText), pSyntaxTreeRoot);
 }
 
 } // end namespace polyglot::CodeAnalysis

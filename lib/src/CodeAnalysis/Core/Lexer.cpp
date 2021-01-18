@@ -14,7 +14,7 @@ constexpr pg_size MAX_LEXED_TOKENS_COUNT{4096};
 Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
     : _textWindow{std::move(sourceText)},
       _mode{LexerMode::Syntax},
-      _lexerCache{this},
+      _lexerCache{},
       _lexedTokens{},
       _lexedDirectiveTriviaTokens{},
       _tokenCount{},
@@ -47,11 +47,11 @@ void Lexer::preLex() noexcept
 
     for (pg_size i = 0; i < size; i++)
     {
-        SyntaxToken* ptrToken = lex();
-        addLexedToken(ptrToken);
+        SyntaxToken* pToken = lex();
+        addLexedToken(pToken);
         _tokenOffset++;
 
-        if (ptrToken->syntaxKind() == SyntaxKind::EndOfFileToken)
+        if (pToken->syntaxKind() == SyntaxKind::EndOfFileToken)
             break;
     }
 

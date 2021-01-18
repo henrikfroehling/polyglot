@@ -9,16 +9,12 @@
 namespace polyglot::CodeAnalysis
 {
 
-class Lexer;
-
 class LexerCache
 {
 public:
     static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
 
 public:
-    explicit LexerCache(Lexer* lexer) noexcept;
-
     TokenInfo lookupToken(std::string_view chars,
                           int hashCode,
                           std::function<TokenInfo(std::string_view chars)> createTokenInfoFunction) noexcept;
@@ -28,9 +24,8 @@ public:
                            std::function<TokenInfo()> createTokenInfoFunction) noexcept;
 
 private:
-    TextKeyedCache _tokenCacheN;
-    TextKeyedCache _triviaCacheN;
-    Lexer* _pLexer;
+    TextKeyedCache _tokenCache{};
+    TextKeyedCache _triviaCache{};
 };
 
 } // end namespace polyglot::CodeAnalyis

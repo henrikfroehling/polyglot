@@ -14,7 +14,7 @@ namespace polyglot::CodeAnalysis
 struct CacheEntry final
 {
     CacheEntry() noexcept
-        : hashCode{ -1 },
+        : hashCode{-1},
           item{},
           text{}
     {}

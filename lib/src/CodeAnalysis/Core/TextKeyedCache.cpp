@@ -7,12 +7,12 @@ TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
                                      long hashCode) noexcept
 {
     const int localIndex = localIndexFromHash(hashCode);
-    auto& ptrLocalEntry = _localTable[localIndex];
+    SharedPtr<CacheEntry>& ptrLocalEntry = _localTable[localIndex];
 
     if (ptrLocalEntry != nullptr && ptrLocalEntry->hashCode == hashCode && ptrLocalEntry->text == chars)
         return ptrLocalEntry->item;
 
-    auto ptrSharedEntry = lookupSharedEntry(chars, hashCode);
+    SharedPtr<CacheEntry> ptrSharedEntry = lookupSharedEntry(chars, hashCode);
 
     if (ptrSharedEntry != nullptr)
     {
