@@ -12,7 +12,8 @@ enum class SyntaxNodeFlags : unsigned char
     ContainsTrivia = 1 << 0,
     ContainsStructuredTrivia = 1 << 1,
     ContainsSkippedText = 1 << 2,
-    ContainsDirectives = 1 << 3
+    ContainsDirectives = 1 << 3,
+    IsMissing = 1 << 4
 };
 
 inline SyntaxNodeFlags operator|(SyntaxNodeFlags lhs,

@@ -49,6 +49,7 @@ set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveList.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveStack.cpp
+  ${SOURCE_DIR}/CodeANalysis/Core/LanguageKind.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LexerMode.cpp
@@ -93,6 +94,9 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
