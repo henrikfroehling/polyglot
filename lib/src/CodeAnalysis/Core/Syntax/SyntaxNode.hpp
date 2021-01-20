@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXNODE_H
 
 #include <string_view>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
@@ -11,7 +10,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API SyntaxNode
+class SyntaxNode
 {
 public:
     SyntaxNode() noexcept;

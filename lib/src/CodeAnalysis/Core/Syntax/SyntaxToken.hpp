@@ -3,7 +3,6 @@
 
 #include <string_view>
 #include <vector>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 
@@ -13,7 +12,7 @@ namespace polyglot::CodeAnalysis
 class SyntaxNode;
 class SyntaxTrivia;
 
-class POLYGLOT_API SyntaxToken
+class SyntaxToken
 {
 public:
     SyntaxToken() noexcept;

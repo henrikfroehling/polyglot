@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include <cassert>
 #include <algorithm>
 

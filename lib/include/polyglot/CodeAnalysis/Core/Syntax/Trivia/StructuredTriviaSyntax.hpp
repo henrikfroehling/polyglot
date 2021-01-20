@@ -3,7 +3,7 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {

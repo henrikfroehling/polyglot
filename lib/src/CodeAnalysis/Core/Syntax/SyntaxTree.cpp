@@ -1,5 +1,5 @@
 #include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {

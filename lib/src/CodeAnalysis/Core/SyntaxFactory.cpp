@@ -1,8 +1,8 @@
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/TokenInfo.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis

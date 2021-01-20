@@ -2,7 +2,6 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTRIVIA_H
 
 #include <string_view>
-#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/DirectiveStack.hpp"
@@ -12,7 +11,7 @@ namespace polyglot::CodeAnalysis
 
 class SyntaxToken;
 
-class POLYGLOT_API SyntaxTrivia
+class SyntaxTrivia
 {
 public:
     SyntaxTrivia() noexcept;
