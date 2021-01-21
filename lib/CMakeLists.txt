@@ -97,6 +97,7 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
