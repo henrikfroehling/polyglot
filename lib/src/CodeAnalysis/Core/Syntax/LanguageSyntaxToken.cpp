@@ -6,15 +6,21 @@ namespace polyglot::CodeAnalysis
 
 LanguageSyntaxToken::LanguageSyntaxToken() noexcept
     : LanguageSyntaxNode{},
-      _text{}
+      _text{},
+      _pLeadingTrivia{nullptr},
+      _pTrailingTrivia{nullptr}
 {}
 
 LanguageSyntaxToken::LanguageSyntaxToken(SyntaxKind syntaxKind,
                                          std::string_view text,
                                          pg_size position,
-                                         pg_size fullWidth) noexcept
+                                         pg_size fullWidth,
+                                         LanguageSyntaxList* leadingTrivia,
+                                         LanguageSyntaxList* trailingTrivia) noexcept
     : LanguageSyntaxNode{syntaxKind, position, text.length()},
-      _text{text}
+      _text{text},
+      _pLeadingTrivia{leadingTrivia},
+      _pTrailingTrivia{trailingTrivia}
 {}
 
 LanguageSyntaxToken::~LanguageSyntaxToken() noexcept
@@ -23,18 +29,6 @@ LanguageSyntaxToken::~LanguageSyntaxToken() noexcept
 LanguageSyntaxNode* LanguageSyntaxToken::child(pg_size index) const noexcept
 {
     throw std::runtime_error{"invalid operation"};
-}
-
-pg_size LanguageSyntaxToken::leadingTriviaWidth() const noexcept
-{
-    LanguageSyntaxNode* pLeading = leadingTrivia();
-    return pLeading != nullptr ? pLeading->fullWidth() : 0;
-}
-
-pg_size LanguageSyntaxToken::trailingTriviaWidth() const noexcept
-{
-    LanguageSyntaxNode* pTrailing = trailingTrivia();
-    return pTrailing != nullptr ? pTrailing->fullWidth() : 0;
 }
 
 } // end namespace polyglot::CodeAnalysis

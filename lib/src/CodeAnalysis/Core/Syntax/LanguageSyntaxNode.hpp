@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_LANGUAGESYNTAXNODE_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_LANGUAGESYNTAXNODE_H
 
+#include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
@@ -34,11 +35,12 @@ public:
     inline virtual pg_size width() const noexcept { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept { return _fullWidth; }
     virtual LanguageSyntaxNode* child(pg_size index) const noexcept = 0;
-    inline pg_size childCount() const noexcept { return _childCount; }
+    inline virtual pg_size childCount() const noexcept { return 0; }
     inline pg_size position() const noexcept { return _position; }
     inline pg_size endPosition() const noexcept { return _position + _fullWidth; }
     inline pg_size spanStart() const noexcept { return _position + leadingTriviaWidth(); }
     inline TextSpan fullSpan() const noexcept { return TextSpan{_position, _fullWidth}; }
+    virtual std::string_view text() const noexcept { return ""; }
 
     inline bool containsTrivia() const noexcept { return (_flags & SyntaxNodeFlags::ContainsTrivia) != SyntaxNodeFlags::None; }
     inline bool containsStructuredTrivia() const noexcept { return (_flags & SyntaxNodeFlags::ContainsStructuredTrivia) != SyntaxNodeFlags::None; }
@@ -57,6 +59,8 @@ public:
     virtual pg_size trailingTriviaWidth() const noexcept;
     inline virtual LanguageSyntaxNode* leadingTrivia() const noexcept { return nullptr; }
     inline virtual LanguageSyntaxNode* trailingTrivia() const noexcept { return nullptr; }
+    inline virtual LanguageSyntaxNode* leadingTriviaCore() const noexcept { return leadingTrivia(); }
+    inline virtual LanguageSyntaxNode* trailingTriviaCore() const noexcept { return trailingTrivia(); }
 
     LanguageSyntaxToken* firstToken() const noexcept;
     LanguageSyntaxToken* lastToken() const noexcept;
@@ -64,7 +68,6 @@ public:
 protected:
     pg_size _position;
     pg_size _fullWidth;
-    pg_size _childCount;
     SyntaxKind _syntaxKind;
     SyntaxNodeFlags _flags;
 

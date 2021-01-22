@@ -7,7 +7,6 @@ namespace polyglot::CodeAnalysis
 LanguageSyntaxNode::LanguageSyntaxNode() noexcept
     : _position{},
       _fullWidth{},
-      _childCount{},
       _syntaxKind{SyntaxKind::None},
       _flags{SyntaxNodeFlags::None}
 {}
@@ -17,7 +16,6 @@ LanguageSyntaxNode::LanguageSyntaxNode(SyntaxKind syntaxKind,
                                        pg_size fullWidth) noexcept
     : _position{position},
       _fullWidth{fullWidth},
-      _childCount{},
       _syntaxKind{syntaxKind},
       _flags{SyntaxNodeFlags::None}
 {}
@@ -69,7 +67,7 @@ LanguageSyntaxNode* LanguageSyntaxNode::firstTerminal() const noexcept
     {
         LanguageSyntaxNode* pFirstChild{nullptr};
 
-        for (pg_size i = 0, n = pNode->_childCount; i < n; i++)
+        for (pg_size i = 0, n = pNode->childCount(); i < n; i++)
         {
             LanguageSyntaxNode* pChild = pNode->child(i);
 
@@ -82,7 +80,7 @@ LanguageSyntaxNode* LanguageSyntaxNode::firstTerminal() const noexcept
 
         pNode = pFirstChild;
     }
-    while (pNode != nullptr && pNode->_childCount > 0);
+    while (pNode != nullptr && pNode->childCount() > 0);
 
     return pNode;
 }
@@ -95,7 +93,7 @@ LanguageSyntaxNode* LanguageSyntaxNode::lastTerminal() const noexcept
     {
         LanguageSyntaxNode* pLastChild{nullptr};
 
-        for (pg_size i = pNode->_childCount - 1; i > -1; i--)
+        for (pg_size i = pNode->childCount() - 1; i > -1; i--)
         {
             LanguageSyntaxNode* pChild = pNode->child(i);
 
@@ -108,7 +106,7 @@ LanguageSyntaxNode* LanguageSyntaxNode::lastTerminal() const noexcept
 
         pNode = pLastChild;
     }
-    while (pNode != nullptr && pNode->_childCount > 0);
+    while (pNode != nullptr && pNode->childCount() > 0);
 
     return pNode;
 }

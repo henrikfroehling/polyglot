@@ -7,7 +7,7 @@
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -19,7 +19,7 @@ class SyntaxTrivia : public ISyntaxTrivia
 public:
     SyntaxTrivia() = delete;
 
-    explicit SyntaxTrivia(LanguageSyntaxTrivia* underlyingTrivia,
+    explicit SyntaxTrivia(LanguageSyntaxNode* underlyingNode,
                           ISyntaxToken* token = nullptr) noexcept;
 
     virtual ~SyntaxTrivia() noexcept;
@@ -29,22 +29,22 @@ public:
     SyntaxTrivia& operator=(const SyntaxTrivia&) noexcept = default;
     SyntaxTrivia& operator=(SyntaxTrivia&&) noexcept = default;
 
-    inline LanguageKind languageKind() const noexcept override { return _pUnderlyingTrivia->languageKind(); }
-    inline SyntaxKind syntaxKind() const noexcept override { return _pUnderlyingTrivia->syntaxKind(); }
-    inline std::string_view text() const noexcept override { return _pUnderlyingTrivia->text(); }
-    inline pg_size position() const noexcept override { return _pUnderlyingTrivia->position(); }
-    inline pg_size endPosition() const noexcept override { return _pUnderlyingTrivia->endPosition(); }
+    inline LanguageKind languageKind() const noexcept override { return _pUnderlyingNode->languageKind(); }
+    inline SyntaxKind syntaxKind() const noexcept override { return _pUnderlyingNode->syntaxKind(); }
+    inline std::string_view text() const noexcept override { return _pUnderlyingNode->text(); }
+    inline pg_size position() const noexcept override { return _pUnderlyingNode->position(); }
+    inline pg_size endPosition() const noexcept override { return _pUnderlyingNode->endPosition(); }
     inline ISyntaxToken* token() const noexcept override { return _pToken; }
-    inline pg_size width() const noexcept override { return _pUnderlyingTrivia->width(); }
-    inline pg_size fullWidth() const noexcept override { return _pUnderlyingTrivia->fullWidth(); }
-    inline pg_size spanStart() const noexcept override { return _pUnderlyingTrivia->spanStart(); }
+    inline pg_size width() const noexcept override { return _pUnderlyingNode->width(); }
+    inline pg_size fullWidth() const noexcept override { return _pUnderlyingNode->fullWidth(); }
+    inline pg_size spanStart() const noexcept override { return _pUnderlyingNode->spanStart(); }
     TextSpan span() const noexcept override;
-    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingTrivia->fullSpan(); }
-    inline bool isDirective() const noexcept override { return _pUnderlyingTrivia->isDirective(); }
-    inline bool isSkippedTokensTrivia() const noexcept override { return _pUnderlyingTrivia->isSkippedTokensTrivia(); }
+    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingNode->fullSpan(); }
+    inline bool isDirective() const noexcept override { return _pUnderlyingNode->isDirective(); }
+    inline bool isSkippedTokensTrivia() const noexcept override { return _pUnderlyingNode->isSkippedTokensTrivia(); }
 
 protected:
-    LanguageSyntaxTrivia* _pUnderlyingTrivia;
+    LanguageSyntaxNode* _pUnderlyingNode;
     ISyntaxToken* _pToken;
 };
 

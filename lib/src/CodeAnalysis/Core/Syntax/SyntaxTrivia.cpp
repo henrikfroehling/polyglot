@@ -4,13 +4,13 @@
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxTrivia::SyntaxTrivia(LanguageSyntaxTrivia* underlyingTrivia,
+SyntaxTrivia::SyntaxTrivia(LanguageSyntaxNode* underlyingNode,
                            ISyntaxToken* token) noexcept
     : ISyntaxTrivia{},
-      _pUnderlyingTrivia{underlyingTrivia},
+      _pUnderlyingNode{underlyingNode},
       _pToken{token}
 {
-    assert(_pUnderlyingTrivia != nullptr);
+    assert(_pUnderlyingNode != nullptr);
 }
 
 SyntaxTrivia::~SyntaxTrivia() noexcept
@@ -18,8 +18,8 @@ SyntaxTrivia::~SyntaxTrivia() noexcept
 
 TextSpan SyntaxTrivia::span() const noexcept
 {
-    return TextSpan{_pUnderlyingTrivia->position() + _pUnderlyingTrivia->leadingTriviaWidth(),
-                    _pUnderlyingTrivia->width()};
+    return TextSpan{_pUnderlyingNode->position() + _pUnderlyingNode->leadingTriviaWidth(),
+                    _pUnderlyingNode->width()};
 }
 
 } // end namespace polyglot::CodeAnalysis

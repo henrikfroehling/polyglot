@@ -29,7 +29,7 @@ public:
     LanguageSyntaxTrivia& operator=(LanguageSyntaxTrivia&&) noexcept = default;
 
     inline virtual pg_size width() const noexcept override { return _fullWidth; }
-    std::string_view text() const noexcept { return _text; }
+    inline std::string_view text() const noexcept override { return _text; }
     virtual LanguageSyntaxNode* child(pg_size index) const noexcept override;
     inline bool isTrivia() const noexcept override final { return true; }
 

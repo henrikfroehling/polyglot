@@ -97,6 +97,8 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxList.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.cpp
@@ -104,6 +106,7 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTriviaList.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_TEXT
