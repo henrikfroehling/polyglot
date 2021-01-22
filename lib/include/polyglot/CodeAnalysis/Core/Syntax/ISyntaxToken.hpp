@@ -2,6 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTOKEN_H
 
 #include <string_view>
+#include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
@@ -12,6 +13,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class ISyntaxNode;
+class ISyntaxTrivia;
 
 class POLYGLOT_API ISyntaxToken
 {
@@ -29,12 +31,16 @@ public:
     virtual pg_size spanStart() const noexcept = 0;
     virtual TextSpan span() const noexcept = 0;
     virtual TextSpan fullSpan() const noexcept = 0;
+
     virtual bool isMissing() const noexcept = 0;
     virtual bool value() const noexcept = 0;
+
     virtual bool hasLeadingTrivia() const noexcept = 0;
     virtual bool hasTrailingTrivia() const noexcept = 0;
     virtual pg_size leadingTriviaWidth() const noexcept = 0;
     virtual pg_size trailingTriviaWidth() const noexcept = 0;
+    virtual std::vector<ISyntaxTrivia*> leadingTrivia() const noexcept = 0;
+    virtual std::vector<ISyntaxTrivia*> trailingTrivia() const noexcept = 0;
 
 protected:
     ISyntaxToken() noexcept = default;

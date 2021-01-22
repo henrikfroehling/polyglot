@@ -4,7 +4,6 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/SyntaxNodeFlags.hpp"
 
@@ -17,6 +16,11 @@ class LanguageSyntaxNode
 {
 public:
     LanguageSyntaxNode() noexcept;
+
+    explicit LanguageSyntaxNode(SyntaxKind syntaxKind,
+                                pg_size position = 0,
+                                pg_size fullWidth = 0) noexcept;
+
     virtual ~LanguageSyntaxNode() noexcept;
 
     LanguageSyntaxNode(const LanguageSyntaxNode&) noexcept = default;
@@ -40,11 +44,11 @@ public:
     inline bool containsStructuredTrivia() const noexcept { return (_flags & SyntaxNodeFlags::ContainsStructuredTrivia) != SyntaxNodeFlags::None; }
     inline bool containsSkippedText() const noexcept { return (_flags & SyntaxNodeFlags::ContainsSkippedText) != SyntaxNodeFlags::None; }
     inline bool containsDirectives() const noexcept { return (_flags & SyntaxNodeFlags::ContainsDirectives) != SyntaxNodeFlags::None; }
-    inline bool isToken() const noexcept { return false; }
-    inline bool isTrivia() const noexcept { return false; }
-    inline bool isStructuredTrivia() const noexcept { return false; }
-    inline bool isDirective() const noexcept { return false; }
-    inline bool isSkippedTokensTrivia() const noexcept { return false; }
+    inline virtual bool isToken() const noexcept { return false; }
+    inline virtual bool isTrivia() const noexcept { return false; }
+    inline virtual bool isStructuredTrivia() const noexcept { return false; }
+    inline virtual bool isDirective() const noexcept { return false; }
+    inline virtual bool isSkippedTokensTrivia() const noexcept { return false; }
     inline bool isMissing() const noexcept { return (_flags & SyntaxNodeFlags::IsMissing) != SyntaxNodeFlags::None; }
 
     inline bool hasLeadingTrivia() const noexcept { return leadingTriviaWidth() != 0; }
@@ -56,13 +60,8 @@ public:
     inline virtual LanguageSyntaxNode* leadingTriviaCore() const noexcept { return leadingTrivia(); }
     inline virtual LanguageSyntaxNode* trailingTriviaCore() const noexcept { return trailingTrivia(); }
 
-    inline LanguageSyntaxToken* firstToken() const noexcept { return static_cast<LanguageSyntaxToken*>(firstTerminal()); }
-    inline LanguageSyntaxToken* lastToken() const noexcept { return static_cast<LanguageSyntaxToken*>(lastTerminal()); }
-
-protected:
-    explicit LanguageSyntaxNode(SyntaxKind syntaxKind,
-                                pg_size position = 0,
-                                pg_size fullWidth = 0) noexcept;
+    LanguageSyntaxToken* firstToken() const noexcept;
+    LanguageSyntaxToken* lastToken() const noexcept;
 
 protected:
     pg_size _position;

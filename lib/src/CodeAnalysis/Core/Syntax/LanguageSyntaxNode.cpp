@@ -1,4 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -48,6 +49,16 @@ pg_size LanguageSyntaxNode::trailingTriviaWidth() const noexcept
     }
 
     return 0;
+}
+
+LanguageSyntaxToken* LanguageSyntaxNode::firstToken() const noexcept
+{
+    return static_cast<LanguageSyntaxToken*>(firstTerminal());
+}
+
+LanguageSyntaxToken* LanguageSyntaxNode::lastToken() const noexcept
+{
+    return static_cast<LanguageSyntaxToken*>(lastTerminal());
 }
 
 LanguageSyntaxNode* LanguageSyntaxNode::firstTerminal() const noexcept

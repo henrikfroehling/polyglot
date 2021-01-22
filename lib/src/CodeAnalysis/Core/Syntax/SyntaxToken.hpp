@@ -4,48 +4,56 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxNode;
-class SyntaxTrivia;
+class ISyntaxNode;
+class ISyntaxTrivia;
 
-class SyntaxToken
+class SyntaxToken : public ISyntaxToken
 {
 public:
-    SyntaxToken() noexcept;
+    explicit SyntaxToken(LanguageSyntaxToken* underlyingToken = nullptr,
+                         ISyntaxNode* parent = nullptr) noexcept;
 
-    explicit SyntaxToken(SyntaxKind syntaxKind,
-                         std::string_view text = "",
-                         pg_size position = 0) noexcept;
+    virtual ~SyntaxToken() noexcept;
 
     SyntaxToken(const SyntaxToken&) noexcept = default;
     SyntaxToken(SyntaxToken&&) noexcept = default;
     SyntaxToken& operator=(const SyntaxToken&) noexcept = default;
     SyntaxToken& operator=(SyntaxToken&&) noexcept = default;
-    inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
-    inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
-    inline pg_size position() const noexcept { return _position; }
-    inline void setPosition(const pg_size position) noexcept { _position = position; }
-    virtual inline std::string_view text() const noexcept { return _text; }
-    inline virtual void setText(std::string_view text) noexcept { _text = text; }
-    void setLeadingTrivia(std::vector<SyntaxTrivia*>&& leadingTrivia) noexcept;
-    void setTrailingTrivia(std::vector<SyntaxTrivia*>&& trailingTrivia) noexcept;
-    void addLeadingTrivia(SyntaxTrivia* leadingTrivia) noexcept;
-    inline bool hasLeadingTrivia() const noexcept { return _leadingTrivia.size() > 0; }
-    inline bool hasTrailingTrivia() const noexcept { return _trailingTrivia.size() > 0; }
-    virtual bool value() const noexcept; // TODO use variant / any as return type
+
+    inline LanguageKind languageKind() const noexcept override { return _pUnderlyingToken->languageKind(); }
+    inline SyntaxKind syntaxKind() const noexcept override { return _pUnderlyingToken->syntaxKind(); }
+    inline std::string_view text() const noexcept override { return _pUnderlyingToken->text(); }
+    inline pg_size position() const noexcept override { return _pUnderlyingToken->position(); }
+    inline pg_size endPosition() const noexcept override { return _pUnderlyingToken->endPosition(); }
+    inline ISyntaxNode* parent() const noexcept override { return _pParent; }
+    inline pg_size width() const noexcept override { return _pUnderlyingToken->width(); }
+    inline pg_size fullWidth() const noexcept override { return _pUnderlyingToken->fullWidth(); }
+    inline pg_size spanStart() const noexcept override { return _pUnderlyingToken->spanStart(); }
+    inline TextSpan span() const noexcept override;
+    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingToken->fullSpan(); }
+
+    inline bool isMissing() const noexcept override { return _pUnderlyingToken->isMissing(); }
+    inline bool value() const noexcept override;
+
+    inline bool hasLeadingTrivia() const noexcept override { return leadingTrivia().size() != 0; }
+    inline bool hasTrailingTrivia() const noexcept override { return trailingTrivia().size() != 0; }
+    inline pg_size leadingTriviaWidth() const noexcept override { return _pUnderlyingToken->leadingTriviaWidth(); }
+    inline pg_size trailingTriviaWidth() const noexcept override { return _pUnderlyingToken->trailingTriviaWidth(); }
+    inline std::vector<ISyntaxTrivia*> leadingTrivia() const noexcept override { return _pUnderlyingToken->leadingTriviaCore(); }
+    inline std::vector<ISyntaxTrivia*> trailingTrivia() const noexcept override { return _pUnderlyingToken->trailingTriviaCore(); }
 
 protected:
-    SyntaxKind _syntaxKind;
-    pg_size _position;
-    std::string_view _text;
-    std::vector<SyntaxTrivia*> _leadingTrivia;
-    std::vector<SyntaxTrivia*> _trailingTrivia;
-    pg_size _fullWidth;
-    SyntaxNode* _pParent;
+    LanguageSyntaxToken* _pUnderlyingToken;
+    ISyntaxNode* _pParent;
 };
 
 } // end namespace polyglot::CodeAnalysis

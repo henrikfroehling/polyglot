@@ -17,6 +17,10 @@ class SyntaxNode final : public ISyntaxNode
 {
 public:
     SyntaxNode() noexcept;
+
+    explicit SyntaxNode(LanguageSyntaxNode* underlyingNode,
+                        ISyntaxNode* parent = nullptr) noexcept;
+
     virtual ~SyntaxNode() noexcept;
 
     SyntaxNode(const SyntaxNode&) noexcept = default;
@@ -49,10 +53,6 @@ public:
     inline std::vector<ISyntaxTrivia*> trailingTrivia() const noexcept override { return std::vector<ISyntaxTrivia*>{}; }
     inline pg_size leadingTriviaWidth() const noexcept { return _pUnderlyingNode->leadingTriviaWidth(); }
     inline pg_size trailingTriviaWidth() const noexcept { return _pUnderlyingNode->trailingTriviaWidth(); }
-
-protected:
-    explicit SyntaxNode(LanguageSyntaxNode* underlyingNode,
-                        ISyntaxNode* parent = nullptr) noexcept;
 
 protected:
     LanguageSyntaxNode* _pUnderlyingNode;
