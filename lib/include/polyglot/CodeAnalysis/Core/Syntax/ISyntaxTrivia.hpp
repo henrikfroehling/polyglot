@@ -22,6 +22,7 @@ public:
     virtual SyntaxKind syntaxKind() const noexcept = 0;
     virtual std::string_view text() const noexcept = 0;
     virtual pg_size position() const noexcept = 0;
+    virtual pg_size endPosition() const noexcept = 0;
     virtual ISyntaxToken* token() const noexcept = 0;
     virtual pg_size width() const noexcept = 0;
     virtual pg_size fullWidth() const noexcept = 0;

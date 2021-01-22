@@ -19,7 +19,9 @@ class ISyntaxTrivia;
 class SyntaxToken : public ISyntaxToken
 {
 public:
-    explicit SyntaxToken(LanguageSyntaxToken* underlyingToken = nullptr,
+    SyntaxToken() = delete;
+
+    explicit SyntaxToken(LanguageSyntaxToken* underlyingToken,
                          ISyntaxNode* parent = nullptr) noexcept;
 
     virtual ~SyntaxToken() noexcept;
@@ -38,7 +40,7 @@ public:
     inline pg_size width() const noexcept override { return _pUnderlyingToken->width(); }
     inline pg_size fullWidth() const noexcept override { return _pUnderlyingToken->fullWidth(); }
     inline pg_size spanStart() const noexcept override { return _pUnderlyingToken->spanStart(); }
-    inline TextSpan span() const noexcept override;
+    TextSpan span() const noexcept override;
     inline TextSpan fullSpan() const noexcept override { return _pUnderlyingToken->fullSpan(); }
 
     inline bool isMissing() const noexcept override { return _pUnderlyingToken->isMissing(); }

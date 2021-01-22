@@ -57,8 +57,6 @@ public:
     virtual pg_size trailingTriviaWidth() const noexcept;
     inline virtual LanguageSyntaxNode* leadingTrivia() const noexcept { return nullptr; }
     inline virtual LanguageSyntaxNode* trailingTrivia() const noexcept { return nullptr; }
-    inline virtual LanguageSyntaxNode* leadingTriviaCore() const noexcept { return leadingTrivia(); }
-    inline virtual LanguageSyntaxNode* trailingTriviaCore() const noexcept { return trailingTrivia(); }
 
     LanguageSyntaxToken* firstToken() const noexcept;
     LanguageSyntaxToken* lastToken() const noexcept;

@@ -3,46 +3,49 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/DirectiveStack.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class ISyntaxToken;
 
-class SyntaxTrivia
+class SyntaxTrivia : public ISyntaxTrivia
 {
 public:
-    SyntaxTrivia() noexcept;
+    SyntaxTrivia() = delete;
 
-    explicit SyntaxTrivia(SyntaxKind syntaxKind) noexcept;
-
-    explicit SyntaxTrivia(SyntaxKind syntaxKind,
-                          std::string_view text,
-                          pg_size position = 0) noexcept;
+    explicit SyntaxTrivia(LanguageSyntaxTrivia* underlyingTrivia,
+                          ISyntaxToken* token = nullptr) noexcept;
 
     virtual ~SyntaxTrivia() noexcept;
+
     SyntaxTrivia(const SyntaxTrivia&) noexcept = default;
     SyntaxTrivia(SyntaxTrivia&&) noexcept = default;
     SyntaxTrivia& operator=(const SyntaxTrivia&) noexcept = default;
     SyntaxTrivia& operator=(SyntaxTrivia&&) noexcept = default;
-    inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
-    inline void setSyntaxKind(SyntaxKind syntaxKind) noexcept { _syntaxKind = syntaxKind; }
-    inline pg_size position() const noexcept { return _position; }
-    inline void setPosition(const pg_size position) noexcept { _position = position; }
-    virtual inline std::string_view text() const noexcept { return _text; }
-    inline virtual void setText(std::string_view text) noexcept { _text = text; }
-    inline virtual bool isStructuredTrivia() const noexcept { return false; }
-    inline virtual bool isDirective() const noexcept { return false; }
-    inline virtual bool isSkippedTokensTrivia() const noexcept { return false; }
-    inline virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept { return std::move(stack); }
+
+    inline LanguageKind languageKind() const noexcept override { return _pUnderlyingTrivia->languageKind(); }
+    inline SyntaxKind syntaxKind() const noexcept override { return _pUnderlyingTrivia->syntaxKind(); }
+    inline std::string_view text() const noexcept override { return _pUnderlyingTrivia->text(); }
+    inline pg_size position() const noexcept override { return _pUnderlyingTrivia->position(); }
+    inline pg_size endPosition() const noexcept override { return _pUnderlyingTrivia->endPosition(); }
+    inline ISyntaxToken* token() const noexcept override { return _pToken; }
+    inline pg_size width() const noexcept override { return _pUnderlyingTrivia->width(); }
+    inline pg_size fullWidth() const noexcept override { return _pUnderlyingTrivia->fullWidth(); }
+    inline pg_size spanStart() const noexcept override { return _pUnderlyingTrivia->spanStart(); }
+    TextSpan span() const noexcept override;
+    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingTrivia->fullSpan(); }
+    inline bool isDirective() const noexcept override { return _pUnderlyingTrivia->isDirective(); }
+    inline bool isSkippedTokensTrivia() const noexcept override { return _pUnderlyingTrivia->isSkippedTokensTrivia(); }
 
 protected:
-    SyntaxKind _syntaxKind;
-    pg_size _position;
-    std::string_view _text;
-    SyntaxToken* _pParent;
+    LanguageSyntaxTrivia* _pUnderlyingTrivia;
+    ISyntaxToken* _pToken;
 };
 
 } // end namespace polyglot::CodeAnalysis
