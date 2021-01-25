@@ -22,13 +22,16 @@ class DelphiUsesClauseSyntax;
 class IdentifierNameExpressionSyntax;
 class NameExpressionSyntax;
 class SyntaxNode;
+class SyntaxPool;
 class SyntaxToken;
 
 class DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;
-    explicit DelphiParser(SharedPtr<SourceText> sourceText) noexcept;
+
+    explicit DelphiParser(SharedPtr<SourceText> sourceText,
+                          SyntaxPool& syntaxPool) noexcept;
 
 private:
     SyntaxNode* parseRoot() noexcept override;

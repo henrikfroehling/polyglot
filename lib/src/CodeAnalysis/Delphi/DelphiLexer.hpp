@@ -12,11 +12,13 @@ namespace polyglot::CodeAnalysis
 
 class SyntaxToken;
 class SyntaxTrivia;
+class SyntaxPool;
 
 class DelphiLexer final : public Lexer
 {
 public:
-    explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;
+    explicit DelphiLexer(SharedPtr<SourceText> sourceText,
+                         SyntaxPool& syntaxPool) noexcept;
 
 private:
     SyntaxToken* lexToken() noexcept override;

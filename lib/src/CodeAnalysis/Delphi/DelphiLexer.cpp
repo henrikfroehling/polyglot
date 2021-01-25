@@ -17,10 +17,12 @@ namespace polyglot::CodeAnalysis
 static const TokenInfo EMPTY_TOKEN_INFO{};
 static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 
-DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText) noexcept
-    : Lexer{std::move(sourceText)},
+DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText,
+                         SyntaxPool& syntaxPool) noexcept
+    : Lexer{std::move(sourceText), syntaxPool},
       _currentTriviaPosition{}
-{}
+{
+}
 
 SyntaxToken* DelphiLexer::lexToken() noexcept
 {

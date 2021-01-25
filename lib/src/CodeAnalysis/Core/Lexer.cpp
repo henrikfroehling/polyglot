@@ -11,7 +11,8 @@ namespace polyglot::CodeAnalysis
 constexpr pg_size MIN_LEXED_TOKENS_COUNT{32};
 constexpr pg_size MAX_LEXED_TOKENS_COUNT{4096};
 
-Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
+Lexer::Lexer(SharedPtr<SourceText> sourceText,
+             SyntaxPool& syntaxPool) noexcept
     : _textWindow{std::move(sourceText)},
       _mode{LexerMode::Syntax},
       _lexerCache{},
@@ -23,7 +24,8 @@ Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
       _directives{},
       _directiveTriviaTokenCount{},
       _directiveTriviaTokenOffset{},
-      _pCurrentDirectiveTriviaToken{nullptr}
+      _pCurrentDirectiveTriviaToken{nullptr},
+      _syntaxPool{syntaxPool}
 {}
 
 Lexer::~Lexer()

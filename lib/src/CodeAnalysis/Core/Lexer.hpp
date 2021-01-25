@@ -15,6 +15,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class SyntaxNode;
+class SyntaxPool;
 class SyntaxToken;
 
 class Lexer : public std::enable_shared_from_this<Lexer>
@@ -37,9 +38,12 @@ public:
     SyntaxToken* peekToken(pg_size n) noexcept;
     void advance() noexcept;
     void setMode(LexerMode mode) noexcept;
+    inline SyntaxPool& syntaxPool() const noexcept { return _syntaxPool; }
 
 protected:
-    explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
+    explicit Lexer(SharedPtr<SourceText> sourceText,
+                   SyntaxPool& syntaxPool) noexcept;
+
     void start() noexcept;
     virtual SyntaxToken* lexToken() noexcept = 0;
     void addLexedToken(SyntaxToken* token) noexcept;
@@ -57,6 +61,7 @@ protected:
     pg_size _directiveTriviaTokenCount;
     pg_size _directiveTriviaTokenOffset;
     SyntaxToken* _pCurrentDirectiveTriviaToken;
+    SyntaxPool& _syntaxPool;
 };
 
 } // end namespace polyglot::CodeAnalysis
