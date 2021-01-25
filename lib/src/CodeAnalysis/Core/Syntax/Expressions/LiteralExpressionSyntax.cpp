@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>

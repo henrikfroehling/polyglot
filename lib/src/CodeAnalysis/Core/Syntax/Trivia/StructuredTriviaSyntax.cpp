@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {

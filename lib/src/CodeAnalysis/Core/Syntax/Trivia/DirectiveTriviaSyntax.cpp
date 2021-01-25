@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/Directive.hpp"
 
 namespace polyglot::CodeAnalysis
