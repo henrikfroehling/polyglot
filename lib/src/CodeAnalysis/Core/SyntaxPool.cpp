@@ -1,56 +1,36 @@
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxNode* SyntaxPool::createSyntaxNode() noexcept
+SyntaxPool::SyntaxPool() noexcept
+    : _syntaxNodes{}
+{}
+
+LanguageSyntaxNode* SyntaxPool::createSyntaxNode() noexcept
 {
-    _syntaxNodes.push_back(std::make_unique<SyntaxNode>());
+    _syntaxNodes.push_back(std::make_unique<LanguageSyntaxNode>());
     return _syntaxNodes.back().get();
 }
 
-SyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
-                                           std::string_view text,
-                                           pg_size position) noexcept
+LanguageSyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
+                                                   std::string_view text,
+                                                   pg_size position) noexcept
 {
-    _syntaxTokens.push_back(std::make_unique<SyntaxToken>(syntaxKind, text, position));
-    return _syntaxTokens.back().get();
+    _syntaxNodes.push_back(std::make_unique<LanguageSyntaxToken>(syntaxKind, text, position));
+    return static_cast<LanguageSyntaxToken*>(_syntaxNodes.back().get());
 }
 
-SyntaxTrivia* SyntaxPool::createSyntaxTrivia() noexcept
+LanguageSyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
+                                                     std::string_view text,
+                                                     pg_size position) noexcept
 {
-    _syntaxTrivia.push_back(std::make_unique<SyntaxTrivia>());
-    return _syntaxTrivia.back().get();
-}
-
-SyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
-                                             std::string_view text,
-                                             pg_size position) noexcept
-{
-    _syntaxTrivia.push_back(std::make_unique<SyntaxTrivia>(syntaxKind, text, position));
-    return _syntaxTrivia.back().get();
-}
-
-SyntaxNode* SyntaxPool::addSyntaxNode(UniquePtr<SyntaxNode> syntaxNode) noexcept
-{
-    assert(syntaxNode != nullptr);
-    _syntaxNodes.push_back(std::move(syntaxNode));
-    return _syntaxNodes.back().get();
-}
-
-SyntaxToken* SyntaxPool::addSyntaxToken(UniquePtr<SyntaxToken> syntaxToken) noexcept
-{
-    assert(syntaxToken != nullptr);
-    _syntaxTokens.push_back(std::move(syntaxToken));
-    return _syntaxTokens.back().get();
-}
-
-SyntaxTrivia* SyntaxPool::addSyntaxTrivia(UniquePtr<SyntaxTrivia> syntaxTrivia) noexcept
-{
-    assert(syntaxTrivia != nullptr);
-    _syntaxTrivia.push_back(std::move(syntaxTrivia));
-    return _syntaxTrivia.back().get();
+    _syntaxNodes.push_back(std::make_unique<LanguageSyntaxTrivia>(syntaxKind, text, position));
+    return static_cast<LanguageSyntaxTrivia*>(_syntaxNodes.back().get());
 }
 
 } // end namespace polyglot::CodeAnalysis
