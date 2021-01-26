@@ -166,7 +166,7 @@ target_compile_features(${PROJECT_NAME} PRIVATE ${CPP_STANDARD})
 target_compile_options(${PROJECT_NAME}
   PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wno-switch -Wno-shift-count-overflow>
-    $<$<CXX_COMPILER_ID:MSVC>:/w44265 /wd4251 /wd4293>
+    $<$<CXX_COMPILER_ID:MSVC>:/w44265 /wd4251 /wd4293 /wd4297>
 )
 
 target_compile_definitions(${PROJECT_NAME}

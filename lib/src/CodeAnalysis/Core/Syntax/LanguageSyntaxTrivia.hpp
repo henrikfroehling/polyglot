@@ -6,7 +6,8 @@
 #include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
+#include "LanguageSyntaxNode.hpp"
+#include "../DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -35,6 +36,8 @@ public:
 
     inline pg_size leadingTriviaWidth() const noexcept override { return 0; }
     inline pg_size trailingTriviaWidth() const noexcept override { return 0; }
+
+    inline virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept { return std::move(stack); }
 
 protected:
     std::string_view _text;

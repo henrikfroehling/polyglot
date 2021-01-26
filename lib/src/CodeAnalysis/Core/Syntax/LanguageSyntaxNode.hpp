@@ -6,7 +6,7 @@
 #include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/SyntaxNodeFlags.hpp"
+#include "../SyntaxNodeFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -34,7 +34,7 @@ public:
     inline SyntaxNodeFlags flags() const noexcept { return _flags; }
     inline virtual pg_size width() const noexcept { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept { return _fullWidth; }
-    virtual LanguageSyntaxNode* child(pg_size index) const noexcept = 0;
+    inline virtual LanguageSyntaxNode* child(pg_size index) const noexcept { return nullptr; }
     inline virtual pg_size childCount() const noexcept { return 0; }
     inline pg_size position() const noexcept { return _position; }
     inline pg_size endPosition() const noexcept { return _position + _fullWidth; }
@@ -52,6 +52,7 @@ public:
     inline virtual bool isDirective() const noexcept { return false; }
     inline virtual bool isSkippedTokensTrivia() const noexcept { return false; }
     inline bool isMissing() const noexcept { return (_flags & SyntaxNodeFlags::IsMissing) != SyntaxNodeFlags::None; }
+    inline virtual bool isExpression() const noexcept { return false; }
 
     inline bool hasLeadingTrivia() const noexcept { return leadingTriviaWidth() != 0; }
     inline bool hasTrailingTrivia() const noexcept { return trailingTriviaWidth() != 0; }

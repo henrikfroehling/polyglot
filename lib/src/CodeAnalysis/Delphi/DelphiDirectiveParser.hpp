@@ -12,8 +12,8 @@ namespace polyglot::CodeAnalysis
 class DirectiveStack;
 class DirectiveTriviaSyntax;
 class ExpressionSyntax;
-class SyntaxToken;
-class SyntaxTrivia;
+class LanguageSyntaxToken;
+class LanguageSyntaxTrivia;
 
 class DelphiDirectiveParser final : public DirectiveParser
 {
@@ -21,72 +21,72 @@ public:
     explicit DelphiDirectiveParser(SharedPtr<Lexer> lexer,
                                    const DirectiveStack& context) noexcept;
 
-    SyntaxTrivia* parseDirective(bool isActive,
-                                 bool endIsActive,
-                                 bool isFirstAfterTokenInFile,
-                                 bool isAfterNonWhitespaceOnLine) noexcept override final;
+    LanguageSyntaxTrivia* parseDirective(bool isActive,
+                                         bool endIsActive,
+                                         bool isFirstAfterTokenInFile,
+                                         bool isAfterNonWhitespaceOnLine) noexcept override final;
 
 private:
-    DirectiveTriviaSyntax* parseIfDirective(SyntaxToken* openBraceDollarToken,
-                                            SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseIfDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                            LanguageSyntaxToken* keyword,
                                             bool isActive) noexcept;
 
-    DirectiveTriviaSyntax* parseIfDefDirective(SyntaxToken* openBraceDollarToken,
-                                               SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseIfDefDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                               LanguageSyntaxToken* keyword,
                                                bool isActive) noexcept;
 
-    DirectiveTriviaSyntax* parseIfNDefDirective(SyntaxToken* openBraceDollarToken,
-                                                SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseIfNDefDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                LanguageSyntaxToken* keyword,
                                                 bool isActive) noexcept;
 
-    DirectiveTriviaSyntax* parseIfEndDirective(SyntaxToken* openBraceDollarToken,
-                                               SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseIfEndDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                               LanguageSyntaxToken* keyword,
                                                bool isActive,
                                                bool endIsActive) noexcept;
 
-    DirectiveTriviaSyntax* parseElseDirective(SyntaxToken* openBraceDollarToken,
-                                              SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseElseDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                              LanguageSyntaxToken* keyword,
                                               bool isActive,
                                               bool endIsActive) noexcept;
 
-    DirectiveTriviaSyntax* parseElseIfDirective(SyntaxToken* openBraceDollarToken,
-                                                SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseElseIfDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                LanguageSyntaxToken* keyword,
                                                 bool isActive,
                                                 bool endIsActive) noexcept;
 
-    DirectiveTriviaSyntax* parseEndIfDirective(SyntaxToken* openBraceDollarToken,
-                                               SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseEndIfDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                               LanguageSyntaxToken* keyword,
                                                bool isActive,
                                                bool endIsActive) noexcept;
 
-    DirectiveTriviaSyntax* parseDefineOrUndefDirective(SyntaxToken* openBraceDollarToken,
-                                                       SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseDefineOrUndefDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                       LanguageSyntaxToken* keyword,
                                                        bool isActive,
                                                        bool isFollowingToken) noexcept;
 
-    DirectiveTriviaSyntax* parseRegionDirective(SyntaxToken* openBraceDollarToken,
-                                                SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseRegionDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                LanguageSyntaxToken* keyword,
                                                 bool isActive) noexcept;
 
-    DirectiveTriviaSyntax* parseEndRegionDirective(SyntaxToken* openBraceDollarToken,
-                                                   SyntaxToken* keyword,
+    DirectiveTriviaSyntax* parseEndRegionDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                   LanguageSyntaxToken* keyword,
                                                    bool isActive) noexcept;
 
-    DirectiveTriviaSyntax* parseMessageDirective(SyntaxToken* openBraceDollarToken,
-                                                 SyntaxToken* keyword) noexcept;
+    DirectiveTriviaSyntax* parseMessageDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                 LanguageSyntaxToken* keyword) noexcept;
 
-    DirectiveTriviaSyntax* parseSwitchDirective(SyntaxToken* openBraceDollarToken,
-                                                SyntaxToken* identifier,
-                                                SyntaxToken* onOffToken) noexcept;
+    DirectiveTriviaSyntax* parseSwitchDirective(LanguageSyntaxToken* openBraceDollarToken,
+                                                LanguageSyntaxToken* identifier,
+                                                LanguageSyntaxToken* onOffToken) noexcept;
 
-    SyntaxToken* parseEndOfDirective() noexcept;
+    LanguageSyntaxToken* parseEndOfDirective() noexcept;
     ExpressionSyntax* parseExpression() noexcept;
     ExpressionSyntax* parseLogicalOr() noexcept;
     ExpressionSyntax* parseLogicalAnd() noexcept;
     ExpressionSyntax* parseEquality() noexcept;
     ExpressionSyntax* parseLogicalNot() noexcept;
     ExpressionSyntax* parsePrimary() noexcept;
-    ExpressionSyntax* parseCallExpression(SyntaxToken* identifier) noexcept;
+    ExpressionSyntax* parseCallExpression(LanguageSyntaxToken* identifier) noexcept;
     bool evaluateBool(ExpressionSyntax* expression) const noexcept;
     bool isDefined(std::string_view id) const noexcept;
 };

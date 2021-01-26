@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,9 +8,9 @@ namespace polyglot::CodeAnalysis
 {
 
 ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                     SyntaxToken* startToken,
-                                                     SyntaxToken* elseKeyword,
-                                                     SyntaxToken* endOfDirectiveToken,
+                                                     LanguageSyntaxToken* startToken,
+                                                     LanguageSyntaxToken* elseKeyword,
+                                                     LanguageSyntaxToken* endOfDirectiveToken,
                                                      bool isActive,
                                                      bool isBranchTaken) noexcept
     : BranchingDirectiveTriviaSyntax{syntaxKind},
@@ -23,9 +23,9 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                             SyntaxToken* elseKeyword,
-                                                             SyntaxToken* endOfDirectiveToken,
+ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                             LanguageSyntaxToken* elseKeyword,
+                                                             LanguageSyntaxToken* endOfDirectiveToken,
                                                              bool isActive,
                                                              bool isBranchTaken) noexcept
 {

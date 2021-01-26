@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,10 +8,10 @@ namespace polyglot::CodeAnalysis
 {
 
 SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxToken* startToken,
-                                                         SyntaxToken* identifier,
-                                                         SyntaxToken* onOffToken,
-                                                         SyntaxToken* endOfDirectiveToken) noexcept
+                                                         LanguageSyntaxToken* startToken,
+                                                         LanguageSyntaxToken* identifier,
+                                                         LanguageSyntaxToken* onOffToken,
+                                                         LanguageSyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pIdentifier{identifier},
@@ -21,10 +21,10 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                                 SyntaxToken* identifier,
-                                                                 SyntaxToken* onOffToken,
-                                                                 SyntaxToken* endOfDirectiveToken) noexcept
+SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                                 LanguageSyntaxToken* identifier,
+                                                                 LanguageSyntaxToken* onOffToken,
+                                                                 LanguageSyntaxToken* endOfDirectiveToken) noexcept
 {
     assert(startToken != nullptr);
     assert(identifier != nullptr);

@@ -6,8 +6,8 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxToken;
 class NameExpressionSyntax;
-class SyntaxToken;
 
 class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
@@ -15,18 +15,18 @@ public:
     explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName) noexcept;
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept = default;
     inline NameExpressionSyntax* unitName() const noexcept { return _pUnitName; }
-    inline SyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
-    inline void setInKeyword(SyntaxToken* inKeyword) noexcept { _pInKeyword = inKeyword; }
-    inline SyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
-    inline void setSourceFile(SyntaxToken* sourceFile) noexcept { _pSourceFile = sourceFile; }
-    inline SyntaxToken* commaToken() const noexcept { return _pCommaToken; }
-    inline void setCommaToken(SyntaxToken* commaToken) noexcept { _pCommaToken = commaToken; }
+    inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
+    inline void setInKeyword(LanguageSyntaxToken* inKeyword) noexcept { _pInKeyword = inKeyword; }
+    inline LanguageSyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
+    inline void setSourceFile(LanguageSyntaxToken* sourceFile) noexcept { _pSourceFile = sourceFile; }
+    inline LanguageSyntaxToken* commaToken() const noexcept { return _pCommaToken; }
+    inline void setCommaToken(LanguageSyntaxToken* commaToken) noexcept { _pCommaToken = commaToken; }
 
 private:
     NameExpressionSyntax* _pUnitName;
-    SyntaxToken* _pInKeyword; // optional
-    SyntaxToken* _pSourceFile; // optional
-    SyntaxToken* _pCommaToken; // optional
+    LanguageSyntaxToken* _pInKeyword; // optional
+    LanguageSyntaxToken* _pSourceFile; // optional
+    LanguageSyntaxToken* _pCommaToken; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis

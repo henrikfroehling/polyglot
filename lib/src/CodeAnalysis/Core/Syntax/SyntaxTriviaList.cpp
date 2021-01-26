@@ -7,7 +7,7 @@ namespace polyglot::CodeAnalysis
 {
 
 SyntaxTriviaList::SyntaxTriviaList(LanguageSyntaxNode* underlyingNode,
-                                   ISyntaxToken* token = nullptr) noexcept
+                                   ISyntaxToken* token) noexcept
     : ISyntaxTriviaList{},
       _pUnderlyingNode{underlyingNode},
       _pToken{token}

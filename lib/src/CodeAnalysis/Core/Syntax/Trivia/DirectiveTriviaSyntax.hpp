@@ -8,15 +8,15 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class DirectiveTriviaSyntax : public StructuredTriviaSyntax
 {
 public:
     explicit DirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~DirectiveTriviaSyntax() noexcept = default;
-    virtual SyntaxToken* startToken() const noexcept = 0;
-    virtual SyntaxToken* endOfDirectiveToken() const noexcept = 0;
+    virtual LanguageSyntaxToken* startToken() const noexcept = 0;
+    virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept = 0;
     virtual bool isActive() const noexcept = 0;
     virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept override;
     inline bool isDirective() const noexcept override { return true; }

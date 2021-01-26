@@ -7,32 +7,32 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class BadDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                      SyntaxToken* startToken,
-                                      SyntaxToken* identifier,
-                                      SyntaxToken* endOfDirectiveToken,
+                                      LanguageSyntaxToken* startToken,
+                                      LanguageSyntaxToken* identifier,
+                                      LanguageSyntaxToken* endOfDirectiveToken,
                                       bool isActive) noexcept;
 
     virtual ~BadDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* identifier() const noexcept { return _pIdentifier; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static BadDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                            SyntaxToken* identifier,
-                                            SyntaxToken* endOfDirectiveToken,
+    static BadDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                            LanguageSyntaxToken* identifier,
+                                            LanguageSyntaxToken* endOfDirectiveToken,
                                             bool isActive) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pIdentifier;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pIdentifier;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

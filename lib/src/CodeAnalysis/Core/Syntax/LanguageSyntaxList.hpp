@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_LANGUAGESYNTAXLIST_H
 
 #include <vector>
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
+#include "LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {

@@ -8,42 +8,42 @@ namespace polyglot::CodeAnalysis
 {
 
 class ExpressionSyntax;
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class ElseIfDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSyntax
 {
 public:
     explicit ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         SyntaxToken* startToken,
-                                         SyntaxToken* elseIfKeyword,
+                                         LanguageSyntaxToken* startToken,
+                                         LanguageSyntaxToken* elseIfKeyword,
                                          ExpressionSyntax* condition,
-                                         SyntaxToken* endOfDirectiveToken,
+                                         LanguageSyntaxToken* endOfDirectiveToken,
                                          bool isActive,
                                          bool isBranchTaken,
                                          bool conditionValue) noexcept;
 
     virtual ~ElseIfDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* elseIfKeywword() const noexcept { return _pElseIfKeyword; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* elseIfKeywword() const noexcept { return _pElseIfKeyword; }
     inline virtual ExpressionSyntax* condition() const noexcept override { return _pCondition; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
 
-    static ElseIfDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                               SyntaxToken* elseIfKeyword,
+    static ElseIfDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                               LanguageSyntaxToken* elseIfKeyword,
                                                ExpressionSyntax* condition,
-                                               SyntaxToken* endOfDirectiveToken,
+                                               LanguageSyntaxToken* endOfDirectiveToken,
                                                bool isActive,
                                                bool isBranchTaken,
                                                bool conditionValue) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pElseIfKeyword;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pElseIfKeyword;
     ExpressionSyntax* _pCondition;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
     bool _conditionValue;

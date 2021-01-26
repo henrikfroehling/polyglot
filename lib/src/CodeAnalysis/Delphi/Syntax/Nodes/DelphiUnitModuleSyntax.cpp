@@ -7,8 +7,8 @@ namespace polyglot::CodeAnalysis
 DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
-                                               SyntaxToken* endKeyword,
-                                               SyntaxToken* dotToken) noexcept
+                                               LanguageSyntaxToken* endKeyword,
+                                               LanguageSyntaxToken* dotToken) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::UnitModule},
       _pHeading{heading},
       _pInterfaceSection{interfaceSection},

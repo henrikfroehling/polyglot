@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,9 +8,9 @@ namespace polyglot::CodeAnalysis
 {
 
 IfEndDirectiveTriviaSyntax::IfEndDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       SyntaxToken* startToken,
-                                                       SyntaxToken* ifEndKeyword,
-                                                       SyntaxToken* endOfDirectiveToken,
+                                                       LanguageSyntaxToken* startToken,
+                                                       LanguageSyntaxToken* ifEndKeyword,
+                                                       LanguageSyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -21,9 +21,9 @@ IfEndDirectiveTriviaSyntax::IfEndDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                               SyntaxToken* ifEndKeyword,
-                                                               SyntaxToken* endOfDirectiveToken,
+IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                               LanguageSyntaxToken* ifEndKeyword,
+                                                               LanguageSyntaxToken* endOfDirectiveToken,
                                                                bool isActive) noexcept
 {
     assert(startToken != nullptr);

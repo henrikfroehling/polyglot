@@ -8,42 +8,42 @@ namespace polyglot::CodeAnalysis
 {
 
 class ExpressionSyntax;
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class IfDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSyntax
 {
 public:
     explicit IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                     SyntaxToken* startToken,
-                                     SyntaxToken* ifKeyword,
+                                     LanguageSyntaxToken* startToken,
+                                     LanguageSyntaxToken* ifKeyword,
                                      ExpressionSyntax* condition,
-                                     SyntaxToken* endOfDirectiveToken,
+                                     LanguageSyntaxToken* endOfDirectiveToken,
                                      bool isActive,
                                      bool isBranchTaken,
                                      bool conditionValue) noexcept;
 
     virtual ~IfDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* ifKeywword() const noexcept { return _pIfKeyword; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* ifKeywword() const noexcept { return _pIfKeyword; }
     inline virtual ExpressionSyntax* condition() const noexcept override { return _pCondition; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
 
-    static IfDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                           SyntaxToken* ifKeyword,
+    static IfDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                           LanguageSyntaxToken* ifKeyword,
                                            ExpressionSyntax* condition,
-                                           SyntaxToken* endOfDirectiveToken,
+                                           LanguageSyntaxToken* endOfDirectiveToken,
                                            bool isActive,
                                            bool isBranchTaken,
                                            bool conditionValue) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pIfKeyword;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pIfKeyword;
     ExpressionSyntax* _pCondition;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
     bool _conditionValue;

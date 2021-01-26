@@ -10,7 +10,7 @@ Parser::Parser(std::shared_ptr<Lexer> lexer) noexcept
 Parser::~Parser() noexcept
 {}
 
-SyntaxNode* Parser::parse() noexcept
+LanguageSyntaxNode* Parser::parse() noexcept
 {
     _ptrLexer->preLex();
     return parseRoot();

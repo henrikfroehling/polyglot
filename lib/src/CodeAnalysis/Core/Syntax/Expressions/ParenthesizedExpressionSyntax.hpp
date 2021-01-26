@@ -7,29 +7,29 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class ParenthesizedExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                           SyntaxToken* openParenthesisToken,
+                                           LanguageSyntaxToken* openParenthesisToken,
                                            ExpressionSyntax* expression,
-                                           SyntaxToken* closeParenthesisToken) noexcept;
+                                           LanguageSyntaxToken* closeParenthesisToken) noexcept;
 
     virtual ~ParenthesizedExpressionSyntax() noexcept = default;
-    inline virtual SyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
+    inline virtual LanguageSyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
     inline virtual ExpressionSyntax* expression() const noexcept { return _pExpression; }
-    inline virtual SyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
+    inline virtual LanguageSyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
 
-    static ParenthesizedExpressionSyntax* create(SyntaxToken* openParenthesisToken,
+    static ParenthesizedExpressionSyntax* create(LanguageSyntaxToken* openParenthesisToken,
                                                  ExpressionSyntax* expression,
-                                                 SyntaxToken* closeParenthesisToken) noexcept;
+                                                 LanguageSyntaxToken* closeParenthesisToken) noexcept;
 
 private:
-    SyntaxToken* _pOpenParenthesisToken;
+    LanguageSyntaxToken* _pOpenParenthesisToken;
     ExpressionSyntax* _pExpression;
-    SyntaxToken* _pCloseParenthesisToken;
+    LanguageSyntaxToken* _pCloseParenthesisToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

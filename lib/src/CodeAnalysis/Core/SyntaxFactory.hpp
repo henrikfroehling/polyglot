@@ -8,44 +8,44 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
-class SyntaxTrivia;
+class LanguageSyntaxToken;
+class LanguageSyntaxTrivia;
 class TokenInfo;
 
 class SyntaxFactory final
 {
 public:
-    static SyntaxToken* token(TokenInfo& tokenInfo,
-                              pg_size position = 0) noexcept;
+    static LanguageSyntaxToken* token(TokenInfo& tokenInfo,
+                                      pg_size position = 0) noexcept;
 
-    static SyntaxToken* tokenWithTrivia(TokenInfo& tokenInfo,
-                                        std::vector<SyntaxTrivia*>&& leadingTrivia,
-                                        std::vector<SyntaxTrivia*>&& trailingTrivia,
-                                        pg_size position = 0) noexcept;
-
-    static SyntaxToken* tokenWithLeadingTrivia(TokenInfo& tokenInfo,
-                                               std::vector<SyntaxTrivia*>&& leadingTrivia,
-                                               pg_size position = 0) noexcept;
-
-    static SyntaxToken* tokenWithTrailingTrivia(TokenInfo& tokenInfo,
-                                                std::vector<SyntaxTrivia*>&& trailingTrivia,
+    static LanguageSyntaxToken* tokenWithTrivia(TokenInfo& tokenInfo,
+                                                std::vector<LanguageSyntaxTrivia*>&& leadingTrivia,
+                                                std::vector<LanguageSyntaxTrivia*>&& trailingTrivia,
                                                 pg_size position = 0) noexcept;
 
-    static inline SyntaxTrivia* carriageReturnLineFeed(pg_size position = 0) noexcept { return endOfLine("\r\n", position); }
-    static inline SyntaxTrivia* lineFeed(pg_size position = 0) noexcept { return endOfLine("\n", position); }
-    static inline SyntaxTrivia* carriageReturn(pg_size position = 0) noexcept { return endOfLine("\r", position); }
+    static LanguageSyntaxToken* tokenWithLeadingTrivia(TokenInfo& tokenInfo,
+                                                       std::vector<LanguageSyntaxTrivia*>&& leadingTrivia,
+                                                       pg_size position = 0) noexcept;
 
-    static SyntaxTrivia* endOfLine(std::string_view text,
-                                  pg_size position = 0) noexcept;
+    static LanguageSyntaxToken* tokenWithTrailingTrivia(TokenInfo& tokenInfo,
+                                                        std::vector<LanguageSyntaxTrivia*>&& trailingTrivia,
+                                                        pg_size position = 0) noexcept;
 
-    static SyntaxTrivia* whiteSpace(std::string_view text,
-                                   pg_size position = 0) noexcept;
+    static inline LanguageSyntaxTrivia* carriageReturnLineFeed(pg_size position = 0) noexcept { return endOfLine("\r\n", position); }
+    static inline LanguageSyntaxTrivia* lineFeed(pg_size position = 0) noexcept { return endOfLine("\n", position); }
+    static inline LanguageSyntaxTrivia* carriageReturn(pg_size position = 0) noexcept { return endOfLine("\r", position); }
 
-    static SyntaxTrivia* singleLineComment(std::string_view text,
-                                          pg_size position = 0) noexcept;
+    static LanguageSyntaxTrivia* endOfLine(std::string_view text,
+                                           pg_size position = 0) noexcept;
 
-    static SyntaxTrivia* multiLineComment(std::string_view text,
-                                         pg_size position = 0) noexcept;
+    static LanguageSyntaxTrivia* whiteSpace(std::string_view text,
+                                            pg_size position = 0) noexcept;
+
+    static LanguageSyntaxTrivia* singleLineComment(std::string_view text,
+                                                   pg_size position = 0) noexcept;
+
+    static LanguageSyntaxTrivia* multiLineComment(std::string_view text,
+                                                  pg_size position = 0) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

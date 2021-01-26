@@ -7,29 +7,29 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class BinaryExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit BinaryExpressionSyntax(SyntaxKind syntaxKind,
                                     ExpressionSyntax* leftExpression,
-                                    SyntaxToken* operatorToken,
+                                    LanguageSyntaxToken* operatorToken,
                                     ExpressionSyntax* rightExpression) noexcept;
 
     virtual ~BinaryExpressionSyntax() noexcept = default;
     inline virtual ExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
-    inline virtual SyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
+    inline virtual LanguageSyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
 
     static BinaryExpressionSyntax* create(SyntaxKind syntaxKind,
                                           ExpressionSyntax* leftExpression,
-                                          SyntaxToken* operatorToken,
+                                          LanguageSyntaxToken* operatorToken,
                                           ExpressionSyntax* rightExpression) noexcept;
 
 private:
     ExpressionSyntax* _pLeftExpression;
-    SyntaxToken* _pOperatorToken;
+    LanguageSyntaxToken* _pOperatorToken;
     ExpressionSyntax* _pRightExpression;
 };
 

@@ -2,8 +2,8 @@
 #include "Core/Hashing.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 #include "CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "CodeAnalysis/Delphi/DelphiLexerFlags.hpp"
 #include "CodeAnalysis/Delphi/DelphiLexerStates.hpp"
@@ -24,13 +24,13 @@ DelphiLexer::DelphiLexer(SharedPtr<SourceText> sourceText,
 {
 }
 
-SyntaxToken* DelphiLexer::lexToken() noexcept
+LanguageSyntaxToken* DelphiLexer::lexToken() noexcept
 {
     switch (_mode)
     {
         case LexerMode::Syntax:
         {
-            std::vector<SyntaxTrivia*> leadingTrivia{};
+            std::vector<LanguageSyntaxTrivia*> leadingTrivia{};
             lexSyntaxTrivia(_textWindow.position() > 0, false, leadingTrivia);
             TokenInfo tokenInfo = quickScanSyntaxToken();
 
@@ -38,10 +38,10 @@ SyntaxToken* DelphiLexer::lexToken() noexcept
                 tokenInfo = lexSyntaxToken();
 
             const pg_size tokenPosition = _textWindow.lexemeStartPosition();
-            std::vector<SyntaxTrivia*> trailingTrivia{};
+            std::vector<LanguageSyntaxTrivia*> trailingTrivia{};
             lexSyntaxTrivia(true, true, trailingTrivia);
 
-            SyntaxToken* pSyntaxToken = SyntaxFactory::tokenWithTrivia(tokenInfo, std::move(leadingTrivia), std::move(trailingTrivia), tokenPosition);
+            LanguageSyntaxToken* pSyntaxToken = SyntaxFactory::tokenWithTrivia(tokenInfo, std::move(leadingTrivia), std::move(trailingTrivia), tokenPosition);
             return pSyntaxToken;
         }
         case LexerMode::Directive:
@@ -613,7 +613,7 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
 
 void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                                   bool isTrailing,
-                                  std::vector<SyntaxTrivia*>& triviaList) noexcept
+                                  std::vector<LanguageSyntaxTrivia*>& triviaList) noexcept
 {
     bool onlyWhitespaceOnLine = !isTrailing;
 
@@ -652,7 +652,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 {
                     scanToEndOfLine();
                     const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
-                    SyntaxTrivia* pSyntaxTrivia = SyntaxFactory::singleLineComment(text, _currentTriviaPosition);
+                    LanguageSyntaxTrivia* pSyntaxTrivia = SyntaxFactory::singleLineComment(text, _currentTriviaPosition);
                     triviaList.push_back(pSyntaxTrivia);
                     onlyWhitespaceOnLine = false;
                     break;
@@ -673,7 +673,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     }
 
                     const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
-                    SyntaxTrivia* pSyntaxTrivia = SyntaxFactory::multiLineComment(text, _currentTriviaPosition);
+                    LanguageSyntaxTrivia* pSyntaxTrivia = SyntaxFactory::multiLineComment(text, _currentTriviaPosition);
                     triviaList.push_back(pSyntaxTrivia);
                     onlyWhitespaceOnLine = false;
                 }
@@ -698,7 +698,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     }
 
                     const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
-                    SyntaxTrivia* pSyntaxTrivia = SyntaxFactory::multiLineComment(text, _currentTriviaPosition);
+                    LanguageSyntaxTrivia* pSyntaxTrivia = SyntaxFactory::multiLineComment(text, _currentTriviaPosition);
                     triviaList.push_back(pSyntaxTrivia);
                     onlyWhitespaceOnLine = false;
                     break;
@@ -724,7 +724,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
     }
 }
 
-SyntaxTrivia* DelphiLexer::scanWhitespace() noexcept
+LanguageSyntaxTrivia* DelphiLexer::scanWhitespace() noexcept
 {
     long hashCode = Hashing::FNV_OFFSET_BIAS;
     bool onlySpaces = true;
@@ -850,7 +850,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
         isTerminated = false;
 }
 
-SyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
+LanguageSyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -882,11 +882,7 @@ SyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
             }
         }
 
-        {
-            SyntaxTrivia* pSyntaxTrivia = SyntaxPool::createSyntaxTrivia();
-            pSyntaxTrivia->setSyntaxKind(SyntaxKind::None);
-            return pSyntaxTrivia;
-        }
+        return SyntaxPool::createSyntaxTrivia(SyntaxKind::None, "");
     }
 }
 
@@ -894,7 +890,7 @@ void DelphiLexer::lexSingleDirective(bool isActive,
                                      bool endIsActive,
                                      bool afterFirstToken,
                                      bool afterNonWhitespaceOnLine,
-                                     std::vector<SyntaxTrivia*>& triviaList) noexcept
+                                     std::vector<LanguageSyntaxTrivia*>& triviaList) noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -906,18 +902,18 @@ void DelphiLexer::lexSingleDirective(bool isActive,
 
     const LexerMode saveMode = _mode;
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
-    SyntaxTrivia* pDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
+    LanguageSyntaxTrivia* pDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(pDirective);
     _directives = pDirective->applyDirectives(_directives);
     setMode(saveMode);
 }
 
-SyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
+LanguageSyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
 {
     start();
     TokenInfo tokenInfo{};
     scanDirectiveToken(tokenInfo);
-    std::vector<SyntaxTrivia*> trailingTrivia{};
+    std::vector<LanguageSyntaxTrivia*> trailingTrivia{};
     lexDirectiveTrailingTrivia(trailingTrivia, tokenInfo.kind == SyntaxKind::EndOfDirectiveToken);
     return SyntaxFactory::tokenWithTrailingTrivia(tokenInfo, std::move(trailingTrivia), _textWindow.lexemeStartPosition());
 }
@@ -1115,14 +1111,14 @@ defaultCase:
     }
 }
 
-void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<SyntaxTrivia*>& triviaList,
+void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<LanguageSyntaxTrivia*>& triviaList,
                                              bool includeEndOfLine) noexcept
 {
     while (true)
     {
         const pg_size position = _textWindow.position();
         _currentTriviaPosition = position;
-        SyntaxTrivia* pTrivia = lexDirectiveTrivia();
+        LanguageSyntaxTrivia* pTrivia = lexDirectiveTrivia();
 
         if (pTrivia == nullptr)
             break;
@@ -1142,7 +1138,7 @@ void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<SyntaxTrivia*>& triviaL
     }
 }
 
-SyntaxTrivia* DelphiLexer::lexDirectiveTrivia() noexcept
+LanguageSyntaxTrivia* DelphiLexer::lexDirectiveTrivia() noexcept
 {
     char character = _textWindow.peekCharacter();
 
@@ -1173,7 +1169,7 @@ SyntaxTrivia* DelphiLexer::lexDirectiveTrivia() noexcept
     return nullptr;
 }
 
-SyntaxTrivia* DelphiLexer::scanDirectiveWhitespace() noexcept
+LanguageSyntaxTrivia* DelphiLexer::scanDirectiveWhitespace() noexcept
 {
     const pg_size startPosition = _textWindow.position();
 

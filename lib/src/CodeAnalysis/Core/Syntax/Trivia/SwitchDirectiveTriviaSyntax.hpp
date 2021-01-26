@@ -7,34 +7,34 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class SwitchDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         SyntaxToken* startToken,
-                                         SyntaxToken* identifier,
-                                         SyntaxToken* onOffToken,
-                                         SyntaxToken* endOfDirectiveToken) noexcept;
+                                         LanguageSyntaxToken* startToken,
+                                         LanguageSyntaxToken* identifier,
+                                         LanguageSyntaxToken* onOffToken,
+                                         LanguageSyntaxToken* endOfDirectiveToken) noexcept;
 
     virtual ~SwitchDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* identifier() const noexcept { return _pIdentifier; }
-    inline virtual SyntaxToken* onOffToken() const noexcept { return _pOnOffToken; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual LanguageSyntaxToken* onOffToken() const noexcept { return _pOnOffToken; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return false; }
 
-    static SwitchDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                               SyntaxToken* identifier,
-                                               SyntaxToken* onOffToken,
-                                               SyntaxToken* endOfDirectiveToken) noexcept;
+    static SwitchDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                               LanguageSyntaxToken* identifier,
+                                               LanguageSyntaxToken* onOffToken,
+                                               LanguageSyntaxToken* endOfDirectiveToken) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pIdentifier;
-    SyntaxToken* _pOnOffToken;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pIdentifier;
+    LanguageSyntaxToken* _pOnOffToken;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

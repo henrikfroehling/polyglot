@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,11 +8,11 @@ namespace polyglot::CodeAnalysis
 {
 
 MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                           SyntaxToken* startToken,
-                                                           SyntaxToken* messageKeyword,
-                                                           SyntaxToken* messageTypeToken,
-                                                           SyntaxToken* messageLiteralToken,
-                                                           SyntaxToken* endOfDirectiveToken) noexcept
+                                                           LanguageSyntaxToken* startToken,
+                                                           LanguageSyntaxToken* messageKeyword,
+                                                           LanguageSyntaxToken* messageTypeToken,
+                                                           LanguageSyntaxToken* messageLiteralToken,
+                                                           LanguageSyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pMessageKeyword{messageKeyword},
@@ -23,11 +23,11 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
     _position = _pStartToken->position();
 }
 
-MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                                   SyntaxToken* messageKeyword,
-                                                                   SyntaxToken* messageTypeToken,
-                                                                   SyntaxToken* messageLiteralToken,
-                                                                   SyntaxToken* endOfDirectiveToken) noexcept
+MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                                   LanguageSyntaxToken* messageKeyword,
+                                                                   LanguageSyntaxToken* messageTypeToken,
+                                                                   LanguageSyntaxToken* messageLiteralToken,
+                                                                   LanguageSyntaxToken* endOfDirectiveToken) noexcept
 {
     assert(startToken != nullptr);
     assert(messageKeyword != nullptr);

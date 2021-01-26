@@ -7,41 +7,41 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class IfDefDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSyntax
 {
 public:
     explicit IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                        SyntaxToken* startToken,
-                                        SyntaxToken* ifDefKeyword,
-                                        SyntaxToken* name,
-                                        SyntaxToken* endOfDirectiveToken,
+                                        LanguageSyntaxToken* startToken,
+                                        LanguageSyntaxToken* ifDefKeyword,
+                                        LanguageSyntaxToken* name,
+                                        LanguageSyntaxToken* endOfDirectiveToken,
                                         bool isActive,
                                         bool isBranchTaken) noexcept;
 
     virtual ~IfDefDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* ifDefKeyword() const noexcept { return _pIfDefKeyword; }
-    inline virtual SyntaxToken* name() const noexcept { return _pName; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* ifDefKeyword() const noexcept { return _pIfDefKeyword; }
+    inline virtual LanguageSyntaxToken* name() const noexcept { return _pName; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return false; }
     inline virtual ExpressionSyntax* condition() const noexcept override { return nullptr; }
 
-    static IfDefDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                              SyntaxToken* ifDefKeyword,
-                                              SyntaxToken* name,
-                                              SyntaxToken* endOfDirectiveToken,
+    static IfDefDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                              LanguageSyntaxToken* ifDefKeyword,
+                                              LanguageSyntaxToken* name,
+                                              LanguageSyntaxToken* endOfDirectiveToken,
                                               bool isActive,
                                               bool isBranchTaken) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pIfDefKeyword;
-    SyntaxToken* _pName;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pIfDefKeyword;
+    LanguageSyntaxToken* _pName;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
 };

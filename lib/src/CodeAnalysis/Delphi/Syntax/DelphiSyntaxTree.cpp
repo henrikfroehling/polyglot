@@ -6,7 +6,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiSyntaxTree::DelphiSyntaxTree(SharedPtr<SourceText> sourceText,
-                                   SyntaxNode* root,
+                                   LanguageSyntaxNode* root,
                                    SyntaxPool&& syntaxPool) noexcept
     : SyntaxTree{std::move(sourceText), root, std::move(syntaxPool)}
 {}
@@ -15,7 +15,7 @@ SharedPtr<DelphiSyntaxTree> DelphiSyntaxTree::parseSourceText(SharedPtr<SourceTe
 {
     SyntaxPool syntaxPool{};
     DelphiParser parser{sourceText, syntaxPool};
-    SyntaxNode* pSyntaxTreeRoot = parser.parse();
+    LanguageSyntaxNode* pSyntaxTreeRoot = parser.parse();
     return std::make_shared<DelphiSyntaxTree>(std::move(sourceText), pSyntaxTreeRoot, std::move(syntaxPool));
 }
 

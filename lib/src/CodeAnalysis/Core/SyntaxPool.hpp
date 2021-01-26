@@ -5,36 +5,41 @@
 #include <vector>
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "Syntax/LanguageSyntaxNode.hpp"
+#include "Syntax/LanguageSyntaxToken.hpp"
+#include "Syntax/LanguageSyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
-class LanguageSyntaxTrivia;
-
 class SyntaxPool final
 {
 public:
-    SyntaxPool() noexcept;
+    SyntaxPool() noexcept = default;
 
     SyntaxPool(const SyntaxPool&) noexcept = default;
     SyntaxPool(SyntaxPool&&) noexcept = default;
     SyntaxPool& operator=(const SyntaxPool&) noexcept = default;
     SyntaxPool& operator=(SyntaxPool&&) noexcept = default;
 
-    LanguageSyntaxNode* createSyntaxNode() noexcept;
+    static LanguageSyntaxNode* createSyntaxNode() noexcept;
 
-    LanguageSyntaxToken* createSyntaxToken(SyntaxKind syntaxKind,
-                                           std::string_view text,
-                                           pg_size position = 0) noexcept;
+    static LanguageSyntaxToken* createSyntaxToken(SyntaxKind syntaxKind,
+                                                  std::string_view text,
+                                                  pg_size position = 0) noexcept;
 
-    LanguageSyntaxTrivia* createSyntaxTrivia(SyntaxKind syntaxKind,
-                                             std::string_view text,
-                                             pg_size position = 0) noexcept;
+    static LanguageSyntaxTrivia* createSyntaxTrivia(SyntaxKind syntaxKind,
+                                                    std::string_view text,
+                                                    pg_size position = 0) noexcept;
+
+    static LanguageSyntaxNode* addSyntaxNode(UniquePtr<LanguageSyntaxNode> syntaxNode) noexcept;
+    static LanguageSyntaxToken* addSyntaxToken(UniquePtr<LanguageSyntaxToken> syntaxToken) noexcept;
+    static LanguageSyntaxTrivia* addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia> syntaxTrivia) noexcept;
 
 private:
-    std::vector<UniquePtr<LanguageSyntaxNode>> _syntaxNodes;
+    static inline std::vector<UniquePtr<LanguageSyntaxNode>> _syntaxNodes{};
+    static inline std::vector<UniquePtr<LanguageSyntaxToken>> _syntaxTokens{};
+    static inline std::vector<UniquePtr<LanguageSyntaxTrivia>> _syntaxTrivia{};
 };
 
 } // end namespace polyglot::CodeAnalysis

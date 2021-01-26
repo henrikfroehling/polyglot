@@ -2,12 +2,12 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXNODE_H
 
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class DelphiSyntaxNode : public SyntaxNode
+class DelphiSyntaxNode : public LanguageSyntaxNode
 {
 public:
     explicit DelphiSyntaxNode(SyntaxKind syntaxKind) noexcept;

@@ -4,7 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 SkippedTokensTriviaSyntax::SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
-                                                     std::vector<SyntaxToken*> skippedTokens) noexcept
+                                                     std::vector<LanguageSyntaxToken*> skippedTokens) noexcept
     : StructuredTriviaSyntax{syntaxKind},
       _skippedTokens{std::move(skippedTokens)}
 {}

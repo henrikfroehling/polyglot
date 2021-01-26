@@ -8,18 +8,18 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class DelphiUsesClauseSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUsesClauseSyntax(SyntaxToken* usesKeyword,
+    explicit DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
                                     std::vector<DelphiUnitReferenceDeclarationSyntax*> unitReferences,
-                                    SyntaxToken* semiColonToken) noexcept;
+                                    LanguageSyntaxToken* semiColonToken) noexcept;
 
     virtual ~DelphiUsesClauseSyntax() noexcept = default;
 
-    inline SyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
+    inline LanguageSyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
     inline const std::vector<DelphiUnitReferenceDeclarationSyntax*>& unitReferences() const noexcept { return _unitReferences; }
 
     inline void addUnitReference(DelphiUnitReferenceDeclarationSyntax* unitReference) noexcept
@@ -27,12 +27,12 @@ public:
         _unitReferences.push_back(unitReference);
     }
 
-    inline SyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+    inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
 private:
-    SyntaxToken* _pUsesKeyword;
+    LanguageSyntaxToken* _pUsesKeyword;
     std::vector<DelphiUnitReferenceDeclarationSyntax*> _unitReferences;
-    SyntaxToken* _pSemiColonToken;
+    LanguageSyntaxToken* _pSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

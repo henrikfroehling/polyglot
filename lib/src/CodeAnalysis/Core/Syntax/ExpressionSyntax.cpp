@@ -4,7 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 ExpressionSyntax::ExpressionSyntax(SyntaxKind syntaxKind) noexcept
-    : SyntaxNode{syntaxKind}
+    : LanguageSyntaxNode{syntaxKind}
 {}
 
 } // end namespace polyglot::CodeAnalysis

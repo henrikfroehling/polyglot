@@ -7,7 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class DelphiCompilationUnitSyntax : public DelphiSyntaxNode
 {
@@ -17,11 +17,11 @@ public:
     inline virtual bool isUnitModule() const noexcept { return false; }
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
-    inline SyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
-    inline void setEOFToken(SyntaxToken* eofToken) noexcept { _pEOFToken = eofToken; }
+    inline LanguageSyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
+    inline void setEOFToken(LanguageSyntaxToken* eofToken) noexcept { _pEOFToken = eofToken; }
 
 private:
-    SyntaxToken* _pEOFToken;
+    LanguageSyntaxToken* _pEOFToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

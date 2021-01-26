@@ -11,7 +11,7 @@ class DelphiUnitHeadingSyntax;
 class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
 {
@@ -19,8 +19,8 @@ public:
     explicit DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
                                     DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                     DelphiUnitImplementationSectionSyntax* implementationSection,
-                                    SyntaxToken* endKeyword,
-                                    SyntaxToken* dotToken) noexcept;
+                                    LanguageSyntaxToken* endKeyword,
+                                    LanguageSyntaxToken* dotToken) noexcept;
 
     virtual ~DelphiUnitModuleSyntax() noexcept = default;
     inline bool isUnitModule() const noexcept override { return true; }
@@ -33,8 +33,8 @@ public:
     inline void setFinalizationSection(DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept { _pFinalizationSection = finalizationSection; }
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
-    inline SyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
-    inline SyntaxToken* dotToken() const noexcept { return _pDotToken; }
+    inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
+    inline LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
 
 private:
     DelphiUnitHeadingSyntax* _pHeading;
@@ -42,8 +42,8 @@ private:
     DelphiUnitImplementationSectionSyntax* _pImplementationSection;
     DelphiUnitInitializationSectionSyntax* _pInitializationSection; // optional
     DelphiUnitFinalizationSectionSyntax* _pFinalizationSection; // optional
-    SyntaxToken* _pEndKeyword;
-    SyntaxToken* _pDotToken;
+    LanguageSyntaxToken* _pEndKeyword;
+    LanguageSyntaxToken* _pDotToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

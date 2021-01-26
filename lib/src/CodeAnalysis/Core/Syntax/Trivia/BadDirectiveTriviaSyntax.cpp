@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,9 +8,9 @@ namespace polyglot::CodeAnalysis
 {
 
 BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                   SyntaxToken* startToken,
-                                                   SyntaxToken* identifier,
-                                                   SyntaxToken* endOfDirectiveToken,
+                                                   LanguageSyntaxToken* startToken,
+                                                   LanguageSyntaxToken* identifier,
+                                                   LanguageSyntaxToken* endOfDirectiveToken,
                                                    bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -21,9 +21,9 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                           SyntaxToken* identifier,
-                                                           SyntaxToken* endOfDirectiveToken,
+BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                           LanguageSyntaxToken* identifier,
+                                                           LanguageSyntaxToken* endOfDirectiveToken,
                                                            bool isActive) noexcept
 {
     assert(startToken != nullptr);

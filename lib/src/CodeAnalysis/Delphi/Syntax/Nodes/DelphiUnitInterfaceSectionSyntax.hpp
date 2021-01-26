@@ -7,18 +7,18 @@ namespace polyglot::CodeAnalysis
 {
 
 class DelphiUsesClauseSyntax;
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class DelphiUnitInterfaceSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitInterfaceSectionSyntax(SyntaxToken* interfaceKeyword) noexcept;
+    explicit DelphiUnitInterfaceSectionSyntax(LanguageSyntaxToken* interfaceKeyword) noexcept;
     virtual ~DelphiUnitInterfaceSectionSyntax() noexcept = default;
     virtual DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept { _pUses = uses; }
 
 private:
-    SyntaxToken* _pInterfaceKeyword;
+    LanguageSyntaxToken* _pInterfaceKeyword;
     DelphiUsesClauseSyntax* _pUses; // optional
 };
 

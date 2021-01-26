@@ -7,38 +7,38 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class MessageDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                          SyntaxToken* startToken,
-                                          SyntaxToken* messageKeyword,
-                                          SyntaxToken* messageTypeToken,
-                                          SyntaxToken* messageLiteralToken,
-                                          SyntaxToken* endOfDirectiveToken) noexcept;
+                                          LanguageSyntaxToken* startToken,
+                                          LanguageSyntaxToken* messageKeyword,
+                                          LanguageSyntaxToken* messageTypeToken,
+                                          LanguageSyntaxToken* messageLiteralToken,
+                                          LanguageSyntaxToken* endOfDirectiveToken) noexcept;
 
     virtual ~MessageDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* messageKeyword() const noexcept { return _pMessageKeyword; }
-    inline virtual SyntaxToken* messageTypeToken() const noexcept { return _pMessageTypeToken; }
-    inline virtual SyntaxToken* messageLiteralToken() const noexcept { return _pMessageLiteralToken; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* messageKeyword() const noexcept { return _pMessageKeyword; }
+    inline virtual LanguageSyntaxToken* messageTypeToken() const noexcept { return _pMessageTypeToken; }
+    inline virtual LanguageSyntaxToken* messageLiteralToken() const noexcept { return _pMessageLiteralToken; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return false; }
 
-    static MessageDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                                SyntaxToken* messageKeyword,
-                                                SyntaxToken* messageTypeToken,
-                                                SyntaxToken* messageLiteralToken,
-                                                SyntaxToken* endOfDirectiveToken) noexcept;
+    static MessageDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                                LanguageSyntaxToken* messageKeyword,
+                                                LanguageSyntaxToken* messageTypeToken,
+                                                LanguageSyntaxToken* messageLiteralToken,
+                                                LanguageSyntaxToken* endOfDirectiveToken) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pMessageKeyword;
-    SyntaxToken* _pMessageTypeToken; // optional
-    SyntaxToken* _pMessageLiteralToken;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pMessageKeyword;
+    LanguageSyntaxToken* _pMessageTypeToken; // optional
+    LanguageSyntaxToken* _pMessageLiteralToken;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

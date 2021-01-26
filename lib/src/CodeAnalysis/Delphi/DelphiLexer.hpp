@@ -10,8 +10,8 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
-class SyntaxTrivia;
+class LanguageSyntaxToken;
+class LanguageSyntaxTrivia;
 class SyntaxPool;
 
 class DelphiLexer final : public Lexer
@@ -21,19 +21,19 @@ public:
                          SyntaxPool& syntaxPool) noexcept;
 
 private:
-    SyntaxToken* lexToken() noexcept override;
+    LanguageSyntaxToken* lexToken() noexcept override;
     TokenInfo quickScanSyntaxToken() noexcept;
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
-                         std::vector<SyntaxTrivia*>& triviaList) noexcept;
+                         std::vector<LanguageSyntaxTrivia*>& triviaList) noexcept;
 
-    SyntaxTrivia* scanWhitespace() noexcept;
+    LanguageSyntaxTrivia* scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
     void scanMultiLineComment(bool& isTerminated) noexcept;
-    SyntaxTrivia* scanEndOfLine() noexcept;
+    LanguageSyntaxTrivia* scanEndOfLine() noexcept;
     void scanSyntaxToken(TokenInfo& tokenInfo) noexcept;
     void scanStringLiteral(TokenInfo& tokenInfo) noexcept;
     void scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept;
@@ -48,16 +48,16 @@ private:
                             bool endIsActive,
                             bool afterFirstToken,
                             bool afterNonWhitespaceOnLine,
-                            std::vector<SyntaxTrivia*>& triviaList) noexcept;
+                            std::vector<LanguageSyntaxTrivia*>& triviaList) noexcept;
 
-    SyntaxToken* lexDirectiveToken() noexcept;
+    LanguageSyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
 
-    void lexDirectiveTrailingTrivia(std::vector<SyntaxTrivia*>& triviaList,
+    void lexDirectiveTrailingTrivia(std::vector<LanguageSyntaxTrivia*>& triviaList,
                                     bool includeEndOfLine) noexcept;
 
-    SyntaxTrivia* lexDirectiveTrivia() noexcept;
-    SyntaxTrivia* scanDirectiveWhitespace() noexcept;
+    LanguageSyntaxTrivia* lexDirectiveTrivia() noexcept;
+    LanguageSyntaxTrivia* scanDirectiveWhitespace() noexcept;
 
 private:
     pg_size _currentTriviaPosition;

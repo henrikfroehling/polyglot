@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,9 +8,9 @@ namespace polyglot::CodeAnalysis
 {
 
 EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                               SyntaxToken* startToken,
-                                                               SyntaxToken* endRegionKeyword,
-                                                               SyntaxToken* endOfDirectiveToken,
+                                                               LanguageSyntaxToken* startToken,
+                                                               LanguageSyntaxToken* endRegionKeyword,
+                                                               LanguageSyntaxToken* endOfDirectiveToken,
                                                                bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -21,9 +21,9 @@ EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntax
     _position = _pStartToken->position();
 }
 
-EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                                       SyntaxToken* endRegionKeyword,
-                                                                       SyntaxToken* endOfDirectiveToken,
+EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                                       LanguageSyntaxToken* endRegionKeyword,
+                                                                       LanguageSyntaxToken* endOfDirectiveToken,
                                                                        bool isActive) noexcept
 {
     assert(startToken != nullptr);

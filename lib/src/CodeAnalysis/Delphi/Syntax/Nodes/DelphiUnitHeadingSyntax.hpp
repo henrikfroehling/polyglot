@@ -6,25 +6,25 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxToken;
 class NameExpressionSyntax;
-class SyntaxToken;
 
 class DelphiUnitHeadingSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitHeadingSyntax(SyntaxToken* unitKeyword,
+    explicit DelphiUnitHeadingSyntax(LanguageSyntaxToken* unitKeyword,
                                      NameExpressionSyntax* name,
-                                     SyntaxToken* semiColonToken) noexcept;
+                                     LanguageSyntaxToken* semiColonToken) noexcept;
 
     virtual ~DelphiUnitHeadingSyntax() noexcept = default;
-    SyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
+    LanguageSyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
     NameExpressionSyntax* name() const noexcept { return _pName; }
-    SyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+    LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
 private:
-    SyntaxToken* _pUnitKeyword;
+    LanguageSyntaxToken* _pUnitKeyword;
     NameExpressionSyntax* _pName;
-    SyntaxToken* _pSemiColonToken;
+    LanguageSyntaxToken* _pSemiColonToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

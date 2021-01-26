@@ -4,9 +4,9 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(SyntaxToken* usesKeyword,
+DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
                                                std::vector<DelphiUnitReferenceDeclarationSyntax*> unitReferences,
-                                               SyntaxToken* semiColonToken) noexcept
+                                               LanguageSyntaxToken* semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UsesClause},
       _pUsesKeyword{usesKeyword},
       _unitReferences{std::move(unitReferences)},

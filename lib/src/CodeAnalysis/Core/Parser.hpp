@@ -8,8 +8,8 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxNode;
-class SyntaxToken;
+class LanguageSyntaxNode;
+class LanguageSyntaxToken;
 
 class Parser
 {
@@ -20,15 +20,15 @@ public:
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    SyntaxNode* parse() noexcept;
+    LanguageSyntaxNode* parse() noexcept;
 
 protected:
     explicit Parser(std::shared_ptr<Lexer> lexer) noexcept;
-    virtual SyntaxNode* parseRoot() noexcept = 0;
-    inline SyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
-    inline SyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
-    inline SyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
-    inline SyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
+    virtual LanguageSyntaxNode* parseRoot() noexcept = 0;
+    inline LanguageSyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
+    inline LanguageSyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
+    inline LanguageSyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
+    inline LanguageSyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
     inline void advance() noexcept { _ptrLexer->advance(); }
 
 protected:

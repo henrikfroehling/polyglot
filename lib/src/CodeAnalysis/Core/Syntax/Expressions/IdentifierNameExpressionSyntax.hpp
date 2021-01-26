@@ -6,19 +6,19 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class IdentifierNameExpressionSyntax : public SimpleNameExpressionSyntax
 {
 public:
-    explicit IdentifierNameExpressionSyntax(SyntaxToken* identifier) noexcept;
+    explicit IdentifierNameExpressionSyntax(LanguageSyntaxToken* identifier) noexcept;
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
-    virtual SyntaxToken* identifier() const noexcept override { return _pIdentifier; }
+    virtual LanguageSyntaxToken* identifier() const noexcept override { return _pIdentifier; }
 
-    static IdentifierNameExpressionSyntax* create(SyntaxToken* identifier) noexcept;
+    static IdentifierNameExpressionSyntax* create(LanguageSyntaxToken* identifier) noexcept;
 
 protected:
-    SyntaxToken* _pIdentifier;
+    LanguageSyntaxToken* _pIdentifier;
 };
 
 } // end namespace polyglot::CodeAnalysis

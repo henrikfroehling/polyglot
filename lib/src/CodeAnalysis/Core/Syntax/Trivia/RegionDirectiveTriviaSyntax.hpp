@@ -7,32 +7,32 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class RegionDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         SyntaxToken* startToken,
-                                         SyntaxToken* regionKeyword,
-                                         SyntaxToken* endOfDirectiveToken,
+                                         LanguageSyntaxToken* startToken,
+                                         LanguageSyntaxToken* regionKeyword,
+                                         LanguageSyntaxToken* endOfDirectiveToken,
                                          bool isActive) noexcept;
 
     virtual ~RegionDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* regionKeyword() const noexcept { return _pRegionKeyword; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* regionKeyword() const noexcept { return _pRegionKeyword; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static RegionDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                               SyntaxToken* regionKeyword,
-                                               SyntaxToken* endOfDirectiveToken,
+    static RegionDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                               LanguageSyntaxToken* regionKeyword,
+                                               LanguageSyntaxToken* endOfDirectiveToken,
                                                bool isActive) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pRegionKeyword;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pRegionKeyword;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

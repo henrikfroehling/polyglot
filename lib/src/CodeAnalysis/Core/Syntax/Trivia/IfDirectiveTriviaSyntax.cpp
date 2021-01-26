@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,10 +8,10 @@ namespace polyglot::CodeAnalysis
 {
 
 IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                 SyntaxToken* startToken,
-                                                 SyntaxToken* ifKeyword,
+                                                 LanguageSyntaxToken* startToken,
+                                                 LanguageSyntaxToken* ifKeyword,
                                                  ExpressionSyntax* condition,
-                                                 SyntaxToken* endOfDirectiveToken,
+                                                 LanguageSyntaxToken* endOfDirectiveToken,
                                                  bool isActive,
                                                  bool isBranchTaken,
                                                  bool conditionValue) noexcept
@@ -27,10 +27,10 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                         SyntaxToken* ifKeyword,
+IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                         LanguageSyntaxToken* ifKeyword,
                                                          ExpressionSyntax* condition,
-                                                         SyntaxToken* endOfDirectiveToken,
+                                                         LanguageSyntaxToken* endOfDirectiveToken,
                                                          bool isActive,
                                                          bool isBranchTaken,
                                                          bool conditionValue) noexcept

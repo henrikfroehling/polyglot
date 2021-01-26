@@ -7,36 +7,36 @@
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxToken;
+class LanguageSyntaxToken;
 
 class UndefDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                        SyntaxToken* startToken,
-                                        SyntaxToken* undefKeyword,
-                                        SyntaxToken* name,
-                                        SyntaxToken* endOfDirectiveToken,
+                                        LanguageSyntaxToken* startToken,
+                                        LanguageSyntaxToken* undefKeyword,
+                                        LanguageSyntaxToken* name,
+                                        LanguageSyntaxToken* endOfDirectiveToken,
                                         bool isActive) noexcept;
 
     virtual ~UndefDirectiveTriviaSyntax() noexcept = default;
-    inline virtual SyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual SyntaxToken* undefKeyword() const noexcept { return _pUndefKeyword; }
-    inline virtual SyntaxToken* name() const noexcept { return _pName; }
-    inline virtual SyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual LanguageSyntaxToken* undefKeyword() const noexcept { return _pUndefKeyword; }
+    inline virtual LanguageSyntaxToken* name() const noexcept { return _pName; }
+    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static UndefDirectiveTriviaSyntax* create(SyntaxToken* startToken,
-                                              SyntaxToken* undefKeyword,
-                                              SyntaxToken* name,
-                                              SyntaxToken* endOfDirectiveToken,
+    static UndefDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+                                              LanguageSyntaxToken* undefKeyword,
+                                              LanguageSyntaxToken* name,
+                                              LanguageSyntaxToken* endOfDirectiveToken,
                                               bool isActive) noexcept;
 
 private:
-    SyntaxToken* _pStartToken;
-    SyntaxToken* _pUndefKeyword;
-    SyntaxToken* _pName;
-    SyntaxToken* _pEndOfDirectiveToken;
+    LanguageSyntaxToken* _pStartToken;
+    LanguageSyntaxToken* _pUndefKeyword;
+    LanguageSyntaxToken* _pName;
+    LanguageSyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

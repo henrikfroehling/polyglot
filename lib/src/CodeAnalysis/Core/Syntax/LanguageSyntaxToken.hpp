@@ -7,8 +7,8 @@
 #include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
+#include "LanguageSyntaxList.hpp"
+#include "LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {

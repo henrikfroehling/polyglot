@@ -20,10 +20,10 @@ class DelphiUnitModuleSyntax;
 class DelphiUnitReferenceDeclarationSyntax;
 class DelphiUsesClauseSyntax;
 class IdentifierNameExpressionSyntax;
+class LanguageSyntaxNode;
+class LanguageSyntaxToken;
 class NameExpressionSyntax;
-class SyntaxNode;
 class SyntaxPool;
-class SyntaxToken;
 
 class DelphiParser final : public Parser
 {
@@ -34,7 +34,7 @@ public:
                           SyntaxPool& syntaxPool) noexcept;
 
 private:
-    SyntaxNode* parseRoot() noexcept override;
+    LanguageSyntaxNode* parseRoot() noexcept override;
     DelphiCompilationUnitSyntax* parseCompilationUnit() noexcept;
     DelphiUnitModuleSyntax* parseUnitModule() noexcept;
     DelphiUnitHeadingSyntax* parseUnitHeading() noexcept;
@@ -49,7 +49,7 @@ private:
     NameExpressionSyntax* parseQualifiedName() noexcept;
 
     NameExpressionSyntax* parseQualifiedNameRight(NameExpressionSyntax* left,
-                                                  SyntaxToken* dotToken) noexcept;
+                                                  LanguageSyntaxToken* dotToken) noexcept;
 
     IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
 };
