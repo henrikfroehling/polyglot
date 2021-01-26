@@ -1,32 +1,25 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxTrivia::SyntaxTrivia() noexcept
-    : _syntaxKind{SyntaxKind::None},
-      _position{},
-      _text{},
-      _pParent{nullptr}
-{}
-
-SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind) noexcept
-    : _syntaxKind{syntaxKind},
-      _position{},
-      _text{},
-      _pParent{nullptr}
-{}
-
-SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
-                           std::string_view text,
-                           pg_size position) noexcept
-    : _syntaxKind{syntaxKind},
-      _position{position},
-      _text{text},
-      _pParent{nullptr}
-{}
+SyntaxTrivia::SyntaxTrivia(LanguageSyntaxNode* underlyingNode,
+                           ISyntaxToken* token) noexcept
+    : ISyntaxTrivia{},
+      _pUnderlyingNode{underlyingNode},
+      _pToken{token}
+{
+    assert(_pUnderlyingNode != nullptr);
+}
 
 SyntaxTrivia::~SyntaxTrivia() noexcept
 {}
+
+TextSpan SyntaxTrivia::span() const noexcept
+{
+    return TextSpan{_pUnderlyingNode->position() + _pUnderlyingNode->leadingTriviaWidth(),
+                    _pUnderlyingNode->width()};
+}
 
 } // end namespace polyglot::CodeAnalysis

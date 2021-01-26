@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,10 +8,10 @@ namespace polyglot::CodeAnalysis
 {
 
 DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxToken* startToken,
-                                                         SyntaxToken* defineKeyword,
-                                                         SyntaxToken* name,
-                                                         SyntaxToken* endOfDirectiveToken,
+                                                         LanguageSyntaxToken* startToken,
+                                                         LanguageSyntaxToken* defineKeyword,
+                                                         LanguageSyntaxToken* name,
+                                                         LanguageSyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -23,10 +23,10 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-DefineDirectiveTriviaSyntax* DefineDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                                 SyntaxToken* defineKeyword,
-                                                                 SyntaxToken* name,
-                                                                 SyntaxToken* endOfDirectiveToken,
+DefineDirectiveTriviaSyntax* DefineDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                                 LanguageSyntaxToken* defineKeyword,
+                                                                 LanguageSyntaxToken* name,
+                                                                 LanguageSyntaxToken* endOfDirectiveToken,
                                                                  bool isActive) noexcept
 {
     assert(startToken != nullptr);

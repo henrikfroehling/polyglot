@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,10 +8,10 @@ namespace polyglot::CodeAnalysis
 {
 
 ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxToken* startToken,
-                                                         SyntaxToken* elseIfKeyword,
+                                                         LanguageSyntaxToken* startToken,
+                                                         LanguageSyntaxToken* elseIfKeyword,
                                                          ExpressionSyntax* condition,
-                                                         SyntaxToken* endOfDirectiveToken,
+                                                         LanguageSyntaxToken* endOfDirectiveToken,
                                                          bool isActive,
                                                          bool isBranchTaken,
                                                          bool conditionValue) noexcept
@@ -27,10 +27,10 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                                 SyntaxToken* elseIfKeyword,
+ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                                 LanguageSyntaxToken* elseIfKeyword,
                                                                  ExpressionSyntax* condition,
-                                                                 SyntaxToken* endOfDirectiveToken,
+                                                                 LanguageSyntaxToken* endOfDirectiveToken,
                                                                  bool isActive,
                                                                  bool isBranchTaken,
                                                                  bool conditionValue) noexcept

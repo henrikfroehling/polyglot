@@ -1,5 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -7,7 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
-                                                 SyntaxToken* token) noexcept
+                                                 LanguageSyntaxToken* token) noexcept
     : ExpressionSyntax{syntaxKind},
       _pToken{token}
 {
@@ -15,7 +16,7 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
 }
 
 LiteralExpressionSyntax* LiteralExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                         SyntaxToken* token) noexcept
+                                                         LanguageSyntaxToken* token) noexcept
 {
     assert(token != nullptr);
     auto ptrLiteralExpression = std::make_unique<LiteralExpressionSyntax>(syntaxKind, token);

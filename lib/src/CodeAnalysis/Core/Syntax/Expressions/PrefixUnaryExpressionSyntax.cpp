@@ -1,5 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -7,7 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxToken* operatorToken,
+                                                         LanguageSyntaxToken* operatorToken,
                                                          ExpressionSyntax* operandExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _pOperatorToken{operatorToken},
@@ -17,7 +18,7 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
 }
 
 PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                                 SyntaxToken* operatorToken,
+                                                                 LanguageSyntaxToken* operatorToken,
                                                                  ExpressionSyntax* operandExpression) noexcept
 {
     assert(operatorToken != nullptr);

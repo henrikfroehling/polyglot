@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,10 +8,10 @@ namespace polyglot::CodeAnalysis
 {
 
 IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       SyntaxToken* startToken,
-                                                       SyntaxToken* ifDefKeyword,
-                                                       SyntaxToken* name,
-                                                       SyntaxToken* endOfDirectiveToken,
+                                                       LanguageSyntaxToken* startToken,
+                                                       LanguageSyntaxToken* ifDefKeyword,
+                                                       LanguageSyntaxToken* name,
+                                                       LanguageSyntaxToken* endOfDirectiveToken,
                                                        bool isActive,
                                                        bool isBranchTaken) noexcept
     : ConditionalDirectiveTriviaSyntax{syntaxKind},
@@ -25,10 +25,10 @@ IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                               SyntaxToken* ifDefKeyword,
-                                                               SyntaxToken* name,
-                                                               SyntaxToken* endOfDirectiveToken,
+IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                               LanguageSyntaxToken* ifDefKeyword,
+                                                               LanguageSyntaxToken* name,
+                                                               LanguageSyntaxToken* endOfDirectiveToken,
                                                                bool isActive,
                                                                bool isBranchTaken) noexcept
 {

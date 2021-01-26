@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,9 +8,9 @@ namespace polyglot::CodeAnalysis
 {
 
 RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         SyntaxToken* startToken,
-                                                         SyntaxToken* regionKeyword,
-                                                         SyntaxToken* endOfDirectiveToken,
+                                                         LanguageSyntaxToken* startToken,
+                                                         LanguageSyntaxToken* regionKeyword,
+                                                         LanguageSyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -21,9 +21,9 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxToken* startToken,
-                                                                 SyntaxToken* regionKeyword,
-                                                                 SyntaxToken* endOfDirectiveToken,
+RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+                                                                 LanguageSyntaxToken* regionKeyword,
+                                                                 LanguageSyntaxToken* endOfDirectiveToken,
                                                                  bool isActive) noexcept
 {
     assert(startToken != nullptr);

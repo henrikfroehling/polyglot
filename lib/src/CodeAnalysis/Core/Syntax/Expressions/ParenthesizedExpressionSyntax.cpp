@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,9 +8,9 @@ namespace polyglot::CodeAnalysis
 {
 
 ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                                             SyntaxToken* openParenthesisToken,
+                                                             LanguageSyntaxToken* openParenthesisToken,
                                                              ExpressionSyntax* expression,
-                                                             SyntaxToken* closeParenthesisToken) noexcept
+                                                             LanguageSyntaxToken* closeParenthesisToken) noexcept
     : ExpressionSyntax{syntaxKind},
       _pOpenParenthesisToken{openParenthesisToken},
       _pExpression{expression},
@@ -19,9 +19,9 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
     _position = _pOpenParenthesisToken->position();
 }
 
-ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(SyntaxToken* openParenthesisToken,
+ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(LanguageSyntaxToken* openParenthesisToken,
                                                                      ExpressionSyntax* expression,
-                                                                     SyntaxToken* closeParenthesisToken) noexcept
+                                                                     LanguageSyntaxToken* closeParenthesisToken) noexcept
 {
     assert(openParenthesisToken != nullptr);
     assert(openParenthesisToken->syntaxKind() == SyntaxKind::OpenParenthesisToken);

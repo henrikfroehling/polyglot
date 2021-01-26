@@ -3,27 +3,30 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "../src/CodeAnalysis/Core/Parser/SyntaxPool.hpp"
 #include "../src/CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class SyntaxNode;
+class LanguageSyntaxNode;
 
 class POLYGLOT_API SyntaxTree
 {
 public:
     SyntaxTree() noexcept;
     virtual ~SyntaxTree() noexcept = default;
-    inline SyntaxNode* root() const noexcept { return _pRoot; }
+    inline LanguageSyntaxNode* root() const noexcept { return _pRoot; }
 
 protected:
     explicit SyntaxTree(SharedPtr<SourceText> sourceText,
-                        SyntaxNode* root) noexcept;
+                        LanguageSyntaxNode* root,
+                        SyntaxPool&& syntaxPool) noexcept;
 
 protected:
     SharedPtr<SourceText> _ptrSourceText;
-    SyntaxNode* _pRoot;
+    LanguageSyntaxNode* _pRoot;
+    SyntaxPool _syntaxPool;
 };
 
 } // end namespace polyglot::CodeAnalysis

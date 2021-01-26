@@ -1,5 +1,6 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -7,10 +8,10 @@ namespace polyglot::CodeAnalysis
 {
 
 CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
-                                           SyntaxToken* identifier,
-                                           SyntaxToken* openParenthesisToken,
+                                           LanguageSyntaxToken* identifier,
+                                           LanguageSyntaxToken* openParenthesisToken,
                                            ExpressionSyntax* argumentExpression,
-                                           SyntaxToken* closeParenthesisToken) noexcept
+                                           LanguageSyntaxToken* closeParenthesisToken) noexcept
     : ExpressionSyntax{syntaxKind},
       _pIdentifier{identifier},
       _pOpenParenthesisToken{openParenthesisToken},
@@ -21,10 +22,10 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
 }
 
 CallExpressionSyntax* CallExpressionSyntax::create(SyntaxKind syntaxKind,
-                                                   SyntaxToken* identifier,
-                                                   SyntaxToken* openParenthesisToken,
+                                                   LanguageSyntaxToken* identifier,
+                                                   LanguageSyntaxToken* openParenthesisToken,
                                                    ExpressionSyntax* argumentExpression,
-                                                   SyntaxToken* closeParenthesisToken) noexcept
+                                                   LanguageSyntaxToken* closeParenthesisToken) noexcept
 {
     assert(identifier != nullptr);
     assert(identifier->syntaxKind() == SyntaxKind::IdentifierToken);

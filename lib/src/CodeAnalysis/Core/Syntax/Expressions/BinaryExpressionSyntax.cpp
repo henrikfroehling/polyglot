@@ -1,5 +1,5 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -8,7 +8,7 @@ namespace polyglot::CodeAnalysis
 
 BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
                                                ExpressionSyntax* leftExpression,
-                                               SyntaxToken* operatorToken,
+                                               LanguageSyntaxToken* operatorToken,
                                                ExpressionSyntax* rightExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _pLeftExpression{leftExpression},
@@ -20,7 +20,7 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
 
 BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
                                                        ExpressionSyntax* leftExpression,
-                                                       SyntaxToken* operatorToken,
+                                                       LanguageSyntaxToken* operatorToken,
                                                        ExpressionSyntax* rightExpression) noexcept
 {
     assert(leftExpression != nullptr);

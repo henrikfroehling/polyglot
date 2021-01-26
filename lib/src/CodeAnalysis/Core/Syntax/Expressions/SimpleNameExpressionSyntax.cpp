@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 
 namespace polyglot::CodeAnalysis
 {

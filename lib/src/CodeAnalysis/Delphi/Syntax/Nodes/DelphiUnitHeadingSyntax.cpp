@@ -1,12 +1,12 @@
-#include "polyglot/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(SyntaxToken* unitKeyword,
+DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(LanguageSyntaxToken* unitKeyword,
                                                  NameExpressionSyntax* name,
-                                                 SyntaxToken* semiColonToken) noexcept
+                                                 LanguageSyntaxToken* semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitHeading},
       _pUnitKeyword{unitKeyword},
       _pName{name},
