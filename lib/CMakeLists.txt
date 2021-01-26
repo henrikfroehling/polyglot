@@ -44,7 +44,7 @@ set(SOURCES_CORE
 
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
-  ${SOURCE_DIR}/CodeANalysis/Core/LanguageKind.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/LanguageKind.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxNodeFlags.cpp
 )
