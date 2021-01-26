@@ -41,6 +41,7 @@ public:
     inline pg_size spanStart() const noexcept { return _position + leadingTriviaWidth(); }
     inline TextSpan fullSpan() const noexcept { return TextSpan{_position, _fullWidth}; }
     virtual std::string_view text() const noexcept { return ""; }
+    bool value() const noexcept;
 
     inline bool containsTrivia() const noexcept { return (_flags & SyntaxNodeFlags::ContainsTrivia) != SyntaxNodeFlags::None; }
     inline bool containsStructuredTrivia() const noexcept { return (_flags & SyntaxNodeFlags::ContainsStructuredTrivia) != SyntaxNodeFlags::None; }

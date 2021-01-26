@@ -43,7 +43,7 @@ public:
     inline TextSpan fullSpan() const noexcept override { return _pUnderlyingNode->fullSpan(); }
 
     inline bool isMissing() const noexcept override { return _pUnderlyingNode->isMissing(); }
-    inline bool value() const noexcept override;
+    inline bool value() const noexcept override { return _pUnderlyingNode->value(); }
 
     bool hasLeadingTrivia() const noexcept override;
     bool hasTrailingTrivia() const noexcept override;

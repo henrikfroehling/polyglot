@@ -25,17 +25,6 @@ TextSpan SyntaxToken::span() const noexcept
                     _pUnderlyingNode->width()};
 }
 
-bool SyntaxToken::value() const noexcept
-{
-    switch (_pUnderlyingNode->syntaxKind())
-    {
-        case SyntaxKind::TrueKeyword: return true;
-        case SyntaxKind::FalseKeyword: return false;
-    }
-
-    return false;
-}
-
 bool SyntaxToken::hasLeadingTrivia() const noexcept
 {
     return _pLeadingTrivia != nullptr && _pLeadingTrivia->count() != 0;
