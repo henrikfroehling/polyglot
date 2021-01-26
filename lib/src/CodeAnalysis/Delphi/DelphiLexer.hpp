@@ -10,6 +10,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class LanguageSyntaxTrivia;
 class SyntaxPool;
@@ -28,7 +29,7 @@ private:
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
-                         std::vector<LanguageSyntaxTrivia*>& triviaList) noexcept;
+                         std::vector<LanguageSyntaxNode*>& triviaList) noexcept;
 
     LanguageSyntaxTrivia* scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
@@ -48,12 +49,12 @@ private:
                             bool endIsActive,
                             bool afterFirstToken,
                             bool afterNonWhitespaceOnLine,
-                            std::vector<LanguageSyntaxTrivia*>& triviaList) noexcept;
+                            std::vector<LanguageSyntaxNode*>& triviaList) noexcept;
 
     LanguageSyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
 
-    void lexDirectiveTrailingTrivia(std::vector<LanguageSyntaxTrivia*>& triviaList,
+    void lexDirectiveTrailingTrivia(std::vector<LanguageSyntaxNode*>& triviaList,
                                     bool includeEndOfLine) noexcept;
 
     LanguageSyntaxTrivia* lexDirectiveTrivia() noexcept;

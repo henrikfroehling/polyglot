@@ -6,11 +6,13 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "Syntax/LanguageSyntaxNode.hpp"
-#include "Syntax/LanguageSyntaxToken.hpp"
-#include "Syntax/LanguageSyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
+
+class LanguageSyntaxList;
+class LanguageSyntaxToken;
+class LanguageSyntaxTrivia;
 
 class SyntaxPool final
 {
@@ -26,20 +28,23 @@ public:
 
     static LanguageSyntaxToken* createSyntaxToken(SyntaxKind syntaxKind,
                                                   std::string_view text,
-                                                  pg_size position = 0) noexcept;
+                                                  pg_size position = 0,
+                                                  LanguageSyntaxList* leadingTrivia = nullptr,
+                                                  LanguageSyntaxList* trailingTrivia = nullptr) noexcept;
 
     static LanguageSyntaxTrivia* createSyntaxTrivia(SyntaxKind syntaxKind,
                                                     std::string_view text,
                                                     pg_size position = 0) noexcept;
 
+    static LanguageSyntaxList* createSyntaxList(std::vector<LanguageSyntaxNode*>&& nodes) noexcept;
+
     static LanguageSyntaxNode* addSyntaxNode(UniquePtr<LanguageSyntaxNode> syntaxNode) noexcept;
     static LanguageSyntaxToken* addSyntaxToken(UniquePtr<LanguageSyntaxToken> syntaxToken) noexcept;
     static LanguageSyntaxTrivia* addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia> syntaxTrivia) noexcept;
+    static LanguageSyntaxList* addSyntaxList(UniquePtr<LanguageSyntaxList> syntaxList) noexcept;
 
 private:
     static inline std::vector<UniquePtr<LanguageSyntaxNode>> _syntaxNodes{};
-    static inline std::vector<UniquePtr<LanguageSyntaxToken>> _syntaxTokens{};
-    static inline std::vector<UniquePtr<LanguageSyntaxTrivia>> _syntaxTrivia{};
 };
 
 } // end namespace polyglot::CodeAnalysis

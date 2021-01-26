@@ -8,19 +8,19 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxToken;
+class LanguageSyntaxNode;
 
 class SkippedTokensTriviaSyntax : public StructuredTriviaSyntax
 {
 public:
     explicit SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
-                                       std::vector<LanguageSyntaxToken*> skippedTokens) noexcept;
+                                       std::vector<LanguageSyntaxNode*> skippedTokens) noexcept;
 
     virtual ~SkippedTokensTriviaSyntax() noexcept = default;
-    inline const std::vector<LanguageSyntaxToken*>& skippedTokens() const noexcept { return _skippedTokens; }
+    inline const std::vector<LanguageSyntaxNode*>& skippedTokens() const noexcept { return _skippedTokens; }
 
 private:
-    std::vector<LanguageSyntaxToken*> _skippedTokens;
+    std::vector<LanguageSyntaxNode*> _skippedTokens;
 };
 
 } // end namespace polyglot::CodeAnalysis

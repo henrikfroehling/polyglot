@@ -17,7 +17,7 @@ LanguageSyntaxToken::LanguageSyntaxToken(SyntaxKind syntaxKind,
                                          pg_size fullWidth,
                                          LanguageSyntaxList* leadingTrivia,
                                          LanguageSyntaxList* trailingTrivia) noexcept
-    : LanguageSyntaxNode{syntaxKind, position, text.length()},
+    : LanguageSyntaxNode{syntaxKind, position, fullWidth},
       _text{text},
       _pLeadingTrivia{leadingTrivia},
       _pTrailingTrivia{trailingTrivia}

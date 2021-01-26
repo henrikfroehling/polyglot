@@ -1,6 +1,8 @@
 #include "CodeAnalysis/Delphi/DelphiDirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
@@ -303,7 +305,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(LanguageSynta
 
 LanguageSyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
-    std::vector<LanguageSyntaxToken*> skippedTokens{};
+    std::vector<LanguageSyntaxNode*> skippedTokens{};
 
     if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
         && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
@@ -331,8 +333,9 @@ LanguageSyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
     {
         auto ptrSkippedTokensTrivia = std::make_unique<SkippedTokensTriviaSyntax>(SyntaxKind::SkippedTokensTrivia, std::move(skippedTokens));
         SkippedTokensTriviaSyntax* skippedTokensTrivia = static_cast<SkippedTokensTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrSkippedTokensTrivia)));
-        // TODO
-        //pEndOfDirective->addLeadingTrivia(skippedTokensTrivia);
+
+        pEndOfDirective = SyntaxFactory::tokenWithLeadingTrivia(pEndOfDirective->syntaxKind(), pEndOfDirective->text(), pEndOfDirective->position(),
+                                                                SyntaxFactory::syntaxList({skippedTokensTrivia}));
     }
 
     return pEndOfDirective;
