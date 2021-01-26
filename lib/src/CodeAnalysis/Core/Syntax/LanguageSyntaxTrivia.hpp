@@ -7,7 +7,7 @@
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
 #include "LanguageSyntaxNode.hpp"
-#include "../DirectiveStack.hpp"
+#include "../Parser/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {

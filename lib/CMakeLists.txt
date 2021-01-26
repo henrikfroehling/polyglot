@@ -44,23 +44,26 @@ set(SOURCES_CORE
 
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/CharFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Directive.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/DirectiveStack.cpp
   ${SOURCE_DIR}/CodeANalysis/Core/LanguageKind.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Lexer.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/LexerCache.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/LexerMode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/QuickScanState.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxNodeFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/TextKeyedCache.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/TokenInfo.cpp
+)
+
+set(SOURCES_CODEANALYSIS_CORE_PARSER
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/CharFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Directive.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveList.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveStack.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Lexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerCache.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerMode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Parser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/QuickScanState.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/SyntaxFactory.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/SyntaxPool.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TextKeyedCache.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TokenInfo.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_SYNTAX
@@ -118,13 +121,13 @@ set(SOURCES_CODEANALYSIS_CORE_TEXT
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
 )
 
-set(SOURCES_CODEANALYSIS_DELPHI_CORE
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiDirectiveParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexer.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiLexerStates.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxFacts.cpp
+set(SOURCES_CODEANALYSIS_DELPHI_PARSER
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiDirectiveParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexer.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexerFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexerStates.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiParser.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiSyntaxFacts.cpp
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
@@ -155,9 +158,10 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES}
   ${SOURCES_CORE}
   ${SOURCES_CODEANALYSIS_CORE}
+  ${SOURCES_CODEANALYSIS_CORE_PARSER}
   ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
   ${SOURCES_CODEANALYSIS_CORE_TEXT}
-  ${SOURCES_CODEANALYSIS_DELPHI_CORE}
+  ${SOURCES_CODEANALYSIS_DELPHI_PARSER}
   ${SOURCES_CODEANALYSIS_DELPHI_SYNTAX}
 )
 

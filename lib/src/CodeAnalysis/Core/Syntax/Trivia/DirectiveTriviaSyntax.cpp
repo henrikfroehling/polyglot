@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
-#include "CodeAnalysis/Core/Directive.hpp"
+#include "CodeAnalysis/Core/Parser/Directive.hpp"
 
 namespace polyglot::CodeAnalysis
 {

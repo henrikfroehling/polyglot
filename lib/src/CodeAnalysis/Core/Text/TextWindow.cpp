@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Text/TextWindow.hpp"
-#include "CodeAnalysis/Core/Lexer.hpp"
+#include "CodeAnalysis/Core/Parser/Lexer.hpp"
 #include <cassert>
 #include <algorithm>
 #include <limits>
