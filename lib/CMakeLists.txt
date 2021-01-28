@@ -45,8 +45,10 @@ set(SOURCES_CORE
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LanguageKind.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxNodeFlags.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_PARSER
@@ -60,8 +62,6 @@ set(SOURCES_CODEANALYSIS_CORE_PARSER
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerMode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Parser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser/QuickScanState.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/SyntaxFactory.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/SyntaxPool.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TextKeyedCache.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TokenInfo.cpp
 )

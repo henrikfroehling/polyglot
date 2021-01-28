@@ -6,7 +6,7 @@
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTrivia.hpp"
-#include "../Syntax/LanguageSyntaxNode.hpp"
+#include "Syntax/LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {

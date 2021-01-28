@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
-#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 

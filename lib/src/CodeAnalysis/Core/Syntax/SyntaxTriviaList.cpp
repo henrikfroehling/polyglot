@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
-#include "CodeAnalysis/Core/Parser/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 #include <cassert>
