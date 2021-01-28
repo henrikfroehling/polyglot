@@ -17,11 +17,11 @@ public:
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
     inline DelphiPackageHeadingSyntax* heading() const noexcept { return _pHeading; }
-    inline void setHeading(DelphiPackageHeadingSyntax* heading) noexcept { _pHeading = heading; }
+    void setHeading(DelphiPackageHeadingSyntax* heading) noexcept;
     inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _pRequiresClause; }
-    inline void setRequiresClause(DelphiPackageRequiresClauseSyntax* requiresClause) noexcept { _pRequiresClause = requiresClause; }
+    void setRequiresClause(DelphiPackageRequiresClauseSyntax* requiresClause) noexcept;
     inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
-    inline void setContainsClause(DelphiPackageContainsClauseSyntax* containsClause) noexcept { _pContainsClause = containsClause; }
+    void setContainsClause(DelphiPackageContainsClauseSyntax* containsClause) noexcept;
 
 private:
     DelphiPackageHeadingSyntax* _pHeading;

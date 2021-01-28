@@ -19,6 +19,10 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
       _pCloseParenthesisToken{closeParenthesisToken}
 {
     _position = _pIdentifier->position();
+    adjustWidthAndFlags(_pIdentifier);
+    adjustWidthAndFlags(_pOpenParenthesisToken);
+    adjustWidthAndFlags(_pArgumentExpression);
+    adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
 CallExpressionSyntax* CallExpressionSyntax::create(SyntaxKind syntaxKind,

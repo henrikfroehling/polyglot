@@ -15,6 +15,8 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
       _pOperandExpression{operandExpression}
 {
     _position = _pOperatorToken->position();
+    adjustWidthAndFlags(_pOperatorToken);
+    adjustWidthAndFlags(_pOperandExpression);
 }
 
 PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxKind syntaxKind,

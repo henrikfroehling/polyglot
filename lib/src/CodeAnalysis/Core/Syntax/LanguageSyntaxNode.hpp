@@ -67,6 +67,9 @@ public:
     LanguageSyntaxToken* lastToken() const noexcept;
 
 protected:
+    void adjustWidthAndFlags(LanguageSyntaxNode* node) noexcept;
+
+protected:
     pg_size _position;
     pg_size _fullWidth;
     SyntaxKind _syntaxKind;

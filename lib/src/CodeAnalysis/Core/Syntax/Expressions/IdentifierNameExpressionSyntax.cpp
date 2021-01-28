@@ -13,6 +13,7 @@ IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(LanguageSyntaxTok
       _pIdentifier{identfier}
 {
     _position = _pIdentifier->position();
+    adjustWidthAndFlags(_pIdentifier);
 }
 
 IdentifierNameExpressionSyntax* IdentifierNameExpressionSyntax::create(LanguageSyntaxToken* identifier) noexcept

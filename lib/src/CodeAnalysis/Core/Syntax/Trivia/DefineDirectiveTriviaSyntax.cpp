@@ -21,6 +21,10 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pDefineKeyword);
+    adjustWidthAndFlags(_pName);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 DefineDirectiveTriviaSyntax* DefineDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

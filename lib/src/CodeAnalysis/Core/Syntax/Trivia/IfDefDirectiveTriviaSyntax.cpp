@@ -23,6 +23,10 @@ IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isBranchTaken{isBranchTaken}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pIfDefKeyword);
+    adjustWidthAndFlags(_pName);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

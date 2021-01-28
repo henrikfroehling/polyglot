@@ -16,9 +16,9 @@ public:
     virtual ~DelphiProgramModuleSyntax() noexcept = default;
     inline bool isProgramModule() const noexcept override { return true; }
     inline DelphiProgramHeadingSyntax* heading() const noexcept { return _pHeading; }
-    inline void setHeading(DelphiProgramHeadingSyntax* heading) noexcept { _pHeading = heading; }
+    void setHeading(DelphiProgramHeadingSyntax* heading) noexcept;
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
-    inline void setUses(DelphiUsesClauseSyntax* uses) noexcept { _pUses = uses; }
+    void setUses(DelphiUsesClauseSyntax* uses) noexcept;
 
 private:
     DelphiProgramHeadingSyntax* _pHeading;

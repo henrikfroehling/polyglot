@@ -19,6 +19,9 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pEndIfKeyword);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 EndIfDirectiveTriviaSyntax* EndIfDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

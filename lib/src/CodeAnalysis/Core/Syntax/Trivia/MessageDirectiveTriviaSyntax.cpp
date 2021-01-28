@@ -21,6 +21,11 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
       _pEndOfDirectiveToken{endOfDirectiveToken}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pMessageKeyword);
+    adjustWidthAndFlags(_pMessageTypeToken);
+    adjustWidthAndFlags(_pMessageLiteralToken);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

@@ -19,6 +19,10 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _pEndOfDirectiveToken{endOfDirectiveToken}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pIdentifier);
+    adjustWidthAndFlags(_pOnOffToken);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

@@ -1,5 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
@@ -25,6 +26,10 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _conditionValue{conditionValue}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pElseIfKeyword);
+    adjustWidthAndFlags(_pCondition);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

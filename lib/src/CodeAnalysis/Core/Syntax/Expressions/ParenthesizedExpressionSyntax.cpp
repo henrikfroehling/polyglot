@@ -17,6 +17,9 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
       _pCloseParenthesisToken{closeParenthesisToken}
 {
     _position = _pOpenParenthesisToken->position();
+    adjustWidthAndFlags(_pOpenParenthesisToken);
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
 ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(LanguageSyntaxToken* openParenthesisToken,

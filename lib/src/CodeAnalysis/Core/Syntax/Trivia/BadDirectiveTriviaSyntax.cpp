@@ -19,6 +19,9 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pIdentifier);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

@@ -7,6 +7,9 @@ SkippedTokensTriviaSyntax::SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
                                                      std::vector<LanguageSyntaxNode*> skippedTokens) noexcept
     : StructuredTriviaSyntax{syntaxKind},
       _skippedTokens{std::move(skippedTokens)}
-{}
+{
+    for (LanguageSyntaxNode* skippedToken : _skippedTokens)
+        adjustWidthAndFlags(skippedToken);
+}
 
 } // end namespace polyglot::CodeAnalysis

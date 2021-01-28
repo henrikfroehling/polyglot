@@ -59,6 +59,15 @@ LanguageSyntaxToken* LanguageSyntaxNode::lastToken() const noexcept
     return static_cast<LanguageSyntaxToken*>(lastTerminal());
 }
 
+void LanguageSyntaxNode::adjustWidthAndFlags(LanguageSyntaxNode* node) noexcept
+{
+    if (node != nullptr)
+    {
+        _fullWidth += node->_fullWidth;
+        _flags |= node->_flags;
+    }
+}
+
 LanguageSyntaxNode* LanguageSyntaxNode::firstTerminal() const noexcept
 {
     LanguageSyntaxNode* pNode = const_cast<LanguageSyntaxNode*>(this);

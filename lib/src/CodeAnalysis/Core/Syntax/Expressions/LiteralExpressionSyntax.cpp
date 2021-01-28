@@ -13,6 +13,7 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
       _pToken{token}
 {
     _position = _pToken->position();
+    adjustWidthAndFlags(_pToken);
 }
 
 LiteralExpressionSyntax* LiteralExpressionSyntax::create(SyntaxKind syntaxKind,

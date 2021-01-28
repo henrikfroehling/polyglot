@@ -1,5 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 
@@ -16,6 +17,9 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
       _pRightExpression{rightExpression}
 {
     _position = _pLeftExpression->position();
+    adjustWidthAndFlags(_pLeftExpression);
+    adjustWidthAndFlags(_pOperatorToken);
+    adjustWidthAndFlags(_pRightExpression);
 }
 
 BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,

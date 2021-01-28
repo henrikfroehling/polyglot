@@ -21,6 +21,9 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isBranchTaken{isBranchTaken}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pElseKeyword);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

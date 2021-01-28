@@ -28,9 +28,9 @@ public:
     inline DelphiUnitInterfaceSectionSyntax* interfaceSection() const noexcept { return _pInterfaceSection; }
     inline DelphiUnitImplementationSectionSyntax* implementationSection() const noexcept { return _pImplementationSection; }
     inline DelphiUnitInitializationSectionSyntax* initializationSection() const noexcept { return _pInitializationSection; }
-    inline void setInitializationSection(DelphiUnitInitializationSectionSyntax* initializationSection) noexcept { _pInitializationSection = initializationSection; }
+    void setInitializationSection(DelphiUnitInitializationSectionSyntax* initializationSection) noexcept;
     inline DelphiUnitFinalizationSectionSyntax* finalizationSection() const noexcept { return _pFinalizationSection; }
-    inline void setFinalizationSection(DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept { _pFinalizationSection = finalizationSection; }
+    void setFinalizationSection(DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept;
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
     inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }

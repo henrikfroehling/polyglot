@@ -21,7 +21,13 @@ LanguageSyntaxToken::LanguageSyntaxToken(SyntaxKind syntaxKind,
       _text{text},
       _pLeadingTrivia{leadingTrivia},
       _pTrailingTrivia{trailingTrivia}
-{}
+{
+    if (_pLeadingTrivia != nullptr)
+        adjustWidthAndFlags(_pLeadingTrivia);
+
+    if (_pTrailingTrivia != nullptr)
+        adjustWidthAndFlags(_pTrailingTrivia);
+}
 
 LanguageSyntaxToken::~LanguageSyntaxToken() noexcept
 {}

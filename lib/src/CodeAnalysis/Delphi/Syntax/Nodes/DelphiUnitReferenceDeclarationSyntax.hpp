@@ -16,11 +16,11 @@ public:
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept = default;
     inline NameExpressionSyntax* unitName() const noexcept { return _pUnitName; }
     inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
-    inline void setInKeyword(LanguageSyntaxToken* inKeyword) noexcept { _pInKeyword = inKeyword; }
+    void setInKeyword(LanguageSyntaxToken* inKeyword) noexcept;
     inline LanguageSyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
-    inline void setSourceFile(LanguageSyntaxToken* sourceFile) noexcept { _pSourceFile = sourceFile; }
+    void setSourceFile(LanguageSyntaxToken* sourceFile) noexcept;
     inline LanguageSyntaxToken* commaToken() const noexcept { return _pCommaToken; }
-    inline void setCommaToken(LanguageSyntaxToken* commaToken) noexcept { _pCommaToken = commaToken; }
+    void setCommaToken(LanguageSyntaxToken* commaToken) noexcept;
 
 private:
     NameExpressionSyntax* _pUnitName;

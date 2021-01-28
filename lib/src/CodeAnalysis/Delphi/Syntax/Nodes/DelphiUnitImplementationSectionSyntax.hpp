@@ -15,7 +15,7 @@ public:
     explicit DelphiUnitImplementationSectionSyntax(LanguageSyntaxToken* implementationKeyword) noexcept;
     virtual ~DelphiUnitImplementationSectionSyntax() noexcept = default;
     virtual DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
-    virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept { _pUses = uses; }
+    virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept;
 
 private:
     LanguageSyntaxToken* _pImplementationKeyword;

@@ -19,6 +19,9 @@ EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntax
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pEndRegionKeyword);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,

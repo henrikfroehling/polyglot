@@ -21,6 +21,10 @@ IfNDefDirectiveTriviaSyntax::IfNDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    adjustWidthAndFlags(_pIfNDefKeyword);
+    adjustWidthAndFlags(_pName);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
 IfNDefDirectiveTriviaSyntax* IfNDefDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
