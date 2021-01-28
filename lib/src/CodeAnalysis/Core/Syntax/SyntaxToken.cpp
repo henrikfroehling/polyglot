@@ -5,15 +5,15 @@
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxToken::SyntaxToken(LanguageSyntaxNode* underlyingNode,
+SyntaxToken::SyntaxToken(LanguageSyntaxToken* underlyingToken,
                          ISyntaxNode* parent) noexcept
     : ISyntaxToken{},
-      _pUnderlyingNode{underlyingNode},
+      _pUnderlyingToken{underlyingToken},
       _pParent{parent},
       _pLeadingTrivia{nullptr},
       _pTrailingTrivia{nullptr}
 {
-    assert(underlyingNode != nullptr);
+    assert(_pUnderlyingToken != nullptr);
 }
 
 SyntaxToken::~SyntaxToken() noexcept
@@ -21,8 +21,8 @@ SyntaxToken::~SyntaxToken() noexcept
 
 TextSpan SyntaxToken::span() const noexcept
 {
-    return TextSpan{_pUnderlyingNode->position() + _pUnderlyingNode->leadingTriviaWidth(),
-                    _pUnderlyingNode->width()};
+    return TextSpan{_pUnderlyingToken->position() + _pUnderlyingToken->leadingTriviaWidth(),
+                    _pUnderlyingToken->width()};
 }
 
 bool SyntaxToken::hasLeadingTrivia() const noexcept

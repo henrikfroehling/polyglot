@@ -1,5 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 #include <cassert>
 #include <stdexcept>
 
@@ -21,7 +22,7 @@ SyntaxTriviaList::~SyntaxTriviaList() noexcept
 ISyntaxTrivia* SyntaxTriviaList::child(pg_size index) const noexcept
 {
     // TODO Fix memory leak
-    return new SyntaxTrivia{_pUnderlyingNode->child(index), _pToken};
+    return new SyntaxTrivia{static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(index)), _pToken};
 }
 
 TextSpan SyntaxTriviaList::span() const noexcept
@@ -40,7 +41,7 @@ TextSpan SyntaxTriviaList::fullSpan() const noexcept
 ISyntaxTrivia* SyntaxTriviaList::first() const noexcept
 {
     if (_pUnderlyingNode->childCount() > 0)
-        return new SyntaxTrivia{_pUnderlyingNode->child(0), _pToken}; // TODO Fix memory leak
+        return new SyntaxTrivia{ static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(0)), _pToken}; // TODO Fix memory leak
 
     throw std::runtime_error{"invalid operation"};
 }
@@ -50,7 +51,7 @@ ISyntaxTrivia* SyntaxTriviaList::last() const noexcept
     const pg_size count = _pUnderlyingNode->childCount();
 
     if (count > 0)
-        return new SyntaxTrivia{_pUnderlyingNode->child(count - 1), _pToken}; // TODO Fix memory leak
+        return new SyntaxTrivia{ static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(count - 1)), _pToken}; // TODO Fix memory leak
 
     throw std::runtime_error{"invalid operation"};
 }

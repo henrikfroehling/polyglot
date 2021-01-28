@@ -478,7 +478,7 @@ bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noe
             return evaluateBool(static_cast<ParenthesizedExpressionSyntax*>(expression)->expression());
         case SyntaxKind::TrueLiteralExpression:
         case SyntaxKind::FalseLiteralExpression:
-            return static_cast<LiteralExpressionSyntax*>(expression)->token()->value();
+            return static_cast<LiteralExpressionSyntax*>(expression)->token()->booleanValue();
         case SyntaxKind::IdentifierNameExpression:
             return isDefined(static_cast<IdentifierNameExpressionSyntax*>(expression)->identifier()->text());
     }

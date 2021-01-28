@@ -23,17 +23,6 @@ LanguageSyntaxNode::LanguageSyntaxNode(SyntaxKind syntaxKind,
 LanguageSyntaxNode::~LanguageSyntaxNode() noexcept
 {}
 
-bool LanguageSyntaxNode::value() const noexcept
-{
-    switch (_syntaxKind)
-    {
-        case SyntaxKind::TrueKeyword: return true;
-        case SyntaxKind::FalseKeyword: return false;
-    }
-
-    return false;
-}
-
 pg_size LanguageSyntaxNode::leadingTriviaWidth() const noexcept
 {
     if (_fullWidth != 0)

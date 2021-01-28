@@ -32,7 +32,7 @@ public:
     virtual TextSpan fullSpan() const noexcept = 0;
 
     virtual bool isMissing() const noexcept = 0;
-    virtual bool value() const noexcept = 0;
+    virtual bool booleanValue() const noexcept = 0;
 
     virtual bool hasLeadingTrivia() const noexcept = 0;
     virtual bool hasTrailingTrivia() const noexcept = 0;
