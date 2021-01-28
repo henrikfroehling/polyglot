@@ -2,6 +2,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
@@ -29,6 +30,13 @@ LanguageSyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
 {
     _syntaxNodes.push_back(std::make_unique<LanguageSyntaxTrivia>(syntaxKind, text, position));
     return static_cast<LanguageSyntaxTrivia*>(_syntaxNodes.back().get());
+}
+
+ISyntaxTrivia* SyntaxPool::createSyntaxTrivia(LanguageSyntaxTrivia* trivia,
+                                              ISyntaxToken* token) noexcept
+{
+    _syntaxTrivia.push_back(std::make_unique<SyntaxTrivia>(trivia, token));
+    return _syntaxTrivia.back().get();
 }
 
 LanguageSyntaxList* SyntaxPool::createSyntaxList(std::vector<LanguageSyntaxNode*>&& nodes) noexcept

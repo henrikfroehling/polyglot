@@ -5,11 +5,13 @@
 #include <vector>
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTrivia.hpp"
 #include "../Syntax/LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
+class ISyntaxToken;
 class LanguageSyntaxList;
 class LanguageSyntaxToken;
 class LanguageSyntaxTrivia;
@@ -36,6 +38,9 @@ public:
                                                     std::string_view text,
                                                     pg_size position = 0) noexcept;
 
+    static ISyntaxTrivia* createSyntaxTrivia(LanguageSyntaxTrivia* trivia,
+                                             ISyntaxToken* token) noexcept;
+
     static LanguageSyntaxList* createSyntaxList(std::vector<LanguageSyntaxNode*>&& nodes) noexcept;
 
     static LanguageSyntaxNode* addSyntaxNode(UniquePtr<LanguageSyntaxNode> syntaxNode) noexcept;
@@ -45,6 +50,7 @@ public:
 
 private:
     static inline std::vector<UniquePtr<LanguageSyntaxNode>> _syntaxNodes{};
+    static inline std::vector<UniquePtr<ISyntaxTrivia>> _syntaxTrivia{};
 };
 
 } // end namespace polyglot::CodeAnalysis
