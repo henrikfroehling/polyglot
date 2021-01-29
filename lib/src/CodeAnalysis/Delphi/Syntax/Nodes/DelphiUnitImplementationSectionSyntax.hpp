@@ -12,10 +12,15 @@ class LanguageSyntaxToken;
 class DelphiUnitImplementationSectionSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitImplementationSectionSyntax(LanguageSyntaxToken* implementationKeyword) noexcept;
+    explicit DelphiUnitImplementationSectionSyntax(LanguageSyntaxToken* implementationKeyword,
+                                                   DelphiUsesClauseSyntax* uses = nullptr) noexcept;
+
     virtual ~DelphiUnitImplementationSectionSyntax() noexcept = default;
+    virtual LanguageSyntaxToken* implementationKeyword() const noexcept { return _pImplementationKeyword; }
     virtual DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
-    virtual void setUses(DelphiUsesClauseSyntax* uses) noexcept;
+
+    static DelphiUnitImplementationSectionSyntax* create(LanguageSyntaxToken* implementationKeyword,
+                                                         DelphiUsesClauseSyntax* uses = nullptr) noexcept;
 
 private:
     LanguageSyntaxToken* _pImplementationKeyword;

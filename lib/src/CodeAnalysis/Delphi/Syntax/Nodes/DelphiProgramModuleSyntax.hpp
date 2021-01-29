@@ -12,13 +12,20 @@ class DelphiUsesClauseSyntax;
 class DelphiProgramModuleSyntax : public DelphiCompilationUnitSyntax
 {
 public:
-    DelphiProgramModuleSyntax() noexcept;
+    explicit DelphiProgramModuleSyntax(DelphiProgramHeadingSyntax* heading,
+                                       DelphiUsesClauseSyntax* uses,
+                                       LanguageSyntaxToken* EOFToken) noexcept;
+
     virtual ~DelphiProgramModuleSyntax() noexcept = default;
     inline bool isProgramModule() const noexcept override { return true; }
     inline DelphiProgramHeadingSyntax* heading() const noexcept { return _pHeading; }
-    void setHeading(DelphiProgramHeadingSyntax* heading) noexcept;
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
-    void setUses(DelphiUsesClauseSyntax* uses) noexcept;
+
+    static DelphiProgramModuleSyntax* create(DelphiProgramHeadingSyntax* heading,
+                                             DelphiUsesClauseSyntax* uses,
+                                             LanguageSyntaxToken* EOFToken) noexcept;
+
+    static DelphiProgramModuleSyntax* create() noexcept;
 
 private:
     DelphiProgramHeadingSyntax* _pHeading;

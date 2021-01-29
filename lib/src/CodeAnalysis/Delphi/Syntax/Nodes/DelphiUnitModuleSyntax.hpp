@@ -20,7 +20,10 @@ public:
                                     DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                     DelphiUnitImplementationSectionSyntax* implementationSection,
                                     LanguageSyntaxToken* endKeyword,
-                                    LanguageSyntaxToken* dotToken) noexcept;
+                                    LanguageSyntaxToken* dotToken,
+                                    LanguageSyntaxToken* EOFToken,
+                                    DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
+                                    DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
 
     virtual ~DelphiUnitModuleSyntax() noexcept = default;
     inline bool isUnitModule() const noexcept override { return true; }
@@ -28,13 +31,20 @@ public:
     inline DelphiUnitInterfaceSectionSyntax* interfaceSection() const noexcept { return _pInterfaceSection; }
     inline DelphiUnitImplementationSectionSyntax* implementationSection() const noexcept { return _pImplementationSection; }
     inline DelphiUnitInitializationSectionSyntax* initializationSection() const noexcept { return _pInitializationSection; }
-    void setInitializationSection(DelphiUnitInitializationSectionSyntax* initializationSection) noexcept;
     inline DelphiUnitFinalizationSectionSyntax* finalizationSection() const noexcept { return _pFinalizationSection; }
-    void setFinalizationSection(DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept;
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
     inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
     inline LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
+
+    static DelphiUnitModuleSyntax* create(DelphiUnitHeadingSyntax* heading,
+                                          DelphiUnitInterfaceSectionSyntax* interfaceSection,
+                                          DelphiUnitImplementationSectionSyntax* implementationSection,
+                                          LanguageSyntaxToken* endKeyword,
+                                          LanguageSyntaxToken* dotToken,
+                                          LanguageSyntaxToken* EOFToken,
+                                          DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
+                                          DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
 
 private:
     DelphiUnitHeadingSyntax* _pHeading;

@@ -1,35 +1,51 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.hpp"
+#include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiPackageModuleSyntax::DelphiPackageModuleSyntax() noexcept
-    : DelphiCompilationUnitSyntax{SyntaxKind::PackageModule},
-      _pHeading{nullptr},
-      _pRequiresClause{nullptr},
-      _pContainsClause{nullptr}
-{}
-
-void DelphiPackageModuleSyntax::setHeading(DelphiPackageHeadingSyntax* heading) noexcept
+DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadingSyntax* heading,
+                                                     DelphiPackageRequiresClauseSyntax* requiresClause,
+                                                     DelphiPackageContainsClauseSyntax* containsClause,
+                                                     LanguageSyntaxToken* EOFToken) noexcept
+    : DelphiCompilationUnitSyntax{SyntaxKind::PackageModule, EOFToken},
+      _pHeading{heading},
+      _pRequiresClause{requiresClause},
+      _pContainsClause{containsClause}
 {
-    _pHeading = heading;
     adjustWidthAndFlags(_pHeading);
-}
-
-void DelphiPackageModuleSyntax::setRequiresClause(DelphiPackageRequiresClauseSyntax* requiresClause) noexcept
-{
-    _pRequiresClause = requiresClause;
     adjustWidthAndFlags(_pRequiresClause);
+    adjustWidthAndFlags(_pContainsClause);
 }
 
-void DelphiPackageModuleSyntax::setContainsClause(DelphiPackageContainsClauseSyntax* containsClause) noexcept
+DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(DelphiPackageHeadingSyntax* heading,
+                                                             DelphiPackageRequiresClauseSyntax* requiresClause,
+                                                             DelphiPackageContainsClauseSyntax* containsClause,
+                                                             LanguageSyntaxToken* EOFToken) noexcept
 {
-    _pContainsClause = containsClause;
-    adjustWidthAndFlags(_pContainsClause);
+    assert(heading != nullptr);
+    assert(heading->syntaxKind() == SyntaxKind::PackageHeading);
+    assert(requiresClause != nullptr);
+    assert(requiresClause->syntaxKind() == SyntaxKind::PackageRequiresClause);
+    assert(containsClause != nullptr);
+    assert(containsClause->syntaxKind() == SyntaxKind::PackageContainsClause);
+    assert(EOFToken != nullptr);
+    assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
+
+    auto ptrPackageModuleSyntax = std::make_unique<DelphiPackageModuleSyntax>(heading, requiresClause, containsClause, EOFToken);
+    return static_cast<DelphiPackageModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrPackageModuleSyntax)));
+}
+
+DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create() noexcept
+{
+    auto ptrPackageModuleSyntax = std::make_unique<DelphiPackageModuleSyntax>(nullptr, nullptr, nullptr, nullptr);
+    return static_cast<DelphiPackageModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrPackageModuleSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

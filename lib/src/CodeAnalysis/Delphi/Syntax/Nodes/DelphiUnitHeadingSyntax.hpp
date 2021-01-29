@@ -21,6 +21,10 @@ public:
     NameExpressionSyntax* name() const noexcept { return _pName; }
     LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
+    static DelphiUnitHeadingSyntax* create(LanguageSyntaxToken* unitKeyword,
+                                           NameExpressionSyntax* name,
+                                           LanguageSyntaxToken* semiColonToken) noexcept;
+
 private:
     LanguageSyntaxToken* _pUnitKeyword;
     NameExpressionSyntax* _pName;

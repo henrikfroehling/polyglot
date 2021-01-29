@@ -1,37 +1,53 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
+#include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName) noexcept
+DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
+                                                                           LanguageSyntaxToken* inKeyword,
+                                                                           LanguageSyntaxToken* sourceFile,
+                                                                           LanguageSyntaxToken* commaToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitReference},
       _pUnitName{unitName},
-      _pInKeyword{nullptr},
-      _pSourceFile{nullptr},
-      _pCommaToken{nullptr}
+      _pInKeyword{inKeyword},
+      _pSourceFile{sourceFile},
+      _pCommaToken{commaToken}
 {
     adjustWidthAndFlags(_pUnitName);
+
+    if (_pInKeyword != nullptr)
+        adjustWidthAndFlags(_pInKeyword);
+
+    if (_pSourceFile != nullptr)
+        adjustWidthAndFlags(_pSourceFile);
+
+    if (_pCommaToken != nullptr)
+        adjustWidthAndFlags(_pCommaToken);
 }
 
-void DelphiUnitReferenceDeclarationSyntax::setInKeyword(LanguageSyntaxToken* inKeyword) noexcept
+DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(NameExpressionSyntax* unitName,
+                                                                                   LanguageSyntaxToken* inKeyword,
+                                                                                   LanguageSyntaxToken* sourceFile,
+                                                                                   LanguageSyntaxToken* commaToken) noexcept
 {
-    _pInKeyword = inKeyword;
-    adjustWidthAndFlags(_pInKeyword);
-}
+    assert(unitName != nullptr);
 
-void DelphiUnitReferenceDeclarationSyntax::setSourceFile(LanguageSyntaxToken* sourceFile) noexcept
-{
-    _pSourceFile = sourceFile;
-    adjustWidthAndFlags(_pSourceFile);
-}
+    if (inKeyword != nullptr)
+        assert(inKeyword->syntaxKind() == SyntaxKind::InKeyword);
 
-void DelphiUnitReferenceDeclarationSyntax::setCommaToken(LanguageSyntaxToken* commaToken) noexcept
-{
-    _pCommaToken = commaToken;
-    adjustWidthAndFlags(_pCommaToken);
+    if (sourceFile != nullptr)
+        assert(sourceFile->syntaxKind() == SyntaxKind::SingleQuotationStringLiteralToken);
+
+    if (commaToken != nullptr)
+        assert(commaToken->syntaxKind() == SyntaxKind::CommaToken);
+
+    auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile, commaToken);
+    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

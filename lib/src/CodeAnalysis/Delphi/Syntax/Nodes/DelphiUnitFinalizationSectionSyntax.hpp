@@ -11,6 +11,8 @@ class DelphiUnitFinalizationSectionSyntax : public DelphiSyntaxNode
 public:
     DelphiUnitFinalizationSectionSyntax() noexcept;
     virtual ~DelphiUnitFinalizationSectionSyntax() noexcept = default;
+
+    static DelphiUnitFinalizationSectionSyntax* create() noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

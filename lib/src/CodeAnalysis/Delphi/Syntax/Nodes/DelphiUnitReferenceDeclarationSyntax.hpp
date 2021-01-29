@@ -12,15 +12,21 @@ class NameExpressionSyntax;
 class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName) noexcept;
+    explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
+                                                  LanguageSyntaxToken* inKeyword = nullptr,
+                                                  LanguageSyntaxToken* sourceFile = nullptr,
+                                                  LanguageSyntaxToken* commaToken = nullptr) noexcept;
+
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept = default;
     inline NameExpressionSyntax* unitName() const noexcept { return _pUnitName; }
     inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
-    void setInKeyword(LanguageSyntaxToken* inKeyword) noexcept;
     inline LanguageSyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
-    void setSourceFile(LanguageSyntaxToken* sourceFile) noexcept;
     inline LanguageSyntaxToken* commaToken() const noexcept { return _pCommaToken; }
-    void setCommaToken(LanguageSyntaxToken* commaToken) noexcept;
+
+    static DelphiUnitReferenceDeclarationSyntax* create(NameExpressionSyntax* unitName,
+                                                        LanguageSyntaxToken* inKeyword = nullptr,
+                                                        LanguageSyntaxToken* sourceFile = nullptr,
+                                                        LanguageSyntaxToken* commaToken = nullptr) noexcept;
 
 private:
     NameExpressionSyntax* _pUnitName;

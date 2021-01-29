@@ -14,7 +14,7 @@ class DelphiUsesClauseSyntax : public DelphiSyntaxNode
 {
 public:
     explicit DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
-                                    std::vector<DelphiUnitReferenceDeclarationSyntax*> unitReferences,
+                                    std::vector<DelphiUnitReferenceDeclarationSyntax*>&& unitReferences,
                                     LanguageSyntaxToken* semiColonToken) noexcept;
 
     virtual ~DelphiUsesClauseSyntax() noexcept = default;
@@ -28,6 +28,10 @@ public:
     }
 
     inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+
+    static DelphiUsesClauseSyntax* create(LanguageSyntaxToken* usesKeyword,
+                                          std::vector<DelphiUnitReferenceDeclarationSyntax*>&& unitReferences,
+                                          LanguageSyntaxToken* semiColonToken) noexcept;
 
 private:
     LanguageSyntaxToken* _pUsesKeyword;

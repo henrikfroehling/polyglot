@@ -21,6 +21,10 @@ public:
     inline virtual LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
     inline virtual SimpleNameExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
 
+    static QualifiedNameExpressionSyntax* create(NameExpressionSyntax* leftExpression,
+                                                 LanguageSyntaxToken* dotToken,
+                                                 SimpleNameExpressionSyntax* rightExpression) noexcept;
+
 private:
     NameExpressionSyntax* _pLeftExpression;
     LanguageSyntaxToken* _pDotToken;

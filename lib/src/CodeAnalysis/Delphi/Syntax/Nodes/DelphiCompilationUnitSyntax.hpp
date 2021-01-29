@@ -12,13 +12,17 @@ class LanguageSyntaxToken;
 class DelphiCompilationUnitSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiCompilationUnitSyntax(SyntaxKind syntaxKind) noexcept;
+    explicit DelphiCompilationUnitSyntax(SyntaxKind syntaxKind,
+                                         LanguageSyntaxToken* EOFToken) noexcept;
+
     virtual ~DelphiCompilationUnitSyntax() noexcept = default;
     inline virtual bool isUnitModule() const noexcept { return false; }
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
     inline LanguageSyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
-    inline void setEOFToken(LanguageSyntaxToken* eofToken) noexcept { _pEOFToken = eofToken; }
+
+    static DelphiCompilationUnitSyntax* create(SyntaxKind syntaxKind,
+                                               LanguageSyntaxToken* EOFToken) noexcept;
 
 private:
     LanguageSyntaxToken* _pEOFToken;
