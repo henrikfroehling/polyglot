@@ -230,7 +230,7 @@ IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
     }
     else
     {
-        LanguageSyntaxToken* pMissingIdentifier = SyntaxFactory::missingToken(SyntaxKind::IdentifierToken);
+        LanguageSyntaxToken* pMissingIdentifier = SyntaxFactory::missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
         return IdentifierNameExpressionSyntax::create(pMissingIdentifier);
     }
 }
