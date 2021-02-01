@@ -1,4 +1,5 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiParser.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
@@ -229,8 +230,8 @@ IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
     }
     else
     {
-        // TODO create missing token
-        return nullptr;
+        LanguageSyntaxToken* pMissingIdentifier = SyntaxFactory::missingToken(SyntaxKind::IdentifierToken);
+        return IdentifierNameExpressionSyntax::create(pMissingIdentifier);
     }
 }
 

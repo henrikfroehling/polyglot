@@ -22,6 +22,10 @@ public:
     static LanguageSyntaxToken* token(TokenInfo& tokenInfo,
                                       pg_size position = 0) noexcept;
 
+    static LanguageSyntaxToken* missingToken(SyntaxKind syntaxKind,
+                                             std::string_view text = "",
+                                             pg_size position = 0) noexcept;
+
     static LanguageSyntaxToken* tokenWithTrivia(TokenInfo& tokenInfo,
                                                 std::vector<LanguageSyntaxNode*>&& leadingTrivia,
                                                 std::vector<LanguageSyntaxNode*>&& trailingTrivia,

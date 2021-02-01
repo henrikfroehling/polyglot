@@ -47,6 +47,7 @@ protected:
     void start() noexcept;
     virtual LanguageSyntaxToken* lexToken() noexcept = 0;
     void addLexedToken(LanguageSyntaxToken* token) noexcept;
+    LanguageSyntaxToken* createMissingToken(SyntaxKind expectedSyntaxKind) noexcept;
 
 protected:
     TextWindow _textWindow;

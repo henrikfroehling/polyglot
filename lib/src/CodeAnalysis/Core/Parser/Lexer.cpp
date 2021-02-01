@@ -1,5 +1,6 @@
 #include "CodeAnalysis/Core/Parser/Lexer.hpp"
 #include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
@@ -97,8 +98,7 @@ LanguageSyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
                 return _pCurrentToken;
             }
 
-            // TODO Create missing replacement token
-            return nullptr;
+            return createMissingToken(syntaxKind);
         }
         case LexerMode::Directive:
         {
@@ -110,8 +110,7 @@ LanguageSyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
                 return _pCurrentDirectiveTriviaToken;
             }
 
-            // TODO Create missing replacement token
-            return nullptr;
+            return createMissingToken(syntaxKind);
         }
     }
 
@@ -211,6 +210,11 @@ void Lexer::addLexedToken(LanguageSyntaxToken* token) noexcept
             break;
         }
     }
+}
+
+LanguageSyntaxToken* Lexer::createMissingToken(SyntaxKind expectedSyntaxKind) noexcept
+{
+    return SyntaxFactory::missingToken(expectedSyntaxKind, _pCurrentToken->text(), _pCurrentToken->position());
 }
 
 } // end namespace polyglot::CodeAnalysis

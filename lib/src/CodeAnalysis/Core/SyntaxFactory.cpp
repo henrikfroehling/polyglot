@@ -2,6 +2,7 @@
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxMissingToken.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -11,6 +12,14 @@ LanguageSyntaxToken* SyntaxFactory::token(TokenInfo& tokenInfo,
                                           pg_size position) noexcept
 {
     return SyntaxPool::createSyntaxToken(tokenInfo.kind, tokenInfo.text, position);
+}
+
+LanguageSyntaxToken* SyntaxFactory::missingToken(SyntaxKind syntaxKind,
+                                                 std::string_view text,
+                                                 pg_size position) noexcept
+{
+    auto ptrMissingToken = std::make_unique<LanguageSyntaxMissingToken>(syntaxKind, text, position, text.length());
+    return SyntaxPool::addSyntaxToken(std::move(ptrMissingToken));
 }
 
 LanguageSyntaxToken* SyntaxFactory::tokenWithTrivia(TokenInfo& tokenInfo,
