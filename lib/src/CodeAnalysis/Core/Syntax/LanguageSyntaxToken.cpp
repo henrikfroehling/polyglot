@@ -32,7 +32,7 @@ LanguageSyntaxToken::LanguageSyntaxToken(SyntaxKind syntaxKind,
 LanguageSyntaxToken::~LanguageSyntaxToken() noexcept
 {}
 
-LanguageSyntaxNode* LanguageSyntaxToken::child(pg_size index) const noexcept
+LanguageSyntaxNode* LanguageSyntaxToken::child(pg_size index) const
 {
     throw std::runtime_error{"invalid operation"};
 }

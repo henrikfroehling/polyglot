@@ -36,9 +36,9 @@ public:
     inline pg_size childCount() const noexcept override { return _pUnderlyingNode->childCount(); }
     inline pg_size position() const noexcept override { return _pUnderlyingNode->position(); }
     inline pg_size endPosition() const noexcept override { return _pUnderlyingNode->endPosition(); }
-    inline pg_size spanStart() const noexcept { return _pUnderlyingNode->spanStart(); }
-    TextSpan span() const noexcept;
-    inline TextSpan fullSpan() const noexcept { return _pUnderlyingNode->fullSpan(); }
+    inline pg_size spanStart() const noexcept override { return _pUnderlyingNode->spanStart(); }
+    TextSpan span() const noexcept override;
+    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingNode->fullSpan(); }
     inline ISyntaxNode* parent() const noexcept override { return _pParent; }
 
     inline bool containsTrivia() const noexcept override { return _pUnderlyingNode->containsTrivia(); }

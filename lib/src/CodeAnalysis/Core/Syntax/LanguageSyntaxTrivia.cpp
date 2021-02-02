@@ -20,7 +20,7 @@ LanguageSyntaxTrivia::LanguageSyntaxTrivia(SyntaxKind syntaxKind,
 LanguageSyntaxTrivia::~LanguageSyntaxTrivia() noexcept
 {}
 
-LanguageSyntaxNode* LanguageSyntaxTrivia::child(pg_size index) const noexcept
+LanguageSyntaxNode* LanguageSyntaxTrivia::child(pg_size index) const
 {
     throw std::runtime_error{"invalid operation"};
 }

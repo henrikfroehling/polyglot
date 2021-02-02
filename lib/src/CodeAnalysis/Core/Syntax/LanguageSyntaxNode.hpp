@@ -34,7 +34,7 @@ public:
     inline SyntaxNodeFlags flags() const noexcept { return _flags; }
     inline virtual pg_size width() const noexcept { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept { return _fullWidth; }
-    inline virtual LanguageSyntaxNode* child(pg_size index) const noexcept { return nullptr; }
+    inline virtual LanguageSyntaxNode* child(pg_size index) const { return nullptr; }
     inline virtual pg_size childCount() const noexcept { return 0; }
     inline pg_size position() const noexcept { return _position; }
     inline pg_size endPosition() const noexcept { return _position + _fullWidth; }

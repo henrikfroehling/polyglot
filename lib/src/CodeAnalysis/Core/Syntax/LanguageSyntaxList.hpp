@@ -19,7 +19,7 @@ public:
     LanguageSyntaxList& operator=(const LanguageSyntaxList&) noexcept = default;
     LanguageSyntaxList& operator=(LanguageSyntaxList&&) noexcept = default;
 
-    inline LanguageSyntaxNode* child(pg_size index) const noexcept override { return _children[index]; }
+    inline LanguageSyntaxNode* child(pg_size index) const noexcept { return _children[index]; }
     inline pg_size childCount() const noexcept override { return _children.size(); }
 
 protected:

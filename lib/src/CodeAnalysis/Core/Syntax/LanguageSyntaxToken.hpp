@@ -35,7 +35,7 @@ public:
     LanguageSyntaxToken& operator=(const LanguageSyntaxToken&) noexcept = default;
     LanguageSyntaxToken& operator=(LanguageSyntaxToken&&) noexcept = default;
 
-    virtual LanguageSyntaxNode* child(pg_size index) const noexcept override;
+    virtual LanguageSyntaxNode* child(pg_size index) const override;
     inline std::string_view text() const noexcept override { return _text; }
     TokenValue value() const noexcept;
     bool booleanValue() const noexcept;

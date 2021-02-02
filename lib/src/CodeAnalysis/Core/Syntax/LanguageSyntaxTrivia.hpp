@@ -31,7 +31,7 @@ public:
 
     inline virtual pg_size width() const noexcept override { return _fullWidth; }
     inline std::string_view text() const noexcept override { return _text; }
-    virtual LanguageSyntaxNode* child(pg_size index) const noexcept override;
+    virtual LanguageSyntaxNode* child(pg_size index) const override;
     inline bool isTrivia() const noexcept override final { return true; }
 
     inline pg_size leadingTriviaWidth() const noexcept override { return 0; }
