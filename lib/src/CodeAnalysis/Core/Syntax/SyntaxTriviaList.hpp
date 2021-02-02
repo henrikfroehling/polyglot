@@ -33,8 +33,8 @@ public:
     ISyntaxTrivia* child(pg_size index) const noexcept override;
     TextSpan span() const noexcept override;
     TextSpan fullSpan() const noexcept override;
-    ISyntaxTrivia* first() const noexcept override;
-    ISyntaxTrivia* last() const noexcept override;
+    ISyntaxTrivia* first() const override;
+    ISyntaxTrivia* last() const override;
 
 protected:
     LanguageSyntaxNode* _pUnderlyingNode;

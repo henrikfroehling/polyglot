@@ -38,7 +38,7 @@ TextSpan SyntaxTriviaList::fullSpan() const noexcept
     return TextSpan{position(), _pUnderlyingNode->fullWidth()};
 }
 
-ISyntaxTrivia* SyntaxTriviaList::first() const noexcept
+ISyntaxTrivia* SyntaxTriviaList::first() const
 {
     if (_pUnderlyingNode->childCount() > 0)
         return SyntaxPool::createSyntaxTrivia(static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(0)), _pToken);
@@ -46,7 +46,7 @@ ISyntaxTrivia* SyntaxTriviaList::first() const noexcept
     throw std::runtime_error{"invalid operation"};
 }
 
-ISyntaxTrivia* SyntaxTriviaList::last() const noexcept
+ISyntaxTrivia* SyntaxTriviaList::last() const
 {
     const pg_size count = _pUnderlyingNode->childCount();
 

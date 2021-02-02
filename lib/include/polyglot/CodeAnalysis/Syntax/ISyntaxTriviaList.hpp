@@ -22,8 +22,8 @@ public:
     virtual ISyntaxTrivia* child(pg_size index) const noexcept = 0;
     virtual TextSpan span() const noexcept = 0;
     virtual TextSpan fullSpan() const noexcept = 0;
-    virtual ISyntaxTrivia* first() const noexcept = 0;
-    virtual ISyntaxTrivia* last() const noexcept = 0;
+    virtual ISyntaxTrivia* first() const = 0;
+    virtual ISyntaxTrivia* last() const = 0;
 
 protected:
     ISyntaxTriviaList() noexcept = default;
