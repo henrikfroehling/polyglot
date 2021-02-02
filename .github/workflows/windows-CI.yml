@@ -1,0 +1,31 @@
+name: windows-CI
+
+on: push
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_LIBRARY_DRIVER=ON
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: windows-latest-develop-ci-${{github.run_number}}-${{github.run_id}}
+        path: ${{runner.workspace}}/build/**/output/*
