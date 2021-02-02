@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Parser/DirectiveStack.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Parser/Directive.hpp"
 
 namespace polyglot::CodeAnalysis

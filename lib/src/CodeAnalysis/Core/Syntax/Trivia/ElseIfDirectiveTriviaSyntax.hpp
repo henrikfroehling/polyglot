@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_TRIVIA_ELSEIFDIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_TRIVIA_ELSEIFDIRECTIVETRIVIASYNTAX_H
 
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis

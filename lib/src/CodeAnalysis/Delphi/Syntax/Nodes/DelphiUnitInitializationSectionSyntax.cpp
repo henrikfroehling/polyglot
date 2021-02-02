@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
 
 namespace polyglot::CodeAnalysis

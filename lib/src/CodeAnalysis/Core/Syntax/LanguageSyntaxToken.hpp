@@ -5,9 +5,9 @@
 #include <variant>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/LanguageKind.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "LanguageSyntaxList.hpp"
 #include "LanguageSyntaxNode.hpp"
 

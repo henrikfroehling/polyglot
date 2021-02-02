@@ -1,5 +1,5 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
+#ifndef POLYGLOT_CODEANALYSIS_SYNTAXKINDS_H
+#define POLYGLOT_CODEANALYSIS_SYNTAXKINDS_H
 
 #include <string>
 #include "polyglot/polyglot_global.hpp"
@@ -337,4 +337,4 @@ std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXKIND_H
+#endif // POLYGLOT_CODEANALYSIS_SYNTAXKINDS_H

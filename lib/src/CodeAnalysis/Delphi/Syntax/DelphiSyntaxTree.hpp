@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHISYNTAXTREE_H
 
 #include "polyglot/polyglot_global.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp"
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -11,7 +11,7 @@ namespace polyglot::CodeAnalysis
 class LanguageSyntaxNode;
 class SyntaxPool;
 
-class POLYGLOT_API DelphiSyntaxTree : public SyntaxTree
+class POLYGLOT_API DelphiSyntaxTree : public ISyntaxTree
 {
 public:
     DelphiSyntaxTree() noexcept = default;

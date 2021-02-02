@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"

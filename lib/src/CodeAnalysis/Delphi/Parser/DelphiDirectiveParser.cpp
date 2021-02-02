@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiDirectiveParser.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"

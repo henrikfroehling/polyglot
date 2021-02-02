@@ -7,7 +7,7 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "LinePosition.hpp"
 #include "LinePositionSpan.hpp"
 

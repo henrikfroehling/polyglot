@@ -1,17 +1,17 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxTree::SyntaxTree() noexcept
+ISyntaxTree::ISyntaxTree() noexcept
     : _ptrSourceText{nullptr},
       _pRoot{nullptr},
       _syntaxPool{}
 {}
 
-SyntaxTree::SyntaxTree(SharedPtr<SourceText> sourceText,
-                       LanguageSyntaxNode* root,
-                       SyntaxPool&& syntaxPool) noexcept
+ISyntaxTree::ISyntaxTree(SharedPtr<SourceText> sourceText,
+                         LanguageSyntaxNode* root,
+                         SyntaxPool&& syntaxPool) noexcept
     : _ptrSourceText{std::move(sourceText)},
       _pRoot{root},
       _syntaxPool{std::move(syntaxPool)}

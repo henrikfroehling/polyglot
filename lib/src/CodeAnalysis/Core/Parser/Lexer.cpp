@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Parser/Lexer.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"

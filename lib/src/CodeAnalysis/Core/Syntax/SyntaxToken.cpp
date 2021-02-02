@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis

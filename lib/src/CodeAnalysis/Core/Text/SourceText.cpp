@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
-#include "CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/Text/TextUtilities.hpp"
 #include <cassert>
 #include <algorithm>

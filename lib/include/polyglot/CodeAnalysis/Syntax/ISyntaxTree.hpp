@@ -1,5 +1,5 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTREE_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTREE_H
+#ifndef POLYGLOT_CODEANALYSIS_SYNTAX_SYNTAXTREE_H
+#define POLYGLOT_CODEANALYSIS_SYNTAX_SYNTAXTREE_H
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -11,17 +11,17 @@ namespace polyglot::CodeAnalysis
 
 class LanguageSyntaxNode;
 
-class POLYGLOT_API SyntaxTree
+class POLYGLOT_API ISyntaxTree
 {
 public:
-    SyntaxTree() noexcept;
-    virtual ~SyntaxTree() noexcept = default;
+    ISyntaxTree() noexcept;
+    virtual ~ISyntaxTree() noexcept = default;
     inline LanguageSyntaxNode* root() const noexcept { return _pRoot; }
 
 protected:
-    explicit SyntaxTree(SharedPtr<SourceText> sourceText,
-                        LanguageSyntaxNode* root,
-                        SyntaxPool&& syntaxPool) noexcept;
+    explicit ISyntaxTree(SharedPtr<SourceText> sourceText,
+                         LanguageSyntaxNode* root,
+                         SyntaxPool&& syntaxPool) noexcept;
 
 protected:
     SharedPtr<SourceText> _ptrSourceText;
@@ -31,4 +31,4 @@ protected:
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTREE_H
+#endif // POLYGLOT_CODEANALYSIS_SYNTAX_SYNTAXTREE_H

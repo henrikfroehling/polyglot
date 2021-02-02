@@ -108,7 +108,7 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTree.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTriviaList.cpp
 )

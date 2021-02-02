@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"

@@ -1,12 +1,12 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTRIVIA_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTRIVIA_H
+#ifndef POLYGLOT_CODEANALYSIS_SYNTAX_ISYNTAXTRIVIA_H
+#define POLYGLOT_CODEANALYSIS_SYNTAX_ISYNTAXTRIVIA_H
 
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/LanguageKind.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -42,4 +42,4 @@ protected:
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTRIVIA_H
+#endif // POLYGLOT_CODEANALYSIS_SYNTAX_ISYNTAXTRIVIA_H

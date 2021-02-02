@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/LanguageKind.hpp"
+#include "polyglot/CodeAnalysis/LanguageKind.hpp"

@@ -1,4 +1,4 @@
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {

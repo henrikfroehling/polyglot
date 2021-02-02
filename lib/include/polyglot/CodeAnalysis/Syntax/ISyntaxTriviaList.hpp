@@ -1,9 +1,9 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
+#ifndef POLYGLOT_CODEANALYSIS_SYNTAX_ISYNTAXTRIVIALIST_H
+#define POLYGLOT_CODEANALYSIS_SYNTAX_ISYNTAXTRIVIALIST_H
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -35,4 +35,4 @@ protected:
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
+#endif // POLYGLOT_CODEANALYSIS_SYNTAX_ISYNTAXTRIVIALIST_H

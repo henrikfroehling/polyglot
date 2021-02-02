@@ -3,7 +3,7 @@
 #include <streambuf>
 #include <string>
 #include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
-#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp>
+#include <polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp>
 
 std::string readFile(const std::string& filename);
 

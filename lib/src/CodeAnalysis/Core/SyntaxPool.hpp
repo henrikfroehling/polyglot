@@ -4,8 +4,8 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
 #include "Syntax/LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis

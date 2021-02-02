@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_NODES_DELPHICOMPILATIONUNITSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_NODES_DELPHICOMPILATIONUNITSYNTAX_H
 
-#include "polyglot/CodeAnalysis/Core/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis

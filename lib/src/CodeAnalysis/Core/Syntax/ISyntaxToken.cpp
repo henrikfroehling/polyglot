@@ -1,1 +1,1 @@
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"

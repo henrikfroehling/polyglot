@@ -1,5 +1,5 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTSPAN_H
-#define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTSPAN_H
+#ifndef POLYGLOT_CODEANALYSIS_TEXT_TEXTSPAN_H
+#define POLYGLOT_CODEANALYSIS_TEXT_TEXTSPAN_H
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -47,4 +47,4 @@ private:
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTSPAN_H
+#endif // POLYGLOT_CODEANALYSIS_TEXT_TEXTSPAN_H

@@ -2,9 +2,9 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.hpp"
-#include "polyglot/CodeAnalysis/Core/Text/TextSpan.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
+#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
