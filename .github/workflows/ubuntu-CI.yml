@@ -27,5 +27,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2.2.2
       with:
-        name: ubuntu-latest-develop-ci-${{github.run_number}}-${{github.run_id}}
+        name: ubuntu-latest-ci-${{github.run_number}}-${{github.run_id}}-${{github.sha}}
         path: ${{runner.workspace}}/build/**/output/*
