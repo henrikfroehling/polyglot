@@ -139,3 +139,5 @@ ServiceFabricBackup/
 .cmake/
 .vscode/
 install/
+
+*.lnk
