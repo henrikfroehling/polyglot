@@ -1,9 +1,9 @@
-#include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxMissingToken.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 
 namespace polyglot::CodeAnalysis
 {

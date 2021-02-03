@@ -4,9 +4,9 @@
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/LanguageKind.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
-#include "../SyntaxNodeFlags.hpp"
+#include "SyntaxNodeFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {

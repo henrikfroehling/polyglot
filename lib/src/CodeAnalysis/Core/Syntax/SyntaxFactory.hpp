@@ -1,11 +1,11 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAXFACTORY_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAXFACTORY_H
+#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXFACTORY_H
+#define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXFACTORY_H
 
 #include <initializer_list>
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -65,4 +65,4 @@ public:
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAXFACTORY_H
+#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXFACTORY_H

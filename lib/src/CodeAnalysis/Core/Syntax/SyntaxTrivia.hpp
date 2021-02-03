@@ -4,8 +4,8 @@
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/LanguageKind.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 

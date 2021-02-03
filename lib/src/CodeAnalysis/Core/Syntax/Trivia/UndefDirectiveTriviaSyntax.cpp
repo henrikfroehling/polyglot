@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis

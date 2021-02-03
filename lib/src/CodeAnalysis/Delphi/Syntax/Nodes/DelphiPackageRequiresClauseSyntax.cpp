@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {

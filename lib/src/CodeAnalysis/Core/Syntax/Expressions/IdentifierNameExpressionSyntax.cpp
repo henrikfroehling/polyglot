@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 

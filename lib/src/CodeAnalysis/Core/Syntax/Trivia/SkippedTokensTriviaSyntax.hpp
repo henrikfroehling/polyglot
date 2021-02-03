@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_TRIVIA_SKIPPEDTOKENSTRIVIASYNTAX_H
 
 #include <vector>
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
 
 namespace polyglot::CodeAnalysis

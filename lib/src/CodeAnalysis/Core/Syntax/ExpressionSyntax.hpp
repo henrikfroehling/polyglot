@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_EXPRESSIONSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_EXPRESSIONSYNTAX_H
 
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis

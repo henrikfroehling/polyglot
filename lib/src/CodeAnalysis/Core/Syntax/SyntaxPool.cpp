@@ -1,4 +1,4 @@
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"

@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxMissingToken.hpp"
-#include "CodeAnalysis/Core/SyntaxNodeFlags.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"
 
 namespace polyglot::CodeAnalysis
 {

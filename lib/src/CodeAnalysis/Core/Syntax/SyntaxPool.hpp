@@ -1,12 +1,12 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAXPOOL_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAXPOOL_H
+#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXPOOL_H
+#define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXPOOL_H
 
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
-#include "Syntax/LanguageSyntaxNode.hpp"
+#include "LanguageSyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -55,4 +55,4 @@ private:
 
 } // end namespace polyglot::CodeAnalysis
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAXPOOL_H
+#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXPOOL_H

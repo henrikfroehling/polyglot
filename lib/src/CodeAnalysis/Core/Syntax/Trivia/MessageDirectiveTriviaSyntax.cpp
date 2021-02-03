@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 

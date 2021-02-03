@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiParser.hpp"
-#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiLexer.hpp"

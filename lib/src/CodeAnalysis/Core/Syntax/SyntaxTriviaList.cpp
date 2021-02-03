@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include <cassert>
 #include <stdexcept>
 
