@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class ParenthesizedExpressionSyntax : public ExpressionSyntax
 {
@@ -22,7 +23,8 @@ public:
     inline virtual ExpressionSyntax* expression() const noexcept { return _pExpression; }
     inline virtual LanguageSyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
 
-    static ParenthesizedExpressionSyntax* create(LanguageSyntaxToken* openParenthesisToken,
+    static ParenthesizedExpressionSyntax* create(SyntaxFactory& syntaxFactory,
+                                                 LanguageSyntaxToken* openParenthesisToken,
                                                  ExpressionSyntax* expression,
                                                  LanguageSyntaxToken* closeParenthesisToken) noexcept;
 

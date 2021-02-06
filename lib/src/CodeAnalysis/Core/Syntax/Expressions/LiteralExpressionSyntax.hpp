@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class LiteralExpressionSyntax : public ExpressionSyntax
 {
@@ -18,7 +19,8 @@ public:
     virtual ~LiteralExpressionSyntax() noexcept = default;
     inline virtual LanguageSyntaxToken* token() const noexcept { return _pToken; }
 
-    static LiteralExpressionSyntax* create(SyntaxKind syntaxKind,
+    static LiteralExpressionSyntax* create(SyntaxFactory& syntaxFactory,
+                                           SyntaxKind syntaxKind,
                                            LanguageSyntaxToken* token) noexcept;
 
 private:

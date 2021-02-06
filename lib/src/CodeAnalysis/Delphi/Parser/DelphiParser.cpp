@@ -1,6 +1,5 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiParser.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiLexer.hpp"
@@ -20,9 +19,9 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText,
-                           SyntaxPool& syntaxPool) noexcept
-    : Parser{std::make_shared<DelphiLexer>(sourceText, syntaxPool)}
+DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
+    : Parser{std::make_shared<DelphiLexer>(sourceText)},
+      _syntaxFactory{_ptrLexer->syntaxPool()}
 {}
 
 LanguageSyntaxNode* DelphiParser::parseRoot() noexcept
@@ -55,7 +54,7 @@ DelphiCompilationUnitSyntax* DelphiParser::parseCompilationUnit() noexcept
         default:
         {
             LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
-            pCompilationUnit = DelphiCompilationUnitSyntax::create(SyntaxKind::CompilationUnit, pEOFToken);
+            pCompilationUnit = DelphiCompilationUnitSyntax::create(_syntaxFactory, SyntaxKind::CompilationUnit, pEOFToken);
         }
     }
 
@@ -111,8 +110,8 @@ endOfUnit:
     LanguageSyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
     LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
-    return DelphiUnitModuleSyntax::create(pHeading, pInterfaceSection, pImplementationSection, pEndKeyword, pDotToken, pEOFToken,
-                                          pInitializationSection, pFinalizationSection);
+    return DelphiUnitModuleSyntax::create(_syntaxFactory, pHeading, pInterfaceSection, pImplementationSection, pEndKeyword,
+                                          pDotToken, pEOFToken, pInitializationSection, pFinalizationSection);
 }
 
 DelphiUnitHeadingSyntax* DelphiParser::parseUnitHeading() noexcept
@@ -120,41 +119,41 @@ DelphiUnitHeadingSyntax* DelphiParser::parseUnitHeading() noexcept
     LanguageSyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
     NameExpressionSyntax* pName = parseQualifiedName();
     LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-    return DelphiUnitHeadingSyntax::create(pUnitKeyword, pName, pSemiColonToken);
+    return DelphiUnitHeadingSyntax::create(_syntaxFactory, pUnitKeyword, pName, pSemiColonToken);
 }
 
 DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noexcept
 {
     LanguageSyntaxToken* pInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
     DelphiUsesClauseSyntax* pUses = parseUsesClause();
-    return DelphiUnitInterfaceSectionSyntax::create(pInterfaceKeyword, pUses);
+    return DelphiUnitInterfaceSectionSyntax::create(_syntaxFactory, pInterfaceKeyword, pUses);
 }
 
 DelphiUnitImplementationSectionSyntax* DelphiParser::parseUnitImplementationSection() noexcept
 {
     LanguageSyntaxToken* pImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
     DelphiUsesClauseSyntax* pUses = parseUsesClause();
-    return DelphiUnitImplementationSectionSyntax::create(pImplementationKeyword, pUses);
+    return DelphiUnitImplementationSectionSyntax::create(_syntaxFactory, pImplementationKeyword, pUses);
 }
 
 DelphiUnitInitializationSectionSyntax* DelphiParser::parseUnitInitializationSection() noexcept
 {
-    return DelphiUnitInitializationSectionSyntax::create();
+    return DelphiUnitInitializationSectionSyntax::create(_syntaxFactory);
 }
 
 DelphiUnitFinalizationSectionSyntax* DelphiParser::parseUnitFinalizationSection() noexcept
 {
-    return DelphiUnitFinalizationSectionSyntax::create();
+    return DelphiUnitFinalizationSectionSyntax::create(_syntaxFactory);
 }
 
 DelphiPackageModuleSyntax* DelphiParser::parsePackageModule() noexcept
 {
-    return DelphiPackageModuleSyntax::create();
+    return DelphiPackageModuleSyntax::create(_syntaxFactory);
 }
 
 DelphiProgramModuleSyntax* DelphiParser::parseProgramModule() noexcept
 {
-    return DelphiProgramModuleSyntax::create();
+    return DelphiProgramModuleSyntax::create(_syntaxFactory);
 }
 
 DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
@@ -172,7 +171,7 @@ DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
     }
 
     LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-    return DelphiUsesClauseSyntax::create(pUsesKeyword, std::move(unitReferences), pSemiColonToken);
+    return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, std::move(unitReferences), pSemiColonToken);
 }
 
 DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcept
@@ -194,7 +193,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     if (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
         pCommaToken = takeToken(SyntaxKind::CommaToken);
 
-    return DelphiUnitReferenceDeclarationSyntax::create(pUnitName, pInKeyword, pSourceFile, pCommaToken);
+    return DelphiUnitReferenceDeclarationSyntax::create(_syntaxFactory, pUnitName, pInKeyword, pSourceFile, pCommaToken);
 }
 
 NameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
@@ -216,7 +215,7 @@ NameExpressionSyntax* DelphiParser::parseQualifiedNameRight(NameExpressionSyntax
     assert(dotToken != nullptr);
     assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
     SimpleNameExpressionSyntax* pRight = parseIdentifierName();
-    return QualifiedNameExpressionSyntax::create(left, dotToken, pRight);
+    return QualifiedNameExpressionSyntax::create(_syntaxFactory, left, dotToken, pRight);
 }
 
 IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
@@ -226,12 +225,12 @@ IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
     if (pCurrentToken->syntaxKind() == SyntaxKind::IdentifierToken)
     {
         LanguageSyntaxToken* pIdentifier = takeToken();
-        return IdentifierNameExpressionSyntax::create(pIdentifier);
+        return IdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
     }
     else
     {
-        LanguageSyntaxToken* pMissingIdentifier = SyntaxFactory::missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
-        return IdentifierNameExpressionSyntax::create(pMissingIdentifier);
+        LanguageSyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
+        return IdentifierNameExpressionSyntax::create(_syntaxFactory, pMissingIdentifier);
     }
 }
 

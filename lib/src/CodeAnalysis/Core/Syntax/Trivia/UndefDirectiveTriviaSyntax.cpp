@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
@@ -22,7 +22,8 @@ UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     _position = _pStartToken->position();
 }
 
-UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               LanguageSyntaxToken* startToken,
                                                                LanguageSyntaxToken* undefKeyword,
                                                                LanguageSyntaxToken* name,
                                                                LanguageSyntaxToken* endOfDirectiveToken,
@@ -38,7 +39,7 @@ UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(LanguageSyntaxTok
     auto ptrUndefDirectiveTrivia = std::make_unique<UndefDirectiveTriviaSyntax>(SyntaxKind::UndefDirectiveTrivia, startToken,
                                                                                 undefKeyword, name, endOfDirectiveToken, isActive);
 
-    return static_cast<UndefDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrUndefDirectiveTrivia)));
+    return static_cast<UndefDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrUndefDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

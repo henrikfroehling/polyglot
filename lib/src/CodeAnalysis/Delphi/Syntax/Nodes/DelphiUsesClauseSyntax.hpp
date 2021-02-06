@@ -9,6 +9,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class DelphiUsesClauseSyntax : public DelphiSyntaxNode
 {
@@ -29,7 +30,8 @@ public:
 
     inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
-    static DelphiUsesClauseSyntax* create(LanguageSyntaxToken* usesKeyword,
+    static DelphiUsesClauseSyntax* create(SyntaxFactory& syntaxFactory,
+                                          LanguageSyntaxToken* usesKeyword,
                                           std::vector<DelphiUnitReferenceDeclarationSyntax*>&& unitReferences,
                                           LanguageSyntaxToken* semiColonToken) noexcept;
 

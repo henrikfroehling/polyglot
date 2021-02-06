@@ -45,6 +45,8 @@ set(SOURCES_CORE
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LanguageKind.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_PARSER
@@ -103,11 +105,9 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxPool.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTriviaList.cpp

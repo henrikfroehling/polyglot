@@ -10,6 +10,7 @@ namespace polyglot::CodeAnalysis
 
 class LanguageSyntaxNode;
 class LanguageSyntaxToken;
+class SyntaxPool;
 
 class Parser
 {
@@ -21,6 +22,7 @@ public:
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
     LanguageSyntaxNode* parse() noexcept;
+    inline SyntaxPool takeSyntaxPool() noexcept { return _ptrLexer->takeSyntaxPool(); }
 
 protected:
     explicit Parser(std::shared_ptr<Lexer> lexer) noexcept;

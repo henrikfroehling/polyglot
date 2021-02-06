@@ -9,6 +9,7 @@ namespace polyglot::CodeAnalysis
 class DelphiPackageContainsClauseSyntax;
 class DelphiPackageHeadingSyntax;
 class DelphiPackageRequiresClauseSyntax;
+class SyntaxFactory;
 
 class DelphiPackageModuleSyntax : public DelphiCompilationUnitSyntax
 {
@@ -24,12 +25,13 @@ public:
     inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _pRequiresClause; }
     inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
 
-    static DelphiPackageModuleSyntax* create(DelphiPackageHeadingSyntax* heading,
+    static DelphiPackageModuleSyntax* create(SyntaxFactory& syntaxFactory,
+                                             DelphiPackageHeadingSyntax* heading,
                                              DelphiPackageRequiresClauseSyntax* requiresClause,
                                              DelphiPackageContainsClauseSyntax* containsClause,
                                              LanguageSyntaxToken* EOFToken) noexcept;
 
-    static DelphiPackageModuleSyntax* create() noexcept;
+    static DelphiPackageModuleSyntax* create(SyntaxFactory& syntaxFactory) noexcept;
 
 private:
     DelphiPackageHeadingSyntax* _pHeading;

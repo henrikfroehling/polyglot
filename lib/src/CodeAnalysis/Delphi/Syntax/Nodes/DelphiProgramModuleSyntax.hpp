@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 
 class DelphiProgramHeadingSyntax;
 class DelphiUsesClauseSyntax;
+class SyntaxFactory;
 
 class DelphiProgramModuleSyntax : public DelphiCompilationUnitSyntax
 {
@@ -21,11 +22,12 @@ public:
     inline DelphiProgramHeadingSyntax* heading() const noexcept { return _pHeading; }
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
 
-    static DelphiProgramModuleSyntax* create(DelphiProgramHeadingSyntax* heading,
+    static DelphiProgramModuleSyntax* create(SyntaxFactory& syntaxFactory,
+                                             DelphiProgramHeadingSyntax* heading,
                                              DelphiUsesClauseSyntax* uses,
                                              LanguageSyntaxToken* EOFToken) noexcept;
 
-    static DelphiProgramModuleSyntax* create() noexcept;
+    static DelphiProgramModuleSyntax* create(SyntaxFactory& syntaxFactory) noexcept;
 
 private:
     DelphiProgramHeadingSyntax* _pHeading;

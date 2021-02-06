@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -27,7 +27,8 @@ IfNDefDirectiveTriviaSyntax::IfNDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-IfNDefDirectiveTriviaSyntax* IfNDefDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+IfNDefDirectiveTriviaSyntax* IfNDefDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                 LanguageSyntaxToken* startToken,
                                                                  LanguageSyntaxToken* ifNDefKeyword,
                                                                  LanguageSyntaxToken* name,
                                                                  LanguageSyntaxToken* endOfDirectiveToken,
@@ -43,7 +44,7 @@ IfNDefDirectiveTriviaSyntax* IfNDefDirectiveTriviaSyntax::create(LanguageSyntaxT
     auto ptrIfNDefDirectiveTrivia = std::make_unique<IfNDefDirectiveTriviaSyntax>(SyntaxKind::IfNDefDirectiveTrivia, startToken,
                                                                                   ifNDefKeyword, name, endOfDirectiveToken, isActive);
 
-    return static_cast<IfNDefDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrIfNDefDirectiveTrivia)));
+    return static_cast<IfNDefDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfNDefDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

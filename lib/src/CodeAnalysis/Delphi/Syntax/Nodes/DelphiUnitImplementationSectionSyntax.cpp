@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
 
@@ -20,7 +20,8 @@ DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(Lan
         adjustWidthAndFlags(_pUses);
 }
 
-DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::create(LanguageSyntaxToken* implementationKeyword,
+DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                                     LanguageSyntaxToken* implementationKeyword,
                                                                                      DelphiUsesClauseSyntax* uses) noexcept
 {
     assert(implementationKeyword != nullptr);
@@ -30,7 +31,7 @@ DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::cr
         assert(uses->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitImplementationSectionSyntax = std::make_unique<DelphiUnitImplementationSectionSyntax>(implementationKeyword, uses);
-    return static_cast<DelphiUnitImplementationSectionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));
+    return static_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

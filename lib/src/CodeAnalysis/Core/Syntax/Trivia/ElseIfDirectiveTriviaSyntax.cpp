@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -32,7 +32,8 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                 LanguageSyntaxToken* startToken,
                                                                  LanguageSyntaxToken* elseIfKeyword,
                                                                  ExpressionSyntax* condition,
                                                                  LanguageSyntaxToken* endOfDirectiveToken,
@@ -51,7 +52,7 @@ ElseIfDirectiveTriviaSyntax* ElseIfDirectiveTriviaSyntax::create(LanguageSyntaxT
                                                                                   elseIfKeyword, condition, endOfDirectiveToken,
                                                                                   isActive, isBranchTaken, conditionValue);
 
-    return static_cast<ElseIfDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrElseIfDirectiveTrivia)));
+    return static_cast<ElseIfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrElseIfDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

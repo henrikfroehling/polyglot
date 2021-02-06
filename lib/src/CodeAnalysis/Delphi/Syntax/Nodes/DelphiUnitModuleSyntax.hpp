@@ -12,6 +12,7 @@ class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
 {
@@ -37,7 +38,8 @@ public:
     inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
     inline LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
 
-    static DelphiUnitModuleSyntax* create(DelphiUnitHeadingSyntax* heading,
+    static DelphiUnitModuleSyntax* create(SyntaxFactory& syntaxFactory,
+                                          DelphiUnitHeadingSyntax* heading,
                                           DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                           DelphiUnitImplementationSectionSyntax* implementationSection,
                                           LanguageSyntaxToken* endKeyword,

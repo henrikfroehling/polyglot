@@ -4,6 +4,8 @@
 #include <limits>
 #include <memory>
 #include "polyglot/Core/Types.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Parser/DirectiveStack.hpp"
 #include "CodeAnalysis/Core/Parser/LexerCache.hpp"
 #include "CodeAnalysis/Core/Parser/LexerMode.hpp"
@@ -38,12 +40,17 @@ public:
     LanguageSyntaxToken* peekToken(pg_size n) noexcept;
     void advance() noexcept;
     void setMode(LexerMode mode) noexcept;
-    inline SyntaxPool& syntaxPool() const noexcept { return _syntaxPool; }
+    inline SyntaxPool& syntaxPool() noexcept { return _syntaxPool; }
+
+    inline SyntaxPool takeSyntaxPool() noexcept
+    {
+        SyntaxPool tmp = std::move(_syntaxPool);
+        _syntaxPool = SyntaxPool{};
+        return std::move(tmp);
+    }
 
 protected:
-    explicit Lexer(SharedPtr<SourceText> sourceText,
-                   SyntaxPool& syntaxPool) noexcept;
-
+    explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
     virtual LanguageSyntaxToken* lexToken() noexcept = 0;
     void addLexedToken(LanguageSyntaxToken* token) noexcept;
@@ -62,7 +69,10 @@ protected:
     pg_size _directiveTriviaTokenCount;
     pg_size _directiveTriviaTokenOffset;
     LanguageSyntaxToken* _pCurrentDirectiveTriviaToken;
-    SyntaxPool& _syntaxPool;
+
+private:
+    SyntaxPool _syntaxPool;
+    SyntaxFactory _syntaxFactory;
 };
 
 } // end namespace polyglot::CodeAnalysis

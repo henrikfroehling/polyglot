@@ -3,6 +3,7 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Parser/Lexer.hpp"
 #include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
@@ -13,13 +14,11 @@ namespace polyglot::CodeAnalysis
 class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class LanguageSyntaxTrivia;
-class SyntaxPool;
 
 class DelphiLexer final : public Lexer
 {
 public:
-    explicit DelphiLexer(SharedPtr<SourceText> sourceText,
-                         SyntaxPool& syntaxPool) noexcept;
+    explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
     LanguageSyntaxToken* lexToken() noexcept override;
@@ -62,6 +61,7 @@ private:
 
 private:
     pg_size _currentTriviaPosition;
+    SyntaxFactory _syntaxFactory;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 
 class LanguageSyntaxToken;
 class SimpleNameExpressionSyntax;
+class SyntaxFactory;
 
 class QualifiedNameExpressionSyntax : public NameExpressionSyntax
 {
@@ -21,7 +22,8 @@ public:
     inline virtual LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
     inline virtual SimpleNameExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
 
-    static QualifiedNameExpressionSyntax* create(NameExpressionSyntax* leftExpression,
+    static QualifiedNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
+                                                 NameExpressionSyntax* leftExpression,
                                                  LanguageSyntaxToken* dotToken,
                                                  SimpleNameExpressionSyntax* rightExpression) noexcept;
 

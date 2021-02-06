@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class DelphiCompilationUnitSyntax : public DelphiSyntaxNode
 {
@@ -21,7 +22,8 @@ public:
     inline virtual bool isProgramModule() const noexcept { return false; }
     inline LanguageSyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
 
-    static DelphiCompilationUnitSyntax* create(SyntaxKind syntaxKind,
+    static DelphiCompilationUnitSyntax* create(SyntaxFactory& syntaxFactory,
+                                               SyntaxKind syntaxKind,
                                                LanguageSyntaxToken* EOFToken) noexcept;
 
 private:

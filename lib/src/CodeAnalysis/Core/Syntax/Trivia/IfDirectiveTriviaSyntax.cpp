@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/ExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -32,7 +32,8 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                         LanguageSyntaxToken* startToken,
                                                          LanguageSyntaxToken* ifKeyword,
                                                          ExpressionSyntax* condition,
                                                          LanguageSyntaxToken* endOfDirectiveToken,
@@ -51,7 +52,7 @@ IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(LanguageSyntaxToken* st
                                                                           ifKeyword, condition, endOfDirectiveToken,
                                                                           isActive, isBranchTaken, conditionValue);
 
-    return static_cast<IfDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrIfDirectiveTrivia)));
+    return static_cast<IfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

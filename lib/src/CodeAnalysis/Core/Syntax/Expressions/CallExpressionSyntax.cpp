@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -25,7 +25,8 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
-CallExpressionSyntax* CallExpressionSyntax::create(SyntaxKind syntaxKind,
+CallExpressionSyntax* CallExpressionSyntax::create(SyntaxFactory& syntaxFactory,
+                                                   SyntaxKind syntaxKind,
                                                    LanguageSyntaxToken* identifier,
                                                    LanguageSyntaxToken* openParenthesisToken,
                                                    ExpressionSyntax* argumentExpression,
@@ -42,7 +43,7 @@ CallExpressionSyntax* CallExpressionSyntax::create(SyntaxKind syntaxKind,
     auto ptrCallExpression = std::make_unique<CallExpressionSyntax>(syntaxKind, identifier, openParenthesisToken,
                                                                     argumentExpression, closeParenthesisToken);
 
-    return static_cast<CallExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrCallExpression)));
+    return static_cast<CallExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCallExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

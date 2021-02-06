@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -26,7 +26,8 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             LanguageSyntaxToken* startToken,
                                                              LanguageSyntaxToken* elseKeyword,
                                                              LanguageSyntaxToken* endOfDirectiveToken,
                                                              bool isActive,
@@ -42,7 +43,7 @@ ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(LanguageSyntaxToken
                                                                               elseKeyword, endOfDirectiveToken,
                                                                               isActive, isBranchTaken);
 
-    return static_cast<ElseDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrElseDirectiveTrivia)));
+    return static_cast<ElseDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrElseDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

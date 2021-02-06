@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class RegionDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
@@ -24,7 +25,8 @@ public:
     inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
 
-    static RegionDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+    static RegionDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
+                                               LanguageSyntaxToken* startToken,
                                                LanguageSyntaxToken* regionKeyword,
                                                LanguageSyntaxToken* endOfDirectiveToken,
                                                bool isActive) noexcept;

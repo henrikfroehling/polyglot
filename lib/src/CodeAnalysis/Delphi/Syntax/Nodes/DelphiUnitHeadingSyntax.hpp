@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 
 class LanguageSyntaxToken;
 class NameExpressionSyntax;
+class SyntaxFactory;
 
 class DelphiUnitHeadingSyntax : public DelphiSyntaxNode
 {
@@ -21,7 +22,8 @@ public:
     NameExpressionSyntax* name() const noexcept { return _pName; }
     LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
-    static DelphiUnitHeadingSyntax* create(LanguageSyntaxToken* unitKeyword,
+    static DelphiUnitHeadingSyntax* create(SyntaxFactory& syntaxFactory,
+                                           LanguageSyntaxToken* unitKeyword,
                                            NameExpressionSyntax* name,
                                            LanguageSyntaxToken* semiColonToken) noexcept;
 

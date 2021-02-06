@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -25,7 +25,8 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                 LanguageSyntaxToken* startToken,
                                                                  LanguageSyntaxToken* identifier,
                                                                  LanguageSyntaxToken* onOffToken,
                                                                  LanguageSyntaxToken* endOfDirectiveToken) noexcept
@@ -41,7 +42,7 @@ SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(LanguageSyntaxT
     auto ptrSwitchDirectiveTrivia = std::make_unique<SwitchDirectiveTriviaSyntax>(SyntaxKind::SwitchDirectiveTrivia, startToken,
                                                                                   identifier, onOffToken, endOfDirectiveToken);
 
-    return static_cast<SwitchDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrSwitchDirectiveTrivia)));
+    return static_cast<SwitchDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrSwitchDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

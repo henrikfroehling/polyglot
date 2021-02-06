@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -24,7 +24,8 @@ IfEndDirectiveTriviaSyntax::IfEndDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               LanguageSyntaxToken* startToken,
                                                                LanguageSyntaxToken* ifEndKeyword,
                                                                LanguageSyntaxToken* endOfDirectiveToken,
                                                                bool isActive) noexcept
@@ -38,7 +39,7 @@ IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(LanguageSyntaxTok
     auto ptrIfEndDirectiveTrivia = std::make_unique<IfEndDirectiveTriviaSyntax>(SyntaxKind::IfEndDirectiveTrivia, startToken,
                                                                                 ifEndKeyword, endOfDirectiveToken, isActive);
 
-    return static_cast<IfEndDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrIfEndDirectiveTrivia)));
+    return static_cast<IfEndDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfEndDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

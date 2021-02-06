@@ -9,6 +9,7 @@ namespace polyglot::CodeAnalysis
 
 class ExpressionSyntax;
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class ElseIfDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSyntax
 {
@@ -31,7 +32,8 @@ public:
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
 
-    static ElseIfDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+    static ElseIfDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
+                                               LanguageSyntaxToken* startToken,
                                                LanguageSyntaxToken* elseIfKeyword,
                                                ExpressionSyntax* condition,
                                                LanguageSyntaxToken* endOfDirectiveToken,

@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 #include <cassert>
 
@@ -22,7 +22,8 @@ QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSynta
     adjustWidthAndFlags(_pRightExpression);
 }
 
-QualifiedNameExpressionSyntax* QualifiedNameExpressionSyntax::create(NameExpressionSyntax* leftExpression,
+QualifiedNameExpressionSyntax* QualifiedNameExpressionSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                     NameExpressionSyntax* leftExpression,
                                                                      LanguageSyntaxToken* dotToken,
                                                                      SimpleNameExpressionSyntax* rightExpression) noexcept
 {
@@ -32,7 +33,7 @@ QualifiedNameExpressionSyntax* QualifiedNameExpressionSyntax::create(NameExpress
     assert(rightExpression != nullptr);
 
     auto ptrQualifiedNameExpressionSyntax = std::make_unique<QualifiedNameExpressionSyntax>(leftExpression, dotToken, rightExpression);
-    return static_cast<QualifiedNameExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrQualifiedNameExpressionSyntax)));
+    return static_cast<QualifiedNameExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrQualifiedNameExpressionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

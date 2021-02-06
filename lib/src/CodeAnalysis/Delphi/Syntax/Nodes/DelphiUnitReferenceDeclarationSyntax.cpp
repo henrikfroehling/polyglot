@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include <cassert>
 
@@ -30,7 +30,8 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
         adjustWidthAndFlags(_pCommaToken);
 }
 
-DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(NameExpressionSyntax* unitName,
+DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                                   NameExpressionSyntax* unitName,
                                                                                    LanguageSyntaxToken* inKeyword,
                                                                                    LanguageSyntaxToken* sourceFile,
                                                                                    LanguageSyntaxToken* commaToken) noexcept
@@ -47,7 +48,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
         assert(commaToken->syntaxKind() == SyntaxKind::CommaToken);
 
     auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile, commaToken);
-    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
+    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 
 class LanguageSyntaxToken;
 class NameExpressionSyntax;
+class SyntaxFactory;
 
 class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
@@ -23,7 +24,8 @@ public:
     inline LanguageSyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
     inline LanguageSyntaxToken* commaToken() const noexcept { return _pCommaToken; }
 
-    static DelphiUnitReferenceDeclarationSyntax* create(NameExpressionSyntax* unitName,
+    static DelphiUnitReferenceDeclarationSyntax* create(SyntaxFactory& syntaxFactory,
+                                                        NameExpressionSyntax* unitName,
                                                         LanguageSyntaxToken* inKeyword = nullptr,
                                                         LanguageSyntaxToken* sourceFile = nullptr,
                                                         LanguageSyntaxToken* commaToken = nullptr) noexcept;

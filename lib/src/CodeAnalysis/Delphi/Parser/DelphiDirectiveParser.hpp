@@ -3,6 +3,7 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Parser/DirectiveParser.hpp"
 #include "CodeAnalysis/Core/Parser/Lexer.hpp"
 
@@ -89,6 +90,9 @@ private:
     ExpressionSyntax* parseCallExpression(LanguageSyntaxToken* identifier) noexcept;
     bool evaluateBool(ExpressionSyntax* expression) const noexcept;
     bool isDefined(std::string_view id) const noexcept;
+
+private:
+    SyntaxFactory _syntaxFactory;
 };
 
 } // end namespace polyglot::CodeAnalysis

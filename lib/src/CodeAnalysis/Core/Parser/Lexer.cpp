@@ -2,7 +2,6 @@
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxFactory.hpp"
 #include <cassert>
 #include <algorithm>
 
@@ -12,8 +11,7 @@ namespace polyglot::CodeAnalysis
 constexpr pg_size MIN_LEXED_TOKENS_COUNT{32};
 constexpr pg_size MAX_LEXED_TOKENS_COUNT{4096};
 
-Lexer::Lexer(SharedPtr<SourceText> sourceText,
-             SyntaxPool& syntaxPool) noexcept
+Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
     : _textWindow{std::move(sourceText)},
       _mode{LexerMode::Syntax},
       _lexerCache{},
@@ -26,7 +24,8 @@ Lexer::Lexer(SharedPtr<SourceText> sourceText,
       _directiveTriviaTokenCount{},
       _directiveTriviaTokenOffset{},
       _pCurrentDirectiveTriviaToken{nullptr},
-      _syntaxPool{syntaxPool}
+      _syntaxPool{},
+      _syntaxFactory{_syntaxPool}
 {}
 
 Lexer::~Lexer()
@@ -214,7 +213,7 @@ void Lexer::addLexedToken(LanguageSyntaxToken* token) noexcept
 
 LanguageSyntaxToken* Lexer::createMissingToken(SyntaxKind expectedSyntaxKind) noexcept
 {
-    return SyntaxFactory::missingToken(expectedSyntaxKind, _pCurrentToken->text(), _pCurrentToken->position());
+    return _syntaxFactory.missingToken(expectedSyntaxKind, _pCurrentToken->text(), _pCurrentToken->position());
 }
 
 } // end namespace polyglot::CodeAnalysis

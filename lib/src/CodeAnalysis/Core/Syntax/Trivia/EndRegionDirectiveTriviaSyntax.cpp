@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -24,7 +24,8 @@ EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntax
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                       LanguageSyntaxToken* startToken,
                                                                        LanguageSyntaxToken* endRegionKeyword,
                                                                        LanguageSyntaxToken* endOfDirectiveToken,
                                                                        bool isActive) noexcept
@@ -38,7 +39,7 @@ EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(LanguageS
     auto ptrEndRegionDirectiveTrivia = std::make_unique<EndRegionDirectiveTriviaSyntax>(SyntaxKind::EndRegionDirectiveTrivia, startToken,
                                                                                         endRegionKeyword, endOfDirectiveToken, isActive);
 
-    return static_cast<EndRegionDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrEndRegionDirectiveTrivia)));
+    return static_cast<EndRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

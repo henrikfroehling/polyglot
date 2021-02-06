@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -28,7 +28,8 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                   LanguageSyntaxToken* startToken,
                                                                    LanguageSyntaxToken* messageKeyword,
                                                                    LanguageSyntaxToken* messageTypeToken,
                                                                    LanguageSyntaxToken* messageLiteralToken,
@@ -45,7 +46,7 @@ MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(LanguageSynta
     auto ptrMessageDirectiveTrivia = std::make_unique<MessageDirectiveTriviaSyntax>(SyntaxKind::MessageDirectiveTrivia, startToken, messageKeyword,
                                                                                     messageTypeToken, messageLiteralToken, endOfDirectiveToken);
 
-    return static_cast<MessageDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
+    return static_cast<MessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

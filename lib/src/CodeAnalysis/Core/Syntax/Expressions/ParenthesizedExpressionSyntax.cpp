@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -22,7 +22,8 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
     adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
-ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(LanguageSyntaxToken* openParenthesisToken,
+ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                     LanguageSyntaxToken* openParenthesisToken,
                                                                      ExpressionSyntax* expression,
                                                                      LanguageSyntaxToken* closeParenthesisToken) noexcept
 {
@@ -35,7 +36,7 @@ ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(LanguageSyn
     auto ptrParenthesizedExpression = std::make_unique<ParenthesizedExpressionSyntax>(SyntaxKind::ParenthesizedExpression, openParenthesisToken,
                                                                                       expression, closeParenthesisToken);
 
-    return static_cast<ParenthesizedExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrParenthesizedExpression)));
+    return static_cast<ParenthesizedExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrParenthesizedExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

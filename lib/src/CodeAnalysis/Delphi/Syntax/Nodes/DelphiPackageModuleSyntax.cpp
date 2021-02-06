@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.hpp"
@@ -24,7 +24,8 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadingSyntax*
     adjustWidthAndFlags(_pContainsClause);
 }
 
-DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(DelphiPackageHeadingSyntax* heading,
+DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             DelphiPackageHeadingSyntax* heading,
                                                              DelphiPackageRequiresClauseSyntax* requiresClause,
                                                              DelphiPackageContainsClauseSyntax* containsClause,
                                                              LanguageSyntaxToken* EOFToken) noexcept
@@ -39,13 +40,13 @@ DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(DelphiPackageHeadin
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 
     auto ptrPackageModuleSyntax = std::make_unique<DelphiPackageModuleSyntax>(heading, requiresClause, containsClause, EOFToken);
-    return static_cast<DelphiPackageModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrPackageModuleSyntax)));
+    return static_cast<DelphiPackageModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPackageModuleSyntax)));
 }
 
-DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create() noexcept
+DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrPackageModuleSyntax = std::make_unique<DelphiPackageModuleSyntax>(nullptr, nullptr, nullptr, nullptr);
-    return static_cast<DelphiPackageModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrPackageModuleSyntax)));
+    return static_cast<DelphiPackageModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPackageModuleSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

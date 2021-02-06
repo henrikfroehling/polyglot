@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class IfDefDirectiveTriviaSyntax : public ConditionalDirectiveTriviaSyntax
 {
@@ -30,7 +31,8 @@ public:
     inline virtual bool conditionValue() const noexcept override { return false; }
     inline virtual ExpressionSyntax* condition() const noexcept override { return nullptr; }
 
-    static IfDefDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+    static IfDefDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
+                                              LanguageSyntaxToken* startToken,
                                               LanguageSyntaxToken* ifDefKeyword,
                                               LanguageSyntaxToken* name,
                                               LanguageSyntaxToken* endOfDirectiveToken,

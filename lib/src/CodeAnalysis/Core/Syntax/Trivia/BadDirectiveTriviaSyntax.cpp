@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -24,7 +24,8 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                           LanguageSyntaxToken* startToken,
                                                            LanguageSyntaxToken* identifier,
                                                            LanguageSyntaxToken* endOfDirectiveToken,
                                                            bool isActive) noexcept
@@ -37,7 +38,7 @@ BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(LanguageSyntaxToken* 
     auto ptrBadDirectiveTrivia = std::make_unique<BadDirectiveTriviaSyntax>(SyntaxKind::BadDirectiveTrivia, startToken,
                                                                             identifier, endOfDirectiveToken, isActive);
 
-    return static_cast<BadDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
+    return static_cast<BadDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

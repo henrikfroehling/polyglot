@@ -1,12 +1,32 @@
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
+
+SyntaxPool::SyntaxPool() noexcept
+    : _syntaxNodes{},
+      _syntaxTrivia{}
+{}
+
+SyntaxPool::SyntaxPool(SyntaxPool&& other) noexcept
+    : _syntaxNodes{std::move(other._syntaxNodes)},
+      _syntaxTrivia{std::move(other._syntaxTrivia)}
+{}
+
+SyntaxPool& SyntaxPool::operator=(SyntaxPool&& other) noexcept
+{
+    if (this != &other)
+    {
+        _syntaxNodes = std::move(other._syntaxNodes);
+        _syntaxTrivia = std::move(other._syntaxTrivia);
+    }
+
+    return *this;
+}
 
 LanguageSyntaxNode* SyntaxPool::createSyntaxNode() noexcept
 {
@@ -45,28 +65,28 @@ LanguageSyntaxList* SyntaxPool::createSyntaxList(std::vector<LanguageSyntaxNode*
     return static_cast<LanguageSyntaxList*>(_syntaxNodes.back().get());
 }
 
-LanguageSyntaxNode* SyntaxPool::addSyntaxNode(UniquePtr<LanguageSyntaxNode> syntaxNode) noexcept
+LanguageSyntaxNode* SyntaxPool::addSyntaxNode(UniquePtr<LanguageSyntaxNode>&& syntaxNode) noexcept
 {
     assert(syntaxNode != nullptr);
     _syntaxNodes.push_back(std::move(syntaxNode));
     return _syntaxNodes.back().get();
 }
 
-LanguageSyntaxToken* SyntaxPool::addSyntaxToken(UniquePtr<LanguageSyntaxToken> syntaxToken) noexcept
+LanguageSyntaxToken* SyntaxPool::addSyntaxToken(UniquePtr<LanguageSyntaxToken>&& syntaxToken) noexcept
 {
     assert(syntaxToken != nullptr);
     _syntaxNodes.push_back(std::move(syntaxToken));
     return static_cast<LanguageSyntaxToken*>(_syntaxNodes.back().get());
 }
 
-LanguageSyntaxTrivia* SyntaxPool::addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia> syntaxTrivia) noexcept
+LanguageSyntaxTrivia* SyntaxPool::addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia>&& syntaxTrivia) noexcept
 {
     assert(syntaxTrivia != nullptr);
     _syntaxNodes.push_back(std::move(syntaxTrivia));
     return static_cast<LanguageSyntaxTrivia*>(_syntaxNodes.back().get());
 }
 
-LanguageSyntaxList* SyntaxPool::addSyntaxList(UniquePtr<LanguageSyntaxList> syntaxList) noexcept
+LanguageSyntaxList* SyntaxPool::addSyntaxList(UniquePtr<LanguageSyntaxList>&& syntaxList) noexcept
 {
     assert(syntaxList != nullptr);
     _syntaxNodes.push_back(std::move(syntaxList));

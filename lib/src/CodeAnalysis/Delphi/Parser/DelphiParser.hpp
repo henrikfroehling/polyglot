@@ -2,6 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_DELPHI_PARSER_DELPHIPARSER_H
 
 #include "polyglot/Core/Types.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Parser/Parser.hpp"
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
 
@@ -23,15 +24,12 @@ class IdentifierNameExpressionSyntax;
 class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class NameExpressionSyntax;
-class SyntaxPool;
 
 class DelphiParser final : public Parser
 {
 public:
     DelphiParser() = delete;
-
-    explicit DelphiParser(SharedPtr<SourceText> sourceText,
-                          SyntaxPool& syntaxPool) noexcept;
+    explicit DelphiParser(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
     LanguageSyntaxNode* parseRoot() noexcept override;
@@ -52,6 +50,9 @@ private:
                                                   LanguageSyntaxToken* dotToken) noexcept;
 
     IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
+
+private:
+    SyntaxFactory _syntaxFactory;
 };
 
 } // end namespace polyglot::CodeAnalysis

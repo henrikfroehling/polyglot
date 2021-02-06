@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
@@ -42,7 +42,8 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
         adjustWidthAndFlags(_pFinalizationSection);
 }
 
-DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(DelphiUnitHeadingSyntax* heading,
+DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFactory,
+                                                       DelphiUnitHeadingSyntax* heading,
                                                        DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                        DelphiUnitImplementationSectionSyntax* implementationSection,
                                                        LanguageSyntaxToken* endKeyword,
@@ -77,7 +78,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(DelphiUnitHeadingSyntax* 
                                                                         endKeyword, dotToken, EOFToken,
                                                                         initializationSection, finalizationSection);
 
-    return static_cast<DelphiUnitModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrUnitModuleSyntax)));
+    return static_cast<DelphiUnitModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitModuleSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

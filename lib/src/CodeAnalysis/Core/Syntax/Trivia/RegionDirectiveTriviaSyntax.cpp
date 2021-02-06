@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -24,7 +24,8 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(LanguageSyntaxToken* startToken,
+RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                 LanguageSyntaxToken* startToken,
                                                                  LanguageSyntaxToken* regionKeyword,
                                                                  LanguageSyntaxToken* endOfDirectiveToken,
                                                                  bool isActive) noexcept
@@ -38,7 +39,7 @@ RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(LanguageSyntaxT
     auto ptrRegionDirectiveTrivia = std::make_unique<RegionDirectiveTriviaSyntax>(SyntaxKind::RegionDirectiveTrivia, startToken,
                                                                                   regionKeyword, endOfDirectiveToken, isActive);
 
-    return static_cast<RegionDirectiveTriviaSyntax*>(SyntaxPool::addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
+    return static_cast<RegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

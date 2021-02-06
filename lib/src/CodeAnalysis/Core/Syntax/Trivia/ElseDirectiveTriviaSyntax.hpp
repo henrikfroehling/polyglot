@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class ElseDirectiveTriviaSyntax : public BranchingDirectiveTriviaSyntax
 {
@@ -26,7 +27,8 @@ public:
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
 
-    static ElseDirectiveTriviaSyntax* create(LanguageSyntaxToken* startToken,
+    static ElseDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
+                                             LanguageSyntaxToken* startToken,
                                              LanguageSyntaxToken* elseKeyword,
                                              LanguageSyntaxToken* endOfDirectiveToken,
                                              bool isActive,

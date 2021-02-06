@@ -6,13 +6,15 @@
 namespace polyglot::CodeAnalysis
 {
 
+class SyntaxFactory;
+
 class DelphiUnitFinalizationSectionSyntax : public DelphiSyntaxNode
 {
 public:
     DelphiUnitFinalizationSectionSyntax() noexcept;
     virtual ~DelphiUnitFinalizationSectionSyntax() noexcept = default;
 
-    static DelphiUnitFinalizationSectionSyntax* create() noexcept;
+    static DelphiUnitFinalizationSectionSyntax* create(SyntaxFactory& syntaxFactory) noexcept;
 };
 
 } // end namespace polyglot::CodeAnalysis

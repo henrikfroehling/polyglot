@@ -7,6 +7,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class IdentifierNameExpressionSyntax : public SimpleNameExpressionSyntax
 {
@@ -15,7 +16,8 @@ public:
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
     virtual LanguageSyntaxToken* identifier() const noexcept override { return _pIdentifier; }
 
-    static IdentifierNameExpressionSyntax* create(LanguageSyntaxToken* identifier) noexcept;
+    static IdentifierNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
+                                                  LanguageSyntaxToken* identifier) noexcept;
 
 protected:
     LanguageSyntaxToken* _pIdentifier;

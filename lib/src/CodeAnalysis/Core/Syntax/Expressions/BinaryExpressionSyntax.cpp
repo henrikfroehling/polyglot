@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
 #include <memory>
 
@@ -22,7 +22,8 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pRightExpression);
 }
 
-BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
+BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxFactory& syntaxFactory,
+                                                       SyntaxKind syntaxKind,
                                                        ExpressionSyntax* leftExpression,
                                                        LanguageSyntaxToken* operatorToken,
                                                        ExpressionSyntax* rightExpression) noexcept
@@ -32,7 +33,7 @@ BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxKind syntaxKind,
     assert(rightExpression != nullptr);
 
     auto ptrBinaryExpression = std::make_unique<BinaryExpressionSyntax>(syntaxKind, leftExpression, operatorToken, rightExpression);
-    return static_cast<BinaryExpressionSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrBinaryExpression)));
+    return static_cast<BinaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrBinaryExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

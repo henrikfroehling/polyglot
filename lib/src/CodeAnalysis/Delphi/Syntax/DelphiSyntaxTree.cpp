@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/SyntaxPool.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiParser.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -13,10 +13,9 @@ DelphiSyntaxTree::DelphiSyntaxTree(SharedPtr<SourceText> sourceText,
 
 SharedPtr<DelphiSyntaxTree> DelphiSyntaxTree::parseSourceText(SharedPtr<SourceText> sourceText) noexcept
 {
-    SyntaxPool syntaxPool{};
-    DelphiParser parser{sourceText, syntaxPool};
+    DelphiParser parser{sourceText};
     LanguageSyntaxNode* pSyntaxTreeRoot = parser.parse();
-    return std::make_shared<DelphiSyntaxTree>(std::move(sourceText), pSyntaxTreeRoot, std::move(syntaxPool));
+    return std::make_shared<DelphiSyntaxTree>(std::move(sourceText), pSyntaxTreeRoot, parser.takeSyntaxPool());
 }
 
 } // end namespace polyglot::CodeAnalysis

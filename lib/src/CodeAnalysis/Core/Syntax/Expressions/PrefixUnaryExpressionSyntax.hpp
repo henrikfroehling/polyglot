@@ -8,6 +8,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxToken;
+class SyntaxFactory;
 
 class PrefixUnaryExpressionSyntax : public ExpressionSyntax
 {
@@ -20,7 +21,8 @@ public:
     inline virtual LanguageSyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* operandExpression() const noexcept { return _pOperandExpression; }
 
-    static PrefixUnaryExpressionSyntax* create(SyntaxKind syntaxKind,
+    static PrefixUnaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
+                                               SyntaxKind syntaxKind,
                                                LanguageSyntaxToken* operatorToken,
                                                ExpressionSyntax* operandExpression) noexcept;
 

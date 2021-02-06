@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
@@ -20,7 +20,8 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadingSyntax*
     adjustWidthAndFlags(_pUses);
 }
 
-DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(DelphiProgramHeadingSyntax* heading,
+DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             DelphiProgramHeadingSyntax* heading,
                                                              DelphiUsesClauseSyntax* uses,
                                                              LanguageSyntaxToken* EOFToken) noexcept
 {
@@ -32,13 +33,13 @@ DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(DelphiProgramHeadin
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 
     auto ptrProgramModuleSyntax = std::make_unique<DelphiProgramModuleSyntax>(heading, uses, EOFToken);
-    return static_cast<DelphiProgramModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrProgramModuleSyntax)));
+    return static_cast<DelphiProgramModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrProgramModuleSyntax)));
 }
 
-DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create() noexcept
+DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrProgramModuleSyntax = std::make_unique<DelphiProgramModuleSyntax>(nullptr, nullptr, nullptr);
-    return static_cast<DelphiProgramModuleSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrProgramModuleSyntax)));
+    return static_cast<DelphiProgramModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrProgramModuleSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

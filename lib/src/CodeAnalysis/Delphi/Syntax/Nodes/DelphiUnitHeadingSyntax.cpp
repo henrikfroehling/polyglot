@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxPool.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include <cassert>
 
@@ -21,7 +21,8 @@ DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(LanguageSyntaxToken* unitKeywor
     adjustWidthAndFlags(_pSemiColonToken);
 }
 
-DelphiUnitHeadingSyntax* DelphiUnitHeadingSyntax::create(LanguageSyntaxToken* unitKeyword,
+DelphiUnitHeadingSyntax* DelphiUnitHeadingSyntax::create(SyntaxFactory& syntaxFactory,
+                                                         LanguageSyntaxToken* unitKeyword,
                                                          NameExpressionSyntax* name,
                                                          LanguageSyntaxToken* semiColonToken) noexcept
 {
@@ -32,7 +33,7 @@ DelphiUnitHeadingSyntax* DelphiUnitHeadingSyntax::create(LanguageSyntaxToken* un
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
     auto ptrUnitHeadingSyntax = std::make_unique<DelphiUnitHeadingSyntax>(unitKeyword, name, semiColonToken);
-    return static_cast<DelphiUnitHeadingSyntax*>(SyntaxPool::addSyntaxNode(std::move(ptrUnitHeadingSyntax)));
+    return static_cast<DelphiUnitHeadingSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitHeadingSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis
