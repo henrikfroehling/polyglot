@@ -46,6 +46,7 @@ void Lexer::preLex() noexcept
                                            _textWindow.content().length() / 2));
 
     _lexedTokens.reserve(size);
+    _syntaxPool.reserve(size);
 
     for (pg_size i = 0; i < size; i++)
     {

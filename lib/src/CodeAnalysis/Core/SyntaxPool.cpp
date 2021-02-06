@@ -93,4 +93,10 @@ LanguageSyntaxList* SyntaxPool::addSyntaxList(UniquePtr<LanguageSyntaxList>&& sy
     return static_cast<LanguageSyntaxList*>(_syntaxNodes.back().get());
 }
 
+void SyntaxPool::reserve(pg_size count) noexcept
+{
+    _syntaxNodes.reserve(count);
+    _syntaxTrivia.reserve(count);
+}
+
 } // end namespace polyglot::CodeAnalysis

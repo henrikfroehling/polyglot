@@ -45,6 +45,8 @@ public:
     LanguageSyntaxTrivia* addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia>&& syntaxTrivia) noexcept;
     LanguageSyntaxList* addSyntaxList(UniquePtr<LanguageSyntaxList>&& syntaxList) noexcept;
 
+    void reserve(pg_size count) noexcept;
+
 private:
     std::vector<UniquePtr<LanguageSyntaxNode>> _syntaxNodes;
     std::vector<UniquePtr<ISyntaxTrivia>> _syntaxTrivia;
