@@ -59,8 +59,7 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
 
     for (; offset < _textWindow.content().length(); offset++)
     {
-        char currentCharacter = content[offset];
-        const int c = static_cast<int>(currentCharacter);
+        const int c = static_cast<int>(content[offset]);
 
         flags = c < CHAR_PROPERTIES_LENGTH ? CHAR_PROPERTIES[c] : CharFlags::Complex;
         previousState = state;
@@ -454,21 +453,36 @@ void DelphiLexer::scanStringLiteral(TokenInfo& tokenInfo) noexcept
         {
             char character = _textWindow.peekCharacter();
 
-            if (character == quoteCharacter)
+            if (character != quoteCharacter)
             {
-                _textWindow.advanceCharacter();
-                break;
-            }
-            else if (character == '\r' || character == '\n' || (character == INVALID_CHARACTER && _textWindow.isAtEnd()))
-            {
-                // TODO error handling
-                break;
+                switch (character)
+                {
+                    case '\r':
+                    case '\n':
+                        goto loopBreakout;
+                    case INVALID_CHARACTER:
+                    {
+                        if (_textWindow.isAtEnd())
+                        {
+                            // TODO error handling
+                            goto loopBreakout;
+                        }
+
+                        break;
+                    }
+                    default:
+                        _textWindow.advanceCharacter();
+                        break;
+                }
             }
             else
             {
                 _textWindow.advanceCharacter();
+                break;
             }
         }
+
+loopBreakout:
 
         tokenInfo.text = _textWindow.lexemeText();
 
