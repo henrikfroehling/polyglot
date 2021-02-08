@@ -3,7 +3,7 @@
 
 #include <QtCore/QAbstractItemModel>
 #include <polyglot/Core/Types.hpp>
-#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp>
+#include <polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp>
 
 namespace models
 {
@@ -31,10 +31,10 @@ public:
                         Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
 
-    void setSyntaxTree(SharedPtr<polyglot::CodeAnalysis::SyntaxTree> syntaxTree) noexcept;
+    void setSyntaxTree(SharedPtr<polyglot::CodeAnalysis::ISyntaxTree> syntaxTree) noexcept;
 
 private:
-    SharedPtr<polyglot::CodeAnalysis::SyntaxTree> _ptrSyntaxTree;
+    SharedPtr<polyglot::CodeAnalysis::ISyntaxTree> _ptrSyntaxTree;
 };
 
 } // end namespace models

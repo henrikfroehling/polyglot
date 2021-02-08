@@ -11,7 +11,7 @@
 #include <string>
 #include <polyglot/Core/Types.hpp>
 #include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
-#include <polyglot/CodeAnalysis/Core/Syntax/SyntaxTree.hpp>
+#include <polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp>
 #include <polyglot/Version.hpp>
 
 namespace ui
@@ -49,7 +49,7 @@ void MainWindow::analyzeSourceCode() noexcept
 {
     const QString editorContent = _pTxtEditor->toPlainText();
     const std::string sourceText = editorContent.toStdString();
-    SharedPtr<polyglot::CodeAnalysis::SyntaxTree> ptrSyntaxtree = polyglot::CodeAnalysis::Delphi::parseSourceText("", sourceText);
+    SharedPtr<polyglot::CodeAnalysis::ISyntaxTree> ptrSyntaxtree = polyglot::CodeAnalysis::Delphi::parseSourceText("", sourceText);
     _pSyntaxTreeModel->setSyntaxTree(ptrSyntaxtree);
 }
 
