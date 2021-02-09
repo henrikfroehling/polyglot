@@ -255,6 +255,11 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::TrueKeyword: return "TrueKeyword";
         case SyntaxKind::FalseKeyword: return "FalseKeyword";
 
+        case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
+        case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";
+        case SyntaxKind::NumberLiteralToken: return "NumberLiteralToken";
+        case SyntaxKind::IdentifierToken: return "IdentifierToken";
+
         // trivia
         case SyntaxKind::WhitespaceTrivia: return "WhitespaceTrivia";
         case SyntaxKind::SingleLineCommentTrivia: return "SingleLineCommentTrivia";
@@ -276,23 +281,6 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::SwitchDirectiveTrivia: return "SwitchDirectiveTrivia";
         case SyntaxKind::SkippedTokensTrivia: return "SkippedTokensTrivia";
 
-        case SyntaxKind::SingleQuotationStringLiteralToken: return "SingleQuotationStringLiteralToken";
-        case SyntaxKind::DoubleQuotationStringLiteralToken: return "DoubleQuotationStringLiteralToken";
-        case SyntaxKind::NumberLiteralToken: return "NumberLiteralToken";
-        case SyntaxKind::IdentifierToken: return "IdentifierToken";
-
-        case SyntaxKind::CompilationUnit: return "CompilationUnit";
-        case SyntaxKind::UnitModule: return "UnitModule";
-        case SyntaxKind::UnitHeading: return "UnitHeading";
-        case SyntaxKind::UnitInterfaceSection: return "UnitInterfaceSection";
-        case SyntaxKind::UnitImplementationSection: return "UnitImplementationSection";
-        case SyntaxKind::UnitInitializationSection: return "UnitInitializationSection";
-        case SyntaxKind::UnitFinalizationSection: return "UnitFinalizationSection";
-        case SyntaxKind::PackageModule: return "PackageModule";
-        case SyntaxKind::PackageHeading: return "PackageHeading";
-        case SyntaxKind::ProgramModule: return "ProgramModule";
-        case SyntaxKind::ProgramHeading: return "ProgramHeading";
-
         // directives
         case SyntaxKind::IfDirectiveKeyword: return "IfDirectiveKeyword";
         case SyntaxKind::ElseIfDirectiveKeyword: return "ElseIfDirectiveKeyword";
@@ -306,6 +294,19 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::OnDirectiveKeyword: return "OnDirectiveKeyword";
         case SyntaxKind::OffDirectiveKeyword: return "OffDirectiveKeyword";
         case SyntaxKind::EndOfDirectiveToken: return "EndOfDirectiveToken";
+
+        case SyntaxKind::SyntaxList: return "SyntaxList";
+        case SyntaxKind::CompilationUnit: return "CompilationUnit";
+        case SyntaxKind::UnitModule: return "UnitModule";
+        case SyntaxKind::UnitHeading: return "UnitHeading";
+        case SyntaxKind::UnitInterfaceSection: return "UnitInterfaceSection";
+        case SyntaxKind::UnitImplementationSection: return "UnitImplementationSection";
+        case SyntaxKind::UnitInitializationSection: return "UnitInitializationSection";
+        case SyntaxKind::UnitFinalizationSection: return "UnitFinalizationSection";
+        case SyntaxKind::PackageModule: return "PackageModule";
+        case SyntaxKind::PackageHeading: return "PackageHeading";
+        case SyntaxKind::ProgramModule: return "ProgramModule";
+        case SyntaxKind::ProgramHeading: return "ProgramHeading";
 
         case SyntaxKind::PackageRequiresClause: return "PackageRequiresClause";
         case SyntaxKind::PackageContainsClause: return "PackageContainsClause";

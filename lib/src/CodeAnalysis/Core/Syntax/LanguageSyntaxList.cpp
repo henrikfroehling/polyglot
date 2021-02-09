@@ -7,6 +7,8 @@ LanguageSyntaxList::LanguageSyntaxList(std::vector<LanguageSyntaxNode*>&& childr
     : LanguageSyntaxNode{},
       _children{std::move(children)}
 {
+    _syntaxKind = SyntaxKind::SyntaxList;
+
     for (LanguageSyntaxNode* child : _children)
         adjustWidthAndFlags(child);
 }

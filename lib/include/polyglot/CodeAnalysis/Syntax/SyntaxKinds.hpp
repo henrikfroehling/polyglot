@@ -257,8 +257,13 @@ enum class SyntaxKind : unsigned short
     TrueKeyword, // true
     FalseKeyword, // false
 
+    SingleQuotationStringLiteralToken = 2000,
+    DoubleQuotationStringLiteralToken,
+    NumberLiteralToken,
+    IdentifierToken,
+
     // trivia
-    WhitespaceTrivia = 2000,
+    WhitespaceTrivia = 2200,
     SingleLineCommentTrivia,
     MultiLineCommentTrivia,
     EndOfLineTrivia,
@@ -278,25 +283,8 @@ enum class SyntaxKind : unsigned short
     SwitchDirectiveTrivia,
     SkippedTokensTrivia,
 
-    SingleQuotationStringLiteralToken = 2500,
-    DoubleQuotationStringLiteralToken,
-    NumberLiteralToken,
-    IdentifierToken,
-
-    CompilationUnit = 2700,
-    UnitModule,
-    UnitHeading,
-    UnitInterfaceSection,
-    UnitImplementationSection,
-    UnitInitializationSection,
-    UnitFinalizationSection,
-    PackageModule,
-    PackageHeading,
-    ProgramModule,
-    ProgramHeading,
-
     // directives
-    IfDirectiveKeyword = 3000, // IF
+    IfDirectiveKeyword = 2700, // IF
     IfDefDirectiveKeyword, // IFDEF
     IfNDefDirectiveKeyword, // IFNDEF
     IfEndDirectiveKeyword, // IFEND
@@ -312,13 +300,27 @@ enum class SyntaxKind : unsigned short
     OffDirectiveKeyword, // OFF
     EndOfDirectiveToken,
 
+    // syntax
+    SyntaxList = 3000,
+    CompilationUnit,
+    UnitModule,
+    UnitHeading,
+    UnitInterfaceSection,
+    UnitImplementationSection,
+    UnitInitializationSection,
+    UnitFinalizationSection,
+    PackageModule,
+    PackageHeading,
+    ProgramModule,
+    ProgramHeading,
+
     PackageRequiresClause,
     PackageContainsClause,
     UsesClause,
     UnitReference,
 
     // expressions
-    LogicalNotExpression = 3500,
+    LogicalNotExpression = 4000,
     LogicalOrExpression,
     LogicalAndExpression,
     EqualsExpression,
