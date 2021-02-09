@@ -4,17 +4,17 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "Syntax/LanguageSyntaxList.hpp"
 #include "Syntax/LanguageSyntaxNode.hpp"
+#include "Syntax/LanguageSyntaxToken.hpp"
 #include "Syntax/LanguageSyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
 class ISyntaxToken;
-class LanguageSyntaxList;
-class LanguageSyntaxToken;
 
 class SyntaxPool final
 {
@@ -46,7 +46,10 @@ public:
     LanguageSyntaxList* addSyntaxList(UniquePtr<LanguageSyntaxList>&& syntaxList) noexcept;
 
 private:
-    std::vector<UniquePtr<LanguageSyntaxNode>> _syntaxNodes;
+    std::vector<UniquePtr<LanguageSyntaxNode>> _languageSyntaxNodes;
+    std::vector<UniquePtr<LanguageSyntaxToken>> _languageSyntaxTokens;
+    std::vector<UniquePtr<LanguageSyntaxTrivia>> _languageSyntaxTrivia;
+    std::vector<UniquePtr<LanguageSyntaxList>> _languageSyntaxLists;
     std::vector<UniquePtr<ISyntaxTrivia>> _syntaxTrivia;
 };
 
