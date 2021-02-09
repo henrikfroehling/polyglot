@@ -28,13 +28,16 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     setWindowTitle(QStringLiteral("polyglot Sandbox - %1").arg(QString::fromStdString(polyglot::Version::LIBRARY_NAME_WITH_VERSION)));
 
     QMenu* menu = menuBar()->addMenu(QStringLiteral("File"));
-    menu->addAction(QStringLiteral("Open File..."));
+    QAction* action = menu->addAction(QStringLiteral("Open File..."));
+    action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_O});
     menu->addSeparator();
-    QAction* action = menu->addAction(QStringLiteral("Quit"));
+    action = menu->addAction(QStringLiteral("Quit"));
+    action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_Q});
     connect(action, &QAction::triggered, qApp, &QApplication::quit);
 
     menu = menuBar()->addMenu(QStringLiteral("polyglot"));
     action = menu->addAction(QStringLiteral("Analyze"));
+    action->setShortcut(QKeySequence{Qt::CTRL | Qt::SHIFT | Qt::Key_A});
     connect(action, &QAction::triggered, this, &MainWindow::analyzeSourceCode);
 
     setCentralWidget(_pTxtEditor);
