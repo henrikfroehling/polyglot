@@ -31,8 +31,15 @@ LanguageSyntaxToken* SyntaxFactory::tokenWithTrivia(TokenInfo& tokenInfo,
                                                     std::vector<LanguageSyntaxNode*>&& trailingTrivia,
                                                     pg_size position) noexcept
 {
-    LanguageSyntaxList* pLeadingTrivia = _syntaxPool.createSyntaxList(std::move(leadingTrivia));
-    LanguageSyntaxList* pTrailingTrivia = _syntaxPool.createSyntaxList(std::move(trailingTrivia));
+    LanguageSyntaxList* pLeadingTrivia{nullptr};
+    LanguageSyntaxList* pTrailingTrivia{nullptr};
+
+    if (leadingTrivia.size() > 0)
+        pLeadingTrivia = _syntaxPool.createSyntaxList(std::move(leadingTrivia));
+
+    if (trailingTrivia.size() > 0)
+        pTrailingTrivia = _syntaxPool.createSyntaxList(std::move(trailingTrivia));
+
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, pLeadingTrivia, pTrailingTrivia);
 }
 
