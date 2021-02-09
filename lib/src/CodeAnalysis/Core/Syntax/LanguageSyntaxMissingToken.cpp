@@ -7,7 +7,7 @@ namespace polyglot::CodeAnalysis
 LanguageSyntaxMissingToken::LanguageSyntaxMissingToken() noexcept
     : LanguageSyntaxToken{}
 {
-    _flags &= SyntaxNodeFlags::IsMissing;
+    _flags |= SyntaxNodeFlags::IsMissing;
 }
 
 LanguageSyntaxMissingToken::LanguageSyntaxMissingToken(SyntaxKind syntaxKind,
@@ -18,7 +18,7 @@ LanguageSyntaxMissingToken::LanguageSyntaxMissingToken(SyntaxKind syntaxKind,
                                                        LanguageSyntaxList* trailingTrivia) noexcept
     : LanguageSyntaxToken{syntaxKind, text, position, fullWidth, leadingTrivia, trailingTrivia}
 {
-    _flags &= SyntaxNodeFlags::IsMissing;
+    _flags |= SyntaxNodeFlags::IsMissing;
 }
 
 LanguageSyntaxMissingToken::~LanguageSyntaxMissingToken() noexcept
