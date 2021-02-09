@@ -16,6 +16,7 @@ DelphiUnitHeadingSyntax::DelphiUnitHeadingSyntax(LanguageSyntaxToken* unitKeywor
       _pName{name},
       _pSemiColonToken{semiColonToken}
 {
+    _position = _pUnitKeyword->position();
     adjustWidthAndFlags(_pUnitKeyword);
     adjustWidthAndFlags(_pName);
     adjustWidthAndFlags(_pSemiColonToken);

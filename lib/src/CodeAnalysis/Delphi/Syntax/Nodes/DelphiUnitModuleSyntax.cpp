@@ -29,6 +29,7 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
       _pEndKeyword{endKeyword},
       _pDotToken{dotToken}
 {
+    _position = _pHeading->position();
     adjustWidthAndFlags(_pHeading);
     adjustWidthAndFlags(_pInterfaceSection);
     adjustWidthAndFlags(_pImplementationSection);

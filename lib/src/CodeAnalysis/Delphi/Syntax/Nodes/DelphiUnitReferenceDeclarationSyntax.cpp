@@ -18,6 +18,7 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
       _pSourceFile{sourceFile},
       _pCommaToken{commaToken}
 {
+    _position = _pUnitName->position();
     adjustWidthAndFlags(_pUnitName);
 
     if (_pInKeyword != nullptr)

@@ -15,6 +15,7 @@ DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
       _unitReferences{std::move(unitReferences)},
       _pSemiColonToken{semiColonToken}
 {
+    _position = _pUsesKeyword->position();
     adjustWidthAndFlags(_pUsesKeyword);
 
     for (DelphiUnitReferenceDeclarationSyntax* referenceNode : _unitReferences)

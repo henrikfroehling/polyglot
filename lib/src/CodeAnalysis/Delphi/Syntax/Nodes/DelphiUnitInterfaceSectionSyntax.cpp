@@ -14,6 +14,7 @@ DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(LanguageSynta
       _pInterfaceKeyword{interfaceKeyword},
       _pUses{uses}
 {
+    _position = _pInterfaceKeyword->position();
     adjustWidthAndFlags(_pInterfaceKeyword);
 
     if (_pUses != nullptr)

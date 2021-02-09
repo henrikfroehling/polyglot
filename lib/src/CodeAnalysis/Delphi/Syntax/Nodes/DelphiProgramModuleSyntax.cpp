@@ -16,6 +16,7 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadingSyntax*
       _pHeading{heading},
       _pUses{uses}
 {
+    _position = _pHeading->position();
     adjustWidthAndFlags(_pHeading);
     adjustWidthAndFlags(_pUses);
 }

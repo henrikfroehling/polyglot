@@ -19,6 +19,7 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadingSyntax*
       _pRequiresClause{requiresClause},
       _pContainsClause{containsClause}
 {
+    _position = _pHeading->position();
     adjustWidthAndFlags(_pHeading);
     adjustWidthAndFlags(_pRequiresClause);
     adjustWidthAndFlags(_pContainsClause);

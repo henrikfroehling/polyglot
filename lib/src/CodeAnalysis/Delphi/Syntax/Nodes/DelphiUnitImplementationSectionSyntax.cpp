@@ -14,6 +14,7 @@ DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(Lan
       _pImplementationKeyword{implementationKeyword},
       _pUses{uses}
 {
+    _position = _pImplementationKeyword->position();
     adjustWidthAndFlags(_pImplementationKeyword);
 
     if (_pUses != nullptr)
