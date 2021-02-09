@@ -125,14 +125,22 @@ DelphiUnitHeadingSyntax* DelphiParser::parseUnitHeading() noexcept
 DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noexcept
 {
     LanguageSyntaxToken* pInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
-    DelphiUsesClauseSyntax* pUses = parseUsesClause();
+    DelphiUsesClauseSyntax* pUses{nullptr};
+
+    if (peekToken(1)->syntaxKind() == SyntaxKind::UsesKeyword)
+        pUses = parseUsesClause();
+
     return DelphiUnitInterfaceSectionSyntax::create(_syntaxFactory, pInterfaceKeyword, pUses);
 }
 
 DelphiUnitImplementationSectionSyntax* DelphiParser::parseUnitImplementationSection() noexcept
 {
     LanguageSyntaxToken* pImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
-    DelphiUsesClauseSyntax* pUses = parseUsesClause();
+    DelphiUsesClauseSyntax* pUses{nullptr};
+
+    if (peekToken(1)->syntaxKind() == SyntaxKind::UsesKeyword)
+        pUses = parseUsesClause();
+
     return DelphiUnitImplementationSectionSyntax::create(_syntaxFactory, pImplementationKeyword, pUses);
 }
 
