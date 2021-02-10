@@ -4,6 +4,7 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiLexer.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
@@ -106,12 +107,11 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
     }
 
 endOfUnit:
-    LanguageSyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
-    LanguageSyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
+    DelphiEndOfModuleExpressionSyntax* endOfModuleExpression = parseEndOfModule();
     LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
-    return DelphiUnitModuleSyntax::create(_syntaxFactory, pHeading, pInterfaceSection, pImplementationSection, pEndKeyword,
-                                          pDotToken, pEOFToken, pInitializationSection, pFinalizationSection);
+    return DelphiUnitModuleSyntax::create(_syntaxFactory, pHeading, pInterfaceSection, pImplementationSection,
+                                          endOfModuleExpression, pEOFToken, pInitializationSection, pFinalizationSection);
 }
 
 DelphiUnitHeadingSyntax* DelphiParser::parseUnitHeading() noexcept
@@ -240,6 +240,13 @@ IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
         LanguageSyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
         return IdentifierNameExpressionSyntax::create(_syntaxFactory, pMissingIdentifier);
     }
+}
+
+DelphiEndOfModuleExpressionSyntax* DelphiParser::parseEndOfModule() noexcept
+{
+    LanguageSyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    LanguageSyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
+    return DelphiEndOfModuleExpressionSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
 } // end namespace polyglot::CodeAnalysis

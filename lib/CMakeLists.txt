@@ -132,6 +132,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_PARSER
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageHeadingSyntax.cpp
@@ -147,6 +148,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
 )

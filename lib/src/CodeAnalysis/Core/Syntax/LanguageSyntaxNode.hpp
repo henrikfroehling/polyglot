@@ -29,7 +29,7 @@ public:
     LanguageSyntaxNode& operator=(const LanguageSyntaxNode&) noexcept = default;
     LanguageSyntaxNode& operator=(LanguageSyntaxNode&&) noexcept = default;
 
-    virtual LanguageKind languageKind() const noexcept { return LanguageKind::Unknown; }
+    inline virtual LanguageKind languageKind() const noexcept { return LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept { return _syntaxKind; }
     inline SyntaxNodeFlags flags() const noexcept { return _flags; }
     inline virtual pg_size width() const noexcept { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }

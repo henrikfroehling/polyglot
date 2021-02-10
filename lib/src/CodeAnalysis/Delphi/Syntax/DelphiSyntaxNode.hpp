@@ -12,6 +12,7 @@ class DelphiSyntaxNode : public LanguageSyntaxNode
 public:
     explicit DelphiSyntaxNode(SyntaxKind syntaxKind) noexcept;
     virtual ~DelphiSyntaxNode() noexcept = default;
+    inline LanguageKind languageKind() const noexcept override { return LanguageKind::Delphi; }
 };
 
 } // end namespace polyglot::CodeAnalysis

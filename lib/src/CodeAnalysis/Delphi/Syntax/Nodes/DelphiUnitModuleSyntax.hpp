@@ -6,6 +6,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class DelphiEndOfModuleExpressionSyntax;
 class DelphiUnitFinalizationSectionSyntax;
 class DelphiUnitHeadingSyntax;
 class DelphiUnitImplementationSectionSyntax;
@@ -20,8 +21,7 @@ public:
     explicit DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
                                     DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                     DelphiUnitImplementationSectionSyntax* implementationSection,
-                                    LanguageSyntaxToken* endKeyword,
-                                    LanguageSyntaxToken* dotToken,
+                                    DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
                                     LanguageSyntaxToken* EOFToken,
                                     DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
                                     DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
@@ -35,15 +35,13 @@ public:
     inline DelphiUnitFinalizationSectionSyntax* finalizationSection() const noexcept { return _pFinalizationSection; }
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
-    inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
-    inline LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
+    inline DelphiEndOfModuleExpressionSyntax* endOfModuleExpression() const noexcept { return _pEndOfModuleExpression; }
 
     static DelphiUnitModuleSyntax* create(SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadingSyntax* heading,
                                           DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                           DelphiUnitImplementationSectionSyntax* implementationSection,
-                                          LanguageSyntaxToken* endKeyword,
-                                          LanguageSyntaxToken* dotToken,
+                                          DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
                                           LanguageSyntaxToken* EOFToken,
                                           DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
                                           DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
@@ -54,8 +52,7 @@ private:
     DelphiUnitImplementationSectionSyntax* _pImplementationSection;
     DelphiUnitInitializationSectionSyntax* _pInitializationSection; // optional
     DelphiUnitFinalizationSectionSyntax* _pFinalizationSection; // optional
-    LanguageSyntaxToken* _pEndKeyword;
-    LanguageSyntaxToken* _pDotToken;
+    DelphiEndOfModuleExpressionSyntax* _pEndOfModuleExpression;
 };
 
 } // end namespace polyglot::CodeAnalysis

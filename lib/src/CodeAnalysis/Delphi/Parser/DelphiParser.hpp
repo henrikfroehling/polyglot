@@ -10,6 +10,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class DelphiCompilationUnitSyntax;
+class DelphiEndOfModuleExpressionSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiUnitFinalizationSectionSyntax;
@@ -50,6 +51,7 @@ private:
                                                   LanguageSyntaxToken* dotToken) noexcept;
 
     IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
+    DelphiEndOfModuleExpressionSyntax* parseEndOfModule() noexcept;
 
 private:
     SyntaxFactory _syntaxFactory;

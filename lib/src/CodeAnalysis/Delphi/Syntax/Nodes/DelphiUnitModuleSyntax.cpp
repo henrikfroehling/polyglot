@@ -2,6 +2,7 @@
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
@@ -15,8 +16,7 @@ namespace polyglot::CodeAnalysis
 DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
-                                               LanguageSyntaxToken* endKeyword,
-                                               LanguageSyntaxToken* dotToken,
+                                               DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
                                                LanguageSyntaxToken* EOFToken,
                                                DelphiUnitInitializationSectionSyntax* initializationSection,
                                                DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
@@ -26,15 +26,13 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
       _pImplementationSection{implementationSection},
       _pInitializationSection{initializationSection},
       _pFinalizationSection{finalizationSection},
-      _pEndKeyword{endKeyword},
-      _pDotToken{dotToken}
+      _pEndOfModuleExpression{endOfModuleExpression}
 {
     _position = _pHeading->position();
     adjustWidthAndFlags(_pHeading);
     adjustWidthAndFlags(_pInterfaceSection);
     adjustWidthAndFlags(_pImplementationSection);
-    adjustWidthAndFlags(_pEndKeyword);
-    adjustWidthAndFlags(_pDotToken);
+    adjustWidthAndFlags(_pEndOfModuleExpression);
 
     if (_pInitializationSection != nullptr)
         adjustWidthAndFlags(_pInitializationSection);
@@ -47,8 +45,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
                                                        DelphiUnitHeadingSyntax* heading,
                                                        DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                        DelphiUnitImplementationSectionSyntax* implementationSection,
-                                                       LanguageSyntaxToken* endKeyword,
-                                                       LanguageSyntaxToken* dotToken,
+                                                       DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
                                                        LanguageSyntaxToken* EOFToken,
                                                        DelphiUnitInitializationSectionSyntax* initializationSection,
                                                        DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
@@ -59,10 +56,8 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
     assert(interfaceSection->syntaxKind() == SyntaxKind::UnitInterfaceSection);
     assert(implementationSection != nullptr);
     assert(implementationSection->syntaxKind() == SyntaxKind::UnitImplementationSection);
-    assert(endKeyword != nullptr);
-    assert(endKeyword->syntaxKind() == SyntaxKind::EndKeyword);
-    assert(dotToken != nullptr);
-    assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
+    assert(endOfModuleExpression != nullptr);
+    assert(endOfModuleExpression->syntaxKind() == SyntaxKind::EndOfModuleExpression);
     assert(EOFToken != nullptr);
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 
@@ -76,7 +71,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
     }
 
     auto ptrUnitModuleSyntax = std::make_unique<DelphiUnitModuleSyntax>(heading, interfaceSection, implementationSection,
-                                                                        endKeyword, dotToken, EOFToken,
+                                                                        endOfModuleExpression, EOFToken,
                                                                         initializationSection, finalizationSection);
 
     return static_cast<DelphiUnitModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitModuleSyntax)));

@@ -332,7 +332,8 @@ enum class SyntaxKind : unsigned short
     FalseLiteralExpression,
     IdentifierNameExpression,
     QualifiedNameExpression,
-    CallExpression
+    CallExpression,
+    EndOfModuleExpression
 };
 
 std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
