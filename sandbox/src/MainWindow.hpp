@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_SANDBOX_MAINWINDOW_H
 #define POLYGLOT_SANDBOX_MAINWINDOW_H
 
+#include <QtCore/QSettings>
 #include <QtWidgets/QMainWindow>
 
 class QDockWidget;
@@ -24,8 +25,13 @@ public:
 
 private slots:
     void analyzeSourceCode() noexcept;
+    void quitApplication() noexcept;
 
 private:
+    void closeEvent(QCloseEvent* event);
+
+private:
+    QSettings _settings;
     QPlainTextEdit* _pTxtEditor;
     QDockWidget* _pDockTreeView;
     QTreeView* _pTreeViewSyntaxVisualizer;

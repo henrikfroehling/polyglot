@@ -1,6 +1,7 @@
 #include "MainWindow.hpp"
 #include "SyntaxTreeModel.hpp"
 #include <QtCore/QString>
+#include <QtCore/QTimer>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDockWidget>
@@ -19,6 +20,7 @@ namespace ui
 
 MainWindow::MainWindow(QWidget* parent) noexcept
     : QMainWindow{parent},
+      _settings{},
       _pTxtEditor{new QPlainTextEdit{this}},
       _pDockTreeView{new QDockWidget{QStringLiteral("Syntax Visualizer"), this}},
       _pTreeViewSyntaxVisualizer{new QTreeView{this}},
@@ -33,7 +35,7 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     menu->addSeparator();
     action = menu->addAction(QStringLiteral("Quit"));
     action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_Q});
-    connect(action, &QAction::triggered, qApp, &QApplication::quit);
+    connect(action, &QAction::triggered, this, &MainWindow::quitApplication);
 
     menu = menuBar()->addMenu(QStringLiteral("polyglot"));
     action = menu->addAction(QStringLiteral("Analyze"));
@@ -46,6 +48,8 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     _pTreeViewSyntaxVisualizer->setModel(_pSyntaxTreeModel);
     _pDockTreeView->setWidget(_pTreeViewSyntaxVisualizer);
     addDockWidget(Qt::LeftDockWidgetArea, _pDockTreeView);
+
+    _pTxtEditor->setPlainText(_settings.value(QStringLiteral("editor-content")).toString());
 }
 
 void MainWindow::analyzeSourceCode() noexcept
@@ -54,6 +58,17 @@ void MainWindow::analyzeSourceCode() noexcept
     const std::string sourceText = editorContent.toStdString();
     SharedPtr<polyglot::CodeAnalysis::ISyntaxTree> ptrSyntaxtree = polyglot::CodeAnalysis::Delphi::parseSourceText("", sourceText);
     _pSyntaxTreeModel->setSyntaxTree(ptrSyntaxtree);
+}
+
+void MainWindow::quitApplication() noexcept
+{
+    QTimer::singleShot(0, this, SLOT(close()));
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    _settings.setValue(QStringLiteral("editor-content"), _pTxtEditor->toPlainText());
+    QMainWindow::closeEvent(event);
 }
 
 } // end namespace ui
