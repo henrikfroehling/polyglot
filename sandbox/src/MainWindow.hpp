@@ -24,6 +24,7 @@ public:
     explicit MainWindow(QWidget* parent = nullptr) noexcept;
 
 private slots:
+    void openFile() noexcept;
     void analyzeSourceCode() noexcept;
     void quitApplication() noexcept;
 

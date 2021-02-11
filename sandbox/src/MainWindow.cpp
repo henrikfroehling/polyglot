@@ -1,10 +1,13 @@
 #include "MainWindow.hpp"
 #include "SyntaxTreeModel.hpp"
+#include <QtCore/QFile>
 #include <QtCore/QString>
+#include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDockWidget>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
@@ -30,14 +33,19 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     setWindowTitle(QStringLiteral("polyglot Sandbox - %1").arg(QString::fromStdString(polyglot::Version::LIBRARY_NAME_WITH_VERSION)));
 
     QMenu* menu = menuBar()->addMenu(QStringLiteral("File"));
+
     QAction* action = menu->addAction(QStringLiteral("Open File..."));
     action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_O});
+    connect(action, &QAction::triggered, this, &MainWindow::openFile);
+
     menu->addSeparator();
+
     action = menu->addAction(QStringLiteral("Quit"));
     action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_Q});
     connect(action, &QAction::triggered, this, &MainWindow::quitApplication);
 
     menu = menuBar()->addMenu(QStringLiteral("polyglot"));
+
     action = menu->addAction(QStringLiteral("Analyze"));
     action->setShortcut(QKeySequence{Qt::CTRL | Qt::SHIFT | Qt::Key_A});
     connect(action, &QAction::triggered, this, &MainWindow::analyzeSourceCode);
@@ -50,6 +58,21 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     addDockWidget(Qt::LeftDockWidgetArea, _pDockTreeView);
 
     _pTxtEditor->setPlainText(_settings.value(QStringLiteral("editor-content")).toString());
+}
+
+void MainWindow::openFile() noexcept
+{
+    const QString filename = QFileDialog::getOpenFileName(this, QStringLiteral("Open File"), QStringLiteral(""),
+                                                          QStringLiteral("Delphi Files (*.pas)"));
+
+    QFile file{filename};
+
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+
+    QTextStream in{&file};
+    QString fileContent = in.readAll();
+    _pTxtEditor->setPlainText(fileContent);
 }
 
 void MainWindow::analyzeSourceCode() noexcept
