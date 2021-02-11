@@ -98,6 +98,11 @@ LanguageSyntaxTrivia* SyntaxFactory::createSyntaxTrivia(SyntaxKind syntaxKind,
     return _syntaxPool.createSyntaxTrivia(syntaxKind, text, position);
 }
 
+LanguageSyntaxList* SyntaxFactory::syntaxList() noexcept
+{
+    return _syntaxPool.createSyntaxList();
+}
+
 LanguageSyntaxList* SyntaxFactory::syntaxList(std::initializer_list<LanguageSyntaxNode*> syntaxNodes) noexcept
 {
     return _syntaxPool.createSyntaxList(std::move(syntaxNodes));

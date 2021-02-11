@@ -10,13 +10,11 @@ namespace polyglot::CodeAnalysis
 
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
                                                                            LanguageSyntaxToken* inKeyword,
-                                                                           LanguageSyntaxToken* sourceFile,
-                                                                           LanguageSyntaxToken* commaToken) noexcept
+                                                                           LanguageSyntaxToken* sourceFile) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitReference},
       _pUnitName{unitName},
       _pInKeyword{inKeyword},
-      _pSourceFile{sourceFile},
-      _pCommaToken{commaToken}
+      _pSourceFile{sourceFile}
 {
     _position = _pUnitName->position();
     adjustWidthAndFlags(_pUnitName);
@@ -26,16 +24,12 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
 
     if (_pSourceFile != nullptr)
         adjustWidthAndFlags(_pSourceFile);
-
-    if (_pCommaToken != nullptr)
-        adjustWidthAndFlags(_pCommaToken);
 }
 
 DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(SyntaxFactory& syntaxFactory,
                                                                                    NameExpressionSyntax* unitName,
                                                                                    LanguageSyntaxToken* inKeyword,
-                                                                                   LanguageSyntaxToken* sourceFile,
-                                                                                   LanguageSyntaxToken* commaToken) noexcept
+                                                                                   LanguageSyntaxToken* sourceFile) noexcept
 {
     assert(unitName != nullptr);
 
@@ -45,10 +39,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
     if (sourceFile != nullptr)
         assert(sourceFile->syntaxKind() == SyntaxKind::SingleQuotationStringLiteralToken);
 
-    if (commaToken != nullptr)
-        assert(commaToken->syntaxKind() == SyntaxKind::CommaToken);
-
-    auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile, commaToken);
+    auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile);
     return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 

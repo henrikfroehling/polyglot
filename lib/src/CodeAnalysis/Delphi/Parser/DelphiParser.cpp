@@ -1,4 +1,5 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiParser.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
@@ -13,6 +14,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
 #include <iostream>
@@ -123,7 +125,7 @@ DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
 
     if (peekToken(1)->syntaxKind() == SyntaxKind::InKeyword)
     {
-        pInKeyword = takeToken(SyntaxKind::InKeyword);
+        pInKeyword = takeToken();
         pFilename = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
     }
 
@@ -176,19 +178,21 @@ DelphiProgramModuleSyntax* DelphiParser::parseProgramModule() noexcept
 DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
 {
     LanguageSyntaxToken* pUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
-    std::vector<DelphiUnitReferenceDeclarationSyntax*> unitReferences{};
+    LanguageSyntaxList* pUnitReferences = _syntaxFactory.syntaxList();
 
-    while (true)
+    DelphiUnitReferenceDeclarationSyntax* pUnitReference = parseUnitReference();
+    pUnitReferences->add(pUnitReference);
+
+    while (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
-        if (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken)
-            break;
-
-        DelphiUnitReferenceDeclarationSyntax* pUnitReference = parseUnitReference();
-        unitReferences.push_back(pUnitReference);
+        LanguageSyntaxToken* pCommaToken = takeToken();
+        pUnitReference = parseUnitReference();
+        pUnitReferences->add(pCommaToken);
+        pUnitReferences->add(pUnitReference);
     }
 
     LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-    return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, std::move(unitReferences), pSemiColonToken);
+    return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, pUnitReferences, pSemiColonToken);
 }
 
 DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcept
@@ -199,7 +203,6 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     NameExpressionSyntax* pUnitName = parseQualifiedName();
     LanguageSyntaxToken* pInKeyword{nullptr};
     LanguageSyntaxToken* pSourceFile{nullptr};
-    LanguageSyntaxToken* pCommaToken{nullptr};
 
     if (currentToken()->syntaxKind() == SyntaxKind::InKeyword)
     {
@@ -207,10 +210,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
         pSourceFile = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
     }
 
-    if (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
-        pCommaToken = takeToken(SyntaxKind::CommaToken);
-
-    return DelphiUnitReferenceDeclarationSyntax::create(_syntaxFactory, pUnitName, pInKeyword, pSourceFile, pCommaToken);
+    return DelphiUnitReferenceDeclarationSyntax::create(_syntaxFactory, pUnitName, pInKeyword, pSourceFile);
 }
 
 NameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept

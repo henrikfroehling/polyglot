@@ -10,7 +10,7 @@ namespace polyglot::CodeAnalysis
 class LanguageSyntaxList : public LanguageSyntaxNode
 {
 public:
-    LanguageSyntaxList() = delete;
+    LanguageSyntaxList() noexcept;
     explicit LanguageSyntaxList(std::vector<LanguageSyntaxNode*>&& children) noexcept;
     virtual ~LanguageSyntaxList() noexcept;
 
@@ -21,6 +21,7 @@ public:
 
     inline LanguageSyntaxNode* child(pg_size index) const override { return _children[index]; }
     inline pg_size childCount() const noexcept override { return _children.size(); }
+    void add(LanguageSyntaxNode* node) noexcept;
 
 protected:
     std::vector<LanguageSyntaxNode*> _children;

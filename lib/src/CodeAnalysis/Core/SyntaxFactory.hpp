@@ -72,6 +72,7 @@ public:
                                              std::string_view text,
                                              pg_size position = 0) noexcept;
 
+    LanguageSyntaxList* syntaxList() noexcept;
     LanguageSyntaxList* syntaxList(std::initializer_list<LanguageSyntaxNode*> syntaxNodes) noexcept;
 
     LanguageSyntaxNode* addSyntaxNode(UniquePtr<LanguageSyntaxNode>&& syntaxNode) noexcept;

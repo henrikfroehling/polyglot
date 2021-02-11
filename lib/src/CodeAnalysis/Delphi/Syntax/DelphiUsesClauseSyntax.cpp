@@ -1,6 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
+#include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 
@@ -8,33 +9,32 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
-                                               std::vector<DelphiUnitReferenceDeclarationSyntax*>&& unitReferences,
+                                               LanguageSyntaxList* unitReferences,
                                                LanguageSyntaxToken* semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UsesClause},
       _pUsesKeyword{usesKeyword},
-      _unitReferences{std::move(unitReferences)},
+      _pUnitReferences{unitReferences},
       _pSemiColonToken{semiColonToken}
 {
     _position = _pUsesKeyword->position();
     adjustWidthAndFlags(_pUsesKeyword);
-
-    for (DelphiUnitReferenceDeclarationSyntax* referenceNode : _unitReferences)
-        adjustWidthAndFlags(referenceNode);
-
+    adjustWidthAndFlags(_pUnitReferences);
     adjustWidthAndFlags(_pSemiColonToken);
 }
 
 DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFactory,
                                                        LanguageSyntaxToken* usesKeyword,
-                                                       std::vector<DelphiUnitReferenceDeclarationSyntax*>&& unitReferences,
+                                                       LanguageSyntaxList* unitReferences,
                                                        LanguageSyntaxToken* semiColonToken) noexcept
 {
     assert(usesKeyword != nullptr);
     assert(usesKeyword->syntaxKind() == SyntaxKind::UsesKeyword);
+    assert(unitReferences != nullptr);
+    assert(unitReferences->childCount() > 0);
     assert(semiColonToken != nullptr);
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
-    auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, std::move(unitReferences), semiColonToken);
+    auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, unitReferences, semiColonToken);
     return static_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
 }
 

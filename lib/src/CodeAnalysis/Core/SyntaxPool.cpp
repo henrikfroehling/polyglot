@@ -66,6 +66,12 @@ ISyntaxTrivia* SyntaxPool::createSyntaxTrivia(LanguageSyntaxTrivia* trivia,
     return _syntaxTrivia.back().get();
 }
 
+LanguageSyntaxList* SyntaxPool::createSyntaxList() noexcept
+{
+    _languageSyntaxLists.push_back(std::make_unique<LanguageSyntaxList>());
+    return _languageSyntaxLists.back().get();
+}
+
 LanguageSyntaxList* SyntaxPool::createSyntaxList(std::vector<LanguageSyntaxNode*>&& nodes) noexcept
 {
     _languageSyntaxLists.push_back(std::make_unique<LanguageSyntaxList>(std::move(nodes)));

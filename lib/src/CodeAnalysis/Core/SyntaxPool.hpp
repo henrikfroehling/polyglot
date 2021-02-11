@@ -38,6 +38,7 @@ public:
     ISyntaxTrivia* createSyntaxTrivia(LanguageSyntaxTrivia* trivia,
                                       ISyntaxToken* token) noexcept;
 
+    LanguageSyntaxList* createSyntaxList() noexcept;
     LanguageSyntaxList* createSyntaxList(std::vector<LanguageSyntaxNode*>&& nodes) noexcept;
 
     LanguageSyntaxNode* addSyntaxNode(UniquePtr<LanguageSyntaxNode>&& syntaxNode) noexcept;
