@@ -118,8 +118,17 @@ DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
 {
     LanguageSyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
     NameExpressionSyntax* pName = parseQualifiedName();
+    LanguageSyntaxToken* pInKeyword{nullptr};
+    LanguageSyntaxToken* pFilename{nullptr};
+
+    if (peekToken(1)->syntaxKind() == SyntaxKind::InKeyword)
+    {
+        pInKeyword = takeToken(SyntaxKind::InKeyword);
+        pFilename = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
+    }
+
     LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-    return DelphiUnitHeadSyntax::create(_syntaxFactory, pUnitKeyword, pName, pSemiColonToken);
+    return DelphiUnitHeadSyntax::create(_syntaxFactory, pUnitKeyword, pName, pSemiColonToken, pInKeyword, pFilename);
 }
 
 DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noexcept

@@ -15,22 +15,30 @@ class DelphiUnitHeadSyntax : public DelphiSyntaxNode
 public:
     explicit DelphiUnitHeadSyntax(LanguageSyntaxToken* unitKeyword,
                                   NameExpressionSyntax* name,
-                                  LanguageSyntaxToken* semiColonToken) noexcept;
+                                  LanguageSyntaxToken* semiColonToken,
+                                  LanguageSyntaxToken* inKeyword = nullptr,
+                                  LanguageSyntaxToken* filename = nullptr) noexcept;
 
     virtual ~DelphiUnitHeadSyntax() noexcept = default;
-    LanguageSyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
-    NameExpressionSyntax* name() const noexcept { return _pName; }
-    LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+    inline LanguageSyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
+    inline NameExpressionSyntax* name() const noexcept { return _pName; }
+    inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+    inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
+    inline LanguageSyntaxToken* filename() const noexcept { return _pFilename; }
 
     static DelphiUnitHeadSyntax* create(SyntaxFactory& syntaxFactory,
                                         LanguageSyntaxToken* unitKeyword,
                                         NameExpressionSyntax* name,
-                                        LanguageSyntaxToken* semiColonToken) noexcept;
+                                        LanguageSyntaxToken* semiColonToken,
+                                        LanguageSyntaxToken* inKeyword = nullptr,
+                                        LanguageSyntaxToken* filename = nullptr) noexcept;
 
 private:
     LanguageSyntaxToken* _pUnitKeyword;
     NameExpressionSyntax* _pName;
     LanguageSyntaxToken* _pSemiColonToken;
+    LanguageSyntaxToken* _pInKeyword; // optional
+    LanguageSyntaxToken* _pFilename; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis
