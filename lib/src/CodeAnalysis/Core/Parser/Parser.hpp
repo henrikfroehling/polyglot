@@ -2,7 +2,7 @@
 #define POLYGLOT_CODEANALYSIS_CORE_PARSER_PARSER_H
 
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Parser/Lexer.hpp"
 
 namespace polyglot::CodeAnalysis

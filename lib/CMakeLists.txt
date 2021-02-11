@@ -44,9 +44,11 @@ set(SOURCES_CORE
 
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/ISyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/LanguageKind.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_PARSER
@@ -97,7 +99,6 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTree.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxList.cpp
@@ -105,7 +106,6 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
@@ -122,6 +122,10 @@ set(SOURCES_CODEANALYSIS_CORE_TEXT
   ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
 )
 
+set(SOURCES_CODEANALYSIS_DELPHI_CORE
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxTree.cpp
+)
+
 set(SOURCES_CODEANALYSIS_DELPHI_PARSER
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiDirectiveParser.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexer.cpp
@@ -132,25 +136,23 @@ set(SOURCES_CODEANALYSIS_DELPHI_PARSER
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageHeadingSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageRequiresClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramHeadingSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitReferenceDeclarationSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -164,6 +166,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES_CODEANALYSIS_CORE_PARSER}
   ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
   ${SOURCES_CODEANALYSIS_CORE_TEXT}
+  ${SOURCES_CODEANALYSIS_DELPHI_CORE}
   ${SOURCES_CODEANALYSIS_DELPHI_PARSER}
   ${SOURCES_CODEANALYSIS_DELPHI_SYNTAX}
 )

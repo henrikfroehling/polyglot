@@ -15,7 +15,7 @@
 #include <string>
 #include <polyglot/Core/Types.hpp>
 #include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
-#include <polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp>
+#include <polyglot/CodeAnalysis/ISyntaxTree.hpp>
 #include <polyglot/Version.hpp>
 
 namespace ui

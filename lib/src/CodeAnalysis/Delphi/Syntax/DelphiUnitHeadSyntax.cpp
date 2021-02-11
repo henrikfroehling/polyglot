@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"

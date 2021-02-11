@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_EXPRESSIONS_NAMEEXPRESSIONSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_EXPRESSIONS_NAMEEXPRESSIONSYNTAX_H
 
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/TypeExpressionSyntax.hpp"
 
 namespace polyglot::CodeAnalysis

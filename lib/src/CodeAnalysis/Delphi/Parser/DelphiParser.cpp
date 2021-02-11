@@ -4,16 +4,16 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiLexer.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitModuleSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUsesClauseSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -107,11 +107,11 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
     }
 
 endOfUnit:
-    DelphiEndOfModuleExpressionSyntax* endOfModuleExpression = parseEndOfModule();
+    DelphiEndOfModuleSyntax* endOfModule = parseEndOfModule();
     LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
     return DelphiUnitModuleSyntax::create(_syntaxFactory, pHead, pInterfaceSection, pImplementationSection,
-                                          endOfModuleExpression, pEOFToken, pInitializationSection, pFinalizationSection);
+                                          endOfModule, pEOFToken, pInitializationSection, pFinalizationSection);
 }
 
 DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
@@ -242,11 +242,11 @@ IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
     }
 }
 
-DelphiEndOfModuleExpressionSyntax* DelphiParser::parseEndOfModule() noexcept
+DelphiEndOfModuleSyntax* DelphiParser::parseEndOfModule() noexcept
 {
     LanguageSyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
     LanguageSyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
-    return DelphiEndOfModuleExpressionSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
+    return DelphiEndOfModuleSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
 } // end namespace polyglot::CodeAnalysis

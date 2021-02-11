@@ -4,7 +4,7 @@
 #include <string>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp"
+#include "polyglot/CodeAnalysis/ISyntaxTree.hpp"
 
 namespace polyglot::CodeAnalysis
 {

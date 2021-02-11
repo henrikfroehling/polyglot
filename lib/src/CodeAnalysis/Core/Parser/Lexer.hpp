@@ -10,8 +10,8 @@
 #include "CodeAnalysis/Core/Parser/LexerCache.hpp"
 #include "CodeAnalysis/Core/Parser/LexerMode.hpp"
 #include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
-#include "CodeAnalysis/Core/Text/TextWindow.hpp"
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
+#include "CodeAnalysis/Core/Text/TextWindow.hpp"
 
 namespace polyglot::CodeAnalysis
 {

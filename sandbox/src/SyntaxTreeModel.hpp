@@ -3,7 +3,7 @@
 
 #include <QtCore/QAbstractItemModel>
 #include <polyglot/Core/Types.hpp>
-#include <polyglot/CodeAnalysis/Syntax/ISyntaxTree.hpp>
+#include <polyglot/CodeAnalysis/ISyntaxTree.hpp>
 
 namespace models
 {

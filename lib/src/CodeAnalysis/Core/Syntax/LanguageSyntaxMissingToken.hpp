@@ -3,7 +3,7 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "LanguageSyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis

@@ -5,7 +5,7 @@
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 
 namespace polyglot::CodeAnalysis
 {

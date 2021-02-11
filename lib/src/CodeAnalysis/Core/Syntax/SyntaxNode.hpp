@@ -4,8 +4,8 @@
 #include <vector>
 #include "polyglot/Core/Types.hpp"
 #include "polyglot/CodeAnalysis/LanguageKind.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxNodeFlags.hpp"

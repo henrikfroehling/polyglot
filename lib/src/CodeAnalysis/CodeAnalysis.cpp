@@ -1,6 +1,6 @@
 #include "polyglot/CodeAnalysis/CodeAnalysis.hpp"
 #include "CodeAnalysis/Core/Text/SourceText.hpp"
-#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxTree.hpp"
+#include "CodeAnalysis/Delphi/DelphiSyntaxTree.hpp"
 
 namespace polyglot::CodeAnalysis
 {
