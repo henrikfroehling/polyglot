@@ -304,7 +304,7 @@ enum class SyntaxKind : unsigned short
     SyntaxList = 3000,
     CompilationUnit,
     UnitModule,
-    UnitHeading,
+    UnitHead,
     UnitInterfaceSection,
     UnitImplementationSection,
     UnitInitializationSection,

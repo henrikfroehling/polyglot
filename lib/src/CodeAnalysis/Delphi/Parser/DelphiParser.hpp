@@ -14,7 +14,7 @@ class DelphiEndOfModuleExpressionSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiUnitFinalizationSectionSyntax;
-class DelphiUnitHeadingSyntax;
+class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
@@ -36,7 +36,7 @@ private:
     LanguageSyntaxNode* parseRoot() noexcept override;
     DelphiCompilationUnitSyntax* parseCompilationUnit() noexcept;
     DelphiUnitModuleSyntax* parseUnitModule() noexcept;
-    DelphiUnitHeadingSyntax* parseUnitHeading() noexcept;
+    DelphiUnitHeadSyntax* parseUnitHead() noexcept;
     DelphiUnitInterfaceSectionSyntax* parseUnitInterfaceSection() noexcept;
     DelphiUnitImplementationSectionSyntax* parseUnitImplementationSection() noexcept;
     DelphiUnitInitializationSectionSyntax* parseUnitInitializationSection() noexcept;

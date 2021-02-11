@@ -8,7 +8,7 @@ namespace polyglot::CodeAnalysis
 
 class DelphiEndOfModuleExpressionSyntax;
 class DelphiUnitFinalizationSectionSyntax;
-class DelphiUnitHeadingSyntax;
+class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
@@ -18,7 +18,7 @@ class SyntaxFactory;
 class DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
 {
 public:
-    explicit DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
+    explicit DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                     DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                     DelphiUnitImplementationSectionSyntax* implementationSection,
                                     DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
@@ -28,7 +28,7 @@ public:
 
     virtual ~DelphiUnitModuleSyntax() noexcept = default;
     inline bool isUnitModule() const noexcept override { return true; }
-    inline DelphiUnitHeadingSyntax* heading() const noexcept { return _pHeading; }
+    inline DelphiUnitHeadSyntax* head() const noexcept { return _pHead; }
     inline DelphiUnitInterfaceSectionSyntax* interfaceSection() const noexcept { return _pInterfaceSection; }
     inline DelphiUnitImplementationSectionSyntax* implementationSection() const noexcept { return _pImplementationSection; }
     inline DelphiUnitInitializationSectionSyntax* initializationSection() const noexcept { return _pInitializationSection; }
@@ -38,7 +38,7 @@ public:
     inline DelphiEndOfModuleExpressionSyntax* endOfModuleExpression() const noexcept { return _pEndOfModuleExpression; }
 
     static DelphiUnitModuleSyntax* create(SyntaxFactory& syntaxFactory,
-                                          DelphiUnitHeadingSyntax* heading,
+                                          DelphiUnitHeadSyntax* head,
                                           DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                           DelphiUnitImplementationSectionSyntax* implementationSection,
                                           DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
@@ -47,7 +47,7 @@ public:
                                           DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
 
 private:
-    DelphiUnitHeadingSyntax* _pHeading;
+    DelphiUnitHeadSyntax* _pHead;
     DelphiUnitInterfaceSectionSyntax* _pInterfaceSection;
     DelphiUnitImplementationSectionSyntax* _pImplementationSection;
     DelphiUnitInitializationSectionSyntax* _pInitializationSection; // optional

@@ -298,7 +298,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::SyntaxList: return "SyntaxList";
         case SyntaxKind::CompilationUnit: return "CompilationUnit";
         case SyntaxKind::UnitModule: return "UnitModule";
-        case SyntaxKind::UnitHeading: return "UnitHeading";
+        case SyntaxKind::UnitHead: return "UnitHead";
         case SyntaxKind::UnitInterfaceSection: return "UnitInterfaceSection";
         case SyntaxKind::UnitImplementationSection: return "UnitImplementationSection";
         case SyntaxKind::UnitInitializationSection: return "UnitInitializationSection";

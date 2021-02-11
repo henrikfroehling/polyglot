@@ -4,11 +4,11 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiLexer.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageModuleSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.hpp"
@@ -65,7 +65,7 @@ DelphiCompilationUnitSyntax* DelphiParser::parseCompilationUnit() noexcept
 
 DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
 {
-    DelphiUnitHeadingSyntax* pHeading = nullptr;
+    DelphiUnitHeadSyntax* pHead = nullptr;
     DelphiUnitInterfaceSectionSyntax* pInterfaceSection = nullptr;
     DelphiUnitImplementationSectionSyntax* pImplementationSection = nullptr;
     DelphiUnitInitializationSectionSyntax* pInitializationSection = nullptr; // optional
@@ -78,7 +78,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
         switch (pCurrentToken->syntaxKind())
         {
             case SyntaxKind::UnitKeyword:
-                pHeading = parseUnitHeading();
+                pHead = parseUnitHead();
                 break;
             case SyntaxKind::InterfaceKeyword:
                 pInterfaceSection = parseUnitInterfaceSection();
@@ -110,16 +110,16 @@ endOfUnit:
     DelphiEndOfModuleExpressionSyntax* endOfModuleExpression = parseEndOfModule();
     LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
-    return DelphiUnitModuleSyntax::create(_syntaxFactory, pHeading, pInterfaceSection, pImplementationSection,
+    return DelphiUnitModuleSyntax::create(_syntaxFactory, pHead, pInterfaceSection, pImplementationSection,
                                           endOfModuleExpression, pEOFToken, pInitializationSection, pFinalizationSection);
 }
 
-DelphiUnitHeadingSyntax* DelphiParser::parseUnitHeading() noexcept
+DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
 {
     LanguageSyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
     NameExpressionSyntax* pName = parseQualifiedName();
     LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-    return DelphiUnitHeadingSyntax::create(_syntaxFactory, pUnitKeyword, pName, pSemiColonToken);
+    return DelphiUnitHeadSyntax::create(_syntaxFactory, pUnitKeyword, pName, pSemiColonToken);
 }
 
 DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noexcept

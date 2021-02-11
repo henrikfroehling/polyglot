@@ -132,6 +132,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_PARSER
 )
 
 set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiPackageContainsClauseSyntax.cpp
@@ -141,7 +142,6 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramHeadingSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiProgramModuleSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.cpp

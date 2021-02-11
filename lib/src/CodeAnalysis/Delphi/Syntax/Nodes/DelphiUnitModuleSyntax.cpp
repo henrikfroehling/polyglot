@@ -2,9 +2,9 @@
 #include "polyglot/CodeAnalysis/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Expressions/DelphiEndOfModuleExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitFinalizationSectionSyntax.hpp"
-#include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitHeadingSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitImplementationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInitializationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/Nodes/DelphiUnitInterfaceSectionSyntax.hpp"
@@ -13,7 +13,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
+DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
                                                DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
@@ -21,15 +21,15 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
                                                DelphiUnitInitializationSectionSyntax* initializationSection,
                                                DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::UnitModule, EOFToken},
-      _pHeading{heading},
+      _pHead{head},
       _pInterfaceSection{interfaceSection},
       _pImplementationSection{implementationSection},
       _pInitializationSection{initializationSection},
       _pFinalizationSection{finalizationSection},
       _pEndOfModuleExpression{endOfModuleExpression}
 {
-    _position = _pHeading->position();
-    adjustWidthAndFlags(_pHeading);
+    _position = _pHead->position();
+    adjustWidthAndFlags(_pHead);
     adjustWidthAndFlags(_pInterfaceSection);
     adjustWidthAndFlags(_pImplementationSection);
     adjustWidthAndFlags(_pEndOfModuleExpression);
@@ -42,7 +42,7 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadingSyntax* heading,
 }
 
 DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFactory,
-                                                       DelphiUnitHeadingSyntax* heading,
+                                                       DelphiUnitHeadSyntax* head,
                                                        DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                        DelphiUnitImplementationSectionSyntax* implementationSection,
                                                        DelphiEndOfModuleExpressionSyntax* endOfModuleExpression,
@@ -50,8 +50,8 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
                                                        DelphiUnitInitializationSectionSyntax* initializationSection,
                                                        DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
 {
-    assert(heading != nullptr);
-    assert(heading->syntaxKind() == SyntaxKind::UnitHeading);
+    assert(head != nullptr);
+    assert(head->syntaxKind() == SyntaxKind::UnitHead);
     assert(interfaceSection != nullptr);
     assert(interfaceSection->syntaxKind() == SyntaxKind::UnitInterfaceSection);
     assert(implementationSection != nullptr);
@@ -70,7 +70,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
         assert(finalizationSection->syntaxKind() == SyntaxKind::UnitFinalizationSection);
     }
 
-    auto ptrUnitModuleSyntax = std::make_unique<DelphiUnitModuleSyntax>(heading, interfaceSection, implementationSection,
+    auto ptrUnitModuleSyntax = std::make_unique<DelphiUnitModuleSyntax>(head, interfaceSection, implementationSection,
                                                                         endOfModuleExpression, EOFToken,
                                                                         initializationSection, finalizationSection);
 
