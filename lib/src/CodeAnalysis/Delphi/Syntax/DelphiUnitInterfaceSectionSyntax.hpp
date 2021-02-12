@@ -18,8 +18,8 @@ public:
                                               DelphiUsesClauseSyntax* uses = nullptr) noexcept;
 
     virtual ~DelphiUnitInterfaceSectionSyntax() noexcept = default;
-    virtual LanguageSyntaxToken* interfaceKeyword() const noexcept { return _pInterfaceKeyword; }
-    virtual DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
+    inline LanguageSyntaxToken* interfaceKeyword() const noexcept { return _pInterfaceKeyword; }
+    inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return _pUses != nullptr ? 2 : 1; }
 
