@@ -7,6 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -22,6 +23,8 @@ public:
     inline virtual ExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
     inline virtual LanguageSyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
+    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    inline virtual pg_size childCount() const noexcept override { return 3; }
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,

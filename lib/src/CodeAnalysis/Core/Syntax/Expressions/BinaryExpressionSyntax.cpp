@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -20,6 +21,18 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pLeftExpression);
     adjustWidthAndFlags(_pOperatorToken);
     adjustWidthAndFlags(_pRightExpression);
+}
+
+LanguageSyntaxNode* BinaryExpressionSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pLeftExpression;
+        case 1: return _pOperatorToken;
+        case 2: return _pRightExpression;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxFactory& syntaxFactory,

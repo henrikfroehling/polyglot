@@ -4,6 +4,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -30,6 +31,19 @@ IfDirectiveTriviaSyntax::IfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pIfKeyword);
     adjustWidthAndFlags(_pCondition);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+}
+
+LanguageSyntaxNode* IfDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pStartToken;
+        case 1: return _pIfKeyword;
+        case 2: return _pCondition;
+        case 3: return _pEndOfDirectiveToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,

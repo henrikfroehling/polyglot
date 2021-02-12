@@ -4,6 +4,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -20,6 +21,18 @@ DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
     adjustWidthAndFlags(_pUsesKeyword);
     adjustWidthAndFlags(_pUnitReferences);
     adjustWidthAndFlags(_pSemiColonToken);
+}
+
+LanguageSyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pUsesKeyword;
+        case 1: return _pUnitReferences;
+        case 2: return _pSemiColonToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFactory,

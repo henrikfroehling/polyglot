@@ -6,6 +6,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -23,6 +24,18 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* he
     adjustWidthAndFlags(_pHead);
     adjustWidthAndFlags(_pRequiresClause);
     adjustWidthAndFlags(_pContainsClause);
+}
+
+LanguageSyntaxNode* DelphiPackageModuleSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pHead;
+        case 1: return _pRequiresClause;
+        case 2: return _pContainsClause;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(SyntaxFactory& syntaxFactory,

@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -17,6 +18,17 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
     _position = _pOperatorToken->position();
     adjustWidthAndFlags(_pOperatorToken);
     adjustWidthAndFlags(_pOperandExpression);
+}
+
+LanguageSyntaxNode* PrefixUnaryExpressionSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pOperatorToken;
+        case 1: return _pOperandExpression;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxFactory& syntaxFactory,

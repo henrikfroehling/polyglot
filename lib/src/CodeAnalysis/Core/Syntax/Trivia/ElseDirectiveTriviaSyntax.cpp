@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -24,6 +25,18 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pStartToken);
     adjustWidthAndFlags(_pElseKeyword);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+}
+
+LanguageSyntaxNode* ElseDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pStartToken;
+        case 1: return _pElseKeyword;
+        case 2: return _pEndOfDirectiveToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,

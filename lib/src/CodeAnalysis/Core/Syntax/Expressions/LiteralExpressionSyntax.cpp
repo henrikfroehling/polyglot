@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -14,6 +15,14 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pToken->position();
     adjustWidthAndFlags(_pToken);
+}
+
+LanguageSyntaxNode* LiteralExpressionSyntax::child(pg_size index) const
+{
+    if (index == 0)
+        return _pToken;
+
+    throw std::out_of_range{"index out of range"};
 }
 
 LiteralExpressionSyntax* LiteralExpressionSyntax::create(SyntaxFactory& syntaxFactory,

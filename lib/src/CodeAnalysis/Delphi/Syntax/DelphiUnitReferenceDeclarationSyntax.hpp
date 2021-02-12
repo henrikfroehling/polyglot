@@ -6,6 +6,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class NameExpressionSyntax;
 class SyntaxFactory;
@@ -21,6 +22,8 @@ public:
     inline NameExpressionSyntax* unitName() const noexcept { return _pUnitName; }
     inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline LanguageSyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return _pSourceFile != nullptr ? 3 : 1; }
 
     static DelphiUnitReferenceDeclarationSyntax* create(SyntaxFactory& syntaxFactory,
                                                         NameExpressionSyntax* unitName,

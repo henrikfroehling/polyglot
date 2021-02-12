@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -23,6 +24,19 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pIdentifier);
     adjustWidthAndFlags(_pOnOffToken);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+}
+
+LanguageSyntaxNode* SwitchDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pStartToken;
+        case 1: return _pIdentifier;
+        case 2: return _pOnOffToken;
+        case 3: return _pEndOfDirectiveToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,

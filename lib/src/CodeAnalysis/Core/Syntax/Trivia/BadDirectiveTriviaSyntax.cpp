@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -22,6 +23,18 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pStartToken);
     adjustWidthAndFlags(_pIdentifier);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+}
+
+LanguageSyntaxNode* BadDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pStartToken;
+        case 1: return _pIdentifier;
+        case 2: return _pEndOfDirectiveToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,

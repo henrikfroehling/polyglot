@@ -9,6 +9,7 @@ namespace polyglot::CodeAnalysis
 class DelphiPackageContainsClauseSyntax;
 class DelphiPackageHeadSyntax;
 class DelphiPackageRequiresClauseSyntax;
+class LanguageSyntaxNode;
 class SyntaxFactory;
 
 class DelphiPackageModuleSyntax : public DelphiCompilationUnitSyntax
@@ -24,6 +25,8 @@ public:
     inline DelphiPackageHeadSyntax* head() const noexcept { return _pHead; }
     inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _pRequiresClause; }
     inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return 3; }
 
     static DelphiPackageModuleSyntax* create(SyntaxFactory& syntaxFactory,
                                              DelphiPackageHeadSyntax* head,

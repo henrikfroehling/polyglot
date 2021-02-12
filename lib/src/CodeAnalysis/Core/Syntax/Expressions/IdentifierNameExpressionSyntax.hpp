@@ -6,6 +6,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -15,6 +16,8 @@ public:
     explicit IdentifierNameExpressionSyntax(LanguageSyntaxToken* identifier) noexcept;
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
     virtual LanguageSyntaxToken* identifier() const noexcept override { return _pIdentifier; }
+    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    inline virtual pg_size childCount() const noexcept override { return 1; }
 
     static IdentifierNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                   LanguageSyntaxToken* identifier) noexcept;

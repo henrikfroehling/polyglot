@@ -2,6 +2,7 @@
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -20,6 +21,19 @@ UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+}
+
+LanguageSyntaxNode* UndefDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pStartToken;
+        case 1: return _pUndefKeyword;
+        case 2: return _pName;
+        case 3: return _pEndOfDirectiveToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 UndefDirectiveTriviaSyntax* UndefDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,

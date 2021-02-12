@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -26,6 +27,36 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
     adjustWidthAndFlags(_pMessageTypeToken);
     adjustWidthAndFlags(_pMessageLiteralToken);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+}
+
+LanguageSyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 4:
+        {
+            switch (index)
+            {
+                case 0: return _pStartToken;
+                case 1: return _pMessageKeyword;
+                case 2: return _pMessageLiteralToken;
+                case 3: return _pEndOfDirectiveToken;
+            }
+        }
+        case 5:
+        {
+            switch (index)
+            {
+                case 0: return _pStartToken;
+                case 1: return _pMessageKeyword;
+                case 2: return _pMessageTypeToken;
+                case 3: return _pMessageLiteralToken;
+                case 4: return _pEndOfDirectiveToken;
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,

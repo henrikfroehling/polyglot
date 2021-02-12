@@ -4,6 +4,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -23,13 +24,46 @@ DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(LanguageSyntaxToken* unitKeyword,
     _position = _pUnitKeyword->position();
     adjustWidthAndFlags(_pUnitKeyword);
     adjustWidthAndFlags(_pName);
-    adjustWidthAndFlags(_pSemiColonToken);
 
     if (_pInKeyword != nullptr)
         adjustWidthAndFlags(_pInKeyword);
 
     if (_pFilename != nullptr)
+    {
+        assert(_pInKeyword != nullptr);
         adjustWidthAndFlags(_pFilename);
+    }
+
+    adjustWidthAndFlags(_pSemiColonToken);
+}
+
+LanguageSyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 3:
+        {
+            switch (index)
+            {
+                case 0: return _pUnitKeyword;
+                case 1: return _pName;
+                case 2: return _pSemiColonToken;
+            }
+        }
+        case 5:
+        {
+            switch (index)
+            {
+                case 0: return _pUnitKeyword;
+                case 1: return _pName;
+                case 2: return _pInKeyword;
+                case 3: return _pFilename;
+                case 4: return _pSemiColonToken;
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 DelphiUnitHeadSyntax* DelphiUnitHeadSyntax::create(SyntaxFactory& syntaxFactory,

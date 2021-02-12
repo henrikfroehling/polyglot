@@ -7,6 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -24,6 +25,8 @@ public:
     inline virtual LanguageSyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
     inline virtual ExpressionSyntax* argumentExpression() const noexcept { return _pArgumentExpression; }
     inline virtual LanguageSyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
+    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    inline virtual pg_size childCount() const noexcept override { return 4; }
 
     static CallExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                         SyntaxKind syntaxKind,

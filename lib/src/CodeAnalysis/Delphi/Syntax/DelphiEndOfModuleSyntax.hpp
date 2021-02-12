@@ -7,6 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -20,6 +21,8 @@ public:
 
     inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
     inline LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return 2; }
 
     static DelphiEndOfModuleSyntax* create(SyntaxFactory& syntaxFactory,
                                            LanguageSyntaxToken* endKeyword,

@@ -26,7 +26,7 @@ public:
                                                SyntaxKind syntaxKind,
                                                LanguageSyntaxToken* EOFToken) noexcept;
 
-private:
+protected:
     LanguageSyntaxToken* _pEOFToken;
 };
 

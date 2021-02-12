@@ -9,6 +9,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxNode;
+class LanguageSyntaxNode;
 
 class SkippedTokensTriviaSyntax : public StructuredTriviaSyntax
 {
@@ -18,6 +19,8 @@ public:
 
     virtual ~SkippedTokensTriviaSyntax() noexcept = default;
     inline const std::vector<LanguageSyntaxNode*>& skippedTokens() const noexcept { return _skippedTokens; }
+    inline LanguageSyntaxNode* child(pg_size index) const override { return _skippedTokens[index]; }
+    inline pg_size childCount() const noexcept override { return _skippedTokens.size(); }
 
 private:
     std::vector<LanguageSyntaxNode*> _skippedTokens;

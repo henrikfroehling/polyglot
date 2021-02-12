@@ -7,6 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -24,6 +25,8 @@ public:
     inline virtual LanguageSyntaxToken* regionKeyword() const noexcept { return _pRegionKeyword; }
     inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return 3; }
 
     static RegionDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                                LanguageSyntaxToken* startToken,

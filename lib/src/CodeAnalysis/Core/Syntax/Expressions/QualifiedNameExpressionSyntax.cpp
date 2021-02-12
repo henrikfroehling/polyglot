@@ -4,6 +4,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -20,6 +21,18 @@ QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSynta
     adjustWidthAndFlags(_pLeftExpression);
     adjustWidthAndFlags(_pDotToken);
     adjustWidthAndFlags(_pRightExpression);
+}
+
+LanguageSyntaxNode* QualifiedNameExpressionSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pLeftExpression;
+        case 1: return _pDotToken;
+        case 2: return _pRightExpression;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 QualifiedNameExpressionSyntax* QualifiedNameExpressionSyntax::create(SyntaxFactory& syntaxFactory,

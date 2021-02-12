@@ -7,6 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -18,6 +19,8 @@ public:
 
     virtual ~LiteralExpressionSyntax() noexcept = default;
     inline virtual LanguageSyntaxToken* token() const noexcept { return _pToken; }
+    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    inline virtual pg_size childCount() const noexcept override { return 1; }
 
     static LiteralExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                            SyntaxKind syntaxKind,

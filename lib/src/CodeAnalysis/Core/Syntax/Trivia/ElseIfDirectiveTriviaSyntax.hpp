@@ -7,6 +7,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class ExpressionSyntax;
 class LanguageSyntaxToken;
 class SyntaxFactory;
@@ -31,6 +32,8 @@ public:
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return 4; }
 
     static ElseIfDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                                LanguageSyntaxToken* startToken,

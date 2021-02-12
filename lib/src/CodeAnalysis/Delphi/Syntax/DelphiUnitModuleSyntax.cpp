@@ -9,6 +9,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -38,7 +39,68 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
         adjustWidthAndFlags(_pInitializationSection);
 
     if (_pFinalizationSection != nullptr)
+    {
+        assert(_pInitializationSection != nullptr);
         adjustWidthAndFlags(_pFinalizationSection);
+    }
+}
+
+LanguageSyntaxNode* DelphiUnitModuleSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 5:
+        {
+            switch (index)
+            {
+                case 0: return _pHead;
+                case 1: return _pInterfaceSection;
+                case 2: return _pImplementationSection;
+                case 3: return _pEndOfModule;
+                case 4: return _pEOFToken;
+            }
+        }
+        case 6:
+        {
+            switch (index)
+            {
+                case 0: return _pHead;
+                case 1: return _pInterfaceSection;
+                case 2: return _pImplementationSection;
+                case 3: return _pInitializationSection;
+                case 4: return _pEndOfModule;
+                case 5: return _pEOFToken;
+            }
+        }
+        case 7:
+        {
+            switch (index)
+            {
+                case 0: return _pHead;
+                case 1: return _pInterfaceSection;
+                case 2: return _pImplementationSection;
+                case 3: return _pInitializationSection;
+                case 4: return _pFinalizationSection;
+                case 5: return _pEndOfModule;
+                case 6: return _pEOFToken;
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+pg_size DelphiUnitModuleSyntax::childCount() const noexcept
+{
+    pg_size count{5};
+
+    if (_pInitializationSection != nullptr)
+        count++;
+
+    if (_pFinalizationSection != nullptr)
+        count++;
+
+    return count;
 }
 
 DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFactory,

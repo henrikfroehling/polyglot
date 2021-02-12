@@ -6,6 +6,7 @@
 namespace polyglot::CodeAnalysis
 {
 
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class NameExpressionSyntax;
 class SyntaxFactory;
@@ -25,6 +26,8 @@ public:
     inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
     inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline LanguageSyntaxToken* filename() const noexcept { return _pFilename; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return _pFilename != nullptr ? 5 : 3; }
 
     static DelphiUnitHeadSyntax* create(SyntaxFactory& syntaxFactory,
                                         LanguageSyntaxToken* unitKeyword,

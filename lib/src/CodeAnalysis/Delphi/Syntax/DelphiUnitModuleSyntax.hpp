@@ -12,6 +12,7 @@ class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -36,6 +37,8 @@ public:
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
     inline DelphiEndOfModuleSyntax* endOfModule() const noexcept { return _pEndOfModule; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    pg_size childCount() const noexcept override;
 
     static DelphiUnitModuleSyntax* create(SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,

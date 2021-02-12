@@ -2,6 +2,7 @@
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -15,6 +16,17 @@ DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(LanguageSyntaxToken* endKeyword
     _position = _pEndKeyword->position();
     adjustWidthAndFlags(_pEndKeyword);
     adjustWidthAndFlags(_pDotToken);
+}
+
+LanguageSyntaxNode* DelphiEndOfModuleSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pEndKeyword;
+        case 1: return _pDotToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 DelphiEndOfModuleSyntax* DelphiEndOfModuleSyntax::create(SyntaxFactory& syntaxFactory,

@@ -5,6 +5,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiProgramHeadSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -19,6 +20,17 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* he
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
     adjustWidthAndFlags(_pUses);
+}
+
+LanguageSyntaxNode* DelphiProgramModuleSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pHead;
+        case 1: return _pUses;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& syntaxFactory,

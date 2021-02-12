@@ -3,6 +3,7 @@
 #include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
@@ -20,6 +21,18 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
     adjustWidthAndFlags(_pOpenParenthesisToken);
     adjustWidthAndFlags(_pExpression);
     adjustWidthAndFlags(_pCloseParenthesisToken);
+}
+
+LanguageSyntaxNode* ParenthesizedExpressionSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pOpenParenthesisToken;
+        case 1: return _pExpression;
+        case 2: return _pCloseParenthesisToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
 }
 
 ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(SyntaxFactory& syntaxFactory,

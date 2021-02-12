@@ -7,6 +7,7 @@ namespace polyglot::CodeAnalysis
 {
 
 class LanguageSyntaxList;
+class LanguageSyntaxNode;
 class LanguageSyntaxToken;
 class SyntaxFactory;
 
@@ -22,6 +23,8 @@ public:
     inline LanguageSyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
     inline LanguageSyntaxList* unitReferences() const noexcept { return _pUnitReferences; }
     inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+    LanguageSyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override { return 3; }
 
     static DelphiUsesClauseSyntax* create(SyntaxFactory& syntaxFactory,
                                           LanguageSyntaxToken* usesKeyword,
