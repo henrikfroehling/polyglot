@@ -1,25 +1,33 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
-#include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxTrivia::SyntaxTrivia(LanguageSyntaxTrivia* underlyingTrivia,
+SyntaxTrivia::SyntaxTrivia() noexcept
+    : SyntaxNode{},
+      ISyntaxTrivia{},
+      _text{},
+      _pToken{nullptr}
+{}
+
+SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
+                           std::string_view text,
+                           pg_size position,
+                           pg_size fullWidth,
                            ISyntaxToken* token) noexcept
-    : ISyntaxTrivia{},
-      _pUnderlyingTrivia{underlyingTrivia},
+    : SyntaxNode{syntaxKind, position, fullWidth},
+      ISyntaxTrivia{},
+      _text{text},
       _pToken{token}
-{
-    assert(_pUnderlyingTrivia != nullptr);
-}
+{}
 
 SyntaxTrivia::~SyntaxTrivia() noexcept
 {}
 
-TextSpan SyntaxTrivia::span() const noexcept
+ISyntaxNode* SyntaxTrivia::child(pg_size index) const
 {
-    return TextSpan{_pUnderlyingTrivia->position() + _pUnderlyingTrivia->leadingTriviaWidth(),
-                    _pUnderlyingTrivia->width()};
+    throw std::runtime_error{"invalid operation"};
 }
 
 } // end namespace polyglot::CodeAnalysis

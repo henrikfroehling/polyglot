@@ -1,38 +1,66 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
-#include <cassert>
+#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxToken::SyntaxToken(LanguageSyntaxToken* underlyingToken,
-                         ISyntaxNode* parent) noexcept
-    : ISyntaxToken{},
-      _pUnderlyingToken{underlyingToken},
-      _pParent{parent},
+SyntaxToken::SyntaxToken() noexcept
+    : SyntaxNode{},
+      ISyntaxToken{},
+      _text{},
       _pLeadingTrivia{nullptr},
       _pTrailingTrivia{nullptr}
+{}
+
+SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
+                         std::string_view text,
+                         pg_size position,
+                         pg_size fullWidth,
+                         ISyntaxTriviaList* leadingTrivia,
+                         ISyntaxTriviaList* trailingTrivia,
+                         ISyntaxNode* parent) noexcept
+    : SyntaxNode{syntaxKind, position, fullWidth, parent},
+      ISyntaxToken{},
+      _text{text},
+      _pLeadingTrivia{leadingTrivia},
+      _pTrailingTrivia{trailingTrivia}
 {
-    assert(_pUnderlyingToken != nullptr);
+    if (_pLeadingTrivia != nullptr)
+        adjustWidthAndFlags(_pLeadingTrivia);
+
+    if (_pTrailingTrivia != nullptr)
+        adjustWidthAndFlags(_pTrailingTrivia);
 }
 
 SyntaxToken::~SyntaxToken() noexcept
 {}
 
-TextSpan SyntaxToken::span() const noexcept
+ISyntaxNode* SyntaxToken::child(pg_size index) const
 {
-    return TextSpan{_pUnderlyingToken->position() + _pUnderlyingToken->leadingTriviaWidth(),
-                    _pUnderlyingToken->width()};
+    throw std::runtime_error{"invalid operation"};
 }
 
-bool SyntaxToken::hasLeadingTrivia() const noexcept
+TokenValue SyntaxToken::value() const noexcept
 {
-    return _pLeadingTrivia != nullptr && _pLeadingTrivia->count() != 0;
+    switch (_syntaxKind)
+    {
+        case SyntaxKind::TrueKeyword:
+            return true;
+        case SyntaxKind::FalseKeyword:
+            return false;
+    }
+
+    return TokenValue{};
 }
 
-bool SyntaxToken::hasTrailingTrivia() const noexcept
+bool SyntaxToken::booleanValue() const noexcept
 {
-    return _pTrailingTrivia != nullptr && _pTrailingTrivia->count() != 0;
+    const TokenValue val = value();
+
+    if (auto pValue = std::get_if<bool>(&val))
+        return *pValue;
+
+    return false;
 }
 
 } // end namespace polyglot::CodeAnalysis

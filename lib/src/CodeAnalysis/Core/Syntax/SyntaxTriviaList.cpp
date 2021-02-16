@@ -1,58 +1,34 @@
 #include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
 #include <cassert>
-#include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
 
-SyntaxTriviaList::SyntaxTriviaList(LanguageSyntaxNode* underlyingNode,
-                                   ISyntaxToken* token) noexcept
-    : ISyntaxTriviaList{},
-      _pUnderlyingNode{underlyingNode},
+SyntaxTriviaList::SyntaxTriviaList(ISyntaxToken* token) noexcept
+    : SyntaxNode{},
+      ISyntaxTriviaList{},
+      _children{},
       _pToken{token}
-{
-    assert(_pUnderlyingNode != nullptr);
-}
+{}
 
 SyntaxTriviaList::~SyntaxTriviaList() noexcept
 {}
 
-ISyntaxTrivia* SyntaxTriviaList::child(pg_size index) const noexcept
+ISyntaxToken* SyntaxTriviaList::token() const noexcept
 {
-    return nullptr; // TODO SyntaxPool::createSyntaxTrivia(static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(index)), _pToken);
+    return _pToken;
 }
 
-TextSpan SyntaxTriviaList::span() const noexcept
+void SyntaxTriviaList::add(ISyntaxTrivia* trivia) noexcept
 {
-    const pg_size pos = position();
+    assert(trivia != nullptr);
 
-    return TextSpan::fromBounds(pos + _pUnderlyingNode->leadingTriviaWidth(),
-                                pos + _pUnderlyingNode->fullWidth() - _pUnderlyingNode->trailingTriviaWidth());
-}
+    if (_children.empty())
+        _position = trivia->position();
 
-TextSpan SyntaxTriviaList::fullSpan() const noexcept
-{
-    return TextSpan{position(), _pUnderlyingNode->fullWidth()};
-}
-
-ISyntaxTrivia* SyntaxTriviaList::first() const
-{
-    if (_pUnderlyingNode->childCount() > 0)
-        return nullptr; // TODO SyntaxPool::createSyntaxTrivia(static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(0)), _pToken);
-
-    throw std::runtime_error{"invalid operation"};
-}
-
-ISyntaxTrivia* SyntaxTriviaList::last() const
-{
-    const pg_size count = _pUnderlyingNode->childCount();
-
-    if (count > 0)
-        return nullptr; // TODO SyntaxPool::createSyntaxTrivia(static_cast<LanguageSyntaxTrivia*>(_pUnderlyingNode->child(count - 1)), _pToken);
-
-    throw std::runtime_error{"invalid operation"};
+    _children.push_back(trivia);
+    adjustWidthAndFlags(trivia);
 }
 
 } // end namespace polyglot::CodeAnalysis
