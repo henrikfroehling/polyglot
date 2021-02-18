@@ -102,11 +102,6 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxMissingToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxList.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxMissingToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
