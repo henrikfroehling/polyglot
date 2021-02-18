@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,7 +9,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(LanguageSyntaxToken* identfier) noexcept
+IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(ISyntaxToken* identfier) noexcept
     : SimpleNameExpressionSyntax{SyntaxKind::IdentifierNameExpression},
       _pIdentifier{identfier}
 {
@@ -17,7 +17,7 @@ IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(LanguageSyntaxTok
     adjustWidthAndFlags(_pIdentifier);
 }
 
-LanguageSyntaxNode* IdentifierNameExpressionSyntax::child(pg_size index) const
+ISyntaxNode* IdentifierNameExpressionSyntax::child(pg_size index) const
 {
     if (index == 0)
         return _pIdentifier;
@@ -26,7 +26,7 @@ LanguageSyntaxNode* IdentifierNameExpressionSyntax::child(pg_size index) const
 }
 
 IdentifierNameExpressionSyntax* IdentifierNameExpressionSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                       LanguageSyntaxToken* identifier) noexcept
+                                                                       ISyntaxToken* identifier) noexcept
 {
     assert(identifier != nullptr);
     assert(identifier->syntaxKind() == SyntaxKind::IdentifierToken);

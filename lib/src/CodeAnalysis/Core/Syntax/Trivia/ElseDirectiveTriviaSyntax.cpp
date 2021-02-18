@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,9 +9,9 @@ namespace polyglot::CodeAnalysis
 {
 
 ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                     LanguageSyntaxToken* startToken,
-                                                     LanguageSyntaxToken* elseKeyword,
-                                                     LanguageSyntaxToken* endOfDirectiveToken,
+                                                     ISyntaxToken* startToken,
+                                                     ISyntaxToken* elseKeyword,
+                                                     ISyntaxToken* endOfDirectiveToken,
                                                      bool isActive,
                                                      bool isBranchTaken) noexcept
     : BranchingDirectiveTriviaSyntax{syntaxKind},
@@ -27,7 +27,7 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* ElseDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* ElseDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -40,9 +40,9 @@ LanguageSyntaxNode* ElseDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                             LanguageSyntaxToken* startToken,
-                                                             LanguageSyntaxToken* elseKeyword,
-                                                             LanguageSyntaxToken* endOfDirectiveToken,
+                                                             ISyntaxToken* startToken,
+                                                             ISyntaxToken* elseKeyword,
+                                                             ISyntaxToken* endOfDirectiveToken,
                                                              bool isActive,
                                                              bool isBranchTaken) noexcept
 {

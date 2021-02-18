@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,10 +9,10 @@ namespace polyglot::CodeAnalysis
 {
 
 CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
-                                           LanguageSyntaxToken* identifier,
-                                           LanguageSyntaxToken* openParenthesisToken,
+                                           ISyntaxToken* identifier,
+                                           ISyntaxToken* openParenthesisToken,
                                            ExpressionSyntax* argumentExpression,
-                                           LanguageSyntaxToken* closeParenthesisToken) noexcept
+                                           ISyntaxToken* closeParenthesisToken) noexcept
     : ExpressionSyntax{syntaxKind},
       _pIdentifier{identifier},
       _pOpenParenthesisToken{openParenthesisToken},
@@ -26,7 +26,7 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
-LanguageSyntaxNode* CallExpressionSyntax::child(pg_size index) const
+ISyntaxNode* CallExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -41,10 +41,10 @@ LanguageSyntaxNode* CallExpressionSyntax::child(pg_size index) const
 
 CallExpressionSyntax* CallExpressionSyntax::create(SyntaxFactory& syntaxFactory,
                                                    SyntaxKind syntaxKind,
-                                                   LanguageSyntaxToken* identifier,
-                                                   LanguageSyntaxToken* openParenthesisToken,
+                                                   ISyntaxToken* identifier,
+                                                   ISyntaxToken* openParenthesisToken,
                                                    ExpressionSyntax* argumentExpression,
-                                                   LanguageSyntaxToken* closeParenthesisToken) noexcept
+                                                   ISyntaxToken* closeParenthesisToken) noexcept
 {
     assert(identifier != nullptr);
     assert(identifier->syntaxKind() == SyntaxKind::IdentifierToken);

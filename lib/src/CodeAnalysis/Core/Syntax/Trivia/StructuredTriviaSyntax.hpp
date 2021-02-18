@@ -2,12 +2,12 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_TRIVIA_STRUCTUREDTRIVIASYNTAX_H
 
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class StructuredTriviaSyntax : public LanguageSyntaxTrivia
+class StructuredTriviaSyntax : public SyntaxTrivia
 {
 public:
     explicit StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept;

@@ -7,34 +7,34 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class ParenthesizedExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit ParenthesizedExpressionSyntax(SyntaxKind syntaxKind,
-                                           LanguageSyntaxToken* openParenthesisToken,
+                                           ISyntaxToken* openParenthesisToken,
                                            ExpressionSyntax* expression,
-                                           LanguageSyntaxToken* closeParenthesisToken) noexcept;
+                                           ISyntaxToken* closeParenthesisToken) noexcept;
 
     virtual ~ParenthesizedExpressionSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
+    inline virtual ISyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
     inline virtual ExpressionSyntax* expression() const noexcept { return _pExpression; }
-    inline virtual LanguageSyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
-    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    inline virtual ISyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
     inline virtual pg_size childCount() const noexcept override { return 3; }
+    virtual ISyntaxNode* child(pg_size index) const override;
 
     static ParenthesizedExpressionSyntax* create(SyntaxFactory& syntaxFactory,
-                                                 LanguageSyntaxToken* openParenthesisToken,
+                                                 ISyntaxToken* openParenthesisToken,
                                                  ExpressionSyntax* expression,
-                                                 LanguageSyntaxToken* closeParenthesisToken) noexcept;
+                                                 ISyntaxToken* closeParenthesisToken) noexcept;
 
 private:
-    LanguageSyntaxToken* _pOpenParenthesisToken;
+    ISyntaxToken* _pOpenParenthesisToken;
     ExpressionSyntax* _pExpression;
-    LanguageSyntaxToken* _pCloseParenthesisToken;
+    ISyntaxToken* _pCloseParenthesisToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

@@ -2,12 +2,12 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_EXPRESSIONSYNTAX_H
 
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class ExpressionSyntax : public LanguageSyntaxNode
+class ExpressionSyntax : public SyntaxNode
 {
 public:
     explicit ExpressionSyntax(SyntaxKind syntaxKind) noexcept;

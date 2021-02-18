@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,10 +9,10 @@ namespace polyglot::CodeAnalysis
 {
 
 IfNDefDirectiveTriviaSyntax::IfNDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         LanguageSyntaxToken* startToken,
-                                                         LanguageSyntaxToken* ifNDefKeyword,
-                                                         LanguageSyntaxToken* name,
-                                                         LanguageSyntaxToken* endOfDirectiveToken,
+                                                         ISyntaxToken* startToken,
+                                                         ISyntaxToken* ifNDefKeyword,
+                                                         ISyntaxToken* name,
+                                                         ISyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -28,7 +28,7 @@ IfNDefDirectiveTriviaSyntax::IfNDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* IfNDefDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* IfNDefDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -42,10 +42,10 @@ LanguageSyntaxNode* IfNDefDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 IfNDefDirectiveTriviaSyntax* IfNDefDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                 LanguageSyntaxToken* startToken,
-                                                                 LanguageSyntaxToken* ifNDefKeyword,
-                                                                 LanguageSyntaxToken* name,
-                                                                 LanguageSyntaxToken* endOfDirectiveToken,
+                                                                 ISyntaxToken* startToken,
+                                                                 ISyntaxToken* ifNDefKeyword,
+                                                                 ISyntaxToken* name,
+                                                                 ISyntaxToken* endOfDirectiveToken,
                                                                  bool isActive) noexcept
 {
     assert(startToken != nullptr);

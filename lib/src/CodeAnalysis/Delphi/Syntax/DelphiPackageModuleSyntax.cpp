@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiPackageHeadSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.hpp"
@@ -14,7 +14,7 @@ namespace polyglot::CodeAnalysis
 DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* head,
                                                      DelphiPackageRequiresClauseSyntax* requiresClause,
                                                      DelphiPackageContainsClauseSyntax* containsClause,
-                                                     LanguageSyntaxToken* EOFToken) noexcept
+                                                     ISyntaxToken* EOFToken) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::PackageModule, EOFToken},
       _pHead{head},
       _pRequiresClause{requiresClause},
@@ -26,7 +26,7 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* he
     adjustWidthAndFlags(_pContainsClause);
 }
 
-LanguageSyntaxNode* DelphiPackageModuleSyntax::child(pg_size index) const
+ISyntaxNode* DelphiPackageModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -42,7 +42,7 @@ DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(SyntaxFactory& synt
                                                              DelphiPackageHeadSyntax* head,
                                                              DelphiPackageRequiresClauseSyntax* requiresClause,
                                                              DelphiPackageContainsClauseSyntax* containsClause,
-                                                             LanguageSyntaxToken* EOFToken) noexcept
+                                                             ISyntaxToken* EOFToken) noexcept
 {
     assert(head != nullptr);
     assert(head->syntaxKind() == SyntaxKind::PackageHead);

@@ -4,7 +4,7 @@ namespace polyglot::CodeAnalysis
 {
 
 StructuredTriviaSyntax::StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept
-    : LanguageSyntaxTrivia{syntaxKind, ""}
+    : SyntaxTrivia{syntaxKind, ""}
 {}
 
 } // end namespace polyglot::CodeAnalysis

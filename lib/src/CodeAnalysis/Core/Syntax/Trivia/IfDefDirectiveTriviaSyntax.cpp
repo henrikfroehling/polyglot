@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,10 +9,10 @@ namespace polyglot::CodeAnalysis
 {
 
 IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       LanguageSyntaxToken* startToken,
-                                                       LanguageSyntaxToken* ifDefKeyword,
-                                                       LanguageSyntaxToken* name,
-                                                       LanguageSyntaxToken* endOfDirectiveToken,
+                                                       ISyntaxToken* startToken,
+                                                       ISyntaxToken* ifDefKeyword,
+                                                       ISyntaxToken* name,
+                                                       ISyntaxToken* endOfDirectiveToken,
                                                        bool isActive,
                                                        bool isBranchTaken) noexcept
     : ConditionalDirectiveTriviaSyntax{syntaxKind},
@@ -30,7 +30,7 @@ IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* IfDefDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* IfDefDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -44,10 +44,10 @@ LanguageSyntaxNode* IfDefDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                               LanguageSyntaxToken* startToken,
-                                                               LanguageSyntaxToken* ifDefKeyword,
-                                                               LanguageSyntaxToken* name,
-                                                               LanguageSyntaxToken* endOfDirectiveToken,
+                                                               ISyntaxToken* startToken,
+                                                               ISyntaxToken* ifDefKeyword,
+                                                               ISyntaxToken* name,
+                                                               ISyntaxToken* endOfDirectiveToken,
                                                                bool isActive,
                                                                bool isBranchTaken) noexcept
 {

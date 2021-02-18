@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,11 +9,11 @@ namespace polyglot::CodeAnalysis
 {
 
 MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                           LanguageSyntaxToken* startToken,
-                                                           LanguageSyntaxToken* messageKeyword,
-                                                           LanguageSyntaxToken* messageTypeToken,
-                                                           LanguageSyntaxToken* messageLiteralToken,
-                                                           LanguageSyntaxToken* endOfDirectiveToken) noexcept
+                                                           ISyntaxToken* startToken,
+                                                           ISyntaxToken* messageKeyword,
+                                                           ISyntaxToken* messageTypeToken,
+                                                           ISyntaxToken* messageLiteralToken,
+                                                           ISyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pMessageKeyword{messageKeyword},
@@ -29,7 +29,7 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -60,11 +60,11 @@ LanguageSyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                   LanguageSyntaxToken* startToken,
-                                                                   LanguageSyntaxToken* messageKeyword,
-                                                                   LanguageSyntaxToken* messageTypeToken,
-                                                                   LanguageSyntaxToken* messageLiteralToken,
-                                                                   LanguageSyntaxToken* endOfDirectiveToken) noexcept
+                                                                   ISyntaxToken* startToken,
+                                                                   ISyntaxToken* messageKeyword,
+                                                                   ISyntaxToken* messageTypeToken,
+                                                                   ISyntaxToken* messageLiteralToken,
+                                                                   ISyntaxToken* endOfDirectiveToken) noexcept
 {
     assert(startToken != nullptr);
     assert(messageKeyword != nullptr);

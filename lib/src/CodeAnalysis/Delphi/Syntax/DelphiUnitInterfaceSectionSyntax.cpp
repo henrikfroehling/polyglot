@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
@@ -9,7 +9,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(LanguageSyntaxToken* interfaceKeyword,
+DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(ISyntaxToken* interfaceKeyword,
                                                                    DelphiUsesClauseSyntax* uses) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitInterfaceSection},
       _pInterfaceKeyword{interfaceKeyword},
@@ -22,7 +22,7 @@ DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(LanguageSynta
         adjustWidthAndFlags(_pUses);
 }
 
-LanguageSyntaxNode* DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -45,7 +45,7 @@ LanguageSyntaxNode* DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
 }
 
 DelphiUnitInterfaceSectionSyntax* DelphiUnitInterfaceSectionSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                           LanguageSyntaxToken* interfaceKeyword,
+                                                                           ISyntaxToken* interfaceKeyword,
                                                                            DelphiUsesClauseSyntax* uses) noexcept
 {
     assert(interfaceKeyword != nullptr);

@@ -7,40 +7,40 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class ElseDirectiveTriviaSyntax : public BranchingDirectiveTriviaSyntax
 {
 public:
     explicit ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                       LanguageSyntaxToken* startToken,
-                                       LanguageSyntaxToken* elseKeyword,
-                                       LanguageSyntaxToken* endOfDirectiveToken,
+                                       ISyntaxToken* startToken,
+                                       ISyntaxToken* elseKeyword,
+                                       ISyntaxToken* endOfDirectiveToken,
                                        bool isActive,
                                        bool isBranchTaken) noexcept;
 
     virtual ~ElseDirectiveTriviaSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual LanguageSyntaxToken* elseKeyword() const noexcept { return _pElseKeyword; }
-    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual ISyntaxToken* elseKeyword() const noexcept { return _pElseKeyword; }
+    inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return 3; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static ElseDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
-                                             LanguageSyntaxToken* startToken,
-                                             LanguageSyntaxToken* elseKeyword,
-                                             LanguageSyntaxToken* endOfDirectiveToken,
+                                             ISyntaxToken* startToken,
+                                             ISyntaxToken* elseKeyword,
+                                             ISyntaxToken* endOfDirectiveToken,
                                              bool isActive,
                                              bool isBranchTaken) noexcept;
     
 private:
-    LanguageSyntaxToken* _pStartToken;
-    LanguageSyntaxToken* _pElseKeyword;
-    LanguageSyntaxToken* _pEndOfDirectiveToken;
+    ISyntaxToken* _pStartToken;
+    ISyntaxToken* _pElseKeyword;
+    ISyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;
 };

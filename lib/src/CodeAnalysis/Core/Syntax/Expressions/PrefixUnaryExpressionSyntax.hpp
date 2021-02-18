@@ -7,30 +7,30 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class PrefixUnaryExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                         LanguageSyntaxToken* operatorToken,
+                                         ISyntaxToken* operatorToken,
                                          ExpressionSyntax* operandExpression) noexcept;
 
     virtual ~PrefixUnaryExpressionSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
+    inline virtual ISyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* operandExpression() const noexcept { return _pOperandExpression; }
-    virtual LanguageSyntaxNode* child(pg_size index) const override;
     inline virtual pg_size childCount() const noexcept override { return 2; }
+    virtual ISyntaxNode* child(pg_size index) const override;
 
     static PrefixUnaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                SyntaxKind syntaxKind,
-                                               LanguageSyntaxToken* operatorToken,
+                                               ISyntaxToken* operatorToken,
                                                ExpressionSyntax* operandExpression) noexcept;
 
 private:
-    LanguageSyntaxToken* _pOperatorToken;
+    ISyntaxToken* _pOperatorToken;
     ExpressionSyntax* _pOperandExpression;
 };
 

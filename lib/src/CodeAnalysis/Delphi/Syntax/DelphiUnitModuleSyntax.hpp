@@ -12,8 +12,8 @@ class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class DelphiUnitModuleSyntax : public DelphiCompilationUnitSyntax
@@ -23,7 +23,7 @@ public:
                                     DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                     DelphiUnitImplementationSectionSyntax* implementationSection,
                                     DelphiEndOfModuleSyntax* endOfModule,
-                                    LanguageSyntaxToken* EOFToken,
+                                    ISyntaxToken* EOFToken,
                                     DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
                                     DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
 
@@ -37,15 +37,15 @@ public:
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
     inline DelphiEndOfModuleSyntax* endOfModule() const noexcept { return _pEndOfModule; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     pg_size childCount() const noexcept override;
+    ISyntaxNode* child(pg_size index) const override;
 
     static DelphiUnitModuleSyntax* create(SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,
                                           DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                           DelphiUnitImplementationSectionSyntax* implementationSection,
                                           DelphiEndOfModuleSyntax* endOfModule,
-                                          LanguageSyntaxToken* EOFToken,
+                                          ISyntaxToken* EOFToken,
                                           DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
                                           DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
 

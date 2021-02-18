@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
@@ -10,7 +10,7 @@ namespace polyglot::CodeAnalysis
 {
 
 QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSyntax* leftExpression,
-                                                             LanguageSyntaxToken* dotToken,
+                                                             ISyntaxToken* dotToken,
                                                              SimpleNameExpressionSyntax* rightExpression) noexcept
     : NameExpressionSyntax{SyntaxKind::QualifiedNameExpression},
       _pLeftExpression{leftExpression},
@@ -23,7 +23,7 @@ QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSynta
     adjustWidthAndFlags(_pRightExpression);
 }
 
-LanguageSyntaxNode* QualifiedNameExpressionSyntax::child(pg_size index) const
+ISyntaxNode* QualifiedNameExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -37,7 +37,7 @@ LanguageSyntaxNode* QualifiedNameExpressionSyntax::child(pg_size index) const
 
 QualifiedNameExpressionSyntax* QualifiedNameExpressionSyntax::create(SyntaxFactory& syntaxFactory,
                                                                      NameExpressionSyntax* leftExpression,
-                                                                     LanguageSyntaxToken* dotToken,
+                                                                     ISyntaxToken* dotToken,
                                                                      SimpleNameExpressionSyntax* rightExpression) noexcept
 {
     assert(leftExpression != nullptr);

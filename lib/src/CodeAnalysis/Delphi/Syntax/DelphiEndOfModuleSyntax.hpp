@@ -7,30 +7,30 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class DelphiEndOfModuleSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiEndOfModuleSyntax(LanguageSyntaxToken* endKeyword,
-                                     LanguageSyntaxToken* dotToken) noexcept;
+    explicit DelphiEndOfModuleSyntax(ISyntaxToken* endKeyword,
+                                     ISyntaxToken* dotToken) noexcept;
 
     virtual ~DelphiEndOfModuleSyntax() noexcept = default;
 
-    inline LanguageSyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
-    inline LanguageSyntaxToken* dotToken() const noexcept { return _pDotToken; }
-    LanguageSyntaxNode* child(pg_size index) const override;
+    inline ISyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
+    inline ISyntaxToken* dotToken() const noexcept { return _pDotToken; }
     inline pg_size childCount() const noexcept override { return 2; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static DelphiEndOfModuleSyntax* create(SyntaxFactory& syntaxFactory,
-                                           LanguageSyntaxToken* endKeyword,
-                                           LanguageSyntaxToken* dotToken) noexcept;
+                                           ISyntaxToken* endKeyword,
+                                           ISyntaxToken* dotToken) noexcept;
 
 private:
-    LanguageSyntaxToken* _pEndKeyword;
-    LanguageSyntaxToken* _pDotToken;
+    ISyntaxToken* _pEndKeyword;
+    ISyntaxToken* _pDotToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

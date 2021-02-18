@@ -6,42 +6,42 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class NameExpressionSyntax;
 class SyntaxFactory;
 
 class DelphiUnitHeadSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitHeadSyntax(LanguageSyntaxToken* unitKeyword,
+    explicit DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
                                   NameExpressionSyntax* name,
-                                  LanguageSyntaxToken* semiColonToken,
-                                  LanguageSyntaxToken* inKeyword = nullptr,
-                                  LanguageSyntaxToken* filename = nullptr) noexcept;
+                                  ISyntaxToken* semiColonToken,
+                                  ISyntaxToken* inKeyword = nullptr,
+                                  ISyntaxToken* filename = nullptr) noexcept;
 
     virtual ~DelphiUnitHeadSyntax() noexcept = default;
-    inline LanguageSyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
+    inline ISyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
     inline NameExpressionSyntax* name() const noexcept { return _pName; }
-    inline LanguageSyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
-    inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
-    inline LanguageSyntaxToken* filename() const noexcept { return _pFilename; }
-    LanguageSyntaxNode* child(pg_size index) const override;
+    inline ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
+    inline ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
+    inline ISyntaxToken* filename() const noexcept { return _pFilename; }
     inline pg_size childCount() const noexcept override { return _pFilename != nullptr ? 5 : 3; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static DelphiUnitHeadSyntax* create(SyntaxFactory& syntaxFactory,
-                                        LanguageSyntaxToken* unitKeyword,
+                                        ISyntaxToken* unitKeyword,
                                         NameExpressionSyntax* name,
-                                        LanguageSyntaxToken* semiColonToken,
-                                        LanguageSyntaxToken* inKeyword = nullptr,
-                                        LanguageSyntaxToken* filename = nullptr) noexcept;
+                                        ISyntaxToken* semiColonToken,
+                                        ISyntaxToken* inKeyword = nullptr,
+                                        ISyntaxToken* filename = nullptr) noexcept;
 
 private:
-    LanguageSyntaxToken* _pUnitKeyword;
+    ISyntaxToken* _pUnitKeyword;
     NameExpressionSyntax* _pName;
-    LanguageSyntaxToken* _pSemiColonToken;
-    LanguageSyntaxToken* _pInKeyword; // optional
-    LanguageSyntaxToken* _pFilename; // optional
+    ISyntaxToken* _pSemiColonToken;
+    ISyntaxToken* _pInKeyword; // optional
+    ISyntaxToken* _pFilename; // optional
 };
 
 } // end namespace polyglot::CodeAnalysis

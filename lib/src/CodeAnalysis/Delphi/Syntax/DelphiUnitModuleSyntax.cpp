@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
@@ -18,7 +18,7 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
                                                DelphiEndOfModuleSyntax* endOfModule,
-                                               LanguageSyntaxToken* EOFToken,
+                                               ISyntaxToken* EOFToken,
                                                DelphiUnitInitializationSectionSyntax* initializationSection,
                                                DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::UnitModule, EOFToken},
@@ -45,7 +45,7 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
     }
 }
 
-LanguageSyntaxNode* DelphiUnitModuleSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUnitModuleSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -108,7 +108,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
                                                        DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                        DelphiUnitImplementationSectionSyntax* implementationSection,
                                                        DelphiEndOfModuleSyntax* endOfModule,
-                                                       LanguageSyntaxToken* EOFToken,
+                                                       ISyntaxToken* EOFToken,
                                                        DelphiUnitInitializationSectionSyntax* initializationSection,
                                                        DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
 {

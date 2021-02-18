@@ -7,37 +7,37 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class BadDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                      LanguageSyntaxToken* startToken,
-                                      LanguageSyntaxToken* identifier,
-                                      LanguageSyntaxToken* endOfDirectiveToken,
+                                      ISyntaxToken* startToken,
+                                      ISyntaxToken* identifier,
+                                      ISyntaxToken* endOfDirectiveToken,
                                       bool isActive) noexcept;
 
     virtual ~BadDirectiveTriviaSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual LanguageSyntaxToken* identifier() const noexcept { return _pIdentifier; }
-    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual ISyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return 3; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static BadDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
-                                            LanguageSyntaxToken* startToken,
-                                            LanguageSyntaxToken* identifier,
-                                            LanguageSyntaxToken* endOfDirectiveToken,
+                                            ISyntaxToken* startToken,
+                                            ISyntaxToken* identifier,
+                                            ISyntaxToken* endOfDirectiveToken,
                                             bool isActive) noexcept;
 
 private:
-    LanguageSyntaxToken* _pStartToken;
-    LanguageSyntaxToken* _pIdentifier;
-    LanguageSyntaxToken* _pEndOfDirectiveToken;
+    ISyntaxToken* _pStartToken;
+    ISyntaxToken* _pIdentifier;
+    ISyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

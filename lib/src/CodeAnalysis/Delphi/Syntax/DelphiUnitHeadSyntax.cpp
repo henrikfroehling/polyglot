@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
@@ -9,11 +9,11 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(LanguageSyntaxToken* unitKeyword,
+DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
                                            NameExpressionSyntax* name,
-                                           LanguageSyntaxToken* semiColonToken,
-                                           LanguageSyntaxToken* inKeyword,
-                                           LanguageSyntaxToken* filename) noexcept
+                                           ISyntaxToken* semiColonToken,
+                                           ISyntaxToken* inKeyword,
+                                           ISyntaxToken* filename) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitHead},
       _pUnitKeyword{unitKeyword},
       _pName{name},
@@ -37,7 +37,7 @@ DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(LanguageSyntaxToken* unitKeyword,
     adjustWidthAndFlags(_pSemiColonToken);
 }
 
-LanguageSyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -67,11 +67,11 @@ LanguageSyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const
 }
 
 DelphiUnitHeadSyntax* DelphiUnitHeadSyntax::create(SyntaxFactory& syntaxFactory,
-                                                   LanguageSyntaxToken* unitKeyword,
+                                                   ISyntaxToken* unitKeyword,
                                                    NameExpressionSyntax* name,
-                                                   LanguageSyntaxToken* semiColonToken,
-                                                   LanguageSyntaxToken* inKeyword,
-                                                   LanguageSyntaxToken* filename) noexcept
+                                                   ISyntaxToken* semiColonToken,
+                                                   ISyntaxToken* inKeyword,
+                                                   ISyntaxToken* filename) noexcept
 {
     assert(unitKeyword != nullptr);
     assert(unitKeyword->syntaxKind() == SyntaxKind::UnitKeyword);

@@ -9,7 +9,8 @@ namespace polyglot::CodeAnalysis
 class DelphiPackageContainsClauseSyntax;
 class DelphiPackageHeadSyntax;
 class DelphiPackageRequiresClauseSyntax;
-class LanguageSyntaxNode;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class DelphiPackageModuleSyntax : public DelphiCompilationUnitSyntax
@@ -18,21 +19,21 @@ public:
     explicit DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* head,
                                        DelphiPackageRequiresClauseSyntax* requiresClause,
                                        DelphiPackageContainsClauseSyntax* containsClause,
-                                       LanguageSyntaxToken* EOFToken) noexcept;
+                                       ISyntaxToken* EOFToken) noexcept;
 
     virtual ~DelphiPackageModuleSyntax() noexcept = default;
     inline bool isPackageModule() const noexcept override { return true; }
     inline DelphiPackageHeadSyntax* head() const noexcept { return _pHead; }
     inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _pRequiresClause; }
     inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return 3; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static DelphiPackageModuleSyntax* create(SyntaxFactory& syntaxFactory,
                                              DelphiPackageHeadSyntax* head,
                                              DelphiPackageRequiresClauseSyntax* requiresClause,
                                              DelphiPackageContainsClauseSyntax* containsClause,
-                                             LanguageSyntaxToken* EOFToken) noexcept;
+                                             ISyntaxToken* EOFToken) noexcept;
 
     static DelphiPackageModuleSyntax* create(SyntaxFactory& syntaxFactory) noexcept;
 

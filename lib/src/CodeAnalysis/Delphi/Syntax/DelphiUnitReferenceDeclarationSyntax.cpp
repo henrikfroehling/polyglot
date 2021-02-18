@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
@@ -10,8 +10,8 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
-                                                                           LanguageSyntaxToken* inKeyword,
-                                                                           LanguageSyntaxToken* sourceFile) noexcept
+                                                                           ISyntaxToken* inKeyword,
+                                                                           ISyntaxToken* sourceFile) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitReference},
       _pUnitName{unitName},
       _pInKeyword{inKeyword},
@@ -30,7 +30,7 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
     }
 }
 
-LanguageSyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -55,8 +55,8 @@ LanguageSyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) c
 
 DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(SyntaxFactory& syntaxFactory,
                                                                                    NameExpressionSyntax* unitName,
-                                                                                   LanguageSyntaxToken* inKeyword,
-                                                                                   LanguageSyntaxToken* sourceFile) noexcept
+                                                                                   ISyntaxToken* inKeyword,
+                                                                                   ISyntaxToken* sourceFile) noexcept
 {
     assert(unitName != nullptr);
 

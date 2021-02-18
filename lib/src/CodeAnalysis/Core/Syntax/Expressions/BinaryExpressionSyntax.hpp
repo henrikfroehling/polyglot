@@ -7,8 +7,8 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class BinaryExpressionSyntax : public ExpressionSyntax
@@ -16,25 +16,25 @@ class BinaryExpressionSyntax : public ExpressionSyntax
 public:
     explicit BinaryExpressionSyntax(SyntaxKind syntaxKind,
                                     ExpressionSyntax* leftExpression,
-                                    LanguageSyntaxToken* operatorToken,
+                                    ISyntaxToken* operatorToken,
                                     ExpressionSyntax* rightExpression) noexcept;
 
     virtual ~BinaryExpressionSyntax() noexcept = default;
     inline virtual ExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
-    inline virtual LanguageSyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
+    inline virtual ISyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
-    virtual LanguageSyntaxNode* child(pg_size index) const override;
     inline virtual pg_size childCount() const noexcept override { return 3; }
+    virtual ISyntaxNode* child(pg_size index) const override;
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,
                                           ExpressionSyntax* leftExpression,
-                                          LanguageSyntaxToken* operatorToken,
+                                          ISyntaxToken* operatorToken,
                                           ExpressionSyntax* rightExpression) noexcept;
 
 private:
     ExpressionSyntax* _pLeftExpression;
-    LanguageSyntaxToken* _pOperatorToken;
+    ISyntaxToken* _pOperatorToken;
     ExpressionSyntax* _pRightExpression;
 };
 
