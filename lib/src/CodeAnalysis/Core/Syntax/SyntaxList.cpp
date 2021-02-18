@@ -8,11 +8,13 @@ namespace polyglot::CodeAnalysis
 
 SyntaxList::SyntaxList() noexcept
     : SyntaxNode{SyntaxKind::SyntaxList},
+      ISyntaxList{},
       _children{}
 {}
 
 SyntaxList::SyntaxList(std::vector<ISyntaxNode*>&& children) noexcept
     : SyntaxNode{SyntaxKind::SyntaxList},
+      ISyntaxList{},
       _children{std::move(children)}
 {
     if (_children.size() > 0)

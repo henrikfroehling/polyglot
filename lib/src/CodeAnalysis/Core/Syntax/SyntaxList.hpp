@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxList.hpp"
 #include "SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
@@ -10,7 +11,7 @@ namespace polyglot::CodeAnalysis
 
 class ISyntaxNode;
 
-class SyntaxList : public SyntaxNode
+class SyntaxList : public SyntaxNode, public ISyntaxList
 {
 public:
     SyntaxList() noexcept;
@@ -24,6 +25,8 @@ public:
 
     inline pg_size childCount() const noexcept override { return _children.size(); }
     inline ISyntaxNode* child(pg_size index) const override { return _children[index]; }
+    inline ISyntaxNode* first() const noexcept override final { return _children.size() > 0 ? _children[0] : nullptr; }
+    inline ISyntaxNode* last() const noexcept override final { return _children.size() > 0 ? _children.back() : nullptr; }
     void add(ISyntaxNode* node) noexcept;
 
 protected:

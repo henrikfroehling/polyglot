@@ -1,8 +1,8 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxList.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxList.hpp"
 #include <cassert>
 #include <stdexcept>
 
@@ -10,7 +10,7 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
-                                               SyntaxList* unitReferences,
+                                               ISyntaxList* unitReferences,
                                                ISyntaxToken* semiColonToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::UsesClause},
       _pUsesKeyword{usesKeyword},
@@ -37,7 +37,7 @@ ISyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const
 
 DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFactory,
                                                        ISyntaxToken* usesKeyword,
-                                                       SyntaxList* unitReferences,
+                                                       ISyntaxList* unitReferences,
                                                        ISyntaxToken* semiColonToken) noexcept
 {
     assert(usesKeyword != nullptr);
