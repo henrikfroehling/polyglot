@@ -10,17 +10,16 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API ISyntaxList : public ISyntaxNode
 {
 public:
+    ISyntaxList() noexcept = default;
     virtual ~ISyntaxList() noexcept = default;
 
-    virtual ISyntaxNode* first() const = 0;
-    virtual ISyntaxNode* last() const = 0;
-
-protected:
-    ISyntaxList() noexcept = default;
     ISyntaxList(const ISyntaxList&) noexcept = default;
     ISyntaxList(ISyntaxList&&) noexcept = default;
     ISyntaxList& operator=(const ISyntaxList&) noexcept = default;
     ISyntaxList& operator=(ISyntaxList&&) noexcept = default;
+
+    virtual ISyntaxNode* first() const = 0;
+    virtual ISyntaxNode* last() const = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis

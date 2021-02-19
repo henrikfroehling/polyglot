@@ -12,15 +12,15 @@ class ISyntaxToken;
 class POLYGLOT_API ISyntaxTrivia : public ISyntaxNode
 {
 public:
-    virtual ~ISyntaxTrivia() noexcept = default;
-    virtual ISyntaxToken* token() const noexcept = 0;
-
-protected:
     ISyntaxTrivia() noexcept = default;
+    virtual ~ISyntaxTrivia() noexcept = default;
+
     ISyntaxTrivia(const ISyntaxTrivia&) noexcept = default;
     ISyntaxTrivia(ISyntaxTrivia&&) noexcept = default;
     ISyntaxTrivia& operator=(const ISyntaxTrivia&) noexcept = default;
     ISyntaxTrivia& operator=(ISyntaxTrivia&&) noexcept = default;
+
+    virtual ISyntaxToken* token() const noexcept = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis

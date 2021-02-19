@@ -13,18 +13,17 @@ class ISyntaxTrivia;
 class POLYGLOT_API ISyntaxTriviaList : public ISyntaxNode
 {
 public:
+    ISyntaxTriviaList() noexcept = default;
     virtual ~ISyntaxTriviaList() noexcept = default;
 
-    virtual ISyntaxToken* token() const noexcept = 0;
-    virtual ISyntaxTrivia* first() const = 0;
-    virtual ISyntaxTrivia* last() const = 0;
-
-protected:
-    ISyntaxTriviaList() noexcept = default;
     ISyntaxTriviaList(const ISyntaxTriviaList&) noexcept = default;
     ISyntaxTriviaList(ISyntaxTriviaList&&) noexcept = default;
     ISyntaxTriviaList& operator=(const ISyntaxTriviaList&) noexcept = default;
     ISyntaxTriviaList& operator=(ISyntaxTriviaList&&) noexcept = default;
+
+    virtual ISyntaxToken* token() const noexcept = 0;
+    virtual ISyntaxTrivia* first() const = 0;
+    virtual ISyntaxTrivia* last() const = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis

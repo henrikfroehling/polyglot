@@ -10,15 +10,15 @@ namespace polyglot::CodeAnalysis
 class POLYGLOT_API ISyntaxToken : public ISyntaxNode
 {
 public:
-    virtual ~ISyntaxToken() noexcept = default;
-    virtual bool booleanValue() const noexcept = 0;
-
-protected:
     ISyntaxToken() noexcept = default;
+    virtual ~ISyntaxToken() noexcept = default;
+
     ISyntaxToken(const ISyntaxToken&) noexcept = default;
     ISyntaxToken(ISyntaxToken&&) noexcept = default;
     ISyntaxToken& operator=(const ISyntaxToken&) noexcept = default;
     ISyntaxToken& operator=(ISyntaxToken&&) noexcept = default;
+
+    virtual bool booleanValue() const noexcept = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis
