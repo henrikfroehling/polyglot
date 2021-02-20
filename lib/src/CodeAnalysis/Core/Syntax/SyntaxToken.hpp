@@ -2,25 +2,31 @@
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTOKEN_H
 
 #include <string_view>
+#include <variant>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
 class ISyntaxNode;
-class ISyntaxTriviaList;
 
-class SyntaxToken : public ISyntaxToken
+using TokenValue = std::variant<std::monostate, bool, char, int, float, double, std::string_view>;
+
+class SyntaxToken : public SyntaxNode, public virtual ISyntaxToken
 {
 public:
-    SyntaxToken() = delete;
+    SyntaxToken() noexcept;
 
-    explicit SyntaxToken(LanguageSyntaxToken* underlyingToken,
+    explicit SyntaxToken(SyntaxKind syntaxKind,
+                         std::string_view text,
+                         pg_size position = 0,
+                         pg_size fullWidth = 0,
+                         ISyntaxTriviaList* leadingTrivia = nullptr,
+                         ISyntaxTriviaList* trailingTrivia = nullptr,
                          ISyntaxNode* parent = nullptr) noexcept;
 
     virtual ~SyntaxToken() noexcept;
@@ -30,31 +36,22 @@ public:
     SyntaxToken& operator=(const SyntaxToken&) noexcept = default;
     SyntaxToken& operator=(SyntaxToken&&) noexcept = default;
 
-    inline LanguageKind languageKind() const noexcept override { return _pUnderlyingToken->languageKind(); }
-    inline SyntaxKind syntaxKind() const noexcept override { return _pUnderlyingToken->syntaxKind(); }
-    inline std::string_view text() const noexcept override { return _pUnderlyingToken->text(); }
-    inline pg_size position() const noexcept override { return _pUnderlyingToken->position(); }
-    inline pg_size endPosition() const noexcept override { return _pUnderlyingToken->endPosition(); }
-    inline ISyntaxNode* parent() const noexcept override { return _pParent; }
-    inline pg_size width() const noexcept override { return _pUnderlyingToken->width(); }
-    inline pg_size fullWidth() const noexcept override { return _pUnderlyingToken->fullWidth(); }
-    inline pg_size spanStart() const noexcept override { return _pUnderlyingToken->spanStart(); }
-    TextSpan span() const noexcept override;
-    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingToken->fullSpan(); }
+    virtual ISyntaxNode* child(pg_size index) const override;
+    inline std::string_view text() const noexcept override { return _text; }
+    inline bool isToken() const noexcept override final { return true; }
+    inline bool hasMissingTokens() const noexcept override final { return false; }
+    TokenValue value() const noexcept;
+    bool booleanValue() const noexcept override;
 
-    inline bool isMissing() const noexcept override { return _pUnderlyingToken->isMissing(); }
-    inline bool booleanValue() const noexcept override { return _pUnderlyingToken->booleanValue(); }
-
-    bool hasLeadingTrivia() const noexcept override;
-    bool hasTrailingTrivia() const noexcept override;
-    inline pg_size leadingTriviaWidth() const noexcept override { return _pUnderlyingToken->leadingTriviaWidth(); }
-    inline pg_size trailingTriviaWidth() const noexcept override { return _pUnderlyingToken->trailingTriviaWidth(); }
+    inline bool hasLeadingTrivia() const noexcept override { return _pLeadingTrivia != nullptr && _pLeadingTrivia->childCount() > 0; }
+    inline bool hasTrailingTrivia() const noexcept override { return _pTrailingTrivia != nullptr && _pTrailingTrivia->childCount() > 0; }
+    inline pg_size leadingTriviaWidth() const noexcept override { return _pLeadingTrivia != nullptr ? static_cast<ISyntaxTriviaList*>(_pLeadingTrivia)->fullWidth() : 0; }
+    inline pg_size trailingTriviaWidth() const noexcept override { return _pTrailingTrivia != nullptr ? static_cast<ISyntaxTriviaList*>(_pTrailingTrivia)->fullWidth() : 0; }
     inline ISyntaxTriviaList* leadingTrivia() const noexcept override { return _pLeadingTrivia; }
     inline ISyntaxTriviaList* trailingTrivia() const noexcept override { return _pTrailingTrivia; }
 
 protected:
-    LanguageSyntaxToken* _pUnderlyingToken;
-    ISyntaxNode* _pParent;
+    std::string_view _text;
     ISyntaxTriviaList* _pLeadingTrivia;
     ISyntaxTriviaList* _pTrailingTrivia;
 };

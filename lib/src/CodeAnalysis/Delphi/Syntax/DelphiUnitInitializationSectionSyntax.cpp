@@ -12,7 +12,7 @@ DelphiUnitInitializationSectionSyntax::DelphiUnitInitializationSectionSyntax() n
 DelphiUnitInitializationSectionSyntax* DelphiUnitInitializationSectionSyntax::create(SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrUnitInitializationSectionSyntax = std::make_unique<DelphiUnitInitializationSectionSyntax>();
-    return static_cast<DelphiUnitInitializationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitInitializationSectionSyntax)));
+    return dynamic_cast<DelphiUnitInitializationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitInitializationSectionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -7,39 +7,39 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class SwitchDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         LanguageSyntaxToken* startToken,
-                                         LanguageSyntaxToken* identifier,
-                                         LanguageSyntaxToken* onOffToken,
-                                         LanguageSyntaxToken* endOfDirectiveToken) noexcept;
+                                         ISyntaxToken* startToken,
+                                         ISyntaxToken* identifier,
+                                         ISyntaxToken* onOffToken,
+                                         ISyntaxToken* endOfDirectiveToken) noexcept;
 
     virtual ~SwitchDirectiveTriviaSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual LanguageSyntaxToken* identifier() const noexcept { return _pIdentifier; }
-    inline virtual LanguageSyntaxToken* onOffToken() const noexcept { return _pOnOffToken; }
-    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual ISyntaxToken* identifier() const noexcept { return _pIdentifier; }
+    inline virtual ISyntaxToken* onOffToken() const noexcept { return _pOnOffToken; }
+    inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return false; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return 4; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static SwitchDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
-                                               LanguageSyntaxToken* startToken,
-                                               LanguageSyntaxToken* identifier,
-                                               LanguageSyntaxToken* onOffToken,
-                                               LanguageSyntaxToken* endOfDirectiveToken) noexcept;
+                                               ISyntaxToken* startToken,
+                                               ISyntaxToken* identifier,
+                                               ISyntaxToken* onOffToken,
+                                               ISyntaxToken* endOfDirectiveToken) noexcept;
 
 private:
-    LanguageSyntaxToken* _pStartToken;
-    LanguageSyntaxToken* _pIdentifier;
-    LanguageSyntaxToken* _pOnOffToken;
-    LanguageSyntaxToken* _pEndOfDirectiveToken;
+    ISyntaxToken* _pStartToken;
+    ISyntaxToken* _pIdentifier;
+    ISyntaxToken* _pOnOffToken;
+    ISyntaxToken* _pEndOfDirectiveToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

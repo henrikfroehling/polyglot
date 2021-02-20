@@ -7,14 +7,14 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxToken;
+class ISyntaxToken;
 
 class SimpleNameExpressionSyntax : public NameExpressionSyntax
 {
 public:
     explicit SimpleNameExpressionSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~SimpleNameExpressionSyntax() noexcept = default;
-    virtual LanguageSyntaxToken* identifier() const noexcept = 0;
+    virtual ISyntaxToken* identifier() const noexcept = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis

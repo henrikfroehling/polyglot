@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,10 +9,10 @@ namespace polyglot::CodeAnalysis
 {
 
 SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         LanguageSyntaxToken* startToken,
-                                                         LanguageSyntaxToken* identifier,
-                                                         LanguageSyntaxToken* onOffToken,
-                                                         LanguageSyntaxToken* endOfDirectiveToken) noexcept
+                                                         ISyntaxToken* startToken,
+                                                         ISyntaxToken* identifier,
+                                                         ISyntaxToken* onOffToken,
+                                                         ISyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pIdentifier{identifier},
@@ -26,7 +26,7 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* SwitchDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* SwitchDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -40,10 +40,10 @@ LanguageSyntaxNode* SwitchDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                 LanguageSyntaxToken* startToken,
-                                                                 LanguageSyntaxToken* identifier,
-                                                                 LanguageSyntaxToken* onOffToken,
-                                                                 LanguageSyntaxToken* endOfDirectiveToken) noexcept
+                                                                 ISyntaxToken* startToken,
+                                                                 ISyntaxToken* identifier,
+                                                                 ISyntaxToken* onOffToken,
+                                                                 ISyntaxToken* endOfDirectiveToken) noexcept
 {
     assert(startToken != nullptr);
     assert(identifier != nullptr);
@@ -56,7 +56,7 @@ SwitchDirectiveTriviaSyntax* SwitchDirectiveTriviaSyntax::create(SyntaxFactory& 
     auto ptrSwitchDirectiveTrivia = std::make_unique<SwitchDirectiveTriviaSyntax>(SyntaxKind::SwitchDirectiveTrivia, startToken,
                                                                                   identifier, onOffToken, endOfDirectiveToken);
 
-    return static_cast<SwitchDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrSwitchDirectiveTrivia)));
+    return dynamic_cast<SwitchDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrSwitchDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

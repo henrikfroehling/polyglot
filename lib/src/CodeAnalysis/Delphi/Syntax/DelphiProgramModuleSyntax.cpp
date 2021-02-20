@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiProgramHeadSyntax.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
@@ -12,7 +12,7 @@ namespace polyglot::CodeAnalysis
 
 DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* head,
                                                      DelphiUsesClauseSyntax* uses,
-                                                     LanguageSyntaxToken* EOFToken) noexcept
+                                                     ISyntaxToken* EOFToken) noexcept
     : DelphiCompilationUnitSyntax{SyntaxKind::ProgramModule, EOFToken},
       _pHead{head},
       _pUses{uses}
@@ -22,7 +22,7 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* he
     adjustWidthAndFlags(_pUses);
 }
 
-LanguageSyntaxNode* DelphiProgramModuleSyntax::child(pg_size index) const
+ISyntaxNode* DelphiProgramModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -36,7 +36,7 @@ LanguageSyntaxNode* DelphiProgramModuleSyntax::child(pg_size index) const
 DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& syntaxFactory,
                                                              DelphiProgramHeadSyntax* head,
                                                              DelphiUsesClauseSyntax* uses,
-                                                             LanguageSyntaxToken* EOFToken) noexcept
+                                                             ISyntaxToken* EOFToken) noexcept
 {
     assert(head != nullptr);
     assert(head->syntaxKind() == SyntaxKind::ProgramHead);
@@ -46,13 +46,13 @@ DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& synt
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 
     auto ptrProgramModuleSyntax = std::make_unique<DelphiProgramModuleSyntax>(head, uses, EOFToken);
-    return static_cast<DelphiProgramModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrProgramModuleSyntax)));
+    return dynamic_cast<DelphiProgramModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrProgramModuleSyntax)));
 }
 
 DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrProgramModuleSyntax = std::make_unique<DelphiProgramModuleSyntax>(nullptr, nullptr, nullptr);
-    return static_cast<DelphiProgramModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrProgramModuleSyntax)));
+    return dynamic_cast<DelphiProgramModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrProgramModuleSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

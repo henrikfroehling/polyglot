@@ -7,41 +7,41 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class DefineDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                         LanguageSyntaxToken* startToken,
-                                         LanguageSyntaxToken* defineKeyword,
-                                         LanguageSyntaxToken* name,
-                                         LanguageSyntaxToken* endOfDirectiveToken,
+                                         ISyntaxToken* startToken,
+                                         ISyntaxToken* defineKeyword,
+                                         ISyntaxToken* name,
+                                         ISyntaxToken* endOfDirectiveToken,
                                          bool isActive) noexcept;
 
     virtual ~DefineDirectiveTriviaSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual LanguageSyntaxToken* defineKeyword() const noexcept { return _pDefineKeyword; }
-    inline virtual LanguageSyntaxToken* name() const noexcept { return _pName; }
-    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual ISyntaxToken* defineKeyword() const noexcept { return _pDefineKeyword; }
+    inline virtual ISyntaxToken* name() const noexcept { return _pName; }
+    inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return 4; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static DefineDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
-                                               LanguageSyntaxToken* startToken,
-                                               LanguageSyntaxToken* defineKeyword,
-                                               LanguageSyntaxToken* name,
-                                               LanguageSyntaxToken* endOfDirectiveToken,
+                                               ISyntaxToken* startToken,
+                                               ISyntaxToken* defineKeyword,
+                                               ISyntaxToken* name,
+                                               ISyntaxToken* endOfDirectiveToken,
                                                bool isActive) noexcept;
 
 private:
-    LanguageSyntaxToken* _pStartToken;
-    LanguageSyntaxToken* _pDefineKeyword;
-    LanguageSyntaxToken* _pName;
-    LanguageSyntaxToken* _pEndOfDirectiveToken;
+    ISyntaxToken* _pStartToken;
+    ISyntaxToken* _pDefineKeyword;
+    ISyntaxToken* _pName;
+    ISyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

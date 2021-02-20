@@ -8,7 +8,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
+class ISyntaxNode;
 class SyntaxPool;
 
 class POLYGLOT_API DelphiSyntaxTree : public ISyntaxTree
@@ -17,7 +17,7 @@ public:
     DelphiSyntaxTree() noexcept = default;
 
     explicit DelphiSyntaxTree(SharedPtr<SourceText> sourceText,
-                              LanguageSyntaxNode* root,
+                              ISyntaxNode* root,
                               SyntaxPool&& syntaxPool) noexcept;
 
     static SharedPtr<DelphiSyntaxTree> parseSourceText(SharedPtr<SourceText> sourceText) noexcept;

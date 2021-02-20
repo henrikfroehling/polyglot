@@ -1,18 +1,18 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxList.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
-                                               LanguageSyntaxList* unitReferences,
-                                               LanguageSyntaxToken* semiColonToken) noexcept
-    : DelphiSyntaxNode{SyntaxKind::UsesClause},
+DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
+                                               ISyntaxList* unitReferences,
+                                               ISyntaxToken* semiColonToken) noexcept
+    : DelphiSyntaxList{SyntaxKind::UsesClause},
       _pUsesKeyword{usesKeyword},
       _pUnitReferences{unitReferences},
       _pSemiColonToken{semiColonToken}
@@ -23,7 +23,7 @@ DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(LanguageSyntaxToken* usesKeyword,
     adjustWidthAndFlags(_pSemiColonToken);
 }
 
-LanguageSyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -36,9 +36,9 @@ LanguageSyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const
 }
 
 DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFactory,
-                                                       LanguageSyntaxToken* usesKeyword,
-                                                       LanguageSyntaxList* unitReferences,
-                                                       LanguageSyntaxToken* semiColonToken) noexcept
+                                                       ISyntaxToken* usesKeyword,
+                                                       ISyntaxList* unitReferences,
+                                                       ISyntaxToken* semiColonToken) noexcept
 {
     assert(usesKeyword != nullptr);
     assert(usesKeyword->syntaxKind() == SyntaxKind::UsesKeyword);
@@ -48,7 +48,7 @@ DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFact
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
     auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, unitReferences, semiColonToken);
-    return static_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
+    return dynamic_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

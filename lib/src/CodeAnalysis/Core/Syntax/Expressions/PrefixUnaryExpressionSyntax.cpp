@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,7 +9,7 @@ namespace polyglot::CodeAnalysis
 {
 
 PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
-                                                         LanguageSyntaxToken* operatorToken,
+                                                         ISyntaxToken* operatorToken,
                                                          ExpressionSyntax* operandExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _pOperatorToken{operatorToken},
@@ -20,7 +20,7 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pOperandExpression);
 }
 
-LanguageSyntaxNode* PrefixUnaryExpressionSyntax::child(pg_size index) const
+ISyntaxNode* PrefixUnaryExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -33,14 +33,14 @@ LanguageSyntaxNode* PrefixUnaryExpressionSyntax::child(pg_size index) const
 
 PrefixUnaryExpressionSyntax* PrefixUnaryExpressionSyntax::create(SyntaxFactory& syntaxFactory,
                                                                  SyntaxKind syntaxKind,
-                                                                 LanguageSyntaxToken* operatorToken,
+                                                                 ISyntaxToken* operatorToken,
                                                                  ExpressionSyntax* operandExpression) noexcept
 {
     assert(operatorToken != nullptr);
     assert(operandExpression != nullptr);
 
     auto ptrPrefixUnaryExpression = std::make_unique<PrefixUnaryExpressionSyntax>(syntaxKind, operatorToken, operandExpression);
-    return static_cast<PrefixUnaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPrefixUnaryExpression)));
+    return dynamic_cast<PrefixUnaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPrefixUnaryExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

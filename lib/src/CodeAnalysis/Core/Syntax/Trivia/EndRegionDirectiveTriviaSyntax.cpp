@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,9 +9,9 @@ namespace polyglot::CodeAnalysis
 {
 
 EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                               LanguageSyntaxToken* startToken,
-                                                               LanguageSyntaxToken* endRegionKeyword,
-                                                               LanguageSyntaxToken* endOfDirectiveToken,
+                                                               ISyntaxToken* startToken,
+                                                               ISyntaxToken* endRegionKeyword,
+                                                               ISyntaxToken* endOfDirectiveToken,
                                                                bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -25,7 +25,7 @@ EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntax
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* EndRegionDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* EndRegionDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -38,9 +38,9 @@ LanguageSyntaxNode* EndRegionDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                       LanguageSyntaxToken* startToken,
-                                                                       LanguageSyntaxToken* endRegionKeyword,
-                                                                       LanguageSyntaxToken* endOfDirectiveToken,
+                                                                       ISyntaxToken* startToken,
+                                                                       ISyntaxToken* endRegionKeyword,
+                                                                       ISyntaxToken* endOfDirectiveToken,
                                                                        bool isActive) noexcept
 {
     assert(startToken != nullptr);
@@ -52,7 +52,7 @@ EndRegionDirectiveTriviaSyntax* EndRegionDirectiveTriviaSyntax::create(SyntaxFac
     auto ptrEndRegionDirectiveTrivia = std::make_unique<EndRegionDirectiveTriviaSyntax>(SyntaxKind::EndRegionDirectiveTrivia, startToken,
                                                                                         endRegionKeyword, endOfDirectiveToken, isActive);
 
-    return static_cast<EndRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndRegionDirectiveTrivia)));
+    return dynamic_cast<EndRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

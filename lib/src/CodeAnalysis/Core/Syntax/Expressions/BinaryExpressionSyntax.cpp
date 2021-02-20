@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -10,7 +10,7 @@ namespace polyglot::CodeAnalysis
 
 BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
                                                ExpressionSyntax* leftExpression,
-                                               LanguageSyntaxToken* operatorToken,
+                                               ISyntaxToken* operatorToken,
                                                ExpressionSyntax* rightExpression) noexcept
     : ExpressionSyntax{syntaxKind},
       _pLeftExpression{leftExpression},
@@ -23,7 +23,7 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pRightExpression);
 }
 
-LanguageSyntaxNode* BinaryExpressionSyntax::child(pg_size index) const
+ISyntaxNode* BinaryExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -38,7 +38,7 @@ LanguageSyntaxNode* BinaryExpressionSyntax::child(pg_size index) const
 BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxFactory& syntaxFactory,
                                                        SyntaxKind syntaxKind,
                                                        ExpressionSyntax* leftExpression,
-                                                       LanguageSyntaxToken* operatorToken,
+                                                       ISyntaxToken* operatorToken,
                                                        ExpressionSyntax* rightExpression) noexcept
 {
     assert(leftExpression != nullptr);
@@ -46,7 +46,7 @@ BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxFactory& syntaxFact
     assert(rightExpression != nullptr);
 
     auto ptrBinaryExpression = std::make_unique<BinaryExpressionSyntax>(syntaxKind, leftExpression, operatorToken, rightExpression);
-    return static_cast<BinaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrBinaryExpression)));
+    return dynamic_cast<BinaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrBinaryExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

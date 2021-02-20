@@ -9,23 +9,23 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
+class ISyntaxNode;
 
 class POLYGLOT_API ISyntaxTree
 {
 public:
     ISyntaxTree() noexcept;
     virtual ~ISyntaxTree() noexcept = default;
-    inline LanguageSyntaxNode* root() const noexcept { return _pRoot; }
+    inline ISyntaxNode* root() const noexcept { return _pRoot; }
 
 protected:
     explicit ISyntaxTree(SharedPtr<SourceText> sourceText,
-                         LanguageSyntaxNode* root,
+                         ISyntaxNode* root,
                          SyntaxPool&& syntaxPool) noexcept;
 
 protected:
     SharedPtr<SourceText> _ptrSourceText;
-    LanguageSyntaxNode* _pRoot;
+    ISyntaxNode* _pRoot;
     SyntaxPool _syntaxPool;
 };
 

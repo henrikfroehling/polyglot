@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,9 +9,9 @@ namespace polyglot::CodeAnalysis
 {
 
 IfEndDirectiveTriviaSyntax::IfEndDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                       LanguageSyntaxToken* startToken,
-                                                       LanguageSyntaxToken* ifEndKeyword,
-                                                       LanguageSyntaxToken* endOfDirectiveToken,
+                                                       ISyntaxToken* startToken,
+                                                       ISyntaxToken* ifEndKeyword,
+                                                       ISyntaxToken* endOfDirectiveToken,
                                                        bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -25,7 +25,7 @@ IfEndDirectiveTriviaSyntax::IfEndDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* IfEndDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* IfEndDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -38,9 +38,9 @@ LanguageSyntaxNode* IfEndDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                               LanguageSyntaxToken* startToken,
-                                                               LanguageSyntaxToken* ifEndKeyword,
-                                                               LanguageSyntaxToken* endOfDirectiveToken,
+                                                               ISyntaxToken* startToken,
+                                                               ISyntaxToken* ifEndKeyword,
+                                                               ISyntaxToken* endOfDirectiveToken,
                                                                bool isActive) noexcept
 {
     assert(startToken != nullptr);
@@ -52,7 +52,7 @@ IfEndDirectiveTriviaSyntax* IfEndDirectiveTriviaSyntax::create(SyntaxFactory& sy
     auto ptrIfEndDirectiveTrivia = std::make_unique<IfEndDirectiveTriviaSyntax>(SyntaxKind::IfEndDirectiveTrivia, startToken,
                                                                                 ifEndKeyword, endOfDirectiveToken, isActive);
 
-    return static_cast<IfEndDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfEndDirectiveTrivia)));
+    return dynamic_cast<IfEndDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfEndDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

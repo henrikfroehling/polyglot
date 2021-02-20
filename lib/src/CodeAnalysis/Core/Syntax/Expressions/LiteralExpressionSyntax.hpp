@@ -7,27 +7,27 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class LiteralExpressionSyntax : public ExpressionSyntax
 {
 public:
     explicit LiteralExpressionSyntax(SyntaxKind syntaxKind,
-                                     LanguageSyntaxToken* token) noexcept;
+                                     ISyntaxToken* literal) noexcept;
 
     virtual ~LiteralExpressionSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* token() const noexcept { return _pToken; }
-    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    inline virtual ISyntaxToken* token() const noexcept { return _pLiteral; }
     inline virtual pg_size childCount() const noexcept override { return 1; }
+    virtual ISyntaxNode* child(pg_size index) const override;
 
     static LiteralExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                            SyntaxKind syntaxKind,
-                                           LanguageSyntaxToken* token) noexcept;
+                                           ISyntaxToken* literal) noexcept;
 
 private:
-    LanguageSyntaxToken* _pToken;
+    ISyntaxToken* _pLiteral;
 };
 
 } // end namespace polyglot::CodeAnalysis

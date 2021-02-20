@@ -1,39 +1,39 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 
-#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxList.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class NameExpressionSyntax;
 class SyntaxFactory;
 
-class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
+class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxList
 {
 public:
     explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
-                                                  LanguageSyntaxToken* inKeyword = nullptr,
-                                                  LanguageSyntaxToken* sourceFile = nullptr) noexcept;
+                                                  ISyntaxToken* inKeyword = nullptr,
+                                                  ISyntaxToken* sourceFile = nullptr) noexcept;
 
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept = default;
     inline NameExpressionSyntax* unitName() const noexcept { return _pUnitName; }
-    inline LanguageSyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
-    inline LanguageSyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
-    LanguageSyntaxNode* child(pg_size index) const override;
+    inline ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
+    inline ISyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
     inline pg_size childCount() const noexcept override { return _pSourceFile != nullptr ? 3 : 1; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static DelphiUnitReferenceDeclarationSyntax* create(SyntaxFactory& syntaxFactory,
                                                         NameExpressionSyntax* unitName,
-                                                        LanguageSyntaxToken* inKeyword = nullptr,
-                                                        LanguageSyntaxToken* sourceFile = nullptr) noexcept;
+                                                        ISyntaxToken* inKeyword = nullptr,
+                                                        ISyntaxToken* sourceFile = nullptr) noexcept;
 
 private:
     NameExpressionSyntax* _pUnitName;
-    LanguageSyntaxToken* _pInKeyword; // optional
-    LanguageSyntaxToken* _pSourceFile; // optional, but needs _pInKeyword
+    ISyntaxToken* _pInKeyword; // optional
+    ISyntaxToken* _pSourceFile; // optional, but needs _pInKeyword
 };
 
 } // end namespace polyglot::CodeAnalysis

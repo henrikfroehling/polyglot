@@ -97,15 +97,13 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxList.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxMissingToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxList.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxMissingToken.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
@@ -144,7 +142,8 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxList.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
@@ -152,7 +151,7 @@ set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.cpp
   ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
+  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

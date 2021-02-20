@@ -10,7 +10,7 @@ ISyntaxTree::ISyntaxTree() noexcept
 {}
 
 ISyntaxTree::ISyntaxTree(SharedPtr<SourceText> sourceText,
-                         LanguageSyntaxNode* root,
+                         ISyntaxNode* root,
                          SyntaxPool&& syntaxPool) noexcept
     : _ptrSourceText{std::move(sourceText)},
       _pRoot{root},

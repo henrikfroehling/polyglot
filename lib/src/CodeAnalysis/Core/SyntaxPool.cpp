@@ -1,109 +1,128 @@
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxList.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
 #include <cassert>
 
 namespace polyglot::CodeAnalysis
 {
 
 SyntaxPool::SyntaxPool() noexcept
-    : _languageSyntaxNodes{},
-      _languageSyntaxTokens{},
-      _languageSyntaxTrivia{},
-      _languageSyntaxLists{},
-      _syntaxTrivia{}
+    : _syntaxLists{},
+      _syntaxNodes{},
+      _syntaxTokens{},
+      _syntaxTrivia{},
+      _syntaxTriviaLists{}
 {}
 
 SyntaxPool::SyntaxPool(SyntaxPool&& other) noexcept
-    : _languageSyntaxNodes{std::move(other._languageSyntaxNodes)},
-      _languageSyntaxTokens{std::move(other._languageSyntaxTokens)},
-      _languageSyntaxTrivia{std::move(other._languageSyntaxTrivia)},
-      _languageSyntaxLists{std::move(other._languageSyntaxLists)},
-      _syntaxTrivia{std::move(other._syntaxTrivia)}
+    : _syntaxLists{ std::move(other._syntaxLists) },
+      _syntaxNodes{std::move(other._syntaxNodes)},
+      _syntaxTokens{std::move(other._syntaxTokens)},
+      _syntaxTrivia{std::move(other._syntaxTrivia)},
+      _syntaxTriviaLists{std::move(other._syntaxTriviaLists)}
 {}
 
 SyntaxPool& SyntaxPool::operator=(SyntaxPool&& other) noexcept
 {
     if (this != &other)
     {
-        _languageSyntaxNodes = std::move(other._languageSyntaxNodes);
-        _languageSyntaxTokens = std::move(other._languageSyntaxTokens);
-        _languageSyntaxTrivia = std::move(other._languageSyntaxTrivia);
-        _languageSyntaxLists = std::move(other._languageSyntaxLists);
+        _syntaxLists = std::move(other._syntaxLists);
+        _syntaxNodes = std::move(other._syntaxNodes);
+        _syntaxTokens = std::move(other._syntaxTokens);
         _syntaxTrivia = std::move(other._syntaxTrivia);
+        _syntaxTriviaLists = std::move(other._syntaxTriviaLists);
     }
 
     return *this;
 }
 
-LanguageSyntaxNode* SyntaxPool::createSyntaxNode() noexcept
+ISyntaxList* SyntaxPool::createSyntaxList() noexcept
 {
-    _languageSyntaxNodes.push_back(std::make_unique<LanguageSyntaxNode>());
-    return _languageSyntaxNodes.back().get();
+    _syntaxLists.emplace_back(new SyntaxList{});
+    return _syntaxLists.back().get();
 }
 
-LanguageSyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
-                                                   std::string_view text,
-                                                   pg_size position,
-                                                   LanguageSyntaxList* leadingTrivia,
-                                                   LanguageSyntaxList* trailingTrivia) noexcept
+ISyntaxList* SyntaxPool::createSyntaxList(std::vector<ISyntaxNode*>&& nodes) noexcept
 {
-    _languageSyntaxTokens.push_back(std::make_unique<LanguageSyntaxToken>(syntaxKind, text, position, text.length(), leadingTrivia, trailingTrivia));
-    return _languageSyntaxTokens.back().get();
+    _syntaxLists.emplace_back(new SyntaxList{std::move(nodes)});
+    return _syntaxLists.back().get();
 }
 
-LanguageSyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
-                                                     std::string_view text,
-                                                     pg_size position) noexcept
+ISyntaxNode* SyntaxPool::createSyntaxNode() noexcept
 {
-    _languageSyntaxTrivia.push_back(std::make_unique<LanguageSyntaxTrivia>(syntaxKind, text, position));
-    return _languageSyntaxTrivia.back().get();
+    _syntaxNodes.emplace_back(new SyntaxNode{});
+    return _syntaxNodes.back().get();
 }
 
-ISyntaxTrivia* SyntaxPool::createSyntaxTrivia(LanguageSyntaxTrivia* trivia,
+ISyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
+                                            std::string_view text,
+                                            pg_size position,
+                                            ISyntaxTriviaList* leadingTrivia,
+                                            ISyntaxTriviaList* trailingTrivia,
+                                            ISyntaxNode* parent) noexcept
+{
+    _syntaxTokens.emplace_back(new SyntaxToken{syntaxKind, text, position, text.length(), leadingTrivia, trailingTrivia, parent});
+    return _syntaxTokens.back().get();
+}
+
+ISyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
+                                              std::string_view text,
+                                              pg_size position,
                                               ISyntaxToken* token) noexcept
 {
-    _syntaxTrivia.push_back(std::make_unique<SyntaxTrivia>(trivia, token));
+    _syntaxTrivia.emplace_back(new SyntaxTrivia{syntaxKind, text, position, text.length(), token});
     return _syntaxTrivia.back().get();
 }
 
-LanguageSyntaxList* SyntaxPool::createSyntaxList() noexcept
+ISyntaxTriviaList* SyntaxPool::createSyntaxTriviaList(ISyntaxToken* token) noexcept
 {
-    _languageSyntaxLists.push_back(std::make_unique<LanguageSyntaxList>());
-    return _languageSyntaxLists.back().get();
+    _syntaxTriviaLists.emplace_back(new SyntaxTriviaList{token});
+    return _syntaxTriviaLists.back().get();
 }
 
-LanguageSyntaxList* SyntaxPool::createSyntaxList(std::vector<LanguageSyntaxNode*>&& nodes) noexcept
+ISyntaxTriviaList* SyntaxPool::createSyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
+                                                      ISyntaxToken* token) noexcept
 {
-    _languageSyntaxLists.push_back(std::make_unique<LanguageSyntaxList>(std::move(nodes)));
-    return _languageSyntaxLists.back().get();
+    _syntaxTriviaLists.emplace_back(new SyntaxTriviaList{std::move(trivia), token});
+    return _syntaxTriviaLists.back().get();
 }
 
-LanguageSyntaxNode* SyntaxPool::addSyntaxNode(UniquePtr<LanguageSyntaxNode>&& syntaxNode) noexcept
-{
-    assert(syntaxNode != nullptr);
-    _languageSyntaxNodes.push_back(std::move(syntaxNode));
-    return _languageSyntaxNodes.back().get();
-}
-
-LanguageSyntaxToken* SyntaxPool::addSyntaxToken(UniquePtr<LanguageSyntaxToken>&& syntaxToken) noexcept
-{
-    assert(syntaxToken != nullptr);
-    _languageSyntaxTokens.push_back(std::move(syntaxToken));
-    return _languageSyntaxTokens.back().get();
-}
-
-LanguageSyntaxTrivia* SyntaxPool::addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia>&& syntaxTrivia) noexcept
-{
-    assert(syntaxTrivia != nullptr);
-    _languageSyntaxTrivia.push_back(std::move(syntaxTrivia));
-    return _languageSyntaxTrivia.back().get();
-}
-
-LanguageSyntaxList* SyntaxPool::addSyntaxList(UniquePtr<LanguageSyntaxList>&& syntaxList) noexcept
+ISyntaxList* SyntaxPool::addSyntaxList(UniquePtr<ISyntaxList>&& syntaxList) noexcept
 {
     assert(syntaxList != nullptr);
-    _languageSyntaxLists.push_back(std::move(syntaxList));
-    return _languageSyntaxLists.back().get();
+    _syntaxLists.push_back(std::move(syntaxList));
+    return _syntaxLists.back().get();
+}
+
+ISyntaxNode* SyntaxPool::addSyntaxNode(UniquePtr<ISyntaxNode>&& syntaxNode) noexcept
+{
+    assert(syntaxNode != nullptr);
+    _syntaxNodes.push_back(std::move(syntaxNode));
+    return _syntaxNodes.back().get();
+}
+
+ISyntaxToken* SyntaxPool::addSyntaxToken(UniquePtr<ISyntaxToken>&& syntaxToken) noexcept
+{
+    assert(syntaxToken != nullptr);
+    _syntaxTokens.push_back(std::move(syntaxToken));
+    return _syntaxTokens.back().get();
+}
+
+ISyntaxTrivia* SyntaxPool::addSyntaxTrivia(UniquePtr<ISyntaxTrivia>&& syntaxTrivia) noexcept
+{
+    assert(syntaxTrivia != nullptr);
+    _syntaxTrivia.push_back(std::move(syntaxTrivia));
+    return _syntaxTrivia.back().get();
+}
+
+ISyntaxTriviaList* SyntaxPool::addSyntaxTriviaList(UniquePtr<ISyntaxTriviaList>&& syntaxTriviaList) noexcept
+{
+    assert(syntaxTriviaList != nullptr);
+    _syntaxTriviaLists.push_back(std::move(syntaxTriviaList));
+    return _syntaxTriviaLists.back().get();
 }
 
 } // end namespace polyglot::CodeAnalysis

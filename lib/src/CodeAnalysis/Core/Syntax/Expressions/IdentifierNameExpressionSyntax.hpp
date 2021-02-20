@@ -6,24 +6,24 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class IdentifierNameExpressionSyntax : public SimpleNameExpressionSyntax
 {
 public:
-    explicit IdentifierNameExpressionSyntax(LanguageSyntaxToken* identifier) noexcept;
+    explicit IdentifierNameExpressionSyntax(ISyntaxToken* identifier) noexcept;
     virtual ~IdentifierNameExpressionSyntax() noexcept = default;
-    virtual LanguageSyntaxToken* identifier() const noexcept override { return _pIdentifier; }
-    virtual LanguageSyntaxNode* child(pg_size index) const override;
+    virtual ISyntaxToken* identifier() const noexcept override { return _pIdentifier; }
     inline virtual pg_size childCount() const noexcept override { return 1; }
+    virtual ISyntaxNode* child(pg_size index) const override;
 
     static IdentifierNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
-                                                  LanguageSyntaxToken* identifier) noexcept;
+                                                  ISyntaxToken* identifier) noexcept;
 
 protected:
-    LanguageSyntaxToken* _pIdentifier;
+    ISyntaxToken* _pIdentifier;
 };
 
 } // end namespace polyglot::CodeAnalysis

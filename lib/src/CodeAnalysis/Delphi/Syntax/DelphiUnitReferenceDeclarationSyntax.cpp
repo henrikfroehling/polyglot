@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
@@ -10,9 +10,9 @@ namespace polyglot::CodeAnalysis
 {
 
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
-                                                                           LanguageSyntaxToken* inKeyword,
-                                                                           LanguageSyntaxToken* sourceFile) noexcept
-    : DelphiSyntaxNode{SyntaxKind::UnitReference},
+                                                                           ISyntaxToken* inKeyword,
+                                                                           ISyntaxToken* sourceFile) noexcept
+    : DelphiSyntaxList{SyntaxKind::UnitReference},
       _pUnitName{unitName},
       _pInKeyword{inKeyword},
       _pSourceFile{sourceFile}
@@ -30,7 +30,7 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
     }
 }
 
-LanguageSyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -55,8 +55,8 @@ LanguageSyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) c
 
 DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(SyntaxFactory& syntaxFactory,
                                                                                    NameExpressionSyntax* unitName,
-                                                                                   LanguageSyntaxToken* inKeyword,
-                                                                                   LanguageSyntaxToken* sourceFile) noexcept
+                                                                                   ISyntaxToken* inKeyword,
+                                                                                   ISyntaxToken* sourceFile) noexcept
 {
     assert(unitName != nullptr);
 
@@ -70,7 +70,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
     }
 
     auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile);
-    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
+    return dynamic_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

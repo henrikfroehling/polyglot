@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include "CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
@@ -9,7 +9,7 @@
 namespace polyglot::CodeAnalysis
 {
 
-DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(LanguageSyntaxToken* implementationKeyword,
+DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(ISyntaxToken* implementationKeyword,
                                                                              DelphiUsesClauseSyntax* uses) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitImplementationSection},
       _pImplementationKeyword{implementationKeyword},
@@ -22,7 +22,7 @@ DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(Lan
         adjustWidthAndFlags(_pUses);
 }
 
-LanguageSyntaxNode* DelphiUnitImplementationSectionSyntax::child(pg_size index) const
+ISyntaxNode* DelphiUnitImplementationSectionSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -45,7 +45,7 @@ LanguageSyntaxNode* DelphiUnitImplementationSectionSyntax::child(pg_size index) 
 }
 
 DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                                     LanguageSyntaxToken* implementationKeyword,
+                                                                                     ISyntaxToken* implementationKeyword,
                                                                                      DelphiUsesClauseSyntax* uses) noexcept
 {
     assert(implementationKeyword != nullptr);
@@ -55,7 +55,7 @@ DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::cr
         assert(uses->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitImplementationSectionSyntax = std::make_unique<DelphiUnitImplementationSectionSyntax>(implementationKeyword, uses);
-    return static_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));
+    return dynamic_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

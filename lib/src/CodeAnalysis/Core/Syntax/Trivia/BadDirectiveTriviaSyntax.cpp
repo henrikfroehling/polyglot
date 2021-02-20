@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,9 +9,9 @@ namespace polyglot::CodeAnalysis
 {
 
 BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                   LanguageSyntaxToken* startToken,
-                                                   LanguageSyntaxToken* identifier,
-                                                   LanguageSyntaxToken* endOfDirectiveToken,
+                                                   ISyntaxToken* startToken,
+                                                   ISyntaxToken* identifier,
+                                                   ISyntaxToken* endOfDirectiveToken,
                                                    bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -25,7 +25,7 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* BadDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* BadDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -38,9 +38,9 @@ LanguageSyntaxNode* BadDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                           LanguageSyntaxToken* startToken,
-                                                           LanguageSyntaxToken* identifier,
-                                                           LanguageSyntaxToken* endOfDirectiveToken,
+                                                           ISyntaxToken* startToken,
+                                                           ISyntaxToken* identifier,
+                                                           ISyntaxToken* endOfDirectiveToken,
                                                            bool isActive) noexcept
 {
     assert(startToken != nullptr);
@@ -51,7 +51,7 @@ BadDirectiveTriviaSyntax* BadDirectiveTriviaSyntax::create(SyntaxFactory& syntax
     auto ptrBadDirectiveTrivia = std::make_unique<BadDirectiveTriviaSyntax>(SyntaxKind::BadDirectiveTrivia, startToken,
                                                                             identifier, endOfDirectiveToken, isActive);
 
-    return static_cast<BadDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
+    return dynamic_cast<BadDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

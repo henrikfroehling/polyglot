@@ -22,8 +22,8 @@ class DelphiUnitModuleSyntax;
 class DelphiUnitReferenceDeclarationSyntax;
 class DelphiUsesClauseSyntax;
 class IdentifierNameExpressionSyntax;
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class NameExpressionSyntax;
 
 class DelphiParser final : public Parser
@@ -33,7 +33,7 @@ public:
     explicit DelphiParser(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
-    LanguageSyntaxNode* parseRoot() noexcept override;
+    ISyntaxNode* parseRoot() noexcept override;
     DelphiCompilationUnitSyntax* parseCompilationUnit() noexcept;
     DelphiUnitModuleSyntax* parseUnitModule() noexcept;
     DelphiUnitHeadSyntax* parseUnitHead() noexcept;
@@ -48,7 +48,7 @@ private:
     NameExpressionSyntax* parseQualifiedName() noexcept;
 
     NameExpressionSyntax* parseQualifiedNameRight(NameExpressionSyntax* left,
-                                                  LanguageSyntaxToken* dotToken) noexcept;
+                                                  ISyntaxToken* dotToken) noexcept;
 
     IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
     DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;

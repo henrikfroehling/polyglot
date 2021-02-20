@@ -3,23 +3,26 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/LanguageKind.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
-#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "../Parser/DirectiveStack.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
+class ISyntaxNode;
 class ISyntaxToken;
 
-class SyntaxTrivia : public ISyntaxTrivia
+class SyntaxTrivia : public SyntaxNode, public virtual ISyntaxTrivia
 {
 public:
-    SyntaxTrivia() = delete;
+    SyntaxTrivia() noexcept;
 
-    explicit SyntaxTrivia(LanguageSyntaxTrivia* underlyingTrivia,
+    explicit SyntaxTrivia(SyntaxKind syntaxKind,
+                          std::string_view text,
+                          pg_size position = 0,
+                          pg_size fullWidth = 0,
                           ISyntaxToken* token = nullptr) noexcept;
 
     virtual ~SyntaxTrivia() noexcept;
@@ -29,22 +32,22 @@ public:
     SyntaxTrivia& operator=(const SyntaxTrivia&) noexcept = default;
     SyntaxTrivia& operator=(SyntaxTrivia&&) noexcept = default;
 
-    inline LanguageKind languageKind() const noexcept override { return _pUnderlyingTrivia->languageKind(); }
-    inline SyntaxKind syntaxKind() const noexcept override { return _pUnderlyingTrivia->syntaxKind(); }
-    inline std::string_view text() const noexcept override { return _pUnderlyingTrivia->text(); }
-    inline pg_size position() const noexcept override { return _pUnderlyingTrivia->position(); }
-    inline pg_size endPosition() const noexcept override { return _pUnderlyingTrivia->endPosition(); }
-    inline ISyntaxToken* token() const noexcept override { return _pToken; }
-    inline pg_size width() const noexcept override { return _pUnderlyingTrivia->width(); }
-    inline pg_size fullWidth() const noexcept override { return _pUnderlyingTrivia->fullWidth(); }
-    inline pg_size spanStart() const noexcept override { return _pUnderlyingTrivia->spanStart(); }
-    TextSpan span() const noexcept override;
-    inline TextSpan fullSpan() const noexcept override { return _pUnderlyingTrivia->fullSpan(); }
-    inline bool isDirective() const noexcept override { return _pUnderlyingTrivia->isDirective(); }
-    inline bool isSkippedTokensTrivia() const noexcept override { return _pUnderlyingTrivia->isSkippedTokensTrivia(); }
+    inline virtual pg_size width() const noexcept override final { return _fullWidth; }
+    virtual ISyntaxNode* child(pg_size index) const override;
+    inline std::string_view text() const noexcept override { return _text; }
+    inline bool isTrivia() const noexcept override final { return true; }
+    inline bool hasMissingTokens() const noexcept override final { return false; }
+    inline ISyntaxToken* token() const noexcept override final { return _pToken; }
+
+    inline bool hasLeadingTrivia() const noexcept override final { return false; }
+    inline bool hasTrailingTrivia() const noexcept override final { return false; }
+    inline pg_size leadingTriviaWidth() const noexcept override final { return 0; }
+    inline pg_size trailingTriviaWidth() const noexcept override final { return 0; }
+
+    inline virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept { return std::move(stack); }
 
 protected:
-    LanguageSyntaxTrivia* _pUnderlyingTrivia;
+    std::string_view _text;
     ISyntaxToken* _pToken;
 };
 

@@ -16,8 +16,8 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxPool;
 
 class Lexer : public std::enable_shared_from_this<Lexer>
@@ -31,13 +31,13 @@ public:
     Lexer& operator=(const Lexer&) = delete;
     Lexer(Lexer&&) = delete;
     Lexer& operator=(Lexer&&) = delete;
-    inline LanguageSyntaxToken* lex() noexcept { return lexToken(); }
+    inline ISyntaxToken* lex() noexcept { return lexToken(); }
     inline const TextWindow& textWindow() const noexcept { return _textWindow; }
     void preLex() noexcept;
-    LanguageSyntaxToken* currentToken() noexcept;
-    LanguageSyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept;
-    LanguageSyntaxToken* takeToken() noexcept;
-    LanguageSyntaxToken* peekToken(pg_size n) noexcept;
+    ISyntaxToken* currentToken() noexcept;
+    ISyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept;
+    ISyntaxToken* takeToken() noexcept;
+    ISyntaxToken* peekToken(pg_size n) noexcept;
     void advance() noexcept;
     void setMode(LexerMode mode) noexcept;
     inline SyntaxPool& syntaxPool() noexcept { return _syntaxPool; }
@@ -52,23 +52,23 @@ public:
 protected:
     explicit Lexer(SharedPtr<SourceText> sourceText) noexcept;
     void start() noexcept;
-    virtual LanguageSyntaxToken* lexToken() noexcept = 0;
-    void addLexedToken(LanguageSyntaxToken* token) noexcept;
-    LanguageSyntaxToken* createMissingToken(SyntaxKind expectedSyntaxKind) noexcept;
+    virtual ISyntaxToken* lexToken() noexcept = 0;
+    void addLexedToken(ISyntaxToken* token) noexcept;
+    ISyntaxToken* createMissingToken(SyntaxKind expectedSyntaxKind) noexcept;
 
 protected:
     TextWindow _textWindow;
     LexerMode _mode;
     LexerCache _lexerCache;
-    std::vector<LanguageSyntaxToken*> _lexedTokens;
-    std::vector<LanguageSyntaxToken*> _lexedDirectiveTriviaTokens;
+    std::vector<ISyntaxToken*> _lexedTokens;
+    std::vector<ISyntaxToken*> _lexedDirectiveTriviaTokens;
     pg_size _tokenCount;
     pg_size _tokenOffset;
-    LanguageSyntaxToken* _pCurrentToken;
+    ISyntaxToken* _pCurrentToken;
     DirectiveStack _directives;
     pg_size _directiveTriviaTokenCount;
     pg_size _directiveTriviaTokenOffset;
-    LanguageSyntaxToken* _pCurrentDirectiveTriviaToken;
+    ISyntaxToken* _pCurrentDirectiveTriviaToken;
 
 private:
     SyntaxPool _syntaxPool;

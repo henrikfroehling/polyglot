@@ -1,14 +1,14 @@
 #include "CodeAnalysis/Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <stdexcept>
 
 namespace polyglot::CodeAnalysis
 {
 
-DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(LanguageSyntaxToken* endKeyword,
-                                                 LanguageSyntaxToken* dotToken) noexcept
+DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(ISyntaxToken* endKeyword,
+                                                 ISyntaxToken* dotToken) noexcept
     : DelphiSyntaxNode{SyntaxKind::EndOfModule},
       _pEndKeyword{endKeyword},
       _pDotToken{dotToken}
@@ -18,7 +18,7 @@ DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(LanguageSyntaxToken* endKeyword
     adjustWidthAndFlags(_pDotToken);
 }
 
-LanguageSyntaxNode* DelphiEndOfModuleSyntax::child(pg_size index) const
+ISyntaxNode* DelphiEndOfModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -30,8 +30,8 @@ LanguageSyntaxNode* DelphiEndOfModuleSyntax::child(pg_size index) const
 }
 
 DelphiEndOfModuleSyntax* DelphiEndOfModuleSyntax::create(SyntaxFactory& syntaxFactory,
-                                                         LanguageSyntaxToken* endKeyword,
-                                                         LanguageSyntaxToken* dotToken) noexcept
+                                                         ISyntaxToken* endKeyword,
+                                                         ISyntaxToken* dotToken) noexcept
 {
     assert(endKeyword != nullptr);
     assert(endKeyword->syntaxKind() == SyntaxKind::EndKeyword);
@@ -39,7 +39,7 @@ DelphiEndOfModuleSyntax* DelphiEndOfModuleSyntax::create(SyntaxFactory& syntaxFa
     assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
 
     auto ptrEndOfModuleSyntax = std::make_unique<DelphiEndOfModuleSyntax>(endKeyword, dotToken);
-    return static_cast<DelphiEndOfModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrEndOfModuleSyntax)));
+    return dynamic_cast<DelphiEndOfModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrEndOfModuleSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

@@ -7,27 +7,27 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxToken;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class DelphiCompilationUnitSyntax : public DelphiSyntaxNode
 {
 public:
     explicit DelphiCompilationUnitSyntax(SyntaxKind syntaxKind,
-                                         LanguageSyntaxToken* EOFToken) noexcept;
+                                         ISyntaxToken* EOFToken) noexcept;
 
     virtual ~DelphiCompilationUnitSyntax() noexcept = default;
     inline virtual bool isUnitModule() const noexcept { return false; }
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
-    inline LanguageSyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
+    inline ISyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
 
     static DelphiCompilationUnitSyntax* create(SyntaxFactory& syntaxFactory,
                                                SyntaxKind syntaxKind,
-                                               LanguageSyntaxToken* EOFToken) noexcept;
+                                               ISyntaxToken* EOFToken) noexcept;
 
 protected:
-    LanguageSyntaxToken* _pEOFToken;
+    ISyntaxToken* _pEOFToken;
 };
 
 } // end namespace polyglot::CodeAnalysis

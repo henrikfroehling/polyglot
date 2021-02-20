@@ -4,11 +4,11 @@ namespace polyglot::CodeAnalysis
 {
 
 SkippedTokensTriviaSyntax::SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
-                                                     std::vector<LanguageSyntaxNode*> skippedTokens) noexcept
+                                                     std::vector<ISyntaxNode*> skippedTokens) noexcept
     : StructuredTriviaSyntax{syntaxKind},
       _skippedTokens{std::move(skippedTokens)}
 {
-    for (LanguageSyntaxNode* skippedToken : _skippedTokens)
+    for (ISyntaxNode* skippedToken : _skippedTokens)
         adjustWidthAndFlags(skippedToken);
 }
 

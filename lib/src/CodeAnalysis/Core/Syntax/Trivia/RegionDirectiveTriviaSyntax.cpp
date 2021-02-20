@@ -1,6 +1,6 @@
 #include "CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
@@ -9,9 +9,9 @@ namespace polyglot::CodeAnalysis
 {
 
 RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                         LanguageSyntaxToken* startToken,
-                                                         LanguageSyntaxToken* regionKeyword,
-                                                         LanguageSyntaxToken* endOfDirectiveToken,
+                                                         ISyntaxToken* startToken,
+                                                         ISyntaxToken* regionKeyword,
+                                                         ISyntaxToken* endOfDirectiveToken,
                                                          bool isActive) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
@@ -25,7 +25,7 @@ RegionDirectiveTriviaSyntax::RegionDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pEndOfDirectiveToken);
 }
 
-LanguageSyntaxNode* RegionDirectiveTriviaSyntax::child(pg_size index) const
+ISyntaxNode* RegionDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
@@ -38,9 +38,9 @@ LanguageSyntaxNode* RegionDirectiveTriviaSyntax::child(pg_size index) const
 }
 
 RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                 LanguageSyntaxToken* startToken,
-                                                                 LanguageSyntaxToken* regionKeyword,
-                                                                 LanguageSyntaxToken* endOfDirectiveToken,
+                                                                 ISyntaxToken* startToken,
+                                                                 ISyntaxToken* regionKeyword,
+                                                                 ISyntaxToken* endOfDirectiveToken,
                                                                  bool isActive) noexcept
 {
     assert(startToken != nullptr);
@@ -52,7 +52,7 @@ RegionDirectiveTriviaSyntax* RegionDirectiveTriviaSyntax::create(SyntaxFactory& 
     auto ptrRegionDirectiveTrivia = std::make_unique<RegionDirectiveTriviaSyntax>(SyntaxKind::RegionDirectiveTrivia, startToken,
                                                                                   regionKeyword, endOfDirectiveToken, isActive);
 
-    return static_cast<RegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
+    return dynamic_cast<RegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

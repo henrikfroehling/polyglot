@@ -7,41 +7,41 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
+class ISyntaxNode;
+class ISyntaxToken;
 class SyntaxFactory;
 
 class UndefDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                        LanguageSyntaxToken* startToken,
-                                        LanguageSyntaxToken* undefKeyword,
-                                        LanguageSyntaxToken* name,
-                                        LanguageSyntaxToken* endOfDirectiveToken,
+                                        ISyntaxToken* startToken,
+                                        ISyntaxToken* undefKeyword,
+                                        ISyntaxToken* name,
+                                        ISyntaxToken* endOfDirectiveToken,
                                         bool isActive) noexcept;
 
     virtual ~UndefDirectiveTriviaSyntax() noexcept = default;
-    inline virtual LanguageSyntaxToken* startToken() const noexcept override { return _pStartToken; }
-    inline virtual LanguageSyntaxToken* undefKeyword() const noexcept { return _pUndefKeyword; }
-    inline virtual LanguageSyntaxToken* name() const noexcept { return _pName; }
-    inline virtual LanguageSyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
+    inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
+    inline virtual ISyntaxToken* undefKeyword() const noexcept { return _pUndefKeyword; }
+    inline virtual ISyntaxToken* name() const noexcept { return _pName; }
+    inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
-    LanguageSyntaxNode* child(pg_size index) const override;
     inline pg_size childCount() const noexcept override { return 4; }
+    ISyntaxNode* child(pg_size index) const override;
 
     static UndefDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
-                                              LanguageSyntaxToken* startToken,
-                                              LanguageSyntaxToken* undefKeyword,
-                                              LanguageSyntaxToken* name,
-                                              LanguageSyntaxToken* endOfDirectiveToken,
+                                              ISyntaxToken* startToken,
+                                              ISyntaxToken* undefKeyword,
+                                              ISyntaxToken* name,
+                                              ISyntaxToken* endOfDirectiveToken,
                                               bool isActive) noexcept;
 
 private:
-    LanguageSyntaxToken* _pStartToken;
-    LanguageSyntaxToken* _pUndefKeyword;
-    LanguageSyntaxToken* _pName;
-    LanguageSyntaxToken* _pEndOfDirectiveToken;
+    ISyntaxToken* _pStartToken;
+    ISyntaxToken* _pUndefKeyword;
+    ISyntaxToken* _pName;
+    ISyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
 };
 

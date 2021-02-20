@@ -1,23 +1,26 @@
 #ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 #define POLYGLOT_CODEANALYSIS_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 
+#include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
 #include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::CodeAnalysis
 {
 
+class ISyntaxNode;
+class ISyntaxToken;
 class ISyntaxTrivia;
 
-class SyntaxTriviaList : public ISyntaxTriviaList
+class SyntaxTriviaList : public SyntaxNode, public virtual ISyntaxTriviaList
 {
 public:
-    SyntaxTriviaList() = delete;
+    explicit SyntaxTriviaList(ISyntaxToken* token = nullptr) noexcept;
 
-    explicit SyntaxTriviaList(LanguageSyntaxNode* underlyingNode,
+    explicit SyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
                               ISyntaxToken* token = nullptr) noexcept;
 
     virtual ~SyntaxTriviaList() noexcept;
@@ -27,17 +30,18 @@ public:
     SyntaxTriviaList& operator=(const SyntaxTriviaList&) noexcept = default;
     SyntaxTriviaList& operator=(SyntaxTriviaList&&) noexcept = default;
 
-    inline pg_size position() const noexcept override { return _pToken != nullptr ? _pToken->position() : 0; }
-    inline ISyntaxToken* token() const noexcept override { return _pToken; }
-    inline pg_size count() const noexcept override { return _pUnderlyingNode->childCount(); }
-    ISyntaxTrivia* child(pg_size index) const noexcept override;
-    TextSpan span() const noexcept override;
-    TextSpan fullSpan() const noexcept override;
-    ISyntaxTrivia* first() const override;
-    ISyntaxTrivia* last() const override;
+    inline pg_size childCount() const noexcept override { return _children.size(); }
+    inline ISyntaxNode* child(pg_size index) const override { return _children[index]; }
+    inline TextSpan span() const noexcept override final { return TextSpan{_position, _fullWidth}; }
+    inline TextSpan fullSpan() const noexcept override final { return TextSpan{_position, _fullWidth}; }
+    inline bool hasMissingTokens() const noexcept override final { return false; }
+    ISyntaxToken* token() const noexcept override;
+    inline ISyntaxTrivia* first() const noexcept override final { return _children.size() > 0 ? _children[0] : nullptr; }
+    inline ISyntaxTrivia* last() const noexcept override final { return _children.size() > 0 ? _children.back() : nullptr; }
+    void add(ISyntaxTrivia* trivia) noexcept;
 
 protected:
-    LanguageSyntaxNode* _pUnderlyingNode;
+    std::vector<ISyntaxTrivia*> _children;
     ISyntaxToken* _pToken;
 };
 
