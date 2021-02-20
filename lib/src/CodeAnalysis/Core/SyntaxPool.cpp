@@ -41,19 +41,19 @@ SyntaxPool& SyntaxPool::operator=(SyntaxPool&& other) noexcept
 
 ISyntaxList* SyntaxPool::createSyntaxList() noexcept
 {
-    _syntaxLists.push_back(std::make_unique<SyntaxList>());
+    _syntaxLists.emplace_back(new SyntaxList{});
     return _syntaxLists.back().get();
 }
 
 ISyntaxList* SyntaxPool::createSyntaxList(std::vector<ISyntaxNode*>&& nodes) noexcept
 {
-    _syntaxLists.push_back(std::make_unique<SyntaxList>(std::move(nodes)));
+    _syntaxLists.emplace_back(new SyntaxList{std::move(nodes)});
     return _syntaxLists.back().get();
 }
 
 ISyntaxNode* SyntaxPool::createSyntaxNode() noexcept
 {
-    _syntaxNodes.push_back(std::make_unique<SyntaxNode>());
+    _syntaxNodes.emplace_back(new SyntaxNode{});
     return _syntaxNodes.back().get();
 }
 
@@ -64,7 +64,7 @@ ISyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
                                             ISyntaxTriviaList* trailingTrivia,
                                             ISyntaxNode* parent) noexcept
 {
-    _syntaxTokens.push_back(std::make_unique<SyntaxToken>(syntaxKind, text, position, text.length(), leadingTrivia, trailingTrivia, parent));
+    _syntaxTokens.emplace_back(new SyntaxToken{syntaxKind, text, position, text.length(), leadingTrivia, trailingTrivia, parent});
     return _syntaxTokens.back().get();
 }
 
@@ -73,20 +73,20 @@ ISyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
                                               pg_size position,
                                               ISyntaxToken* token) noexcept
 {
-    _syntaxTrivia.push_back(std::make_unique<SyntaxTrivia>(syntaxKind, text, position, text.length(), token));
+    _syntaxTrivia.emplace_back(new SyntaxTrivia{syntaxKind, text, position, text.length(), token});
     return _syntaxTrivia.back().get();
 }
 
 ISyntaxTriviaList* SyntaxPool::createSyntaxTriviaList(ISyntaxToken* token) noexcept
 {
-    _syntaxTriviaLists.push_back(std::make_unique<SyntaxTriviaList>(token));
+    _syntaxTriviaLists.emplace_back(new SyntaxTriviaList{token});
     return _syntaxTriviaLists.back().get();
 }
 
 ISyntaxTriviaList* SyntaxPool::createSyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
                                                       ISyntaxToken* token) noexcept
 {
-    _syntaxTriviaLists.push_back(std::make_unique<SyntaxTriviaList>(std::move(trivia), token));
+    _syntaxTriviaLists.emplace_back(new SyntaxTriviaList{std::move(trivia), token});
     return _syntaxTriviaLists.back().get();
 }
 
