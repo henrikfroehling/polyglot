@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
 #include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
@@ -14,10 +15,14 @@ class ISyntaxNode;
 class ISyntaxToken;
 class ISyntaxTrivia;
 
-class SyntaxTriviaList : public SyntaxNode, public ISyntaxTriviaList
+class SyntaxTriviaList : public SyntaxNode, public virtual ISyntaxTriviaList
 {
 public:
     explicit SyntaxTriviaList(ISyntaxToken* token = nullptr) noexcept;
+
+    explicit SyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
+                              ISyntaxToken* token = nullptr) noexcept;
+
     virtual ~SyntaxTriviaList() noexcept;
 
     SyntaxTriviaList(const SyntaxTriviaList&) noexcept = default;

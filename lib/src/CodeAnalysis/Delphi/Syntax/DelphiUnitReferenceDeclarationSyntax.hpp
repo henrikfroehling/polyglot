@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 
-#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxList.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -11,7 +11,7 @@ class ISyntaxToken;
 class NameExpressionSyntax;
 class SyntaxFactory;
 
-class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
+class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxList
 {
 public:
     explicit DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,

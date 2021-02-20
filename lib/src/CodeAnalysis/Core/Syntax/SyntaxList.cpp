@@ -7,14 +7,20 @@ namespace polyglot::CodeAnalysis
 {
 
 SyntaxList::SyntaxList() noexcept
-    : SyntaxNode{SyntaxKind::SyntaxList},
-      ISyntaxList{},
+    : ISyntaxList{},
+      SyntaxNode{SyntaxKind::SyntaxList},
+      _children{}
+{}
+
+SyntaxList::SyntaxList(SyntaxKind syntaxKind) noexcept
+    : ISyntaxList{},
+      SyntaxNode{syntaxKind},
       _children{}
 {}
 
 SyntaxList::SyntaxList(std::vector<ISyntaxNode*>&& children) noexcept
-    : SyntaxNode{SyntaxKind::SyntaxList},
-      ISyntaxList{},
+    : ISyntaxList{},
+      SyntaxNode{SyntaxKind::SyntaxList},
       _children{std::move(children)}
 {
     if (_children.size() > 0)

@@ -87,7 +87,7 @@ DelphiUnitHeadSyntax* DelphiUnitHeadSyntax::create(SyntaxFactory& syntaxFactory,
     }
 
     auto ptrUnitHeadingSyntax = std::make_unique<DelphiUnitHeadSyntax>(unitKeyword, name, semiColonToken, inKeyword, filename);
-    return static_cast<DelphiUnitHeadSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitHeadingSyntax)));
+    return dynamic_cast<DelphiUnitHeadSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitHeadingSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

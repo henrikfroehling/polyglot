@@ -12,7 +12,7 @@ DelphiUnitFinalizationSectionSyntax::DelphiUnitFinalizationSectionSyntax() noexc
 DelphiUnitFinalizationSectionSyntax* DelphiUnitFinalizationSectionSyntax::create(SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrUnitFinalizationSectionSyntax = std::make_unique<DelphiUnitFinalizationSectionSyntax>();
-    return static_cast<DelphiUnitFinalizationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitFinalizationSectionSyntax)));
+    return dynamic_cast<DelphiUnitFinalizationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitFinalizationSectionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

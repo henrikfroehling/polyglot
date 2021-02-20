@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 #define POLYGLOT_CODEANALYSIS_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 
-#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.hpp"
+#include "CodeAnalysis/Delphi/Syntax/DelphiSyntaxList.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -11,7 +11,7 @@ class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxFactory;
 
-class DelphiUsesClauseSyntax : public DelphiSyntaxNode
+class DelphiUsesClauseSyntax : public DelphiSyntaxList
 {
 public:
     explicit DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,

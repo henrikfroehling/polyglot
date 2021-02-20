@@ -1,9 +1,12 @@
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxList.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxMissingToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
+#include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
 #include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxMissingToken.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
 
 namespace polyglot::CodeAnalysis
 {
@@ -12,115 +15,136 @@ SyntaxFactory::SyntaxFactory(SyntaxPool& syntaxPool) noexcept
     : _syntaxPool{syntaxPool}
 {}
 
-LanguageSyntaxToken* SyntaxFactory::token(TokenInfo& tokenInfo,
-                                          pg_size position) noexcept
+ISyntaxToken* SyntaxFactory::token(TokenInfo& tokenInfo,
+                                   pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position);
 }
 
-LanguageSyntaxToken* SyntaxFactory::missingToken(SyntaxKind syntaxKind,
-                                                 std::string_view text,
-                                                 pg_size position) noexcept
+ISyntaxToken* SyntaxFactory::missingToken(SyntaxKind syntaxKind,
+                                          std::string_view text,
+                                          pg_size position) noexcept
 {
-    auto ptrMissingToken = std::make_unique<LanguageSyntaxMissingToken>(syntaxKind, text, position, text.length());
+    auto ptrMissingToken = std::make_unique<SyntaxMissingToken>(syntaxKind, text, position, text.length());
     return _syntaxPool.addSyntaxToken(std::move(ptrMissingToken));
 }
 
-LanguageSyntaxToken* SyntaxFactory::tokenWithTrivia(TokenInfo& tokenInfo,
-                                                    std::vector<LanguageSyntaxNode*>&& leadingTrivia,
-                                                    std::vector<LanguageSyntaxNode*>&& trailingTrivia,
-                                                    pg_size position) noexcept
+ISyntaxToken* SyntaxFactory::tokenWithTrivia(TokenInfo& tokenInfo,
+                                             std::vector<ISyntaxTrivia*>&& leadingTrivia,
+                                             std::vector<ISyntaxTrivia*>&& trailingTrivia,
+                                             pg_size position) noexcept
 {
-    LanguageSyntaxList* pLeadingTrivia{nullptr};
-    LanguageSyntaxList* pTrailingTrivia{nullptr};
+    ISyntaxTriviaList* pLeadingTrivia{nullptr};
+    ISyntaxTriviaList* pTrailingTrivia{nullptr};
 
     if (leadingTrivia.size() > 0)
-        pLeadingTrivia = _syntaxPool.createSyntaxList(std::move(leadingTrivia));
+        pLeadingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(leadingTrivia));
 
     if (trailingTrivia.size() > 0)
-        pTrailingTrivia = _syntaxPool.createSyntaxList(std::move(trailingTrivia));
+        pTrailingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(trailingTrivia));
 
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, pLeadingTrivia, pTrailingTrivia);
 }
 
-LanguageSyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(TokenInfo& tokenInfo,
-                                                           std::vector<LanguageSyntaxNode*>&& leadingTrivia,
-                                                           pg_size position) noexcept
+ISyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(TokenInfo& tokenInfo,
+                                                    std::vector<ISyntaxTrivia*>&& leadingTrivia,
+                                                    pg_size position) noexcept
 {
-    LanguageSyntaxList* pLeadingTrivia = _syntaxPool.createSyntaxList(std::move(leadingTrivia));
+    ISyntaxTriviaList* pLeadingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(leadingTrivia));
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, pLeadingTrivia);
 }
 
-LanguageSyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(SyntaxKind syntaxKind,
-                                                           std::string_view text,
-                                                           pg_size position,
-                                                           LanguageSyntaxList* leadingTrivia) noexcept
+ISyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(SyntaxKind syntaxKind,
+                                                    std::string_view text,
+                                                    pg_size position,
+                                                    ISyntaxTriviaList* leadingTrivia) noexcept
 {
     return _syntaxPool.createSyntaxToken(syntaxKind, text, position, leadingTrivia);
 }
 
-LanguageSyntaxToken* SyntaxFactory::tokenWithTrailingTrivia(TokenInfo& tokenInfo,
-                                                            std::vector<LanguageSyntaxNode*>&& trailingTrivia,
-                                                            pg_size position) noexcept
+ISyntaxToken* SyntaxFactory::tokenWithTrailingTrivia(TokenInfo& tokenInfo,
+                                                     std::vector<ISyntaxTrivia*>&& trailingTrivia,
+                                                     pg_size position) noexcept
 {
-    LanguageSyntaxList* pTrailingTrivia = _syntaxPool.createSyntaxList(std::move(trailingTrivia));
+    ISyntaxTriviaList* pTrailingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(trailingTrivia));
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, nullptr, pTrailingTrivia);
 }
                                              
-LanguageSyntaxTrivia* SyntaxFactory::endOfLine(std::string_view text,
-                                               pg_size position) noexcept
+ISyntaxTrivia* SyntaxFactory::endOfLine(std::string_view text,
+                                        pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::EndOfLineTrivia, text, position);
 }
 
-LanguageSyntaxTrivia* SyntaxFactory::whiteSpace(std::string_view text,
-                                                pg_size position) noexcept
+ISyntaxTrivia* SyntaxFactory::whiteSpace(std::string_view text,
+                                         pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::WhitespaceTrivia, text, position);
 }
 
-LanguageSyntaxTrivia* SyntaxFactory::singleLineComment(std::string_view text,
-                                                       pg_size position) noexcept
+ISyntaxTrivia* SyntaxFactory::singleLineComment(std::string_view text,
+                                                pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::SingleLineCommentTrivia, text, position);
 }
 
-LanguageSyntaxTrivia* SyntaxFactory::multiLineComment(std::string_view text,
-                                                      pg_size position) noexcept
+ISyntaxTrivia* SyntaxFactory::multiLineComment(std::string_view text,
+                                               pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::MultiLineCommentTrivia, text, position);
 }
 
-LanguageSyntaxTrivia* SyntaxFactory::createSyntaxTrivia(SyntaxKind syntaxKind,
-                                                        std::string_view text,
-                                                        pg_size position) noexcept
+ISyntaxTrivia* SyntaxFactory::createSyntaxTrivia(SyntaxKind syntaxKind,
+                                                 std::string_view text,
+                                                 pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(syntaxKind, text, position);
 }
 
-LanguageSyntaxList* SyntaxFactory::syntaxList() noexcept
+ISyntaxList* SyntaxFactory::syntaxList() noexcept
 {
     return _syntaxPool.createSyntaxList();
 }
 
-LanguageSyntaxList* SyntaxFactory::syntaxList(std::initializer_list<LanguageSyntaxNode*> syntaxNodes) noexcept
+ISyntaxList* SyntaxFactory::syntaxList(std::initializer_list<ISyntaxNode*> syntaxNodes) noexcept
 {
     return _syntaxPool.createSyntaxList(std::move(syntaxNodes));
 }
 
-LanguageSyntaxNode* SyntaxFactory::addSyntaxNode(UniquePtr<LanguageSyntaxNode>&& syntaxNode) noexcept
+ISyntaxTriviaList* SyntaxFactory::syntaxTriviaList(ISyntaxToken* token) noexcept
+{
+    return _syntaxPool.createSyntaxTriviaList(token);
+}
+
+ISyntaxTriviaList* SyntaxFactory::syntaxTriviaList(std::initializer_list<ISyntaxTrivia*> trivia,
+                                                   ISyntaxToken* token) noexcept
+{
+    return _syntaxPool.createSyntaxTriviaList(std::move(trivia), token);
+}
+
+ISyntaxList* SyntaxFactory::addSyntaxList(UniquePtr<ISyntaxList>&& syntaxList) noexcept
+{
+    return _syntaxPool.addSyntaxList(std::move(syntaxList));
+}
+
+ISyntaxNode* SyntaxFactory::addSyntaxNode(UniquePtr<ISyntaxNode>&& syntaxNode) noexcept
 {
     return _syntaxPool.addSyntaxNode(std::move(syntaxNode));
 }
 
-LanguageSyntaxToken* SyntaxFactory::addSyntaxToken(UniquePtr<LanguageSyntaxToken>&& syntaxToken) noexcept
+ISyntaxToken* SyntaxFactory::addSyntaxToken(UniquePtr<ISyntaxToken>&& syntaxToken) noexcept
 {
     return _syntaxPool.addSyntaxToken(std::move(syntaxToken));
 }
 
-LanguageSyntaxTrivia* SyntaxFactory::addSyntaxTrivia(UniquePtr<LanguageSyntaxTrivia>&& syntaxTrivia) noexcept
+ISyntaxTrivia* SyntaxFactory::addSyntaxTrivia(UniquePtr<ISyntaxTrivia>&& syntaxTrivia) noexcept
 {
     return _syntaxPool.addSyntaxTrivia(std::move(syntaxTrivia));
+}
+
+ISyntaxTriviaList* SyntaxFactory::addSyntaxTriviaList(UniquePtr<ISyntaxTriviaList>&& syntaxTriviaList) noexcept
+{
+    return _syntaxPool.addSyntaxTriviaList(std::move(syntaxTriviaList));
 }
 
 } // end namespace polyglot::CodeAnalysis

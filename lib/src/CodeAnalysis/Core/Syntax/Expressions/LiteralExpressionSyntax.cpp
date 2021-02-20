@@ -31,7 +31,7 @@ LiteralExpressionSyntax* LiteralExpressionSyntax::create(SyntaxFactory& syntaxFa
 {
     assert(literal != nullptr);
     auto ptrLiteralExpression = std::make_unique<LiteralExpressionSyntax>(syntaxKind, literal);
-    return static_cast<LiteralExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrLiteralExpression)));
+    return dynamic_cast<LiteralExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrLiteralExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

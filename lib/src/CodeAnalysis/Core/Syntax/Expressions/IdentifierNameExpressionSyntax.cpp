@@ -32,7 +32,7 @@ IdentifierNameExpressionSyntax* IdentifierNameExpressionSyntax::create(SyntaxFac
     assert(identifier->syntaxKind() == SyntaxKind::IdentifierToken);
 
     auto ptrIdentifierNameExpression = std::make_unique<IdentifierNameExpressionSyntax>(identifier);
-    return static_cast<IdentifierNameExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrIdentifierNameExpression)));
+    return dynamic_cast<IdentifierNameExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrIdentifierNameExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

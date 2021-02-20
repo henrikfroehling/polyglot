@@ -9,16 +9,10 @@ namespace polyglot::CodeAnalysis
 
 class ISyntaxToken;
 
-class POLYGLOT_API ISyntaxTrivia : public ISyntaxNode
+class POLYGLOT_API ISyntaxTrivia : public virtual ISyntaxNode
 {
 public:
-    ISyntaxTrivia() noexcept = default;
-    virtual ~ISyntaxTrivia() noexcept = default;
-
-    ISyntaxTrivia(const ISyntaxTrivia&) noexcept = default;
-    ISyntaxTrivia(ISyntaxTrivia&&) noexcept = default;
-    ISyntaxTrivia& operator=(const ISyntaxTrivia&) noexcept = default;
-    ISyntaxTrivia& operator=(ISyntaxTrivia&&) noexcept = default;
+    virtual ~ISyntaxTrivia() noexcept {}
 
     virtual ISyntaxToken* token() const noexcept = 0;
 };

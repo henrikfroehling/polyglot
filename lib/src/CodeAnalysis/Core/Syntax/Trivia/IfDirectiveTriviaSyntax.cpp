@@ -66,7 +66,7 @@ IfDirectiveTriviaSyntax* IfDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFa
                                                                           ifKeyword, condition, endOfDirectiveToken,
                                                                           isActive, isBranchTaken, conditionValue);
 
-    return static_cast<IfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfDirectiveTrivia)));
+    return dynamic_cast<IfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

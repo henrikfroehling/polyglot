@@ -57,7 +57,7 @@ CallExpressionSyntax* CallExpressionSyntax::create(SyntaxFactory& syntaxFactory,
     auto ptrCallExpression = std::make_unique<CallExpressionSyntax>(syntaxKind, identifier, openParenthesisToken,
                                                                     argumentExpression, closeParenthesisToken);
 
-    return static_cast<CallExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCallExpression)));
+    return dynamic_cast<CallExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCallExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

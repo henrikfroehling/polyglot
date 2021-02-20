@@ -1,5 +1,5 @@
 #include "CodeAnalysis/Core/Parser/Directive.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
@@ -23,7 +23,7 @@ bool Directive::isBranchTaken() const noexcept
 
 std::string_view Directive::identifier() const noexcept
 {
-    switch (_pNode->syntaxKind())
+    switch (static_cast<SyntaxNode*>(_pNode)->syntaxKind())
     {
         case SyntaxKind::DefineDirectiveTrivia:
             return static_cast<DefineDirectiveTriviaSyntax*>(_pNode)->name()->text();

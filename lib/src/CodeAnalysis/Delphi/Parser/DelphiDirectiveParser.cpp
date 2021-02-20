@@ -1,6 +1,7 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiDirectiveParser.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
@@ -35,12 +36,12 @@ DelphiDirectiveParser::DelphiDirectiveParser(SharedPtr<Lexer> lexer,
       _syntaxFactory{lexer->syntaxPool()}
 {}
 
-LanguageSyntaxTrivia* DelphiDirectiveParser::parseDirective(bool isActive,
-                                                            bool endIsActive,
-                                                            bool isFirstAfterTokenInFile,
-                                                            bool isAfterNonWhitespaceOnLine) noexcept
+ISyntaxTrivia* DelphiDirectiveParser::parseDirective(bool isActive,
+                                                     bool endIsActive,
+                                                     bool isFirstAfterTokenInFile,
+                                                     bool isAfterNonWhitespaceOnLine) noexcept
 {
-    LanguageSyntaxToken* pOpenBraceDollarToken = takeToken(SyntaxKind::OpenBraceDollarToken);
+    ISyntaxToken* pOpenBraceDollarToken = takeToken(SyntaxKind::OpenBraceDollarToken);
     assert(pOpenBraceDollarToken != nullptr);
 
     if (isAfterNonWhitespaceOnLine)
@@ -48,7 +49,7 @@ LanguageSyntaxTrivia* DelphiDirectiveParser::parseDirective(bool isActive,
         // TODO error handling
     }
 
-    LanguageSyntaxTrivia* pTrivia{nullptr};
+    ISyntaxTrivia* pTrivia{nullptr};
     SyntaxKind syntaxKind = currentToken()->syntaxKind();
 
     switch (syntaxKind)
@@ -88,13 +89,13 @@ LanguageSyntaxTrivia* DelphiDirectiveParser::parseDirective(bool isActive,
             pTrivia = parseMessageDirective(pOpenBraceDollarToken, takeToken(syntaxKind));
             break;
         default:
-            LanguageSyntaxToken* pIdentifier = takeToken(SyntaxKind::IdentifierToken);
-            LanguageSyntaxToken* pNextToken = peekToken(1);
+            ISyntaxToken* pIdentifier = takeToken(SyntaxKind::IdentifierToken);
+            ISyntaxToken* pNextToken = peekToken(1);
 
             if (pNextToken->syntaxKind() == SyntaxKind::OnDirectiveKeyword || pNextToken->syntaxKind() == SyntaxKind::OffDirectiveKeyword)
                 return parseSwitchDirective(pOpenBraceDollarToken, pIdentifier, takeToken());
 
-            LanguageSyntaxToken* pEndOfDirectiveToken = parseEndOfDirective();
+            ISyntaxToken* pEndOfDirectiveToken = parseEndOfDirective();
 
             if (!isAfterNonWhitespaceOnLine)
             {
@@ -108,51 +109,51 @@ LanguageSyntaxTrivia* DelphiDirectiveParser::parseDirective(bool isActive,
     return pTrivia;
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                               LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDirective(ISyntaxToken* openBraceDollarToken,
+                                                               ISyntaxToken* keyword,
                                                                bool isActive) noexcept
 {
     ExpressionSyntax* pExpression = parseExpression();
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     const bool isTrue = evaluateBool(pExpression);
     const bool isBranchTaken = isActive && isTrue;
     return IfDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pExpression, pEndOfDirective, isActive, isBranchTaken, isTrue);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDefDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                  LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDefDirective(ISyntaxToken* openBraceDollarToken,
+                                                                  ISyntaxToken* keyword,
                                                                   bool isActive) noexcept
 {
-    LanguageSyntaxToken* pIdentifier = takeToken(SyntaxKind::IdentifierToken);
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pIdentifier = takeToken(SyntaxKind::IdentifierToken);
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     const bool isBranchTaken = isActive && isDefined(pIdentifier->text());
     return IfDefDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pIdentifier, pEndOfDirective, isActive, isBranchTaken);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfNDefDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                   LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfNDefDirective(ISyntaxToken* openBraceDollarToken,
+                                                                   ISyntaxToken* keyword,
                                                                    bool isActive) noexcept
 {
-    LanguageSyntaxToken* pIdentifier = takeToken(SyntaxKind::IdentifierToken);
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pIdentifier = takeToken(SyntaxKind::IdentifierToken);
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     return IfNDefDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pIdentifier, pEndOfDirective, isActive);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfEndDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                  LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfEndDirective(ISyntaxToken* openBraceDollarToken,
+                                                                  ISyntaxToken* keyword,
                                                                   bool isActive,
                                                                   bool endIsActive) noexcept
 {
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     return IfEndDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pEndOfDirective, isActive);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                 LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseDirective(ISyntaxToken* openBraceDollarToken,
+                                                                 ISyntaxToken* keyword,
                                                                  bool isActive,
                                                                  bool endIsActive) noexcept
 {
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     if (_context.hasPreviousIfOrElseIf())
     {
@@ -176,13 +177,13 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseDirective(LanguageSyntaxT
     }
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseIfDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                   LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseIfDirective(ISyntaxToken* openBraceDollarToken,
+                                                                   ISyntaxToken* keyword,
                                                                    bool isActive,
                                                                    bool endIsActive) noexcept
 {
     ExpressionSyntax* pExpression = parseExpression();
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     if (_context.hasPreviousIfOrElseIf())
     {
@@ -212,12 +213,12 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseIfDirective(LanguageSynta
     }
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndIfDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                  LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndIfDirective(ISyntaxToken* openBraceDollarToken,
+                                                                  ISyntaxToken* keyword,
                                                                   bool isActive,
                                                                   bool endIsActive) noexcept
 {
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     if (_context.hasUnfinishedIf())
         return EndIfDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pEndOfDirective, isActive);
@@ -233,8 +234,8 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndIfDirective(LanguageSyntax
     }
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseDefineOrUndefDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                          LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseDefineOrUndefDirective(ISyntaxToken* openBraceDollarToken,
+                                                                          ISyntaxToken* keyword,
                                                                           bool isActive,
                                                                           bool isFollowingToken) noexcept
 {
@@ -243,8 +244,8 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseDefineOrUndefDirective(Langua
         // TODO error handling
     }
 
-    LanguageSyntaxToken* pName = takeToken(SyntaxKind::IdentifierToken);
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pName = takeToken(SyntaxKind::IdentifierToken);
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     if (keyword->syntaxKind() == SyntaxKind::DefineDirectiveKeyword)
         return DefineDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pName, pEndOfDirective, isActive);
@@ -252,19 +253,19 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseDefineOrUndefDirective(Langua
         return UndefDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pName, pEndOfDirective, isActive);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseRegionDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                   LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseRegionDirective(ISyntaxToken* openBraceDollarToken,
+                                                                   ISyntaxToken* keyword,
                                                                    bool isActive) noexcept
 {
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     return RegionDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pEndOfDirective, isActive);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndRegionDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                      LanguageSyntaxToken* keyword,
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndRegionDirective(ISyntaxToken* openBraceDollarToken,
+                                                                      ISyntaxToken* keyword,
                                                                       bool isActive) noexcept
 {
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     if (_context.hasUnfinishedRegion())
         return EndRegionDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pEndOfDirective, isActive);
@@ -280,31 +281,31 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseEndRegionDirective(LanguageSy
     }
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseMessageDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                    LanguageSyntaxToken* keyword) noexcept
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseMessageDirective(ISyntaxToken* openBraceDollarToken,
+                                                                    ISyntaxToken* keyword) noexcept
 {
-    LanguageSyntaxToken* pMessageType{nullptr};
+    ISyntaxToken* pMessageType{nullptr};
 
     if (peekToken(1)->syntaxKind() == SyntaxKind::IdentifierToken)
         pMessageType = takeToken();
 
-    LanguageSyntaxToken* pMessage = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pMessage = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     return MessageDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, keyword, pMessageType, pMessage, pEndOfDirective);
 }
 
-DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(LanguageSyntaxToken* openBraceDollarToken,
-                                                                   LanguageSyntaxToken* identifier,
-                                                                   LanguageSyntaxToken* onOffToken) noexcept
+DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(ISyntaxToken* openBraceDollarToken,
+                                                                   ISyntaxToken* identifier,
+                                                                   ISyntaxToken* onOffToken) noexcept
 {
-    LanguageSyntaxToken* pEndOfDirective = parseEndOfDirective();
+    ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     return SwitchDirectiveTriviaSyntax::create(_syntaxFactory, openBraceDollarToken, identifier, onOffToken, pEndOfDirective);
 }
 
-LanguageSyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
+ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
-    std::vector<LanguageSyntaxNode*> skippedTokens{};
+    std::vector<ISyntaxNode*> skippedTokens{};
 
     if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
         && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
@@ -318,23 +319,20 @@ LanguageSyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
         }
     }
 
-    LanguageSyntaxToken* pEndOfDirective{nullptr};
+    ISyntaxToken* pEndOfDirective{nullptr};
 
     if (currentToken()->syntaxKind() == SyntaxKind::EndOfDirectiveToken)
         pEndOfDirective = takeToken();
     else
-    {
-        auto ptrEndOfDirective = std::make_unique<LanguageSyntaxToken>(SyntaxKind::EndOfDirectiveToken, "");
-        pEndOfDirective = _syntaxFactory.addSyntaxToken(std::move(ptrEndOfDirective));
-    }
+        pEndOfDirective = _syntaxFactory.missingToken(SyntaxKind::EndOfDirectiveToken, "", currentToken()->position());
 
     if (skippedTokens.size() > 0)
     {
         auto ptrSkippedTokensTrivia = std::make_unique<SkippedTokensTriviaSyntax>(SyntaxKind::SkippedTokensTrivia, std::move(skippedTokens));
-        SkippedTokensTriviaSyntax* skippedTokensTrivia = static_cast<SkippedTokensTriviaSyntax*>(_syntaxFactory.addSyntaxTrivia(std::move(ptrSkippedTokensTrivia)));
+        SkippedTokensTriviaSyntax* skippedTokensTrivia = dynamic_cast<SkippedTokensTriviaSyntax*>(_syntaxFactory.addSyntaxTrivia(std::move(ptrSkippedTokensTrivia)));
 
         pEndOfDirective = _syntaxFactory.tokenWithLeadingTrivia(pEndOfDirective->syntaxKind(), pEndOfDirective->text(), pEndOfDirective->position(),
-                                                                _syntaxFactory.syntaxList({skippedTokensTrivia}));
+                                                                _syntaxFactory.syntaxTriviaList({skippedTokensTrivia}));
     }
 
     return pEndOfDirective;
@@ -351,7 +349,7 @@ ExpressionSyntax* DelphiDirectiveParser::parseLogicalOr() noexcept
 
     while (currentToken()->syntaxKind() == SyntaxKind::OrKeyword)
     {
-        LanguageSyntaxToken* pOperatorToken = takeToken();
+        ISyntaxToken* pOperatorToken = takeToken();
         ExpressionSyntax* pRightExpression = parseLogicalAnd();
         pLeftExpression = BinaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalOrExpression, pLeftExpression, pOperatorToken, pRightExpression);
     }
@@ -365,7 +363,7 @@ ExpressionSyntax* DelphiDirectiveParser::parseLogicalAnd() noexcept
 
     while (currentToken()->syntaxKind() == SyntaxKind::AndKeyword)
     {
-        LanguageSyntaxToken* pOperatorToken = takeToken();
+        ISyntaxToken* pOperatorToken = takeToken();
         ExpressionSyntax* pRightExpression = parseEquality();
         pLeftExpression = BinaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalAndExpression, pLeftExpression, pOperatorToken, pRightExpression);
     }
@@ -380,7 +378,7 @@ ExpressionSyntax* DelphiDirectiveParser::parseEquality() noexcept
 
     while (DelphiSyntaxFacts::isComparisonSyntaxKind(currentSyntaxKind))
     {
-        LanguageSyntaxToken* pOperatorToken = takeToken();
+        ISyntaxToken* pOperatorToken = takeToken();
         ExpressionSyntax* pRightExpression = parseEquality();
         SyntaxKind expressionKind = DelphiSyntaxFacts::binaryExpressionKind(pOperatorToken->syntaxKind());
         pLeftExpression = BinaryExpressionSyntax::create(_syntaxFactory, expressionKind, pLeftExpression, pOperatorToken, pRightExpression);
@@ -394,7 +392,7 @@ ExpressionSyntax* DelphiDirectiveParser::parseLogicalNot() noexcept
 {
     if (currentToken()->syntaxKind() == SyntaxKind::NotKeyword)
     {
-        LanguageSyntaxToken* pOperatorToken = takeToken();
+        ISyntaxToken* pOperatorToken = takeToken();
         return PrefixUnaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalNotExpression, pOperatorToken, parseLogicalNot());
     }
 
@@ -409,14 +407,14 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
     {
         case SyntaxKind::OpenParenthesisToken:
         {
-            LanguageSyntaxToken* pOpenParenthesisToken = takeToken();
+            ISyntaxToken* pOpenParenthesisToken = takeToken();
             ExpressionSyntax* pExpression = parseExpression();
-            LanguageSyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
+            ISyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
             return ParenthesizedExpressionSyntax::create(_syntaxFactory, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
         }
         case SyntaxKind::IdentifierToken:
         {
-            LanguageSyntaxToken* pIdentifier = takeToken();
+            ISyntaxToken* pIdentifier = takeToken();
 
             if (peekToken(1)->syntaxKind() == SyntaxKind::OpenParenthesisToken)
                 return parseCallExpression(pIdentifier);
@@ -435,11 +433,11 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
     return nullptr;
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseCallExpression(LanguageSyntaxToken* identifier) noexcept
+ExpressionSyntax* DelphiDirectiveParser::parseCallExpression(ISyntaxToken* identifier) noexcept
 {
-    LanguageSyntaxToken* pOpenParenthesisToken = takeToken(SyntaxKind::OpenParenthesisToken);
+    ISyntaxToken* pOpenParenthesisToken = takeToken(SyntaxKind::OpenParenthesisToken);
     ExpressionSyntax* pExpression = parseExpression();
-    LanguageSyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
+    ISyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
     return CallExpressionSyntax::create(_syntaxFactory, SyntaxKind::CallExpression, identifier, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
 }
 

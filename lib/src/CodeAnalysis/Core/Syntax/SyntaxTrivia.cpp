@@ -5,8 +5,8 @@ namespace polyglot::CodeAnalysis
 {
 
 SyntaxTrivia::SyntaxTrivia() noexcept
-    : SyntaxNode{},
-      ISyntaxTrivia{},
+    : ISyntaxTrivia{},
+      SyntaxNode{},
       _text{},
       _pToken{nullptr}
 {}
@@ -16,8 +16,8 @@ SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
                            pg_size position,
                            pg_size fullWidth,
                            ISyntaxToken* token) noexcept
-    : SyntaxNode{syntaxKind, position, fullWidth},
-      ISyntaxTrivia{},
+    : ISyntaxTrivia{},
+      SyntaxNode{syntaxKind, position, fullWidth},
       _text{text},
       _pToken{token}
 {}

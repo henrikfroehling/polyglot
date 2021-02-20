@@ -5,8 +5,8 @@ namespace polyglot::CodeAnalysis
 {
 
 SyntaxToken::SyntaxToken() noexcept
-    : SyntaxNode{},
-      ISyntaxToken{},
+    : ISyntaxToken{},
+      SyntaxNode{},
       _text{},
       _pLeadingTrivia{nullptr},
       _pTrailingTrivia{nullptr}
@@ -19,8 +19,8 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
                          ISyntaxTriviaList* leadingTrivia,
                          ISyntaxTriviaList* trailingTrivia,
                          ISyntaxNode* parent) noexcept
-    : SyntaxNode{syntaxKind, position, fullWidth, parent},
-      ISyntaxToken{},
+    : ISyntaxToken{},
+      SyntaxNode{syntaxKind, position, fullWidth, parent},
       _text{text},
       _pLeadingTrivia{leadingTrivia},
       _pTrailingTrivia{trailingTrivia}

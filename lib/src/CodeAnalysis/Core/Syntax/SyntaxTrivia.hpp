@@ -14,7 +14,7 @@ namespace polyglot::CodeAnalysis
 class ISyntaxNode;
 class ISyntaxToken;
 
-class SyntaxTrivia : public SyntaxNode, public ISyntaxTrivia
+class SyntaxTrivia : public SyntaxNode, public virtual ISyntaxTrivia
 {
 public:
     SyntaxTrivia() noexcept;

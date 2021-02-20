@@ -62,7 +62,7 @@ IfDefDirectiveTriviaSyntax* IfDefDirectiveTriviaSyntax::create(SyntaxFactory& sy
                                                                                 ifDefKeyword, name, endOfDirectiveToken,
                                                                                 isActive, isBranchTaken);
 
-    return static_cast<IfDefDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfDefDirectiveTrivia)));
+    return dynamic_cast<IfDefDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrIfDefDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

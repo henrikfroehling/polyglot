@@ -16,7 +16,7 @@ class ISyntaxNode;
 
 using TokenValue = std::variant<std::monostate, bool, char, int, float, double, std::string_view>;
 
-class SyntaxToken : public SyntaxNode, public ISyntaxToken
+class SyntaxToken : public SyntaxNode, public virtual ISyntaxToken
 {
 public:
     SyntaxToken() noexcept;

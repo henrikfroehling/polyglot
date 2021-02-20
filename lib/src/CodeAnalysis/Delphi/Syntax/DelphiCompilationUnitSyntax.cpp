@@ -22,7 +22,7 @@ DelphiCompilationUnitSyntax* DelphiCompilationUnitSyntax::create(SyntaxFactory& 
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 
     auto ptrCompilationUnitSyntax = std::make_unique<DelphiCompilationUnitSyntax>(syntaxKind, EOFToken);
-    return static_cast<DelphiCompilationUnitSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCompilationUnitSyntax)));
+    return dynamic_cast<DelphiCompilationUnitSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCompilationUnitSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

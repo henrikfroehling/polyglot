@@ -77,7 +77,7 @@ MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxFactory
     auto ptrMessageDirectiveTrivia = std::make_unique<MessageDirectiveTriviaSyntax>(SyntaxKind::MessageDirectiveTrivia, startToken, messageKeyword,
                                                                                     messageTypeToken, messageLiteralToken, endOfDirectiveToken);
 
-    return static_cast<MessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
+    return dynamic_cast<MessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

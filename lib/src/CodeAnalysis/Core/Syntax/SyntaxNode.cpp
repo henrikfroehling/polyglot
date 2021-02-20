@@ -69,19 +69,19 @@ pg_size SyntaxNode::trailingTriviaWidth() const noexcept
 
 ISyntaxToken* SyntaxNode::firstToken() const noexcept
 {
-    return static_cast<ISyntaxToken*>(firstTerminal());
+    return dynamic_cast<ISyntaxToken*>(firstTerminal());
 }
 
 ISyntaxToken* SyntaxNode::lastToken() const noexcept
 {
-    return static_cast<ISyntaxToken*>(lastTerminal());
+    return dynamic_cast<ISyntaxToken*>(lastTerminal());
 }
 
 void SyntaxNode::adjustWidthAndFlags(ISyntaxNode* node) noexcept
 {
     if (node != nullptr)
     {
-        SyntaxNode* pSyntaxNode = static_cast<SyntaxNode*>(node);
+        SyntaxNode* pSyntaxNode = dynamic_cast<SyntaxNode*>(node);
 
         _fullWidth += pSyntaxNode->_fullWidth;
         _flags |= pSyntaxNode->_flags;

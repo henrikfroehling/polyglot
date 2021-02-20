@@ -1,6 +1,7 @@
 #include "CodeAnalysis/Delphi/Parser/DelphiParser.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxList.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxList.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "CodeAnalysis/Delphi/Parser/DelphiLexer.hpp"
@@ -27,7 +28,7 @@ DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
       _syntaxFactory{_ptrLexer->syntaxPool()}
 {}
 
-LanguageSyntaxNode* DelphiParser::parseRoot() noexcept
+ISyntaxNode* DelphiParser::parseRoot() noexcept
 {
     if (DelphiSyntaxFacts::isModuleStart(currentToken()->syntaxKind()))
         return parseCompilationUnit();
@@ -40,7 +41,7 @@ LanguageSyntaxNode* DelphiParser::parseRoot() noexcept
 
 DelphiCompilationUnitSyntax* DelphiParser::parseCompilationUnit() noexcept
 {
-    LanguageSyntaxToken* pCurrentToken = currentToken();
+    ISyntaxToken* pCurrentToken = currentToken();
     DelphiCompilationUnitSyntax* pCompilationUnit = nullptr;
 
     switch (pCurrentToken->syntaxKind())
@@ -56,7 +57,7 @@ DelphiCompilationUnitSyntax* DelphiParser::parseCompilationUnit() noexcept
             break;
         default:
         {
-            LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
+            ISyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
             pCompilationUnit = DelphiCompilationUnitSyntax::create(_syntaxFactory, SyntaxKind::CompilationUnit, pEOFToken);
         }
     }
@@ -75,7 +76,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
 
     while (true)
     {
-        LanguageSyntaxToken* pCurrentToken = currentToken();
+        ISyntaxToken* pCurrentToken = currentToken();
 
         switch (pCurrentToken->syntaxKind())
         {
@@ -110,7 +111,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
 
 endOfUnit:
     DelphiEndOfModuleSyntax* endOfModule = parseEndOfModule();
-    LanguageSyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
+    ISyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
     return DelphiUnitModuleSyntax::create(_syntaxFactory, pHead, pInterfaceSection, pImplementationSection,
                                           endOfModule, pEOFToken, pInitializationSection, pFinalizationSection);
@@ -118,10 +119,10 @@ endOfUnit:
 
 DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
 {
-    LanguageSyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
+    ISyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
     NameExpressionSyntax* pName = parseQualifiedName();
-    LanguageSyntaxToken* pInKeyword{nullptr};
-    LanguageSyntaxToken* pFilename{nullptr};
+    ISyntaxToken* pInKeyword{nullptr};
+    ISyntaxToken* pFilename{nullptr};
 
     if (peekToken(1)->syntaxKind() == SyntaxKind::InKeyword)
     {
@@ -129,13 +130,13 @@ DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
         pFilename = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
     }
 
-    LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return DelphiUnitHeadSyntax::create(_syntaxFactory, pUnitKeyword, pName, pSemiColonToken, pInKeyword, pFilename);
 }
 
 DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noexcept
 {
-    LanguageSyntaxToken* pInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
+    ISyntaxToken* pInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
     DelphiUsesClauseSyntax* pUses{nullptr};
 
     if (peekToken(1)->syntaxKind() == SyntaxKind::UsesKeyword)
@@ -146,7 +147,7 @@ DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noex
 
 DelphiUnitImplementationSectionSyntax* DelphiParser::parseUnitImplementationSection() noexcept
 {
-    LanguageSyntaxToken* pImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
+    ISyntaxToken* pImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
     DelphiUsesClauseSyntax* pUses{nullptr};
 
     if (peekToken(1)->syntaxKind() == SyntaxKind::UsesKeyword)
@@ -177,21 +178,21 @@ DelphiProgramModuleSyntax* DelphiParser::parseProgramModule() noexcept
 
 DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
 {
-    LanguageSyntaxToken* pUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
-    LanguageSyntaxList* pUnitReferences = _syntaxFactory.syntaxList();
+    ISyntaxToken* pUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
+    SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList());
 
     DelphiUnitReferenceDeclarationSyntax* pUnitReference = parseUnitReference();
     pUnitReferences->add(pUnitReference);
 
     while (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
-        LanguageSyntaxToken* pCommaToken = takeToken();
+        ISyntaxToken* pCommaToken = takeToken();
         pUnitReference = parseUnitReference();
         pUnitReferences->add(pCommaToken);
         pUnitReferences->add(pUnitReference);
     }
 
-    LanguageSyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, pUnitReferences, pSemiColonToken);
 }
 
@@ -201,8 +202,8 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
         return nullptr; // TODO error handling
 
     NameExpressionSyntax* pUnitName = parseQualifiedName();
-    LanguageSyntaxToken* pInKeyword{nullptr};
-    LanguageSyntaxToken* pSourceFile{nullptr};
+    ISyntaxToken* pInKeyword{nullptr};
+    ISyntaxToken* pSourceFile{nullptr};
 
     if (currentToken()->syntaxKind() == SyntaxKind::InKeyword)
     {
@@ -219,7 +220,7 @@ NameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
 
     while (currentToken()->syntaxKind() == SyntaxKind::DotToken)
     {
-        LanguageSyntaxToken* pSeparator = takeToken();
+        ISyntaxToken* pSeparator = takeToken();
         pName = parseQualifiedNameRight(pName, pSeparator);
     }
 
@@ -227,7 +228,7 @@ NameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
 }
 
 NameExpressionSyntax* DelphiParser::parseQualifiedNameRight(NameExpressionSyntax* left,
-                                                            LanguageSyntaxToken* dotToken) noexcept
+                                                            ISyntaxToken* dotToken) noexcept
 {
     assert(dotToken != nullptr);
     assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
@@ -237,24 +238,24 @@ NameExpressionSyntax* DelphiParser::parseQualifiedNameRight(NameExpressionSyntax
 
 IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
 {
-    LanguageSyntaxToken* pCurrentToken = currentToken();
+    ISyntaxToken* pCurrentToken = currentToken();
 
     if (pCurrentToken->syntaxKind() == SyntaxKind::IdentifierToken)
     {
-        LanguageSyntaxToken* pIdentifier = takeToken();
+        ISyntaxToken* pIdentifier = takeToken();
         return IdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
     }
     else
     {
-        LanguageSyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
+        ISyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
         return IdentifierNameExpressionSyntax::create(_syntaxFactory, pMissingIdentifier);
     }
 }
 
 DelphiEndOfModuleSyntax* DelphiParser::parseEndOfModule() noexcept
 {
-    LanguageSyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
-    LanguageSyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
+    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    ISyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
     return DelphiEndOfModuleSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 

@@ -16,13 +16,7 @@ class ISyntaxTriviaList;
 class POLYGLOT_API ISyntaxNode
 {
 public:
-    ISyntaxNode() noexcept = default;
-    virtual ~ISyntaxNode() noexcept = default;
-
-    ISyntaxNode(const ISyntaxNode&) noexcept = default;
-    ISyntaxNode(ISyntaxNode&&) noexcept = default;
-    ISyntaxNode& operator=(const ISyntaxNode&) noexcept = default;
-    ISyntaxNode& operator=(ISyntaxNode&&) noexcept = default;
+    virtual ~ISyntaxNode() noexcept {}
 
     virtual LanguageKind languageKind() const noexcept = 0;
     virtual SyntaxKind syntaxKind() const noexcept = 0;

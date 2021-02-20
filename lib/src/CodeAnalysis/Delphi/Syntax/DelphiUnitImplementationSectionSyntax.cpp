@@ -55,7 +55,7 @@ DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::cr
         assert(uses->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitImplementationSectionSyntax = std::make_unique<DelphiUnitImplementationSectionSyntax>(implementationKeyword, uses);
-    return static_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));
+    return dynamic_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

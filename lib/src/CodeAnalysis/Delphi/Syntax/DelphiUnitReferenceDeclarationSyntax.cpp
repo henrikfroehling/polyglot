@@ -12,7 +12,7 @@ namespace polyglot::CodeAnalysis
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
                                                                            ISyntaxToken* inKeyword,
                                                                            ISyntaxToken* sourceFile) noexcept
-    : DelphiSyntaxNode{SyntaxKind::UnitReference},
+    : DelphiSyntaxList{SyntaxKind::UnitReference},
       _pUnitName{unitName},
       _pInKeyword{inKeyword},
       _pSourceFile{sourceFile}
@@ -70,7 +70,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
     }
 
     auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile);
-    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
+    return dynamic_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

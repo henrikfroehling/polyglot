@@ -49,7 +49,7 @@ ParenthesizedExpressionSyntax* ParenthesizedExpressionSyntax::create(SyntaxFacto
     auto ptrParenthesizedExpression = std::make_unique<ParenthesizedExpressionSyntax>(SyntaxKind::ParenthesizedExpression, openParenthesisToken,
                                                                                       expression, closeParenthesisToken);
 
-    return static_cast<ParenthesizedExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrParenthesizedExpression)));
+    return dynamic_cast<ParenthesizedExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrParenthesizedExpression)));
 }
 
 } // end namespace polyglot::CodeAnalysis

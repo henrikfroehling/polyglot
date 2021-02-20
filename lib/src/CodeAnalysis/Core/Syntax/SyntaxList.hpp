@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "polyglot/Core/Types.hpp"
+#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxList.hpp"
 #include "SyntaxNode.hpp"
 
@@ -11,10 +12,11 @@ namespace polyglot::CodeAnalysis
 
 class ISyntaxNode;
 
-class SyntaxList : public SyntaxNode, public ISyntaxList
+class SyntaxList : public SyntaxNode, public virtual ISyntaxList
 {
 public:
     SyntaxList() noexcept;
+    explicit SyntaxList(SyntaxKind syntaxKind) noexcept;
     explicit SyntaxList(std::vector<ISyntaxNode*>&& children) noexcept;
     virtual ~SyntaxList() noexcept;
 

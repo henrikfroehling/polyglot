@@ -46,7 +46,7 @@ QualifiedNameExpressionSyntax* QualifiedNameExpressionSyntax::create(SyntaxFacto
     assert(rightExpression != nullptr);
 
     auto ptrQualifiedNameExpressionSyntax = std::make_unique<QualifiedNameExpressionSyntax>(leftExpression, dotToken, rightExpression);
-    return static_cast<QualifiedNameExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrQualifiedNameExpressionSyntax)));
+    return dynamic_cast<QualifiedNameExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrQualifiedNameExpressionSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

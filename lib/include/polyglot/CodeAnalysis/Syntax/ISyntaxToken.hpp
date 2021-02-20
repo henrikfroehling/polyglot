@@ -7,16 +7,10 @@
 namespace polyglot::CodeAnalysis
 {
 
-class POLYGLOT_API ISyntaxToken : public ISyntaxNode
+class POLYGLOT_API ISyntaxToken : public virtual ISyntaxNode
 {
 public:
-    ISyntaxToken() noexcept = default;
-    virtual ~ISyntaxToken() noexcept = default;
-
-    ISyntaxToken(const ISyntaxToken&) noexcept = default;
-    ISyntaxToken(ISyntaxToken&&) noexcept = default;
-    ISyntaxToken& operator=(const ISyntaxToken&) noexcept = default;
-    ISyntaxToken& operator=(ISyntaxToken&&) noexcept = default;
+    virtual ~ISyntaxToken() noexcept {}
 
     virtual bool booleanValue() const noexcept = 0;
 };

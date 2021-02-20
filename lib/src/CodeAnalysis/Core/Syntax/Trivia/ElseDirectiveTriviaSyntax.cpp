@@ -56,7 +56,7 @@ ElseDirectiveTriviaSyntax* ElseDirectiveTriviaSyntax::create(SyntaxFactory& synt
                                                                               elseKeyword, endOfDirectiveToken,
                                                                               isActive, isBranchTaken);
 
-    return static_cast<ElseDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrElseDirectiveTrivia)));
+    return dynamic_cast<ElseDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrElseDirectiveTrivia)));
 }
 
 } // end namespace polyglot::CodeAnalysis

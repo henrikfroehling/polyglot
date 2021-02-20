@@ -12,7 +12,7 @@ namespace polyglot::CodeAnalysis
 DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
                                                ISyntaxList* unitReferences,
                                                ISyntaxToken* semiColonToken) noexcept
-    : DelphiSyntaxNode{SyntaxKind::UsesClause},
+    : DelphiSyntaxList{SyntaxKind::UsesClause},
       _pUsesKeyword{usesKeyword},
       _pUnitReferences{unitReferences},
       _pSemiColonToken{semiColonToken}
@@ -48,7 +48,7 @@ DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFact
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
     auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, unitReferences, semiColonToken);
-    return static_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
+    return dynamic_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
 }
 
 } // end namespace polyglot::CodeAnalysis

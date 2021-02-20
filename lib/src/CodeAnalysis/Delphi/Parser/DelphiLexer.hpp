@@ -11,9 +11,8 @@
 namespace polyglot::CodeAnalysis
 {
 
-class LanguageSyntaxNode;
-class LanguageSyntaxToken;
-class LanguageSyntaxTrivia;
+class ISyntaxToken;
+class ISyntaxTrivia;
 
 class DelphiLexer final : public Lexer
 {
@@ -21,19 +20,19 @@ public:
     explicit DelphiLexer(SharedPtr<SourceText> sourceText) noexcept;
 
 private:
-    LanguageSyntaxToken* lexToken() noexcept override;
+    ISyntaxToken* lexToken() noexcept override;
     TokenInfo quickScanSyntaxToken() noexcept;
     TokenInfo lexSyntaxToken() noexcept;
     TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
-                         std::vector<LanguageSyntaxNode*>& triviaList) noexcept;
+                         std::vector<ISyntaxTrivia*>& triviaList) noexcept;
 
-    LanguageSyntaxTrivia* scanWhitespace() noexcept;
+    ISyntaxTrivia* scanWhitespace() noexcept;
     void scanToEndOfLine() noexcept;
     void scanMultiLineComment(bool& isTerminated) noexcept;
-    LanguageSyntaxTrivia* scanEndOfLine() noexcept;
+    ISyntaxTrivia* scanEndOfLine() noexcept;
     void scanSyntaxToken(TokenInfo& tokenInfo) noexcept;
     void scanStringLiteral(TokenInfo& tokenInfo) noexcept;
     void scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept;
@@ -48,16 +47,16 @@ private:
                             bool endIsActive,
                             bool afterFirstToken,
                             bool afterNonWhitespaceOnLine,
-                            std::vector<LanguageSyntaxNode*>& triviaList) noexcept;
+                            std::vector<ISyntaxTrivia*>& triviaList) noexcept;
 
-    LanguageSyntaxToken* lexDirectiveToken() noexcept;
+    ISyntaxToken* lexDirectiveToken() noexcept;
     void scanDirectiveToken(TokenInfo& tokenInfo) noexcept;
 
-    void lexDirectiveTrailingTrivia(std::vector<LanguageSyntaxNode*>& triviaList,
+    void lexDirectiveTrailingTrivia(std::vector<ISyntaxTrivia*>& triviaList,
                                     bool includeEndOfLine) noexcept;
 
-    LanguageSyntaxTrivia* lexDirectiveTrivia() noexcept;
-    LanguageSyntaxTrivia* scanDirectiveWhitespace() noexcept;
+    ISyntaxTrivia* lexDirectiveTrivia() noexcept;
+    ISyntaxTrivia* scanDirectiveWhitespace() noexcept;
 
 private:
     pg_size _currentTriviaPosition;

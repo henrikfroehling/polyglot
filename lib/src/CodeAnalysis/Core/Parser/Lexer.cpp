@@ -1,7 +1,7 @@
 #include "CodeAnalysis/Core/Parser/Lexer.hpp"
 #include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxNode.hpp"
-#include "CodeAnalysis/Core/Syntax/LanguageSyntaxToken.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxNode.hpp"
+#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include <cassert>
 #include <algorithm>
 
@@ -49,7 +49,7 @@ void Lexer::preLex() noexcept
 
     for (pg_size i = 0; i < size; i++)
     {
-        LanguageSyntaxToken* pToken = lex();
+        ISyntaxToken* pToken = lex();
         addLexedToken(pToken);
         _tokenOffset++;
 
@@ -60,7 +60,7 @@ void Lexer::preLex() noexcept
     _tokenOffset = currentTokenOffset;
 }
 
-LanguageSyntaxToken* Lexer::currentToken() noexcept
+ISyntaxToken* Lexer::currentToken() noexcept
 {
     switch (_mode)
     {
@@ -83,7 +83,7 @@ LanguageSyntaxToken* Lexer::currentToken() noexcept
     return nullptr;
 }
 
-LanguageSyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
+ISyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
 {
     switch (_mode)
     {
@@ -116,7 +116,7 @@ LanguageSyntaxToken* Lexer::takeToken(SyntaxKind syntaxKind) noexcept
     return nullptr;
 }
 
-LanguageSyntaxToken* Lexer::takeToken() noexcept
+ISyntaxToken* Lexer::takeToken() noexcept
 {
     switch (_mode)
     {
@@ -137,7 +137,7 @@ LanguageSyntaxToken* Lexer::takeToken() noexcept
     return nullptr;
 }
 
-LanguageSyntaxToken* Lexer::peekToken(pg_size n) noexcept
+ISyntaxToken* Lexer::peekToken(pg_size n) noexcept
 {
     assert(n >= 0);
 
@@ -184,7 +184,7 @@ void Lexer::setMode(LexerMode mode) noexcept
     _mode = mode;
 }
 
-void Lexer::addLexedToken(LanguageSyntaxToken* token) noexcept
+void Lexer::addLexedToken(ISyntaxToken* token) noexcept
 {
     assert(token != nullptr);
 
@@ -211,7 +211,7 @@ void Lexer::addLexedToken(LanguageSyntaxToken* token) noexcept
     }
 }
 
-LanguageSyntaxToken* Lexer::createMissingToken(SyntaxKind expectedSyntaxKind) noexcept
+ISyntaxToken* Lexer::createMissingToken(SyntaxKind expectedSyntaxKind) noexcept
 {
     return _syntaxFactory.missingToken(expectedSyntaxKind, _pCurrentToken->text(), _pCurrentToken->position());
 }
