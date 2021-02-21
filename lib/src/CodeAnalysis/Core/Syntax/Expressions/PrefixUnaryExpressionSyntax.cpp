@@ -17,7 +17,9 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pOperatorToken->position();
     adjustWidthAndFlags(_pOperatorToken);
+    _pOperatorToken->setChildNumber(0);
     adjustWidthAndFlags(_pOperandExpression);
+    _pOperandExpression->setChildNumber(1);
 }
 
 ISyntaxNode* PrefixUnaryExpressionSyntax::child(pg_size index) const

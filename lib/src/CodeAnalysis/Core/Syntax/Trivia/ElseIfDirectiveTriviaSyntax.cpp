@@ -28,9 +28,13 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pElseIfKeyword);
+    _pElseIfKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pCondition);
+    _pCondition->setChildNumber(2);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(3);
 }
 
 ISyntaxNode* ElseIfDirectiveTriviaSyntax::child(pg_size index) const

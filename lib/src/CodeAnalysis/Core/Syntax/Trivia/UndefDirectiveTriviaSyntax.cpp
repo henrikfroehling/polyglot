@@ -21,6 +21,14 @@ UndefDirectiveTriviaSyntax::UndefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
+    adjustWidthAndFlags(_pUndefKeyword);
+    _pUndefKeyword->setChildNumber(1);
+    adjustWidthAndFlags(_pName);
+    _pName->setChildNumber(2);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(3);
 }
 
 ISyntaxNode* UndefDirectiveTriviaSyntax::child(pg_size index) const

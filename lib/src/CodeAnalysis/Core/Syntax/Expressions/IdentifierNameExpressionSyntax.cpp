@@ -15,6 +15,7 @@ IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(ISyntaxToken* ide
 {
     _position = _pIdentifier->position();
     adjustWidthAndFlags(_pIdentifier);
+    _pIdentifier->setChildNumber(0);
 }
 
 ISyntaxNode* IdentifierNameExpressionSyntax::child(pg_size index) const

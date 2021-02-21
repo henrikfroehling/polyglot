@@ -19,8 +19,11 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
 {
     _position = _pOpenParenthesisToken->position();
     adjustWidthAndFlags(_pOpenParenthesisToken);
+    _pOpenParenthesisToken->setChildNumber(0);
     adjustWidthAndFlags(_pExpression);
+    _pExpression->setChildNumber(1);
     adjustWidthAndFlags(_pCloseParenthesisToken);
+    _pCloseParenthesisToken->setChildNumber(2);
 }
 
 ISyntaxNode* ParenthesizedExpressionSyntax::child(pg_size index) const

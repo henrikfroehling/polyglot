@@ -8,8 +8,13 @@ SkippedTokensTriviaSyntax::SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
     : StructuredTriviaSyntax{syntaxKind},
       _skippedTokens{std::move(skippedTokens)}
 {
+    pg_size childNr{};
+
     for (ISyntaxNode* skippedToken : _skippedTokens)
+    {
         adjustWidthAndFlags(skippedToken);
+        skippedToken->setChildNumber(childNr++);
+    }
 }
 
 } // end namespace polyglot::CodeAnalysis

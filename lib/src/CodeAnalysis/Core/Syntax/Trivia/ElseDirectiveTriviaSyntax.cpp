@@ -23,8 +23,11 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pElseKeyword);
+    _pElseKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(2);
 }
 
 ISyntaxNode* ElseDirectiveTriviaSyntax::child(pg_size index) const

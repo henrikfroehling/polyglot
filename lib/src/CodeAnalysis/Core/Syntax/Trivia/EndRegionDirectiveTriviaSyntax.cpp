@@ -21,8 +21,11 @@ EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntax
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pEndRegionKeyword);
+    _pEndRegionKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(2);
 }
 
 ISyntaxNode* EndRegionDirectiveTriviaSyntax::child(pg_size index) const

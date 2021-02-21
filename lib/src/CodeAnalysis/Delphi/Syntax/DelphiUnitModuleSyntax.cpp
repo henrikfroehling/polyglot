@@ -31,18 +31,31 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
 {
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
+    _pHead->setChildNumber(0);
     adjustWidthAndFlags(_pInterfaceSection);
+    _pInterfaceSection->setChildNumber(1);
     adjustWidthAndFlags(_pImplementationSection);
-    adjustWidthAndFlags(_pEndOfModule);
+    _pImplementationSection->setChildNumber(2);
+
+    pg_size childNr{3};
 
     if (_pInitializationSection != nullptr)
+    {
         adjustWidthAndFlags(_pInitializationSection);
+        _pInitializationSection->setChildNumber(childNr++);
+    }
 
     if (_pFinalizationSection != nullptr)
     {
         assert(_pInitializationSection != nullptr);
         adjustWidthAndFlags(_pFinalizationSection);
+        _pFinalizationSection->setChildNumber(childNr++);
     }
+
+    adjustWidthAndFlags(_pEndOfModule);
+    _pEndOfModule->setChildNumber(childNr++);
+    adjustWidthAndFlags(_pEOFToken);
+    _pEOFToken->setChildNumber(childNr++);
 }
 
 ISyntaxNode* DelphiUnitModuleSyntax::child(pg_size index) const

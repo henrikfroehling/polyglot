@@ -21,9 +21,13 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pIdentifier->position();
     adjustWidthAndFlags(_pIdentifier);
+    _pIdentifier->setChildNumber(0);
     adjustWidthAndFlags(_pOpenParenthesisToken);
+    _pOpenParenthesisToken->setChildNumber(1);
     adjustWidthAndFlags(_pArgumentExpression);
+    _pArgumentExpression->setChildNumber(2);
     adjustWidthAndFlags(_pCloseParenthesisToken);
+    _pCloseParenthesisToken->setChildNumber(3);
 }
 
 ISyntaxNode* CallExpressionSyntax::child(pg_size index) const

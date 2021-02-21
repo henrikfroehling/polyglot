@@ -10,7 +10,8 @@ SyntaxNode::SyntaxNode() noexcept
       _fullWidth{},
       _syntaxKind{SyntaxKind::None},
       _flags{SyntaxNodeFlags::None},
-      _pParent{nullptr}
+      _pParent{nullptr},
+      _childNumber{}
 {}
 
 SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
@@ -22,7 +23,8 @@ SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
       _fullWidth{fullWidth},
       _syntaxKind{syntaxKind},
       _flags{SyntaxNodeFlags::None},
-      _pParent{parent}
+      _pParent{parent},
+      _childNumber{}
 {}
 
 SyntaxNode::~SyntaxNode() noexcept
@@ -85,6 +87,7 @@ void SyntaxNode::adjustWidthAndFlags(ISyntaxNode* node) noexcept
 
         _fullWidth += pSyntaxNode->_fullWidth;
         _flags |= pSyntaxNode->_flags;
+        pSyntaxNode->setParent(this);
     }
 }
 

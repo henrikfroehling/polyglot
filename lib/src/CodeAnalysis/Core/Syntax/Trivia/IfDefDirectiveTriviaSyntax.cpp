@@ -25,9 +25,13 @@ IfDefDirectiveTriviaSyntax::IfDefDirectiveTriviaSyntax(SyntaxKind syntaxKind,
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pIfDefKeyword);
+    _pIfDefKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pName);
+    _pName->setChildNumber(2);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(3);
 }
 
 ISyntaxNode* IfDefDirectiveTriviaSyntax::child(pg_size index) const

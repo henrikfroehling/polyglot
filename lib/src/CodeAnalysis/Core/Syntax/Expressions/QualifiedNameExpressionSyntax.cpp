@@ -19,8 +19,11 @@ QualifiedNameExpressionSyntax::QualifiedNameExpressionSyntax(NameExpressionSynta
 {
     _position = _pLeftExpression->position();
     adjustWidthAndFlags(_pLeftExpression);
+    _pLeftExpression->setChildNumber(0);
     adjustWidthAndFlags(_pDotToken);
+    _pDotToken->setChildNumber(1);
     adjustWidthAndFlags(_pRightExpression);
+    _pRightExpression->setChildNumber(2);
 }
 
 ISyntaxNode* QualifiedNameExpressionSyntax::child(pg_size index) const

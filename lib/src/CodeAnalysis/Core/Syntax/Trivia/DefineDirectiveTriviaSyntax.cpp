@@ -23,9 +23,13 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pDefineKeyword);
+    _pDefineKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pName);
+    _pName->setChildNumber(2);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(3);
 }
 
 ISyntaxNode* DefineDirectiveTriviaSyntax::child(pg_size index) const

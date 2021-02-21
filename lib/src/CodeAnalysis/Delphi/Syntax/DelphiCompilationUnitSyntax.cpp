@@ -10,9 +10,7 @@ DelphiCompilationUnitSyntax::DelphiCompilationUnitSyntax(SyntaxKind syntaxKind,
                                                          ISyntaxToken* EOFToken) noexcept
     : DelphiSyntaxNode{syntaxKind},
       _pEOFToken{EOFToken}
-{
-    adjustWidthAndFlags(_pEOFToken);
-}
+{}
 
 DelphiCompilationUnitSyntax* DelphiCompilationUnitSyntax::create(SyntaxFactory& syntaxFactory,
                                                                  SyntaxKind syntaxKind,

@@ -24,6 +24,7 @@ public:
     virtual pg_size fullWidth() const noexcept = 0;
     virtual pg_size childCount() const noexcept = 0;
     virtual ISyntaxNode* child(pg_size index) const = 0;
+    virtual pg_size childNumber() const noexcept = 0;
     virtual pg_size position() const noexcept = 0;
     virtual pg_size endPosition() const noexcept = 0;
     virtual pg_size spanStart() const noexcept = 0;
@@ -51,6 +52,9 @@ public:
     virtual pg_size trailingTriviaWidth() const noexcept = 0;
     virtual ISyntaxTriviaList* leadingTrivia() const noexcept = 0;
     virtual ISyntaxTriviaList* trailingTrivia() const noexcept = 0;
+
+    virtual void setParent(ISyntaxNode* parent) noexcept = 0;
+    virtual void setChildNumber(pg_size childNumber) noexcept = 0;
 };
 
 } // end namespace polyglot::CodeAnalysis

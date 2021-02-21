@@ -15,7 +15,9 @@ DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(ISyntaxToken* endKeyword,
 {
     _position = _pEndKeyword->position();
     adjustWidthAndFlags(_pEndKeyword);
+    _pEndKeyword->setChildNumber(0);
     adjustWidthAndFlags(_pDotToken);
+    _pDotToken->setChildNumber(1);
 }
 
 ISyntaxNode* DelphiEndOfModuleSyntax::child(pg_size index) const

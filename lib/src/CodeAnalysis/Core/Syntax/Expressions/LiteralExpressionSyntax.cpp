@@ -15,6 +15,7 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pLiteral->position();
     adjustWidthAndFlags(_pLiteral);
+    _pLiteral->setChildNumber(0);
 }
 
 ISyntaxNode* LiteralExpressionSyntax::child(pg_size index) const

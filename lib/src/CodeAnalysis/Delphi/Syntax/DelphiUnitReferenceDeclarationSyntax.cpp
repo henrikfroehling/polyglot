@@ -19,14 +19,21 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
 {
     _position = _pUnitName->position();
     adjustWidthAndFlags(_pUnitName);
+    _pUnitName->setChildNumber(0);
+
+    pg_size childNr{1};
 
     if (_pInKeyword != nullptr)
+    {
         adjustWidthAndFlags(_pInKeyword);
+        _pInKeyword->setChildNumber(childNr++);
+    }
 
     if (_pSourceFile != nullptr)
     {
         assert(_pInKeyword != nullptr);
         adjustWidthAndFlags(_pSourceFile);
+        _pSourceFile->setChildNumber(childNr);
     }
 }
 

@@ -17,9 +17,13 @@ DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(ISy
 {
     _position = _pImplementationKeyword->position();
     adjustWidthAndFlags(_pImplementationKeyword);
+    _pImplementationKeyword->setChildNumber(0);
 
     if (_pUses != nullptr)
+    {
         adjustWidthAndFlags(_pUses);
+        _pUses->setChildNumber(1);
+    }
 }
 
 ISyntaxNode* DelphiUnitImplementationSectionSyntax::child(pg_size index) const

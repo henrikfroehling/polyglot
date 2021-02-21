@@ -22,8 +22,11 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* he
 {
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
+    _pHead->setChildNumber(0);
     adjustWidthAndFlags(_pRequiresClause);
+    _pRequiresClause->setChildNumber(1);
     adjustWidthAndFlags(_pContainsClause);
+    _pContainsClause->setChildNumber(2);
 }
 
 ISyntaxNode* DelphiPackageModuleSyntax::child(pg_size index) const

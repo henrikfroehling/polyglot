@@ -23,18 +23,27 @@ DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
 {
     _position = _pUnitKeyword->position();
     adjustWidthAndFlags(_pUnitKeyword);
+    _pUnitKeyword->setChildNumber(0);
     adjustWidthAndFlags(_pName);
+    _pName->setChildNumber(1);
+
+    pg_size childNr{2};
 
     if (_pInKeyword != nullptr)
+    {
         adjustWidthAndFlags(_pInKeyword);
+        _pInKeyword->setChildNumber(childNr++);
+    }
 
     if (_pFilename != nullptr)
     {
         assert(_pInKeyword != nullptr);
         adjustWidthAndFlags(_pFilename);
+        _pFilename->setChildNumber(childNr++);
     }
 
     adjustWidthAndFlags(_pSemiColonToken);
+    _pSemiColonToken->setChildNumber(childNr);
 }
 
 ISyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const

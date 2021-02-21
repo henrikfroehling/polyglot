@@ -19,8 +19,11 @@ DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
 {
     _position = _pUsesKeyword->position();
     adjustWidthAndFlags(_pUsesKeyword);
+    _pUsesKeyword->setChildNumber(0);
     adjustWidthAndFlags(_pUnitReferences);
+    _pUnitReferences->setChildNumber(1);
     adjustWidthAndFlags(_pSemiColonToken);
+    _pSemiColonToken->setChildNumber(2);
 }
 
 ISyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const

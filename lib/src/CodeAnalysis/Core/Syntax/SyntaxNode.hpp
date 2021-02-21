@@ -39,6 +39,7 @@ public:
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }
     inline virtual pg_size childCount() const noexcept override { return 0; }
     inline virtual ISyntaxNode* child(pg_size index) const override { return nullptr; }
+    inline virtual pg_size childNumber() const noexcept override { return _childNumber; }
     inline pg_size position() const noexcept override final { return _position; }
     inline pg_size endPosition() const noexcept override final { return _position + width() + trailingTriviaWidth(); }
     inline pg_size spanStart() const noexcept override final { return _position; }
@@ -70,6 +71,9 @@ public:
     ISyntaxToken* firstToken() const noexcept;
     ISyntaxToken* lastToken() const noexcept;
 
+    inline void setParent(ISyntaxNode* parent) noexcept override { _pParent = parent; }
+    inline void setChildNumber(pg_size childNumber) noexcept override { _childNumber = childNumber; }
+
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;
 
@@ -79,6 +83,7 @@ protected:
     SyntaxKind _syntaxKind;
     SyntaxNodeFlags _flags;
     ISyntaxNode* _pParent;
+    pg_size _childNumber;
 
 private:
     ISyntaxNode* firstTerminal() const noexcept;

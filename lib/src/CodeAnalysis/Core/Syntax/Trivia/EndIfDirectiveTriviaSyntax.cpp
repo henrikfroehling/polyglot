@@ -21,8 +21,11 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pEndIfKeyword);
+    _pEndIfKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(2);
 }
 
 ISyntaxNode* EndIfDirectiveTriviaSyntax::child(pg_size index) const

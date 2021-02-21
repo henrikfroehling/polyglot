@@ -19,8 +19,11 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pLeftExpression->position();
     adjustWidthAndFlags(_pLeftExpression);
+    _pLeftExpression->setChildNumber(0);
     adjustWidthAndFlags(_pOperatorToken);
+    _pOperatorToken->setChildNumber(1);
     adjustWidthAndFlags(_pRightExpression);
+    _pRightExpression->setChildNumber(2);
 }
 
 ISyntaxNode* BinaryExpressionSyntax::child(pg_size index) const

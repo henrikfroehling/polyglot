@@ -21,8 +21,11 @@ BadDirectiveTriviaSyntax::BadDirectiveTriviaSyntax(SyntaxKind syntaxKind,
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pIdentifier);
+    _pIdentifier->setChildNumber(1);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(2);
 }
 
 ISyntaxNode* BadDirectiveTriviaSyntax::child(pg_size index) const

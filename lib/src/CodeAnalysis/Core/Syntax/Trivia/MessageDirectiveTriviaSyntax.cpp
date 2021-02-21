@@ -23,10 +23,20 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
 {
     _position = _pStartToken->position();
     adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
     adjustWidthAndFlags(_pMessageKeyword);
+    _pMessageKeyword->setChildNumber(1);
     adjustWidthAndFlags(_pMessageTypeToken);
+
+    pg_size childNr{2};
+
+    if (_pMessageTypeToken != nullptr)
+        _pMessageTypeToken->setChildNumber(childNr++);
+
     adjustWidthAndFlags(_pMessageLiteralToken);
+    _pMessageLiteralToken->setChildNumber(childNr++);
     adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(childNr);
 }
 
 ISyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const

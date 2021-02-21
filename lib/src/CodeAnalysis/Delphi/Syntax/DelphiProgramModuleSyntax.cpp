@@ -19,7 +19,9 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* he
 {
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
+    _pHead->setChildNumber(0);
     adjustWidthAndFlags(_pUses);
+    _pUses->setChildNumber(1);
 }
 
 ISyntaxNode* DelphiProgramModuleSyntax::child(pg_size index) const
