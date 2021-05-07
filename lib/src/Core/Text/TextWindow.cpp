@@ -1,10 +1,10 @@
-#include "CodeAnalysis/Core/Text/TextWindow.hpp"
-#include "CodeAnalysis/Core/Parser/Lexer.hpp"
+#include "TextWindow.hpp"
 #include <cassert>
 #include <algorithm>
 #include <limits>
+#include "CodeAnalysis/Core/Parser/Lexer.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 constexpr pg_size DEFAULT_WINDOW_LENGTH{2048};
@@ -135,4 +135,4 @@ std::string_view TextWindow::lexemeText() const noexcept
     return std::string_view{_ptrSourceText->content().data() + offset, width()};
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text

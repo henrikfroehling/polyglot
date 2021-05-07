@@ -1,10 +1,10 @@
-#ifndef POLYGLOT_CODEANALYSIS_TEXT_TEXTSPAN_H
-#define POLYGLOT_CODEANALYSIS_TEXT_TEXTSPAN_H
+#ifndef POLYGLOT_CORE_TEXT_TEXTSPAN_H
+#define POLYGLOT_CORE_TEXT_TEXTSPAN_H
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 class POLYGLOT_API TextSpan final
@@ -45,6 +45,6 @@ private:
     pg_size _length;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text
 
-#endif // POLYGLOT_CODEANALYSIS_TEXT_TEXTSPAN_H
+#endif // POLYGLOT_CORE_TEXT_TEXTSPAN_H

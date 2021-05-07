@@ -1,7 +1,7 @@
-#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
+#include "polyglot/Core/Text/TextSpan.hpp"
 #include <algorithm>
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 TextSpan::TextSpan(const pg_size start,
@@ -69,4 +69,4 @@ bool operator!=(const TextSpan& lhs,
     return !(lhs == rhs);
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text

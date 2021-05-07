@@ -38,6 +38,12 @@ set(SOURCES
 )
 
 set(SOURCES_CORE
+  ${SOURCE_DIR}/Core/Hashing.cpp
+  ${SOURCE_DIR}/Core/LanguageKind.cpp
+  ${SOURCE_DIR}/Core/Types.cpp
+)
+
+set(SOURCES_CORE_Syntax
   ${SOURCE_DIR}/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTree.cpp
@@ -49,9 +55,15 @@ set(SOURCES_CORE
   ${SOURCE_DIR}/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTrivia.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTriviaList.cpp
-  ${SOURCE_DIR}/Core/Hashing.cpp
-  ${SOURCE_DIR}/Core/LanguageKind.cpp
-  ${SOURCE_DIR}/Core/Types.cpp
+)
+
+set(SOURCES_CORE_TEXT
+  ${SOURCE_DIR}/Core/Text/LinePosition.cpp
+  ${SOURCE_DIR}/Core/Text/LinePositionSpan.cpp
+  ${SOURCE_DIR}/Core/Text/SourceText.cpp
+  ${SOURCE_DIR}/Core/Text/TextSpan.cpp
+  ${SOURCE_DIR}/Core/Text/TextUtilities.cpp
+  ${SOURCE_DIR}/Core/Text/TextWindow.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE
@@ -121,15 +133,6 @@ set(SOURCES_CODEANALYSIS_CORE_SYNTAX
   ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTriviaList.cpp
 )
 
-set(SOURCES_CODEANALYSIS_CORE_TEXT
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextSpan.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextUtilities.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
-)
-
 set(SOURCES_CODEANALYSIS_DELPHI_CORE
   ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxTree.cpp
 )
@@ -171,10 +174,10 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES}
   ${SOURCES_CORE}
-  ${SOURCES_CODEANALYSIS_CORE}
+  ${SOURCES_CORE_SYNTAX}
+  ${SOURCES_CORE_TEXT}
   ${SOURCES_CODEANALYSIS_CORE_PARSER}
   ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
-  ${SOURCES_CODEANALYSIS_CORE_TEXT}
   ${SOURCES_CODEANALYSIS_DELPHI_CORE}
   ${SOURCES_CODEANALYSIS_DELPHI_PARSER}
   ${SOURCES_CODEANALYSIS_DELPHI_SYNTAX}

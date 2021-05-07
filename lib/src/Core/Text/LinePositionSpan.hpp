@@ -1,9 +1,9 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITIONSPAN_H
-#define POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITIONSPAN_H
+#ifndef POLYGLOT_CORE_TEXT_LINEPOSITIONSPAN_H
+#define POLYGLOT_CORE_TEXT_LINEPOSITIONSPAN_H
 
 #include "LinePosition.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 class LinePositionSpan final
@@ -32,6 +32,6 @@ private:
     LinePosition _end;
 };
 
-} // end namespace polyglot::CodeAnalyis
+} // end namespace polyglot::Core::Text
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITIONSPAN_H
+#endif // POLYGLOT_CORE_TEXT_LINEPOSITIONSPAN_H

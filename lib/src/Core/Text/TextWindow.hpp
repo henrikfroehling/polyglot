@@ -1,12 +1,12 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTWINDOW_H
-#define POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTWINDOW_H
+#ifndef POLYGLOT_CORE_TEXT_TEXTWINDOW_H
+#define POLYGLOT_CORE_TEXT_TEXTWINDOW_H
 
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Types.hpp"
-#include "CodeAnalysis/Core/Text/SourceText.hpp"
+#include "SourceText.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 class TextWindow final
@@ -47,6 +47,6 @@ private:
     pg_size _lexemeStart;
 };
 
-} // end namespace polyglot::CodeAnaylsis
+} // end namespace polyglot::Core::Text
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_TEXTWINDOW_H
+#endif // POLYGLOT_CORE_TEXT_TEXTWINDOW_H

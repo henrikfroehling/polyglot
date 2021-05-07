@@ -1,11 +1,10 @@
-#include "CodeAnalysis/Core/Text/SourceText.hpp"
-#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
-#include "CodeAnalysis/Core/Text/TextUtilities.hpp"
+#include "SourceText.hpp"
 #include <cassert>
 #include <algorithm>
 #include <vector>
+#include "TextUtilities.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 // ----------------------------------------------
@@ -372,4 +371,4 @@ std::ostream& operator<<(std::ostream& os,
     return os;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text

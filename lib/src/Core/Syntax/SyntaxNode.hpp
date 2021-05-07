@@ -2,10 +2,10 @@
 #define POLYGLOT_CORE_SYNTAX_SYNTAXNODE_H
 
 #include <string_view>
-#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
 
@@ -30,8 +30,8 @@ public:
     inline virtual pg_size position() const noexcept override { return 0; }
     inline virtual pg_size endPosition() const noexcept override { return 0; }
     inline virtual pg_size spanStart() const noexcept override { return 0; }
-    inline virtual CodeAnalysis::TextSpan span() const noexcept override { return CodeAnalysis::TextSpan{}; }
-    inline virtual CodeAnalysis::TextSpan fullSpan() const noexcept override { return CodeAnalysis::TextSpan{}; }
+    inline virtual TextSpan span() const noexcept override { return TextSpan{}; }
+    inline virtual TextSpan fullSpan() const noexcept override { return TextSpan{}; }
 
     inline virtual pg_size childCount() const noexcept override { return 0; }
     inline virtual SyntaxNodeOrToken child(pg_size index) const override { return SyntaxNodeOrToken{nullptr, nullptr}; }

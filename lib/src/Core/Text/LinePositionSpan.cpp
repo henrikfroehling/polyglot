@@ -1,8 +1,8 @@
-#include "CodeAnalysis/Core/Text/LinePositionSpan.hpp"
+#include "LinePositionSpan.hpp"
 #include <cassert>
 #include <utility>
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 LinePositionSpan::LinePositionSpan(LinePosition start,
@@ -25,4 +25,4 @@ bool operator!=(const LinePositionSpan& lhs,
     return !(lhs == rhs);
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text

@@ -1,7 +1,7 @@
-#include "CodeAnalysis/Core/Text/TextUtilities.hpp"
-#include "CodeAnalysis/Core/Text/SourceText.hpp"
+#include "TextUtilities.hpp"
+#include "SourceText.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 pg_size lengthOfLineBreak(const SourceText& sourceText,
@@ -54,4 +54,4 @@ pg_size lengthOfLineBreakEndingAt(const SourceText& sourceText,
     return 0;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text

@@ -1,7 +1,7 @@
-#include "CodeAnalysis/Core/Text/LinePosition.hpp"
+#include "LinePosition.hpp"
 #include <utility>
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 constexpr int compare(const pg_size lhs,
@@ -58,4 +58,4 @@ bool operator>=(const LinePosition& lhs,
     return lhs.compareTo(rhs) >= 0;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text

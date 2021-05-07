@@ -1,17 +1,17 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_SOURCETEXT_H
-#define POLYGLOT_CODEANALYSIS_CORE_TEXT_SOURCETEXT_H
+#ifndef POLYGLOT_CORE_TEXT_SOURCETEXT_H
+#define POLYGLOT_CORE_TEXT_SOURCETEXT_H
 
 #include <memory>
 #include <ostream>
 #include <string>
 #include <string_view>
 #include <vector>
+#include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 #include "LinePosition.hpp"
 #include "LinePositionSpan.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 class TextSpan;
@@ -141,6 +141,6 @@ private:
 
 using SourceTextPtr = std::shared_ptr<SourceText>;
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_SOURCETEXT_H
+#endif // POLYGLOT_CORE_TEXT_SOURCETEXT_H

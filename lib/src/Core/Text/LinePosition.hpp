@@ -1,9 +1,9 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITION_H
-#define POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITION_H
+#ifndef POLYGLOT_CORE_TEXT_LINEPOSITION_H
+#define POLYGLOT_CORE_TEXT_LINEPOSITION_H
 
 #include "polyglot/Core/Types.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Text
 {
 
 class LinePosition final
@@ -45,6 +45,6 @@ private:
     pg_size _character;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Text
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_TEXT_LINEPOSITION_H
+#endif // POLYGLOT_CORE_TEXT_LINEPOSITION_H
