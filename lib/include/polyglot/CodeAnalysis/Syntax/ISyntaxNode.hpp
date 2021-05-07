@@ -4,8 +4,8 @@
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/LanguageKind.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/Core/LanguageKind.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/CodeAnalysis/Text/TextSpan.hpp"
 
 namespace polyglot::CodeAnalysis

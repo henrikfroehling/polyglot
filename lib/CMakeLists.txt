@@ -38,17 +38,27 @@ set(SOURCES
 )
 
 set(SOURCES_CORE
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxNode.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxTree.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxTrivia.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxTriviaList.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxKinds.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxNode.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxNodeOrToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxTrivia.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxTriviaList.cpp
   ${SOURCE_DIR}/Core/Hashing.cpp
+  ${SOURCE_DIR}/Core/LanguageKind.cpp
   ${SOURCE_DIR}/Core/Types.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/ISyntaxTree.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/LanguageKind.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_PARSER

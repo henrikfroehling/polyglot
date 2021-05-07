@@ -1,10 +1,10 @@
-#ifndef POLYGLOT_CODEANALYSIS_SYNTAXKINDS_H
-#define POLYGLOT_CODEANALYSIS_SYNTAXKINDS_H
+#ifndef POLYGLOT_CORE_SYNTAX_SYNTAXKINDS_H
+#define POLYGLOT_CORE_SYNTAX_SYNTAXKINDS_H
 
 #include <string>
 #include "polyglot/polyglot_global.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Syntax
 {
 
 enum class SyntaxKind : unsigned short
@@ -338,6 +338,6 @@ enum class SyntaxKind : unsigned short
 
 std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Syntax
 
-#endif // POLYGLOT_CODEANALYSIS_SYNTAXKINDS_H
+#endif // POLYGLOT_CORE_SYNTAX_SYNTAXKINDS_H

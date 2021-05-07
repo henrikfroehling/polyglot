@@ -1,6 +1,6 @@
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Syntax
 {
 
 std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
@@ -333,4 +333,4 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
     return "";
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Syntax
