@@ -1,11 +1,11 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_DELPHIDIRECTIVEPARSER_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_DELPHIDIRECTIVEPARSER_H
+#ifndef POLYGLOT_CORE_PARSER_DELPHIDIRECTIVEPARSER_H
+#define POLYGLOT_CORE_PARSER_DELPHIDIRECTIVEPARSER_H
 
 #include "polyglot/Core/Types.hpp"
-#include "CodeAnalysis/Core/Parser/Lexer.hpp"
-#include "CodeAnalysis/Core/Parser/Parser.hpp"
+#include "Lexer.hpp"
+#include "Parser.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 class DirectiveStack;
@@ -34,6 +34,6 @@ private:
     inline ISyntaxNode* parseRoot() noexcept override { return nullptr; }
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_DELPHIDIRECTIVEPARSER_H
+#endif // POLYGLOT_CORE_PARSER_DELPHIDIRECTIVEPARSER_H

@@ -1,8 +1,8 @@
-#include "CodeAnalysis/Core/Parser/DirectiveList.hpp"
-#include "CodeAnalysis/Core/Parser/Directive.hpp"
+#include "DirectiveList.hpp"
 #include <cassert>
+#include "Directive.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 static SharedPtr<DirectiveList> EMPTY = []()
@@ -54,4 +54,4 @@ bool operator!=(const DirectiveList& lhs,
     return !(lhs == rhs);
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

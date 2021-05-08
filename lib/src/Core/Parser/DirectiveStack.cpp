@@ -1,8 +1,8 @@
-#include "CodeAnalysis/Core/Parser/DirectiveStack.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Parser/Directive.hpp"
+#include "DirectiveStack.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "Directive.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 DirectiveStack::DirectiveStack() noexcept
@@ -214,4 +214,4 @@ SharedPtr<DirectiveList> DirectiveStack::completeRegion(SharedPtr<DirectiveList>
     return newStack;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

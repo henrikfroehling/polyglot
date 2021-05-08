@@ -1,10 +1,10 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_TOKENINFO_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_TOKENINFO_H
+#ifndef POLYGLOT_CORE_PARSER_TOKENINFO_H
+#define POLYGLOT_CORE_PARSER_TOKENINFO_H
 
 #include <string_view>
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 struct TokenInfo final
@@ -26,6 +26,6 @@ struct TokenInfo final
     std::string_view text{};
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_TOKENINFO_H
+#endif // POLYGLOT_CORE_PARSER_TOKENINFO_H

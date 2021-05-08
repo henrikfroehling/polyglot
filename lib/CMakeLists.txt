@@ -43,15 +43,32 @@ set(SOURCES_CORE
   ${SOURCE_DIR}/Core/Types.cpp
 )
 
+set(SOURCES_CORE_PARSER
+  ${SOURCE_DIR}/Core/Parser/CharFlags.cpp
+  ${SOURCE_DIR}/Core/Parser/Directive.cpp
+  ${SOURCE_DIR}/Core/Parser/DirectiveList.cpp
+  ${SOURCE_DIR}/Core/Parser/DirectiveParser.cpp
+  ${SOURCE_DIR}/Core/Parser/DirectiveStack.cpp
+  ${SOURCE_DIR}/Core/Parser/Lexer.cpp
+  ${SOURCE_DIR}/Core/Parser/LexerCache.cpp
+  ${SOURCE_DIR}/Core/Parser/LexerMode.cpp
+  ${SOURCE_DIR}/Core/Parser/Parser.cpp
+  ${SOURCE_DIR}/Core/Parser/QuickScanState.cpp
+  ${SOURCE_DIR}/Core/Parser/TextKeyedCache.cpp
+  ${SOURCE_DIR}/Core/Parser/TokenInfo.cpp
+)
+
 set(SOURCES_CORE_Syntax
   ${SOURCE_DIR}/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTree.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTrivia.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTriviaList.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxFactory.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxNode.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxNodeOrToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxPool.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTrivia.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTriviaList.cpp
@@ -69,23 +86,6 @@ set(SOURCES_CORE_TEXT
 set(SOURCES_CODEANALYSIS_CORE
   ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
   ${SOURCE_DIR}/CodeAnalysis/Core/ISyntaxTree.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
-)
-
-set(SOURCES_CODEANALYSIS_CORE_PARSER
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/CharFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Directive.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveStack.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Lexer.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerCache.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerMode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Parser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/QuickScanState.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TextKeyedCache.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TokenInfo.cpp
 )
 
 set(SOURCES_CODEANALYSIS_CORE_SYNTAX
@@ -174,9 +174,9 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES}
   ${SOURCES_CORE}
+  ${SOURCES_CORE_PARSER}
   ${SOURCES_CORE_SYNTAX}
   ${SOURCES_CORE_TEXT}
-  ${SOURCES_CODEANALYSIS_CORE_PARSER}
   ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
   ${SOURCES_CODEANALYSIS_DELPHI_CORE}
   ${SOURCES_CODEANALYSIS_DELPHI_PARSER}

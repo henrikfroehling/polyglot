@@ -1,6 +1,6 @@
-#include "CodeAnalysis/Core/Parser/DirectiveParser.hpp"
+#include "DirectiveParser.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 DirectiveParser::DirectiveParser(SharedPtr<Lexer> lexer,
@@ -11,4 +11,4 @@ DirectiveParser::DirectiveParser(SharedPtr<Lexer> lexer,
     lexer->setMode(LexerMode::Directive);
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

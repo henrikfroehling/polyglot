@@ -1,12 +1,12 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_LEXERCACHE_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_LEXERCACHE_H
+#ifndef POLYGLOT_CORE_PARSER_LEXERCACHE_H
+#define POLYGLOT_CORE_PARSER_LEXERCACHE_H
 
 #include <functional>
 #include <string_view>
-#include "CodeAnalysis/Core/Parser/TextKeyedCache.hpp"
-#include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
+#include "TextKeyedCache.hpp"
+#include "TokenInfo.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 class LexerCache
@@ -28,6 +28,6 @@ private:
     TextKeyedCache _triviaCache{};
 };
 
-} // end namespace polyglot::CodeAnalyis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_LEXERCACHE_H
+#endif // POLYGLOT_CORE_PARSER_LEXERCACHE_H

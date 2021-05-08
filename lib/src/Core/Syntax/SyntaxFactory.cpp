@@ -1,14 +1,14 @@
-#include "CodeAnalysis/Core/SyntaxFactory.hpp"
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxList.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxMissingToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
-#include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
+#include "SyntaxFactory.hpp"
+#include "Core/Syntax/SyntaxList.hpp"
+#include "Core/Syntax/SyntaxMissingToken.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
+#include "Core/Syntax/SyntaxTriviaList.hpp"
+#include "Core/Parser/TokenInfo.hpp"
+#include "SyntaxPool.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Syntax
 {
 
 SyntaxFactory::SyntaxFactory(SyntaxPool& syntaxPool) noexcept
@@ -147,4 +147,4 @@ ISyntaxTriviaList* SyntaxFactory::addSyntaxTriviaList(UniquePtr<ISyntaxTriviaLis
     return _syntaxPool.addSyntaxTriviaList(std::move(syntaxTriviaList));
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Syntax

@@ -1,12 +1,12 @@
-#include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxList.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTrivia.hpp"
-#include "CodeAnalysis/Core/Syntax/SyntaxTriviaList.hpp"
+#include "SyntaxPool.hpp"
 #include <cassert>
+#include "Core/Syntax/SyntaxList.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
+#include "Core/Syntax/SyntaxTriviaList.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Syntax
 {
 
 SyntaxPool::SyntaxPool() noexcept
@@ -125,4 +125,4 @@ ISyntaxTriviaList* SyntaxPool::addSyntaxTriviaList(UniquePtr<ISyntaxTriviaList>&
     return _syntaxTriviaLists.back().get();
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Syntax

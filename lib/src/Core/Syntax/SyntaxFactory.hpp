@@ -1,18 +1,18 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_SYNTAXFACTORY_H
-#define POLYGLOT_CODEANALYSIS_CORE_SYNTAXFACTORY_H
+#ifndef POLYGLOT_CORE_SYNTAX_SYNTAXFACTORY_H
+#define POLYGLOT_CORE_SYNTAX_SYNTAXFACTORY_H
 
 #include <initializer_list>
 #include <string_view>
 #include <vector>
+#include "polyglot/Core/Syntax/ISyntaxList.hpp"
+#include "polyglot/Core/Syntax/ISyntaxNode.hpp"
+#include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
+#include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxList.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxTrivia.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxTriviaList.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Syntax
 {
 
 class SyntaxPool;
@@ -91,6 +91,6 @@ protected:
     SyntaxPool& _syntaxPool;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Syntax
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_SYNTAXFACTORY_H
+#endif // POLYGLOT_CORE_SYNTAX_SYNTAXFACTORY_H

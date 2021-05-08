@@ -1,6 +1,6 @@
-#include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
+#include "TokenInfo.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 bool operator==(const TokenInfo& lhs,
@@ -15,4 +15,4 @@ bool operator!=(const TokenInfo& lhs,
     return !(lhs == rhs);
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

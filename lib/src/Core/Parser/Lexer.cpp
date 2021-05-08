@@ -1,11 +1,11 @@
-#include "CodeAnalysis/Core/Parser/Lexer.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxNode.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
+#include "Lexer.hpp"
 #include <cassert>
 #include <algorithm>
+#include "polyglot/Core/Syntax/ISyntaxNode.hpp"
+#include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 constexpr pg_size MIN_LEXED_TOKENS_COUNT{32};
@@ -216,4 +216,4 @@ ISyntaxToken* Lexer::createMissingToken(SyntaxKind expectedSyntaxKind) noexcept
     return _syntaxFactory.missingToken(expectedSyntaxKind, _pCurrentToken->text(), _pCurrentToken->position());
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

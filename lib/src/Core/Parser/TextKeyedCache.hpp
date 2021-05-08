@@ -1,14 +1,14 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_TEXTKEYEDCACHE_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_TEXTKEYEDCACHE_H
+#ifndef POLYGLOT_CORE_PARSER_TEXTKEYEDCACHE_H
+#define POLYGLOT_CORE_PARSER_TEXTKEYEDCACHE_H
 
 #include <random>
 #include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
+#include "TokenInfo.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 struct CacheEntry final
@@ -87,6 +87,6 @@ private:
                        const SharedPtr<CacheEntry>& cacheEntry) noexcept;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_TEXTKEYEDCACHE_H
+#endif // POLYGLOT_CORE_PARSER_TEXTKEYEDCACHE_H

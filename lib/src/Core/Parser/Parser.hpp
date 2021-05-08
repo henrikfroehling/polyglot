@@ -1,11 +1,11 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_PARSER_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_PARSER_H
+#ifndef POLYGLOT_CORE_PARSER_PARSER_H
+#define POLYGLOT_CORE_PARSER_PARSER_H
 
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
-#include "CodeAnalysis/Core/Parser/Lexer.hpp"
+#include "Lexer.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 class ISyntaxNode;
@@ -37,6 +37,6 @@ protected:
     SharedPtr<Lexer> _ptrLexer;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_PARSER_H
+#endif // POLYGLOT_CORE_PARSER_PARSER_H

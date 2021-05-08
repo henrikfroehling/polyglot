@@ -1,6 +1,6 @@
-#include "CodeAnalysis/Core/Parser/Parser.hpp"
+#include "Parser.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 Parser::Parser(std::shared_ptr<Lexer> lexer) noexcept
@@ -16,4 +16,4 @@ ISyntaxNode* Parser::parse() noexcept
     return parseRoot();
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

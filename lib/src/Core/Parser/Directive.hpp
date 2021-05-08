@@ -1,12 +1,12 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVE_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVE_H
+#ifndef POLYGLOT_CORE_PARSER_DIRECTIVE_H
+#define POLYGLOT_CORE_PARSER_DIRECTIVE_H
 
 #include <string_view>
-#include "polyglot/CodeAnalysis/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "CodeAnalysis/Core/Syntax/SyntaxNode.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 class Directive
@@ -29,6 +29,6 @@ private:
     DirectiveTriviaSyntax* _pNode;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVE_H
+#endif // POLYGLOT_CORE_PARSER_DIRECTIVE_H

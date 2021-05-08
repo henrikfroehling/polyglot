@@ -1,11 +1,11 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVESTACK_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVESTACK_H
+#ifndef POLYGLOT_CORE_PARSER_DIRECTIVESTACK_H
+#define POLYGLOT_CORE_PARSER_DIRECTIVESTACK_H
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "DirectiveList.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 enum class DefineState
@@ -49,6 +49,6 @@ private:
     SharedPtr<DirectiveList> _directives;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVESTACK_H
+#endif // POLYGLOT_CORE_PARSER_DIRECTIVESTACK_H

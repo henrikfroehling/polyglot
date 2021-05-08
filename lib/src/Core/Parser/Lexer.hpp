@@ -1,19 +1,19 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_LEXER_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_LEXER_H
+#ifndef POLYGLOT_CORE_PARSER_LEXER_H
+#define POLYGLOT_CORE_PARSER_LEXER_H
 
 #include <limits>
 #include <memory>
 #include "polyglot/Core/Types.hpp"
 #include "CodeAnalysis/Core/SyntaxFactory.hpp"
 #include "CodeAnalysis/Core/SyntaxPool.hpp"
-#include "CodeAnalysis/Core/Parser/DirectiveStack.hpp"
-#include "CodeAnalysis/Core/Parser/LexerCache.hpp"
-#include "CodeAnalysis/Core/Parser/LexerMode.hpp"
-#include "CodeAnalysis/Core/Parser/TokenInfo.hpp"
-#include "CodeAnalysis/Core/Text/SourceText.hpp"
-#include "CodeAnalysis/Core/Text/TextWindow.hpp"
+#include "Core/Text/SourceText.hpp"
+#include "Core/Text/TextWindow.hpp"
+#include "DirectiveStack.hpp"
+#include "LexerCache.hpp"
+#include "LexerMode.hpp"
+#include "TokenInfo.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 class ISyntaxNode;
@@ -75,6 +75,6 @@ private:
     SyntaxFactory _syntaxFactory;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_LEXER_H
+#endif // POLYGLOT_CORE_PARSER_LEXER_H

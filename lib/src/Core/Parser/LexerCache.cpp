@@ -1,6 +1,6 @@
-#include "CodeAnalysis/Core/Parser/LexerCache.hpp"
+#include "LexerCache.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 TokenInfo LexerCache::lookupToken(std::string_view chars,
@@ -33,4 +33,4 @@ TokenInfo LexerCache::lookupTrivia(std::string_view chars,
     return tokenInfo;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

@@ -1,6 +1,6 @@
-#include "CodeAnalysis/Core/Parser/TextKeyedCache.hpp"
+#include "TextKeyedCache.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
@@ -89,4 +89,4 @@ foundIndex:
     _sharedTable[sharedIndex] = cacheEntry;
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser

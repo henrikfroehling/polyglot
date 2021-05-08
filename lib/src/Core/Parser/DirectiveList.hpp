@@ -1,9 +1,9 @@
-#ifndef POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVELIST_H
-#define POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVELIST_H
+#ifndef POLYGLOT_CORE_PARSER_DIRECTIVELIST_H
+#define POLYGLOT_CORE_PARSER_DIRECTIVELIST_H
 
 #include "polyglot/Core/Types.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 class Directive;
@@ -36,6 +36,6 @@ private:
     SharedPtr<DirectiveList> _ptrTail;
 };
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
 
-#endif // POLYGLOT_CODEANALYSIS_CORE_PARSER_DIRECTIVELIST_H
+#endif // POLYGLOT_CORE_PARSER_DIRECTIVELIST_H

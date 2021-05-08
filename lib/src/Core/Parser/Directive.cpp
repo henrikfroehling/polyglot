@@ -1,10 +1,10 @@
-#include "CodeAnalysis/Core/Parser/Directive.hpp"
+#include "Directive.hpp"
 #include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
 #include "CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 
-namespace polyglot::CodeAnalysis
+namespace polyglot::Core::Parser
 {
 
 Directive::Directive(DirectiveTriviaSyntax* node) noexcept
@@ -46,4 +46,4 @@ bool operator!=(const Directive& lhs,
     return !(lhs == rhs);
 }
 
-} // end namespace polyglot::CodeAnalysis
+} // end namespace polyglot::Core::Parser
