@@ -66,10 +66,10 @@ set(SOURCES_CORE_Syntax
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTrivia.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTriviaList.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxFactory.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxFlags.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxMissingToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxNode.cpp
-  ${SOURCE_DIR}/Core/Syntax/SyntaxNodeFlags.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxNodeOrToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxPool.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxToken.cpp
