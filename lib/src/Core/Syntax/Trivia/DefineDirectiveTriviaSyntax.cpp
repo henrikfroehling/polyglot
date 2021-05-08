@@ -1,0 +1,68 @@
+#include "DefineDirectiveTriviaSyntax.hpp"
+#include <cassert>
+#include <memory>
+#include <stdexcept>
+#include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "Core/Syntax/SyntaxFactory.hpp"
+
+namespace polyglot::Core::Syntax
+{
+
+DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
+                                                         ISyntaxToken* startToken,
+                                                         ISyntaxToken* defineKeyword,
+                                                         ISyntaxToken* name,
+                                                         ISyntaxToken* endOfDirectiveToken,
+                                                         bool isActive) noexcept
+    : DirectiveTriviaSyntax{syntaxKind},
+      _pStartToken{startToken},
+      _pDefineKeyword{defineKeyword},
+      _pName{name},
+      _pEndOfDirectiveToken{endOfDirectiveToken},
+      _isActive{isActive}
+{
+    _position = _pStartToken->position();
+    adjustWidthAndFlags(_pStartToken);
+    _pStartToken->setChildNumber(0);
+    adjustWidthAndFlags(_pDefineKeyword);
+    _pDefineKeyword->setChildNumber(1);
+    adjustWidthAndFlags(_pName);
+    _pName->setChildNumber(2);
+    adjustWidthAndFlags(_pEndOfDirectiveToken);
+    _pEndOfDirectiveToken->setChildNumber(3);
+}
+
+ISyntaxNode* DefineDirectiveTriviaSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return _pStartToken;
+        case 1: return _pDefineKeyword;
+        case 2: return _pName;
+        case 3: return _pEndOfDirectiveToken;
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DefineDirectiveTriviaSyntax* DefineDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                 ISyntaxToken* startToken,
+                                                                 ISyntaxToken* defineKeyword,
+                                                                 ISyntaxToken* name,
+                                                                 ISyntaxToken* endOfDirectiveToken,
+                                                                 bool isActive) noexcept
+{
+    assert(startToken != nullptr);
+    assert(defineKeyword != nullptr);
+    assert(defineKeyword->syntaxKind() == SyntaxKind::DefineDirectiveKeyword);
+    assert(name != nullptr);
+    assert(endOfDirectiveToken != nullptr);
+    assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
+
+    auto ptrDefineDirectiveTrivia = std::make_unique<DefineDirectiveTriviaSyntax>(SyntaxKind::DefineDirectiveTrivia, startToken,
+                                                                                  defineKeyword, name, endOfDirectiveToken, isActive);
+
+    return dynamic_cast<DefineDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrDefineDirectiveTrivia)));
+}
+
+} // end namespace polyglot::Core::Syntax
