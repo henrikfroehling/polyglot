@@ -22,21 +22,18 @@ ElseDirectiveTriviaSyntax::ElseDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isBranchTaken{isBranchTaken}
 {
     _position = _pStartToken->position();
-    adjustWidthAndFlags(_pStartToken);
-    _pStartToken->setChildNumber(0);
-    adjustWidthAndFlags(_pElseKeyword);
-    _pElseKeyword->setChildNumber(1);
-    adjustWidthAndFlags(_pEndOfDirectiveToken);
-    _pEndOfDirectiveToken->setChildNumber(2);
+    adjustWidth(_pStartToken);
+    adjustWidth(_pElseKeyword);
+    adjustWidth(_pEndOfDirectiveToken);
 }
 
-ISyntaxNode* ElseDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxNodeOrToken ElseDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pStartToken;
-        case 1: return _pElseKeyword;
-        case 2: return _pEndOfDirectiveToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
+        case 1: return SyntaxNodeOrToken::asToken(_pElseKeyword);
+        case 2: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
     }
 
     throw std::out_of_range{"index out of range"};

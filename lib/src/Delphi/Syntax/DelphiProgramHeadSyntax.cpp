@@ -5,7 +5,7 @@ namespace polyglot::Delphi::Syntax
 {
 
 DelphiProgramHeadSyntax::DelphiProgramHeadSyntax() noexcept
-    : DelphiSyntaxNode{SyntaxKind::ProgramHead}
+    : DelphiSyntaxNode{Core::Syntax::SyntaxKind::ProgramHead}
 {}
 
 } // end namespace polyglot::Delphi::Syntax

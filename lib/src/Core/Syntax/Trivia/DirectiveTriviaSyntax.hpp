@@ -14,12 +14,12 @@ class DirectiveTriviaSyntax : public StructuredTriviaSyntax
 {
 public:
     explicit DirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept;
-    virtual ~DirectiveTriviaSyntax() noexcept = default;
+    virtual ~DirectiveTriviaSyntax() noexcept {}
     virtual ISyntaxToken* startToken() const noexcept = 0;
     virtual ISyntaxToken* endOfDirectiveToken() const noexcept = 0;
     virtual bool isActive() const noexcept = 0;
-    virtual DirectiveStack applyDirectives(DirectiveStack stack) const noexcept override;
-    inline bool isDirective() const noexcept override { return true; }
+    virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept override;
+    inline bool isDirective() const noexcept override final { return true; }
 };
 
 } // end namespace polyglot::Core::Syntax

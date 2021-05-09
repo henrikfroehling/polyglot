@@ -11,6 +11,11 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* head,
                                                      DelphiPackageRequiresClauseSyntax* requiresClause,
                                                      DelphiPackageContainsClauseSyntax* containsClause,
@@ -22,20 +27,18 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* he
 {
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
-    _pHead->setChildNumber(0);
     adjustWidthAndFlags(_pRequiresClause);
-    _pRequiresClause->setChildNumber(1);
     adjustWidthAndFlags(_pContainsClause);
-    _pContainsClause->setChildNumber(2);
 }
 
-ISyntaxNode* DelphiPackageModuleSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiPackageModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pHead;
-        case 1: return _pRequiresClause;
-        case 2: return _pContainsClause;
+        case 0: return SyntaxNodeOrToken::asNode(_pHead);
+        case 1: return SyntaxNodeOrToken::asNode(_pRequiresClause);
+        case 2: return SyntaxNodeOrToken::asNode(_pContainsClause);
+        case 3: return SyntaxNodeOrToken::asToken(_pEOFToken);
     }
 
     throw std::out_of_range{"index out of range"};

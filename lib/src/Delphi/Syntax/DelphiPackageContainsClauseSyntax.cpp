@@ -5,7 +5,7 @@ namespace polyglot::Delphi::Syntax
 {
 
 DelphiPackageContainsClauseSyntax::DelphiPackageContainsClauseSyntax() noexcept
-    : DelphiSyntaxNode{SyntaxKind::PackageContainsClause}
+    : DelphiSyntaxNode{Core::Syntax::SyntaxKind::PackageContainsClause}
 {}
 
 } // end namespace polyglot::Delphi::Syntax

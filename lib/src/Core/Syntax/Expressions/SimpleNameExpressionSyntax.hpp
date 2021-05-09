@@ -13,7 +13,7 @@ class SimpleNameExpressionSyntax : public NameExpressionSyntax
 {
 public:
     explicit SimpleNameExpressionSyntax(SyntaxKind syntaxKind) noexcept;
-    virtual ~SimpleNameExpressionSyntax() noexcept = default;
+    virtual ~SimpleNameExpressionSyntax() noexcept {}
     virtual ISyntaxToken* identifier() const noexcept = 0;
 };
 

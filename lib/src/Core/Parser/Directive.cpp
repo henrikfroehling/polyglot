@@ -1,19 +1,21 @@
 #include "Directive.hpp"
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
-#include "CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
-#include "CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
-#include "CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
+#include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Parser
 {
 
-Directive::Directive(DirectiveTriviaSyntax* node) noexcept
-    : _pNode{node}
+using namespace Core::Syntax;
+
+Directive::Directive(DirectiveTriviaSyntax* trivia) noexcept
+    : _pTrivia{trivia}
 {}
 
 bool Directive::isBranchTaken() const noexcept
 {
-    BranchingDirectiveTriviaSyntax* ptrBranching = static_cast<BranchingDirectiveTriviaSyntax*>(_pNode);
+    BranchingDirectiveTriviaSyntax* ptrBranching = static_cast<BranchingDirectiveTriviaSyntax*>(_pTrivia);
 
     if (ptrBranching != nullptr)
         return ptrBranching->isBranchTaken();
@@ -23,12 +25,12 @@ bool Directive::isBranchTaken() const noexcept
 
 std::string_view Directive::identifier() const noexcept
 {
-    switch (static_cast<SyntaxNode*>(_pNode)->syntaxKind())
+    switch (static_cast<SyntaxTrivia*>(_pTrivia)->syntaxKind())
     {
         case SyntaxKind::DefineDirectiveTrivia:
-            return static_cast<DefineDirectiveTriviaSyntax*>(_pNode)->name()->text();
+            return static_cast<DefineDirectiveTriviaSyntax*>(_pTrivia)->name()->text();
         case SyntaxKind::UndefDirectiveTrivia:
-            return static_cast<UndefDirectiveTriviaSyntax*>(_pNode)->name()->text();
+            return static_cast<UndefDirectiveTriviaSyntax*>(_pTrivia)->name()->text();
         default:
             return std::string_view{};
     }

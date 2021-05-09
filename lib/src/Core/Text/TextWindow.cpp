@@ -2,10 +2,12 @@
 #include <cassert>
 #include <algorithm>
 #include <limits>
-#include "CodeAnalysis/Core/Parser/Lexer.hpp"
+#include "Core/Parser/Lexer.hpp"
 
 namespace polyglot::Core::Text
 {
+
+using polyglot::Core::Parser::Lexer;
 
 constexpr pg_size DEFAULT_WINDOW_LENGTH{2048};
 

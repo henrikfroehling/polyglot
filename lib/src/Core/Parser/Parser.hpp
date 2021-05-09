@@ -5,32 +5,37 @@
 #include "polyglot/Core/Types.hpp"
 #include "Lexer.hpp"
 
-namespace polyglot::Core::Parser
+namespace polyglot::Core::Syntax
 {
 
 class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxPool;
 
+} // end namespace polyglot::Core::Syntax
+
+namespace polyglot::Core::Parser
+{
+
 class Parser
 {
 public:
     Parser() = delete;
-    virtual ~Parser() noexcept;
+    virtual ~Parser() noexcept {}
     Parser(const Parser&) = delete;
     Parser& operator=(const Parser&) = delete;
     Parser(Parser&&) = delete;
     Parser& operator=(Parser&&) = delete;
-    ISyntaxNode* parse() noexcept;
-    inline SyntaxPool takeSyntaxPool() noexcept { return _ptrLexer->takeSyntaxPool(); }
+    Syntax::ISyntaxNode* parse() noexcept;
+    inline Syntax::SyntaxPool takeSyntaxPool() noexcept { return _ptrLexer->takeSyntaxPool(); }
 
 protected:
     explicit Parser(std::shared_ptr<Lexer> lexer) noexcept;
-    virtual ISyntaxNode* parseRoot() noexcept = 0;
-    inline ISyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
-    inline ISyntaxToken* takeToken(SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
-    inline ISyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
-    inline ISyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
+    virtual Syntax::ISyntaxNode* parseRoot() noexcept = 0;
+    inline Syntax::ISyntaxToken* currentToken() noexcept { return _ptrLexer->currentToken(); }
+    inline Syntax::ISyntaxToken* takeToken(Syntax::SyntaxKind syntaxKind) noexcept { return _ptrLexer->takeToken(syntaxKind); }
+    inline Syntax::ISyntaxToken* takeToken() noexcept { return _ptrLexer->takeToken(); }
+    inline Syntax::ISyntaxToken* peekToken(pg_size n) noexcept { return _ptrLexer->peekToken(n); }
     inline void advance() noexcept { _ptrLexer->advance(); }
 
 protected:

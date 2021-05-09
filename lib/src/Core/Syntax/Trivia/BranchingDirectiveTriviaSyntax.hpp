@@ -11,7 +11,7 @@ class BranchingDirectiveTriviaSyntax : public DirectiveTriviaSyntax
 {
 public:
     explicit BranchingDirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept;
-    virtual ~BranchingDirectiveTriviaSyntax() noexcept = default;
+    virtual ~BranchingDirectiveTriviaSyntax() noexcept {}
     virtual bool isBranchTaken() const noexcept = 0;
 };
 

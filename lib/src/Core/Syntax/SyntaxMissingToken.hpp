@@ -25,7 +25,7 @@ public:
                                 ISyntaxTriviaList* trailingTrivia = nullptr,
                                 ISyntaxNode* parent = nullptr) noexcept;
 
-    virtual ~SyntaxMissingToken() noexcept;
+    virtual ~SyntaxMissingToken() noexcept {}
 
     SyntaxMissingToken(const SyntaxMissingToken&) noexcept = default;
     SyntaxMissingToken(SyntaxMissingToken&&) noexcept = default;

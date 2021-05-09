@@ -21,23 +21,19 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pIdentifier->position();
     adjustWidthAndFlags(_pIdentifier);
-    _pIdentifier->setChildNumber(0);
     adjustWidthAndFlags(_pOpenParenthesisToken);
-    _pOpenParenthesisToken->setChildNumber(1);
     adjustWidthAndFlags(_pArgumentExpression);
-    _pArgumentExpression->setChildNumber(2);
     adjustWidthAndFlags(_pCloseParenthesisToken);
-    _pCloseParenthesisToken->setChildNumber(3);
 }
 
-ISyntaxNode* CallExpressionSyntax::child(pg_size index) const
+SyntaxNodeOrToken CallExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pIdentifier;
-        case 1: return _pOpenParenthesisToken;
-        case 2: return _pArgumentExpression;
-        case 3: return _pCloseParenthesisToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pIdentifier);
+        case 1: return SyntaxNodeOrToken::asToken(_pOpenParenthesisToken);
+        case 2: return SyntaxNodeOrToken::asNode(_pArgumentExpression);
+        case 3: return SyntaxNodeOrToken::asToken(_pCloseParenthesisToken);
     }
 
     throw std::out_of_range{"index out of range"};

@@ -1,40 +1,50 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "DelphiSyntaxList.hpp"
+
+namespace polyglot::Core::Syntax
+{
+
+class ISyntaxList;
+class ISyntaxToken;
+class SyntaxFactory;
+
+} // end namespace polyglot::Core::Syntax
 
 namespace polyglot::Delphi::Syntax
 {
 
-class ISyntaxList;
-class ISyntaxNode;
-class ISyntaxToken;
-class SyntaxFactory;
-
 class DelphiUsesClauseSyntax : public DelphiSyntaxList
 {
 public:
-    explicit DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
-                                    ISyntaxList* unitReferences,
-                                    ISyntaxToken* semiColonToken) noexcept;
+    explicit DelphiUsesClauseSyntax(Core::Syntax::ISyntaxToken* usesKeyword,
+                                    Core::Syntax::ISyntaxList* unitReferences,
+                                    Core::Syntax::ISyntaxToken* semiColonToken) noexcept;
 
-    virtual ~DelphiUsesClauseSyntax() noexcept = default;
+    virtual ~DelphiUsesClauseSyntax() noexcept {}
 
-    inline ISyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
-    inline ISyntaxList* unitReferences() const noexcept { return _pUnitReferences; }
-    inline ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
-    inline pg_size childCount() const noexcept override { return 3; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline Core::Syntax::ISyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
+    inline Core::Syntax::ISyntaxList* unitReferences() const noexcept { return _pUnitReferences; }
+    inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
-    static DelphiUsesClauseSyntax* create(SyntaxFactory& syntaxFactory,
-                                          ISyntaxToken* usesKeyword,
-                                          ISyntaxList* unitReferences,
-                                          ISyntaxToken* semiColonToken) noexcept;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    inline Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+
+    inline Core::Syntax::SyntaxNodeOrToken first() const noexcept override final { return Core::Syntax::SyntaxNodeOrToken::asToken(_pUsesKeyword); }
+    inline Core::Syntax::SyntaxNodeOrToken last() const noexcept override final { return Core::Syntax::SyntaxNodeOrToken::asToken(_pSemiColonToken); }
+
+    static DelphiUsesClauseSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
+                                          Core::Syntax::ISyntaxToken* usesKeyword,
+                                          Core::Syntax::ISyntaxList* unitReferences,
+                                          Core::Syntax::ISyntaxToken* semiColonToken) noexcept;
 
 private:
-    ISyntaxToken* _pUsesKeyword;
-    ISyntaxList* _pUnitReferences;
-    ISyntaxToken* _pSemiColonToken;
+    Core::Syntax::ISyntaxToken* _pUsesKeyword;
+    Core::Syntax::ISyntaxList* _pUnitReferences;
+    Core::Syntax::ISyntaxToken* _pSemiColonToken;
 };
 
 } // end namespace polyglot::Delphi::Syntax

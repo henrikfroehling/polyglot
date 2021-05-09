@@ -11,6 +11,8 @@
 namespace polyglot::Core::Syntax
 {
 
+using Core::Parser::TokenInfo;
+
 SyntaxFactory::SyntaxFactory(SyntaxPool& syntaxPool) noexcept
     : _syntaxPool{syntaxPool}
 {}
@@ -106,7 +108,7 @@ ISyntaxList* SyntaxFactory::syntaxList() noexcept
     return _syntaxPool.createSyntaxList();
 }
 
-ISyntaxList* SyntaxFactory::syntaxList(std::initializer_list<ISyntaxNode*> syntaxNodes) noexcept
+ISyntaxList* SyntaxFactory::syntaxList(std::vector<SyntaxNodeOrToken>&& syntaxNodes) noexcept
 {
     return _syntaxPool.createSyntaxList(std::move(syntaxNodes));
 }

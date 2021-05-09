@@ -11,16 +11,16 @@ namespace polyglot::Delphi::Parser
 class DelphiSyntaxFacts
 {
 public:
-    static bool isPunctuation(SyntaxKind syntaxKind) noexcept;
-    static bool isCompoundPunctuation(SyntaxKind syntaxKind) noexcept;
-    static SyntaxKind binaryExpressionKind(SyntaxKind syntaxKind) noexcept;
-    static SyntaxKind literalExpressionKind(SyntaxKind syntaxKind) noexcept;
-    static bool isComparisonSyntaxKind(SyntaxKind syntaxKind) noexcept;
-    static bool isKeyword(SyntaxKind syntaxKind) noexcept;
-    static bool isModuleStart(SyntaxKind syntaxKind) noexcept;
+    static bool isPunctuation(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isCompoundPunctuation(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static Core::Syntax::SyntaxKind binaryExpressionKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static Core::Syntax::SyntaxKind literalExpressionKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isComparisonSyntaxKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isKeyword(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isModuleStart(Core::Syntax::SyntaxKind syntaxKind) noexcept;
 
-    static SyntaxKind keywordKind(std::string_view text,
-                                  LexerMode mode = LexerMode::Syntax) noexcept;
+    static Core::Syntax::SyntaxKind keywordKind(std::string_view text,
+                                                Core::Parser::LexerMode mode = Core::Parser::LexerMode::Syntax) noexcept;
 };
 
 } // end namespace polyglot::Delphi::Parser

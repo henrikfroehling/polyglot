@@ -2,6 +2,8 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_PREFIXUNARYEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/ExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -18,11 +20,11 @@ public:
                                          ISyntaxToken* operatorToken,
                                          ExpressionSyntax* operandExpression) noexcept;
 
-    virtual ~PrefixUnaryExpressionSyntax() noexcept = default;
+    virtual ~PrefixUnaryExpressionSyntax() noexcept {}
     inline virtual ISyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* operandExpression() const noexcept { return _pOperandExpression; }
-    inline virtual pg_size childCount() const noexcept override { return 2; }
-    virtual ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 2; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static PrefixUnaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                SyntaxKind syntaxKind,

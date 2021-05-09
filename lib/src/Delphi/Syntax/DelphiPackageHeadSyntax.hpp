@@ -10,7 +10,7 @@ class DelphiPackageHeadSyntax : public DelphiSyntaxNode
 {
 public:
     DelphiPackageHeadSyntax() noexcept;
-    virtual ~DelphiPackageHeadSyntax() noexcept = default;
+    virtual ~DelphiPackageHeadSyntax() noexcept {}
 };
 
 } // end namespace polyglot::Delphi::Syntax

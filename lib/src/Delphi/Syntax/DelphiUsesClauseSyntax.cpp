@@ -9,6 +9,12 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxList;
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
                                                ISyntaxList* unitReferences,
                                                ISyntaxToken* semiColonToken) noexcept
@@ -19,20 +25,17 @@ DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
 {
     _position = _pUsesKeyword->position();
     adjustWidthAndFlags(_pUsesKeyword);
-    _pUsesKeyword->setChildNumber(0);
     adjustWidthAndFlags(_pUnitReferences);
-    _pUnitReferences->setChildNumber(1);
     adjustWidthAndFlags(_pSemiColonToken);
-    _pSemiColonToken->setChildNumber(2);
 }
 
-ISyntaxNode* DelphiUsesClauseSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiUsesClauseSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pUsesKeyword;
-        case 1: return _pUnitReferences;
-        case 2: return _pSemiColonToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pUsesKeyword);
+        case 1: return SyntaxNodeOrToken::asNode(_pUnitReferences);
+        case 2: return SyntaxNodeOrToken::asToken(_pSemiColonToken);
     }
 
     throw std::out_of_range{"index out of range"};
@@ -51,7 +54,7 @@ DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFact
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
     auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, unitReferences, semiColonToken);
-    return dynamic_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
+    return dynamic_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUsesClauseSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

@@ -27,24 +27,20 @@ ElseIfDirectiveTriviaSyntax::ElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _conditionValue{conditionValue}
 {
     _position = _pStartToken->position();
-    adjustWidthAndFlags(_pStartToken);
-    _pStartToken->setChildNumber(0);
-    adjustWidthAndFlags(_pElseIfKeyword);
-    _pElseIfKeyword->setChildNumber(1);
-    adjustWidthAndFlags(_pCondition);
-    _pCondition->setChildNumber(2);
-    adjustWidthAndFlags(_pEndOfDirectiveToken);
-    _pEndOfDirectiveToken->setChildNumber(3);
+    adjustWidth(_pStartToken);
+    adjustWidth(_pElseIfKeyword);
+    adjustWidth(_pCondition);
+    adjustWidth(_pEndOfDirectiveToken);
 }
 
-ISyntaxNode* ElseIfDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxNodeOrToken ElseIfDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pStartToken;
-        case 1: return _pElseIfKeyword;
-        case 2: return _pCondition;
-        case 3: return _pEndOfDirectiveToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
+        case 1: return SyntaxNodeOrToken::asToken(_pElseIfKeyword);
+        case 2: return SyntaxNodeOrToken::asNode(_pCondition);
+        case 3: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
     }
 
     throw std::out_of_range{"index out of range"};

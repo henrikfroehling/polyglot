@@ -6,7 +6,17 @@
 #include "Core/Parser/Parser.hpp"
 #include "Core/Text/SourceText.hpp"
 
-namespace polyglot::Delphi::Parser
+namespace polyglot::Core::Syntax
+{
+
+class IdentifierNameExpressionSyntax;
+class ISyntaxNode;
+class ISyntaxToken;
+class NameExpressionSyntax;
+
+} // end namespace polyglot::Core::Syntax
+
+namespace polyglot::Delphi::Syntax
 {
 
 class DelphiCompilationUnitSyntax;
@@ -21,40 +31,41 @@ class DelphiUnitInterfaceSectionSyntax;
 class DelphiUnitModuleSyntax;
 class DelphiUnitReferenceDeclarationSyntax;
 class DelphiUsesClauseSyntax;
-class IdentifierNameExpressionSyntax;
-class ISyntaxNode;
-class ISyntaxToken;
-class NameExpressionSyntax;
 
-class DelphiParser final : public Parser
+} // end namespace polyglot::Delphi::Syntax
+
+namespace polyglot::Delphi::Parser
+{
+
+class DelphiParser final : public Core::Parser::Parser
 {
 public:
     DelphiParser() = delete;
-    explicit DelphiParser(SharedPtr<SourceText> sourceText) noexcept;
+    explicit DelphiParser(SharedPtr<Core::Text::SourceText> sourceText) noexcept;
 
 private:
-    ISyntaxNode* parseRoot() noexcept override;
-    DelphiCompilationUnitSyntax* parseCompilationUnit() noexcept;
-    DelphiUnitModuleSyntax* parseUnitModule() noexcept;
-    DelphiUnitHeadSyntax* parseUnitHead() noexcept;
-    DelphiUnitInterfaceSectionSyntax* parseUnitInterfaceSection() noexcept;
-    DelphiUnitImplementationSectionSyntax* parseUnitImplementationSection() noexcept;
-    DelphiUnitInitializationSectionSyntax* parseUnitInitializationSection() noexcept;
-    DelphiUnitFinalizationSectionSyntax* parseUnitFinalizationSection() noexcept;
-    DelphiPackageModuleSyntax* parsePackageModule() noexcept;
-    DelphiProgramModuleSyntax* parseProgramModule() noexcept;
-    DelphiUsesClauseSyntax* parseUsesClause() noexcept;
-    DelphiUnitReferenceDeclarationSyntax* parseUnitReference() noexcept;
-    NameExpressionSyntax* parseQualifiedName() noexcept;
+    Core::Syntax::ISyntaxNode* parseRoot() noexcept override;
+    Syntax::DelphiCompilationUnitSyntax* parseCompilationUnit() noexcept;
+    Syntax::DelphiUnitModuleSyntax* parseUnitModule() noexcept;
+    Syntax::DelphiUnitHeadSyntax* parseUnitHead() noexcept;
+    Syntax::DelphiUnitInterfaceSectionSyntax* parseUnitInterfaceSection() noexcept;
+    Syntax::DelphiUnitImplementationSectionSyntax* parseUnitImplementationSection() noexcept;
+    Syntax::DelphiUnitInitializationSectionSyntax* parseUnitInitializationSection() noexcept;
+    Syntax::DelphiUnitFinalizationSectionSyntax* parseUnitFinalizationSection() noexcept;
+    Syntax::DelphiPackageModuleSyntax* parsePackageModule() noexcept;
+    Syntax::DelphiProgramModuleSyntax* parseProgramModule() noexcept;
+    Syntax::DelphiUsesClauseSyntax* parseUsesClause() noexcept;
+    Syntax::DelphiUnitReferenceDeclarationSyntax* parseUnitReference() noexcept;
+    Core::Syntax::NameExpressionSyntax* parseQualifiedName() noexcept;
 
-    NameExpressionSyntax* parseQualifiedNameRight(NameExpressionSyntax* left,
-                                                  ISyntaxToken* dotToken) noexcept;
+    Core::Syntax::NameExpressionSyntax* parseQualifiedNameRight(Core::Syntax::NameExpressionSyntax* left,
+                                                                Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
-    IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
-    DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
+    Core::Syntax::IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
+    Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
 
 private:
-    SyntaxFactory _syntaxFactory;
+    Core::Syntax::SyntaxFactory _syntaxFactory;
 };
 
 } // end namespace polyglot::Delphi::Parser

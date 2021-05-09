@@ -2,6 +2,8 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_BINARYEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/ExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -19,12 +21,12 @@ public:
                                     ISyntaxToken* operatorToken,
                                     ExpressionSyntax* rightExpression) noexcept;
 
-    virtual ~BinaryExpressionSyntax() noexcept = default;
+    virtual ~BinaryExpressionSyntax() noexcept {}
     inline virtual ExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
     inline virtual ISyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
-    inline virtual pg_size childCount() const noexcept override { return 3; }
-    virtual ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,

@@ -6,10 +6,10 @@ namespace polyglot::Delphi::Syntax
 {
 
 DelphiUnitFinalizationSectionSyntax::DelphiUnitFinalizationSectionSyntax() noexcept
-    : DelphiSyntaxNode{SyntaxKind::UnitFinalizationSection}
+    : DelphiSyntaxNode{Core::Syntax::SyntaxKind::UnitFinalizationSection}
 {}
 
-DelphiUnitFinalizationSectionSyntax* DelphiUnitFinalizationSectionSyntax::create(SyntaxFactory& syntaxFactory) noexcept
+DelphiUnitFinalizationSectionSyntax* DelphiUnitFinalizationSectionSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrUnitFinalizationSectionSyntax = std::make_unique<DelphiUnitFinalizationSectionSyntax>();
     return dynamic_cast<DelphiUnitFinalizationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitFinalizationSectionSyntax)));

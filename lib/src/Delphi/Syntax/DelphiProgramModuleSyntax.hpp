@@ -1,37 +1,44 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "DelphiCompilationUnitSyntax.hpp"
+
+namespace polyglot::Core::Syntax
+{
+
+class ISyntaxToken;
+class SyntaxFactory;
+
+} // end namespace polyglot::Core::Syntax
 
 namespace polyglot::Delphi::Syntax
 {
 
 class DelphiProgramHeadSyntax;
 class DelphiUsesClauseSyntax;
-class ISyntaxNode;
-class ISyntaxToken;
-class SyntaxFactory;
 
 class DelphiProgramModuleSyntax : public DelphiCompilationUnitSyntax
 {
 public:
     explicit DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* head,
                                        DelphiUsesClauseSyntax* uses,
-                                       ISyntaxToken* EOFToken) noexcept;
+                                       Core::Syntax::ISyntaxToken* EOFToken) noexcept;
 
-    virtual ~DelphiProgramModuleSyntax() noexcept = default;
+    virtual ~DelphiProgramModuleSyntax() noexcept {}
     inline bool isProgramModule() const noexcept override { return true; }
     inline DelphiProgramHeadSyntax* head() const noexcept { return _pHead; }
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
-    inline pg_size childCount() const noexcept override { return 2; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
 
-    static DelphiProgramModuleSyntax* create(SyntaxFactory& syntaxFactory,
+    static DelphiProgramModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiProgramHeadSyntax* head,
                                              DelphiUsesClauseSyntax* uses,
-                                             ISyntaxToken* EOFToken) noexcept;
+                                             Core::Syntax::ISyntaxToken* EOFToken) noexcept;
 
-    static DelphiProgramModuleSyntax* create(SyntaxFactory& syntaxFactory) noexcept;
+    static DelphiProgramModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory) noexcept;
 
 private:
     DelphiProgramHeadSyntax* _pHead;

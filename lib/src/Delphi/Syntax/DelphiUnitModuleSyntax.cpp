@@ -14,6 +14,11 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
@@ -31,34 +36,23 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
 {
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
-    _pHead->setChildNumber(0);
     adjustWidthAndFlags(_pInterfaceSection);
-    _pInterfaceSection->setChildNumber(1);
     adjustWidthAndFlags(_pImplementationSection);
-    _pImplementationSection->setChildNumber(2);
-
-    pg_size childNr{3};
 
     if (_pInitializationSection != nullptr)
-    {
         adjustWidthAndFlags(_pInitializationSection);
-        _pInitializationSection->setChildNumber(childNr++);
-    }
 
     if (_pFinalizationSection != nullptr)
     {
         assert(_pInitializationSection != nullptr);
         adjustWidthAndFlags(_pFinalizationSection);
-        _pFinalizationSection->setChildNumber(childNr++);
     }
 
     adjustWidthAndFlags(_pEndOfModule);
-    _pEndOfModule->setChildNumber(childNr++);
     adjustWidthAndFlags(_pEOFToken);
-    _pEOFToken->setChildNumber(childNr++);
 }
 
-ISyntaxNode* DelphiUnitModuleSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiUnitModuleSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -66,36 +60,36 @@ ISyntaxNode* DelphiUnitModuleSyntax::child(pg_size index) const
         {
             switch (index)
             {
-                case 0: return _pHead;
-                case 1: return _pInterfaceSection;
-                case 2: return _pImplementationSection;
-                case 3: return _pEndOfModule;
-                case 4: return _pEOFToken;
+                case 0: return SyntaxNodeOrToken::asNode(_pHead);
+                case 1: return SyntaxNodeOrToken::asNode(_pInterfaceSection);
+                case 2: return SyntaxNodeOrToken::asNode(_pImplementationSection);
+                case 3: return SyntaxNodeOrToken::asNode(_pEndOfModule);
+                case 4: return SyntaxNodeOrToken::asToken(_pEOFToken);
             }
         }
         case 6:
         {
             switch (index)
             {
-                case 0: return _pHead;
-                case 1: return _pInterfaceSection;
-                case 2: return _pImplementationSection;
-                case 3: return _pInitializationSection;
-                case 4: return _pEndOfModule;
-                case 5: return _pEOFToken;
+                case 0: return SyntaxNodeOrToken::asNode(_pHead);
+                case 1: return SyntaxNodeOrToken::asNode(_pInterfaceSection);
+                case 2: return SyntaxNodeOrToken::asNode(_pImplementationSection);
+                case 3: return SyntaxNodeOrToken::asNode(_pInitializationSection);
+                case 4: return SyntaxNodeOrToken::asNode(_pEndOfModule);
+                case 5: return SyntaxNodeOrToken::asToken(_pEOFToken);
             }
         }
         case 7:
         {
             switch (index)
             {
-                case 0: return _pHead;
-                case 1: return _pInterfaceSection;
-                case 2: return _pImplementationSection;
-                case 3: return _pInitializationSection;
-                case 4: return _pFinalizationSection;
-                case 5: return _pEndOfModule;
-                case 6: return _pEOFToken;
+                case 0: return SyntaxNodeOrToken::asNode(_pHead);
+                case 1: return SyntaxNodeOrToken::asNode(_pInterfaceSection);
+                case 2: return SyntaxNodeOrToken::asNode(_pImplementationSection);
+                case 3: return SyntaxNodeOrToken::asNode(_pInitializationSection);
+                case 4: return SyntaxNodeOrToken::asNode(_pFinalizationSection);
+                case 5: return SyntaxNodeOrToken::asNode(_pEndOfModule);
+                case 6: return SyntaxNodeOrToken::asToken(_pEOFToken);
             }
         }
     }

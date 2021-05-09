@@ -11,7 +11,7 @@ class NameExpressionSyntax : public TypeExpressionSyntax
 {
 public:
     explicit NameExpressionSyntax(SyntaxKind syntaxKind) noexcept;
-    virtual ~NameExpressionSyntax() noexcept = default;
+    virtual ~NameExpressionSyntax() noexcept {}
 };
 
 } // end namespace polyglot::Core::Syntax

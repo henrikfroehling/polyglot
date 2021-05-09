@@ -60,6 +60,7 @@ set(SOURCES_CORE_PARSER
 
 set(SOURCES_CORE_Syntax
   ${SOURCE_DIR}/Core/Syntax/ExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxList.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxNode.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxToken.cpp
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTree.cpp
@@ -67,6 +68,7 @@ set(SOURCES_CORE_Syntax
   ${SOURCE_DIR}/Core/Syntax/ISyntaxTriviaList.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxFactory.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxFlags.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxList.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxMissingToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxNode.cpp
@@ -151,6 +153,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitModuleSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/IDelphiSyntaxTree.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)

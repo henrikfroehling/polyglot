@@ -2,18 +2,15 @@
 #include <iostream>
 #include <streambuf>
 #include <string>
-#include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
-#include <polyglot/CodeAnalysis/ISyntaxTree.hpp>
+#include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
 
 std::string readFile(const std::string& filename);
 
 int main(int argc,
          char** argv)
 {
-    using namespace polyglot::CodeAnalysis;
-
     const std::string sourceText = readFile(argv[1]);
-    auto ptrSyntaxTree = Delphi::parseSourceText(argv[1], sourceText);
+    auto ptrSyntaxTree = polyglot::Delphi::Syntax::IDelphiSyntaxTree::parseSourceText(argv[1], sourceText);
 
     std::string str;
     std::getline(std::cin, str);

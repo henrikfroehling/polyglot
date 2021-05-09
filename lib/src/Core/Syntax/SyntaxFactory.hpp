@@ -10,13 +10,20 @@
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
 #include "polyglot/Core/Types.hpp"
+
+namespace polyglot::Core::Parser
+{
+
+class TokenInfo;
+
+} // end namespace polyglot::Core::Parser
 
 namespace polyglot::Core::Syntax
 {
 
 class SyntaxPool;
-class TokenInfo;
 
 class SyntaxFactory
 {
@@ -28,19 +35,19 @@ public:
     SyntaxFactory& operator=(const SyntaxFactory&) = delete;
     SyntaxFactory& operator=(SyntaxFactory&&) = delete;
 
-    ISyntaxToken* token(TokenInfo& tokenInfo,
+    ISyntaxToken* token(Parser::TokenInfo& tokenInfo,
                         pg_size position = 0) noexcept;
 
     ISyntaxToken* missingToken(SyntaxKind syntaxKind,
                                std::string_view text = "",
                                pg_size position = 0) noexcept;
 
-    ISyntaxToken* tokenWithTrivia(TokenInfo& tokenInfo,
+    ISyntaxToken* tokenWithTrivia(Parser::TokenInfo& tokenInfo,
                                   std::vector<ISyntaxTrivia*>&& leadingTrivia,
                                   std::vector<ISyntaxTrivia*>&& trailingTrivia,
                                   pg_size position = 0) noexcept;
 
-    ISyntaxToken* tokenWithLeadingTrivia(TokenInfo& tokenInfo,
+    ISyntaxToken* tokenWithLeadingTrivia(Parser::TokenInfo& tokenInfo,
                                          std::vector<ISyntaxTrivia*>&& leadingTrivia,
                                          pg_size position = 0) noexcept;
 
@@ -49,7 +56,7 @@ public:
                                          pg_size position = 0,
                                          ISyntaxTriviaList* leadingTrivia = nullptr) noexcept;
 
-    ISyntaxToken* tokenWithTrailingTrivia(TokenInfo& tokenInfo,
+    ISyntaxToken* tokenWithTrailingTrivia(Parser::TokenInfo& tokenInfo,
                                           std::vector<ISyntaxTrivia*>&& trailingTrivia,
                                           pg_size position = 0) noexcept;
 
@@ -74,7 +81,7 @@ public:
                                       pg_size position = 0) noexcept;
 
     ISyntaxList* syntaxList() noexcept;
-    ISyntaxList* syntaxList(std::initializer_list<ISyntaxNode*> syntaxNodes) noexcept;
+    ISyntaxList* syntaxList(std::vector<SyntaxNodeOrToken>&& syntaxNodes) noexcept;
 
     ISyntaxTriviaList* syntaxTriviaList(ISyntaxToken* token = nullptr) noexcept;
 

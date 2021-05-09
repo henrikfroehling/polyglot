@@ -2,7 +2,6 @@
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTOKEN_H
 
 #include <string_view>
-#include <variant>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
@@ -14,8 +13,6 @@
 
 namespace polyglot::Core::Syntax
 {
-
-using TokenValue = std::variant<std::monostate, bool, char, int, float, double, std::string_view>;
 
 class SyntaxToken : public ISyntaxToken
 {
@@ -66,7 +63,7 @@ public:
     inline virtual bool isPunctuation() const noexcept override { return false; }
     inline bool isMissing() const noexcept override final { return (_flags & SyntaxFlags::IsMssing) != SyntaxFlags::None; }
 
-    TokenValue value() const noexcept;
+    TokenValue value() const noexcept override;
     bool booleanValue() const noexcept override;
 
 protected:

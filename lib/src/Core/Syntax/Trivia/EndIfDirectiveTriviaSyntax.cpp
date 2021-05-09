@@ -20,21 +20,18 @@ EndIfDirectiveTriviaSyntax::EndIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
       _isActive{isActive}
 {
     _position = _pStartToken->position();
-    adjustWidthAndFlags(_pStartToken);
-    _pStartToken->setChildNumber(0);
-    adjustWidthAndFlags(_pEndIfKeyword);
-    _pEndIfKeyword->setChildNumber(1);
-    adjustWidthAndFlags(_pEndOfDirectiveToken);
-    _pEndOfDirectiveToken->setChildNumber(2);
+    adjustWidth(_pStartToken);
+    adjustWidth(_pEndIfKeyword);
+    adjustWidth(_pEndOfDirectiveToken);
 }
 
-ISyntaxNode* EndIfDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxNodeOrToken EndIfDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pStartToken;
-        case 1: return _pEndIfKeyword;
-        case 2: return _pEndOfDirectiveToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
+        case 1: return SyntaxNodeOrToken::asToken(_pEndIfKeyword);
+        case 2: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
     }
 
     throw std::out_of_range{"index out of range"};

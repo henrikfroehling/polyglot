@@ -9,6 +9,12 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::NameExpressionSyntax;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
                                                                            ISyntaxToken* inKeyword,
                                                                            ISyntaxToken* sourceFile) noexcept
@@ -19,40 +25,33 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
 {
     _position = _pUnitName->position();
     adjustWidthAndFlags(_pUnitName);
-    _pUnitName->setChildNumber(0);
-
-    pg_size childNr{1};
 
     if (_pInKeyword != nullptr)
-    {
         adjustWidthAndFlags(_pInKeyword);
-        _pInKeyword->setChildNumber(childNr++);
-    }
 
     if (_pSourceFile != nullptr)
     {
         assert(_pInKeyword != nullptr);
         adjustWidthAndFlags(_pSourceFile);
-        _pSourceFile->setChildNumber(childNr);
     }
 }
 
-ISyntaxNode* DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
         case 1:
         {
             if (index == 0)
-                return _pUnitName;
+                return SyntaxNodeOrToken::asNode(_pUnitName);
         }
         case 3:
         {
             switch (index)
             {
-                case 0: return _pUnitName;
-                case 1: return _pInKeyword;
-                case 2: return _pSourceFile;
+                case 0: return SyntaxNodeOrToken::asNode(_pUnitName);
+                case 1: return SyntaxNodeOrToken::asToken(_pInKeyword);
+                case 2: return SyntaxNodeOrToken::asToken(_pSourceFile);
             }
         }
     }
@@ -77,7 +76,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
     }
 
     auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile);
-    return dynamic_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
+    return dynamic_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

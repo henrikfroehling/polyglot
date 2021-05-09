@@ -8,8 +8,8 @@
 #include <vector>
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "LinePosition.hpp"
-#include "LinePositionSpan.hpp"
+#include "../../../../src/Core/Text/LinePosition.hpp"
+#include "../../../../src/Core/Text/LinePositionSpan.hpp"
 
 namespace polyglot::Core::Text
 {

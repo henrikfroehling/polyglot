@@ -23,8 +23,11 @@
 namespace polyglot::Delphi::Parser
 {
 
-DelphiParser::DelphiParser(SharedPtr<SourceText> sourceText) noexcept
-    : Parser{std::make_shared<DelphiLexer>(sourceText)},
+using namespace Core::Syntax;
+using namespace Delphi::Syntax;
+
+DelphiParser::DelphiParser(SharedPtr<Core::Text::SourceText> sourceText) noexcept
+    : Core::Parser::Parser{std::make_shared<DelphiLexer>(sourceText)},
       _syntaxFactory{_ptrLexer->syntaxPool()}
 {}
 
@@ -179,19 +182,20 @@ DelphiProgramModuleSyntax* DelphiParser::parseProgramModule() noexcept
 DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
 {
     ISyntaxToken* pUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
-    SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList());
+    std::vector<SyntaxNodeOrToken> unitReferences;
 
     DelphiUnitReferenceDeclarationSyntax* pUnitReference = parseUnitReference();
-    pUnitReferences->add(pUnitReference);
+    unitReferences.push_back(SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
 
     while (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
         ISyntaxToken* pCommaToken = takeToken();
         pUnitReference = parseUnitReference();
-        pUnitReferences->add(pCommaToken);
-        pUnitReferences->add(pUnitReference);
+        unitReferences.push_back(SyntaxNodeOrToken::asToken(pCommaToken));
+        unitReferences.push_back(SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
     }
 
+    SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList(std::move(unitReferences)));
     ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, pUnitReferences, pSemiColonToken);
 }

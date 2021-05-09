@@ -22,7 +22,4 @@ SyntaxMissingToken::SyntaxMissingToken(SyntaxKind syntaxKind,
     _flags |= SyntaxNodeFlags::IsMissing;
 }
 
-SyntaxMissingToken::~SyntaxMissingToken() noexcept
-{}
-
 } // end namespace polyglot::Core::Syntax

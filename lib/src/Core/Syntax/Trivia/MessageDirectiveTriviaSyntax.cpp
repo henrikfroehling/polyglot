@@ -22,24 +22,17 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
       _pEndOfDirectiveToken{endOfDirectiveToken}
 {
     _position = _pStartToken->position();
-    adjustWidthAndFlags(_pStartToken);
-    _pStartToken->setChildNumber(0);
-    adjustWidthAndFlags(_pMessageKeyword);
-    _pMessageKeyword->setChildNumber(1);
-    adjustWidthAndFlags(_pMessageTypeToken);
-
-    pg_size childNr{2};
+    adjustWidth(_pStartToken);
+    adjustWidth(_pMessageKeyword);
 
     if (_pMessageTypeToken != nullptr)
-        _pMessageTypeToken->setChildNumber(childNr++);
+        adjustWidth(_pMessageTypeToken);
 
-    adjustWidthAndFlags(_pMessageLiteralToken);
-    _pMessageLiteralToken->setChildNumber(childNr++);
-    adjustWidthAndFlags(_pEndOfDirectiveToken);
-    _pEndOfDirectiveToken->setChildNumber(childNr);
+    adjustWidth(_pMessageLiteralToken);
+    adjustWidth(_pEndOfDirectiveToken);
 }
 
-ISyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxNodeOrToken MessageDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -47,21 +40,21 @@ ISyntaxNode* MessageDirectiveTriviaSyntax::child(pg_size index) const
         {
             switch (index)
             {
-                case 0: return _pStartToken;
-                case 1: return _pMessageKeyword;
-                case 2: return _pMessageLiteralToken;
-                case 3: return _pEndOfDirectiveToken;
+                case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
+                case 1: return SyntaxNodeOrToken::asToken(_pMessageKeyword);
+                case 2: return SyntaxNodeOrToken::asToken(_pMessageLiteralToken);
+                case 3: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
             }
         }
         case 5:
         {
             switch (index)
             {
-                case 0: return _pStartToken;
-                case 1: return _pMessageKeyword;
-                case 2: return _pMessageTypeToken;
-                case 3: return _pMessageLiteralToken;
-                case 4: return _pEndOfDirectiveToken;
+                case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
+                case 1: return SyntaxNodeOrToken::asToken(_pMessageKeyword);
+                case 2: return SyntaxNodeOrToken::asToken(_pMessageTypeToken);
+                case 3: return SyntaxNodeOrToken::asToken(_pMessageLiteralToken);
+                case 4: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
             }
         }
     }

@@ -1,4 +1,4 @@
-#include "SourceText.hpp"
+#include "polyglot/Core/Text/SourceText.hpp"
 #include <cassert>
 #include <algorithm>
 #include <vector>

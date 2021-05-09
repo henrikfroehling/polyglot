@@ -11,7 +11,7 @@ class ExpressionSyntax : public SyntaxNode
 {
 public:
     explicit ExpressionSyntax(SyntaxKind syntaxKind) noexcept;
-    virtual ~ExpressionSyntax() noexcept = default;
+    virtual ~ExpressionSyntax() noexcept {}
     inline bool isExpression() const noexcept override { return true; }
 };
 

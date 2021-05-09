@@ -3,26 +3,27 @@
 
 #include <vector>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "StructuredTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-class ISyntaxNode;
-
 class SkippedTokensTriviaSyntax : public StructuredTriviaSyntax
 {
 public:
     explicit SkippedTokensTriviaSyntax(SyntaxKind syntaxKind,
-                                       std::vector<ISyntaxNode*> skippedTokens) noexcept;
+                                       std::vector<SyntaxNodeOrToken>&& skippedTokens) noexcept;
 
-    virtual ~SkippedTokensTriviaSyntax() noexcept = default;
-    inline const std::vector<ISyntaxNode*>& skippedTokens() const noexcept { return _skippedTokens; }
-    inline pg_size childCount() const noexcept override { return _skippedTokens.size(); }
-    inline ISyntaxNode* child(pg_size index) const override { return _skippedTokens[index]; }
+    virtual ~SkippedTokensTriviaSyntax() noexcept {}
+    inline const std::vector<SyntaxNodeOrToken>& skippedTokens() const noexcept { return _skippedTokens; }
+    inline bool isSkippedTokensTrivia() const noexcept override final { return true; }
+    inline pg_size childCount() const noexcept override final { return _skippedTokens.size(); }
+    inline SyntaxNodeOrToken child(pg_size index) const override final { return _skippedTokens[index]; }
 
 private:
-    std::vector<ISyntaxNode*> _skippedTokens;
+    std::vector<SyntaxNodeOrToken> _skippedTokens;
 };
 
 } // end namespace polyglot::Core::Syntax

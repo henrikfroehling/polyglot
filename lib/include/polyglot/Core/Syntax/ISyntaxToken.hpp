@@ -2,6 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXTOKEN_H
 
 #include <string_view>
+#include <variant>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
@@ -13,6 +14,8 @@ namespace polyglot::Core::Syntax
 
 class ISyntaxNode;
 class ISyntaxTriviaList;
+
+using TokenValue = std::variant<std::monostate, bool, char, int, float, double, std::string_view>;
 
 class POLYGLOT_API ISyntaxToken
 {
@@ -47,6 +50,9 @@ public:
     virtual bool isLiteral() const noexcept = 0;
     virtual bool isPunctuation() const noexcept = 0;
     virtual bool isMissing() const noexcept = 0;
+
+    virtual TokenValue value() const noexcept = 0;
+    virtual bool booleanValue() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

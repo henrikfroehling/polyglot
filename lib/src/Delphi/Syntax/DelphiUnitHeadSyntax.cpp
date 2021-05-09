@@ -9,6 +9,12 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::NameExpressionSyntax;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
                                            NameExpressionSyntax* name,
                                            ISyntaxToken* semiColonToken,
@@ -23,30 +29,21 @@ DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
 {
     _position = _pUnitKeyword->position();
     adjustWidthAndFlags(_pUnitKeyword);
-    _pUnitKeyword->setChildNumber(0);
     adjustWidthAndFlags(_pName);
-    _pName->setChildNumber(1);
-
-    pg_size childNr{2};
 
     if (_pInKeyword != nullptr)
-    {
         adjustWidthAndFlags(_pInKeyword);
-        _pInKeyword->setChildNumber(childNr++);
-    }
 
     if (_pFilename != nullptr)
     {
         assert(_pInKeyword != nullptr);
         adjustWidthAndFlags(_pFilename);
-        _pFilename->setChildNumber(childNr++);
     }
 
     adjustWidthAndFlags(_pSemiColonToken);
-    _pSemiColonToken->setChildNumber(childNr);
 }
 
-ISyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiUnitHeadSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -54,20 +51,20 @@ ISyntaxNode* DelphiUnitHeadSyntax::child(pg_size index) const
         {
             switch (index)
             {
-                case 0: return _pUnitKeyword;
-                case 1: return _pName;
-                case 2: return _pSemiColonToken;
+                case 0: return SyntaxNodeOrToken::asToken(_pUnitKeyword);
+                case 1: return SyntaxNodeOrToken::asNode(_pName);
+                case 2: return SyntaxNodeOrToken::asToken(_pSemiColonToken);
             }
         }
         case 5:
         {
             switch (index)
             {
-                case 0: return _pUnitKeyword;
-                case 1: return _pName;
-                case 2: return _pInKeyword;
-                case 3: return _pFilename;
-                case 4: return _pSemiColonToken;
+                case 0: return SyntaxNodeOrToken::asToken(_pUnitKeyword);
+                case 1: return SyntaxNodeOrToken::asNode(_pName);
+                case 2: return SyntaxNodeOrToken::asToken(_pInKeyword);
+                case 3: return SyntaxNodeOrToken::asToken(_pFilename);
+                case 4: return SyntaxNodeOrToken::asToken(_pSemiColonToken);
             }
         }
     }

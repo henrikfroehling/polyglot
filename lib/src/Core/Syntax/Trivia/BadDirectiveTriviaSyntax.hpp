@@ -2,12 +2,13 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_BADDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxFactory;
 
@@ -20,13 +21,13 @@ public:
                                       ISyntaxToken* endOfDirectiveToken,
                                       bool isActive) noexcept;
 
-    virtual ~BadDirectiveTriviaSyntax() noexcept = default;
+    virtual ~BadDirectiveTriviaSyntax() noexcept {}
     inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
     inline virtual ISyntaxToken* identifier() const noexcept { return _pIdentifier; }
     inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
-    inline pg_size childCount() const noexcept override { return 3; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static BadDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                             ISyntaxToken* startToken,

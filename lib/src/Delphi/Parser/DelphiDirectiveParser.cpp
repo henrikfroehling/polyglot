@@ -30,7 +30,12 @@
 namespace polyglot::Delphi::Parser
 {
 
-DelphiDirectiveParser::DelphiDirectiveParser(SharedPtr<Lexer> lexer,
+using Core::Parser::DefineState;
+using Core::Parser::DirectiveParser;
+using Core::Parser::DirectiveStack;
+using namespace Core::Syntax;
+
+DelphiDirectiveParser::DelphiDirectiveParser(SharedPtr<Core::Parser::Lexer> lexer,
                                              const DirectiveStack& context) noexcept
     : DirectiveParser{lexer, context},
       _syntaxFactory{lexer->syntaxPool()}
@@ -305,7 +310,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(ISyntaxToken*
 
 ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
-    std::vector<ISyntaxNode*> skippedTokens{};
+    std::vector<SyntaxNodeOrToken> skippedTokens{};
 
     if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
         && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
@@ -315,7 +320,7 @@ ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
         while (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
                && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
         {
-            skippedTokens.push_back(takeToken());
+            skippedTokens.push_back(SyntaxNodeOrToken::asToken(takeToken()));
         }
     }
 

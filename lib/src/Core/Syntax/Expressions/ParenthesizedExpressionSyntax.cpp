@@ -19,20 +19,17 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
 {
     _position = _pOpenParenthesisToken->position();
     adjustWidthAndFlags(_pOpenParenthesisToken);
-    _pOpenParenthesisToken->setChildNumber(0);
     adjustWidthAndFlags(_pExpression);
-    _pExpression->setChildNumber(1);
     adjustWidthAndFlags(_pCloseParenthesisToken);
-    _pCloseParenthesisToken->setChildNumber(2);
 }
 
-ISyntaxNode* ParenthesizedExpressionSyntax::child(pg_size index) const
+SyntaxNodeOrToken ParenthesizedExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pOpenParenthesisToken;
-        case 1: return _pExpression;
-        case 2: return _pCloseParenthesisToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pOpenParenthesisToken);
+        case 1: return SyntaxNodeOrToken::asNode(_pExpression);
+        case 2: return SyntaxNodeOrToken::asToken(_pCloseParenthesisToken);
     }
 
     throw std::out_of_range{"index out of range"};

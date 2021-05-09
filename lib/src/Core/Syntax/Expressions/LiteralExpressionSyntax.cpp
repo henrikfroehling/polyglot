@@ -15,13 +15,12 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pLiteral->position();
     adjustWidthAndFlags(_pLiteral);
-    _pLiteral->setChildNumber(0);
 }
 
-ISyntaxNode* LiteralExpressionSyntax::child(pg_size index) const
+SyntaxNodeOrToken LiteralExpressionSyntax::child(pg_size index) const
 {
     if (index == 0)
-        return _pLiteral;
+        return SyntaxNodeOrToken::asToken(_pLiteral);
 
     throw std::out_of_range{"index out of range"};
 }

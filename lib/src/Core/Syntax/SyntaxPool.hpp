@@ -9,6 +9,7 @@
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::Core::Syntax
@@ -22,7 +23,7 @@ public:
     SyntaxPool& operator=(SyntaxPool&& other) noexcept;
 
     ISyntaxList* createSyntaxList() noexcept;
-    ISyntaxList* createSyntaxList(std::vector<ISyntaxNode*>&& nodes) noexcept;
+    ISyntaxList* createSyntaxList(std::vector<SyntaxNodeOrToken>&& nodes) noexcept;
 
     ISyntaxNode* createSyntaxNode() noexcept;
 

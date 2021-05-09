@@ -8,6 +8,9 @@
 namespace polyglot::Core::Parser
 {
 
+using namespace polyglot::Core::Syntax;
+using namespace polyglot::Core::Text;
+
 constexpr pg_size MIN_LEXED_TOKENS_COUNT{32};
 constexpr pg_size MAX_LEXED_TOKENS_COUNT{4096};
 
@@ -26,9 +29,6 @@ Lexer::Lexer(SharedPtr<SourceText> sourceText) noexcept
       _pCurrentDirectiveTriviaToken{nullptr},
       _syntaxPool{},
       _syntaxFactory{_syntaxPool}
-{}
-
-Lexer::~Lexer()
 {}
 
 void Lexer::start() noexcept

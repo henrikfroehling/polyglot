@@ -5,6 +5,8 @@
 namespace polyglot::Delphi::Parser
 {
 
+using polyglot::Core::Syntax::SyntaxKind;
+
 static const std::unordered_map<std::string, SyntaxKind> SYNTAXKEYWORDS =
 {
     { "and", SyntaxKind::AndKeyword },
@@ -541,7 +543,7 @@ bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) noexcept
 }
 
 SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text,
-                                          LexerMode mode) noexcept
+                                          Core::Parser::LexerMode mode) noexcept
 {
     std::string lowerCaseText{text};
     std::transform(std::begin(lowerCaseText), std::end(lowerCaseText), std::begin(lowerCaseText), static_cast<int(*)(int)>(std::tolower));
@@ -550,7 +552,7 @@ SyntaxKind DelphiSyntaxFacts::keywordKind(std::string_view text,
     {
         SyntaxKind syntaxKind = SYNTAXKEYWORDS.at(lowerCaseText);
 
-        if (mode == LexerMode::Directive)
+        if (mode == Core::Parser::LexerMode::Directive)
         {
             switch (syntaxKind)
             {

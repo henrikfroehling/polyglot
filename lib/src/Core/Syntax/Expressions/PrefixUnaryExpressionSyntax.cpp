@@ -17,17 +17,15 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pOperatorToken->position();
     adjustWidthAndFlags(_pOperatorToken);
-    _pOperatorToken->setChildNumber(0);
     adjustWidthAndFlags(_pOperandExpression);
-    _pOperandExpression->setChildNumber(1);
 }
 
-ISyntaxNode* PrefixUnaryExpressionSyntax::child(pg_size index) const
+SyntaxNodeOrToken PrefixUnaryExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pOperatorToken;
-        case 1: return _pOperandExpression;
+        case 0: return SyntaxNodeOrToken::asToken(_pOperatorToken);
+        case 1: return SyntaxNodeOrToken::asNode(_pOperandExpression);
     }
 
     throw std::out_of_range{"index out of range"};

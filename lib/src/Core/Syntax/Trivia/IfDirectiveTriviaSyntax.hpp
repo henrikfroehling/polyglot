@@ -2,13 +2,14 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_IFDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "ConditionalDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
 class ExpressionSyntax;
-class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxFactory;
 
@@ -24,7 +25,7 @@ public:
                                      bool isBranchTaken,
                                      bool conditionValue) noexcept;
 
-    virtual ~IfDirectiveTriviaSyntax() noexcept = default;
+    virtual ~IfDirectiveTriviaSyntax() noexcept {}
     inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
     inline virtual ISyntaxToken* ifKeywword() const noexcept { return _pIfKeyword; }
     inline virtual ExpressionSyntax* condition() const noexcept override { return _pCondition; }
@@ -32,8 +33,8 @@ public:
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
-    inline pg_size childCount() const noexcept override { return 4; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 4; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static IfDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                            ISyntaxToken* startToken,

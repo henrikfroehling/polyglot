@@ -48,7 +48,7 @@ public:
     inline virtual Text::TextSpan fullSpan() const noexcept override { return Text::TextSpan{endPositionIncludingTrivia(), _fullWidth}; }
 
     inline virtual pg_size childCount() const noexcept override { return 0; }
-    inline virtual SyntaxNodeOrToken child(pg_size index) const override { return SyntaxNodeOrToken{nullptr, nullptr}; }
+    inline virtual SyntaxNodeOrToken child(pg_size index) const override { return SyntaxNodeOrToken::empty(); }
 
     inline bool hasLeadingTrivia() const noexcept override final { return leadingTriviaWidth() != 0; }
     inline bool hasTrailingTrivia() const noexcept override final { return trailingTriviaWidth() != 0; }

@@ -10,7 +10,7 @@ class DelphiPackageRequiresClauseSyntax : public DelphiSyntaxNode
 {
 public:
     DelphiPackageRequiresClauseSyntax() noexcept;
-    virtual ~DelphiPackageRequiresClauseSyntax() noexcept = default;
+    virtual ~DelphiPackageRequiresClauseSyntax() noexcept {}
 };
 
 } // end namespace polyglot::Delphi::Syntax

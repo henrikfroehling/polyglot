@@ -15,19 +15,18 @@ class ISyntaxNode;
 class SyntaxTree : public ISyntaxTree
 {
 public:
-    SyntaxTree() noexcept;
     virtual ~SyntaxTree() noexcept {}
 
     inline ISyntaxNode* root() const noexcept override final { return _pRoot; }
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
 
 protected:
-    explicit SyntaxTree(SharedPtr<SourceText> sourceText,
+    explicit SyntaxTree(SharedPtr<Text::SourceText> sourceText,
                         ISyntaxNode* root,
                         SyntaxPool&& syntaxPool) noexcept;
 
 protected:
-    SharedPtr<SourceText> _ptrSourceText;
+    SharedPtr<Text::SourceText> _ptrSourceText;
     ISyntaxNode* _pRoot;
     SyntaxPool _syntaxPool;
 };

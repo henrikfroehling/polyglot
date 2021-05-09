@@ -6,6 +6,10 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+
 DelphiCompilationUnitSyntax::DelphiCompilationUnitSyntax(SyntaxKind syntaxKind,
                                                          ISyntaxToken* EOFToken) noexcept
     : DelphiSyntaxNode{syntaxKind},

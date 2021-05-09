@@ -1,5 +1,5 @@
 #include "TextUtilities.hpp"
-#include "SourceText.hpp"
+#include "polyglot/Core/Text/SourceText.hpp"
 
 namespace polyglot::Core::Text
 {

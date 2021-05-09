@@ -13,7 +13,7 @@ class ConditionalDirectiveTriviaSyntax : public BranchingDirectiveTriviaSyntax
 {
 public:
     explicit ConditionalDirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept;
-    virtual ~ConditionalDirectiveTriviaSyntax() noexcept = default;
+    virtual ~ConditionalDirectiveTriviaSyntax() noexcept {}
     virtual ExpressionSyntax* condition() const noexcept = 0;
     virtual bool conditionValue() const noexcept = 0;
 };

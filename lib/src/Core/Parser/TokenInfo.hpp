@@ -22,7 +22,7 @@ struct TokenInfo final
     friend bool operator!=(const TokenInfo& lhs,
                            const TokenInfo& rhs) noexcept;
 
-    SyntaxKind kind = SyntaxKind::None;
+    Syntax::SyntaxKind kind = Syntax::SyntaxKind::None;
     std::string_view text{};
 };
 

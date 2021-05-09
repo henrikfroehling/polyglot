@@ -5,6 +5,8 @@
 namespace polyglot::Core::Parser
 {
 
+using namespace Core::Syntax;
+
 DirectiveStack::DirectiveStack() noexcept
     : _directives{nullptr}
 {}

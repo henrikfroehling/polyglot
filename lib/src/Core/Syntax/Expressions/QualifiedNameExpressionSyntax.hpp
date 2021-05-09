@@ -1,6 +1,8 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_QUALIFIEDNAMEEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_QUALIFIEDNAMEEXPRESSIONSYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "NameExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -18,12 +20,12 @@ public:
                                            ISyntaxToken* dotToken,
                                            SimpleNameExpressionSyntax* rightExpression) noexcept;
 
-    virtual ~QualifiedNameExpressionSyntax() noexcept = default;
+    virtual ~QualifiedNameExpressionSyntax() noexcept {}
     inline virtual NameExpressionSyntax* leftExpression() const noexcept { return _pLeftExpression; }
     inline virtual ISyntaxToken* dotToken() const noexcept { return _pDotToken; }
     inline virtual SimpleNameExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
-    inline virtual pg_size childCount() const noexcept override { return 3; }
-    virtual ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static QualifiedNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  NameExpressionSyntax* leftExpression,

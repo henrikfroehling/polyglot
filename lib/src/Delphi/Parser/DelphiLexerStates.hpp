@@ -6,141 +6,141 @@
 namespace polyglot::Delphi::Parser
 {
 
-static constexpr QuickScanState STATE_TRANSITIONS[9][11]
+static constexpr Core::Parser::QuickScanState STATE_TRANSITIONS[9][11]
 {
     // Initial
     {
-        QuickScanState::FollowingWhite,             // White
-        QuickScanState::FollowingCR,                // CR
-        QuickScanState::DoneAfterNext,              // LF
-        QuickScanState::Identifier,                 // Letter
-        QuickScanState::Number,                     // Digit
-        QuickScanState::Punctuation,                // Punctuation
-        QuickScanState::Dot,                        // Dot
-        QuickScanState::CompoundPunctuationStart,   // Compound Punctuation
-        QuickScanState::Bad,                        // Slash
-        QuickScanState::Bad,                        // Complex
-        QuickScanState::Bad                         // EndOfFile
+        Core::Parser::QuickScanState::FollowingWhite,             // White
+        Core::Parser::QuickScanState::FollowingCR,                // CR
+        Core::Parser::QuickScanState::DoneAfterNext,              // LF
+        Core::Parser::QuickScanState::Identifier,                 // Letter
+        Core::Parser::QuickScanState::Number,                     // Digit
+        Core::Parser::QuickScanState::Punctuation,                // Punctuation
+        Core::Parser::QuickScanState::Dot,                        // Dot
+        Core::Parser::QuickScanState::CompoundPunctuationStart,   // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,                        // Slash
+        Core::Parser::QuickScanState::Bad,                        // Complex
+        Core::Parser::QuickScanState::Bad                         // EndOfFile
     },
 
     // Following White
     {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::FollowingCR,    // CR
-        QuickScanState::DoneAfterNext,  // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Done,           // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Done,           // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
+        Core::Parser::QuickScanState::FollowingWhite, // White
+        Core::Parser::QuickScanState::FollowingCR,    // CR
+        Core::Parser::QuickScanState::DoneAfterNext,  // LF
+        Core::Parser::QuickScanState::Done,           // Letter
+        Core::Parser::QuickScanState::Done,           // Digit
+        Core::Parser::QuickScanState::Done,           // Punctuation
+        Core::Parser::QuickScanState::Done,           // Dot
+        Core::Parser::QuickScanState::Done,           // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,            // Slash
+        Core::Parser::QuickScanState::Bad,            // Complex
+        Core::Parser::QuickScanState::Done            // EndOfFile
     },
 
     // Following CR
     {
-        QuickScanState::Done,           // White
-        QuickScanState::Done,           // CR
-        QuickScanState::DoneAfterNext,  // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Done,           // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Done,           // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Done,           // Slash
-        QuickScanState::Done,           // Complex
-        QuickScanState::Done            // EndOfFile
+        Core::Parser::QuickScanState::Done,           // White
+        Core::Parser::QuickScanState::Done,           // CR
+        Core::Parser::QuickScanState::DoneAfterNext,  // LF
+        Core::Parser::QuickScanState::Done,           // Letter
+        Core::Parser::QuickScanState::Done,           // Digit
+        Core::Parser::QuickScanState::Done,           // Punctuation
+        Core::Parser::QuickScanState::Done,           // Dot
+        Core::Parser::QuickScanState::Done,           // Compound Punctuation
+        Core::Parser::QuickScanState::Done,           // Slash
+        Core::Parser::QuickScanState::Done,           // Complex
+        Core::Parser::QuickScanState::Done            // EndOfFile
     },
 
     // Identifier
     {
-        QuickScanState::Done,       // White
-        QuickScanState::Done,       // CR
-        QuickScanState::Done,       // LF
-        QuickScanState::Identifier, // Letter
-        QuickScanState::Identifier, // Digit
-        QuickScanState::Done,       // Punctuation
-        QuickScanState::Done,       // Dot
-        QuickScanState::Done,       // Compound Punctuation
-        QuickScanState::Bad,        // Slash
-        QuickScanState::Bad,        // Complex
-        QuickScanState::Done        // EndOfFile
+        Core::Parser::QuickScanState::Done,       // White
+        Core::Parser::QuickScanState::Done,       // CR
+        Core::Parser::QuickScanState::Done,       // LF
+        Core::Parser::QuickScanState::Identifier, // Letter
+        Core::Parser::QuickScanState::Identifier, // Digit
+        Core::Parser::QuickScanState::Done,       // Punctuation
+        Core::Parser::QuickScanState::Done,       // Dot
+        Core::Parser::QuickScanState::Done,       // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,        // Slash
+        Core::Parser::QuickScanState::Bad,        // Complex
+        Core::Parser::QuickScanState::Done        // EndOfFile
     },
 
     // Number
     {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::FollowingCR,    // CR
-        QuickScanState::DoneAfterNext,  // LF
-        QuickScanState::Bad,            // Letter
-        QuickScanState::Number,         // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Bad,            // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
+        Core::Parser::QuickScanState::FollowingWhite, // White
+        Core::Parser::QuickScanState::FollowingCR,    // CR
+        Core::Parser::QuickScanState::DoneAfterNext,  // LF
+        Core::Parser::QuickScanState::Bad,            // Letter
+        Core::Parser::QuickScanState::Number,         // Digit
+        Core::Parser::QuickScanState::Done,           // Punctuation
+        Core::Parser::QuickScanState::Bad,            // Dot
+        Core::Parser::QuickScanState::Done,           // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,            // Slash
+        Core::Parser::QuickScanState::Bad,            // Complex
+        Core::Parser::QuickScanState::Done            // EndOfFile
     },
 
     // Punctuation
     {
-        QuickScanState::Done,   // White
-        QuickScanState::Done,   // CR
-        QuickScanState::Done,   // LF
-        QuickScanState::Done,   // Letter
-        QuickScanState::Done,   // Digit
-        QuickScanState::Done,   // Punctuation
-        QuickScanState::Done,   // Dot
-        QuickScanState::Done,   // Compound Punctuation
-        QuickScanState::Bad,    // Slash
-        QuickScanState::Bad,    // Complex
-        QuickScanState::Done    // EndOfFile
+        Core::Parser::QuickScanState::Done,   // White
+        Core::Parser::QuickScanState::Done,   // CR
+        Core::Parser::QuickScanState::Done,   // LF
+        Core::Parser::QuickScanState::Done,   // Letter
+        Core::Parser::QuickScanState::Done,   // Digit
+        Core::Parser::QuickScanState::Done,   // Punctuation
+        Core::Parser::QuickScanState::Done,   // Dot
+        Core::Parser::QuickScanState::Done,   // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,    // Slash
+        Core::Parser::QuickScanState::Bad,    // Complex
+        Core::Parser::QuickScanState::Done    // EndOfFile
     },
 
     // Dot
     {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::Done,           // CR
-        QuickScanState::Done,           // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Number,         // Digit
-        QuickScanState::Done,           // Punctuation
-        QuickScanState::Bad,            // Dot
-        QuickScanState::Done,           // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
+        Core::Parser::QuickScanState::FollowingWhite, // White
+        Core::Parser::QuickScanState::Done,           // CR
+        Core::Parser::QuickScanState::Done,           // LF
+        Core::Parser::QuickScanState::Done,           // Letter
+        Core::Parser::QuickScanState::Number,         // Digit
+        Core::Parser::QuickScanState::Done,           // Punctuation
+        Core::Parser::QuickScanState::Bad,            // Dot
+        Core::Parser::QuickScanState::Done,           // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,            // Slash
+        Core::Parser::QuickScanState::Bad,            // Complex
+        Core::Parser::QuickScanState::Done            // EndOfFile
     },
 
     // Compound Punctuation
     {
-        QuickScanState::FollowingWhite, // White
-        QuickScanState::Done,           // CR
-        QuickScanState::Done,           // LF
-        QuickScanState::Done,           // Letter
-        QuickScanState::Done,           // Digit
-        QuickScanState::Bad,            // Punctuation
-        QuickScanState::Done,           // Dot
-        QuickScanState::Bad,            // Compound Punctuation
-        QuickScanState::Bad,            // Slash
-        QuickScanState::Bad,            // Complex
-        QuickScanState::Done            // EndOfFile
+        Core::Parser::QuickScanState::FollowingWhite, // White
+        Core::Parser::QuickScanState::Done,           // CR
+        Core::Parser::QuickScanState::Done,           // LF
+        Core::Parser::QuickScanState::Done,           // Letter
+        Core::Parser::QuickScanState::Done,           // Digit
+        Core::Parser::QuickScanState::Bad,            // Punctuation
+        Core::Parser::QuickScanState::Done,           // Dot
+        Core::Parser::QuickScanState::Bad,            // Compound Punctuation
+        Core::Parser::QuickScanState::Bad,            // Slash
+        Core::Parser::QuickScanState::Bad,            // Complex
+        Core::Parser::QuickScanState::Done            // EndOfFile
     },
 
     // Done after next
     {
-        QuickScanState::Done,   // White
-        QuickScanState::Done,   // CR
-        QuickScanState::Done,   // LF
-        QuickScanState::Done,   // Letter
-        QuickScanState::Done,   // Digit
-        QuickScanState::Done,   // Punctuation
-        QuickScanState::Done,   // Dot
-        QuickScanState::Done,   // Compound Punctuation
-        QuickScanState::Done,   // Slash
-        QuickScanState::Done,   // Complex
-        QuickScanState::Done    // EndOfFile
+        Core::Parser::QuickScanState::Done,   // White
+        Core::Parser::QuickScanState::Done,   // CR
+        Core::Parser::QuickScanState::Done,   // LF
+        Core::Parser::QuickScanState::Done,   // Letter
+        Core::Parser::QuickScanState::Done,   // Digit
+        Core::Parser::QuickScanState::Done,   // Punctuation
+        Core::Parser::QuickScanState::Done,   // Dot
+        Core::Parser::QuickScanState::Done,   // Compound Punctuation
+        Core::Parser::QuickScanState::Done,   // Slash
+        Core::Parser::QuickScanState::Done,   // Complex
+        Core::Parser::QuickScanState::Done    // EndOfFile
     }
 };
 

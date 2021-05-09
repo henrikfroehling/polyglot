@@ -2,12 +2,13 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_REGIONDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxFactory;
 
@@ -20,13 +21,13 @@ public:
                                          ISyntaxToken* endOfDirectiveToken,
                                          bool isActive) noexcept;
 
-    virtual ~RegionDirectiveTriviaSyntax() noexcept = default;
+    virtual ~RegionDirectiveTriviaSyntax() noexcept {}
     inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
     inline virtual ISyntaxToken* regionKeyword() const noexcept { return _pRegionKeyword; }
     inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
-    inline pg_size childCount() const noexcept override { return 3; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static RegionDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                                ISyntaxToken* startToken,

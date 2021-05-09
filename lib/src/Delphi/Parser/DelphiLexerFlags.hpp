@@ -6,137 +6,154 @@
 namespace polyglot::Delphi::Parser
 {
 
-static constexpr CharFlags CHAR_PROPERTIES[255]
+static constexpr Core::Parser::CharFlags CHAR_PROPERTIES[255]
 {
     // 0 .. 31
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::White,   // TAB
-    CharFlags::LF,      // LF
-    CharFlags::White,   // VT
-    CharFlags::White,   // FF
-    CharFlags::CR,      // CR
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::White,   // TAB
+    Core::Parser::CharFlags::LF,      // LF
+    Core::Parser::CharFlags::White,   // VT
+    Core::Parser::CharFlags::White,   // FF
+    Core::Parser::CharFlags::CR,      // CR
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
 
     // 32 .. 63
-    CharFlags::White,                       // SPC
-    CharFlags::Punctuation,                 // !
-    CharFlags::Complex,                     // "
-    CharFlags::Punctuation,                 // #
-    CharFlags::Punctuation,                 // $
-    CharFlags::Complex,                     // %
-    CharFlags::Punctuation,                 // &
-    CharFlags::Complex,                     // '
-    CharFlags::Complex,                     // (
-    CharFlags::Punctuation,                 // )
-    CharFlags::Complex,                     // *
-    CharFlags::Punctuation,                 // +
-    CharFlags::Punctuation,                 // ,
-    CharFlags::CompoundPunctuationStart,    // -
-    CharFlags::Dot,                         // .
-    CharFlags::Slash,                       // /
-    CharFlags::Digit,                       // 0
-    CharFlags::Digit,                       // 1
-    CharFlags::Digit,                       // 2
-    CharFlags::Digit,                       // 3
-    CharFlags::Digit,                       // 4
-    CharFlags::Digit,                       // 5
-    CharFlags::Digit,                       // 6
-    CharFlags::Digit,                       // 7
-    CharFlags::Digit,                       // 8
-    CharFlags::Digit,                       // 9
-    CharFlags::CompoundPunctuationStart,    // :
-    CharFlags::Punctuation,                 // ;
-    CharFlags::CompoundPunctuationStart,    // <
-    CharFlags::Punctuation,                 // =
-    CharFlags::CompoundPunctuationStart,    // >
-    CharFlags::Complex,                     // ?
+    Core::Parser::CharFlags::White,                       // SPC
+    Core::Parser::CharFlags::Punctuation,                 // !
+    Core::Parser::CharFlags::Complex,                     // "
+    Core::Parser::CharFlags::Punctuation,                 // #
+    Core::Parser::CharFlags::Punctuation,                 // $
+    Core::Parser::CharFlags::Complex,                     // %
+    Core::Parser::CharFlags::Punctuation,                 // &
+    Core::Parser::CharFlags::Complex,                     // '
+    Core::Parser::CharFlags::Complex,                     // (
+    Core::Parser::CharFlags::Punctuation,                 // )
+    Core::Parser::CharFlags::Complex,                     // *
+    Core::Parser::CharFlags::Punctuation,                 // +
+    Core::Parser::CharFlags::Punctuation,                 // ,
+    Core::Parser::CharFlags::CompoundPunctuationStart,    // -
+    Core::Parser::CharFlags::Dot,                         // .
+    Core::Parser::CharFlags::Slash,                       // /
+    Core::Parser::CharFlags::Digit,                       // 0
+    Core::Parser::CharFlags::Digit,                       // 1
+    Core::Parser::CharFlags::Digit,                       // 2
+    Core::Parser::CharFlags::Digit,                       // 3
+    Core::Parser::CharFlags::Digit,                       // 4
+    Core::Parser::CharFlags::Digit,                       // 5
+    Core::Parser::CharFlags::Digit,                       // 6
+    Core::Parser::CharFlags::Digit,                       // 7
+    Core::Parser::CharFlags::Digit,                       // 8
+    Core::Parser::CharFlags::Digit,                       // 9
+    Core::Parser::CharFlags::CompoundPunctuationStart,    // :
+    Core::Parser::CharFlags::Punctuation,                 // ;
+    Core::Parser::CharFlags::CompoundPunctuationStart,    // <
+    Core::Parser::CharFlags::Punctuation,                 // =
+    Core::Parser::CharFlags::CompoundPunctuationStart,    // >
+    Core::Parser::CharFlags::Complex,                     // ?
 
     // 64 .. 95
-    CharFlags::CompoundPunctuationStart,    // @
-    CharFlags::Letter,                      // A
-    CharFlags::Letter,                      // B
-    CharFlags::Letter,                      // C
-    CharFlags::Letter,                      // D
-    CharFlags::Letter,                      // E
-    CharFlags::Letter,                      // F
-    CharFlags::Letter,                      // G
-    CharFlags::Letter,                      // H
-    CharFlags::Letter,                      // I
-    CharFlags::Letter,                      // J
-    CharFlags::Letter,                      // K
-    CharFlags::Letter,                      // L
-    CharFlags::Letter,                      // M
-    CharFlags::Letter,                      // N
-    CharFlags::Letter,                      // O
-    CharFlags::Letter,                      // P
-    CharFlags::Letter,                      // Q
-    CharFlags::Letter,                      // R
-    CharFlags::Letter,                      // S
-    CharFlags::Letter,                      // T
-    CharFlags::Letter,                      // U
-    CharFlags::Letter,                      // V
-    CharFlags::Letter,                      // W
-    CharFlags::Letter,                      // X
-    CharFlags::Letter,                      // Y
-    CharFlags::Letter,                      // Z
-    CharFlags::Punctuation,                 // [
-    CharFlags::Complex,                     // Backslash
-    CharFlags::Punctuation,                 // ]
-    CharFlags::CompoundPunctuationStart,    // ^
-    CharFlags::Letter,                      // _
+    Core::Parser::CharFlags::CompoundPunctuationStart,    // @
+    Core::Parser::CharFlags::Letter,                      // A
+    Core::Parser::CharFlags::Letter,                      // B
+    Core::Parser::CharFlags::Letter,                      // C
+    Core::Parser::CharFlags::Letter,                      // D
+    Core::Parser::CharFlags::Letter,                      // E
+    Core::Parser::CharFlags::Letter,                      // F
+    Core::Parser::CharFlags::Letter,                      // G
+    Core::Parser::CharFlags::Letter,                      // H
+    Core::Parser::CharFlags::Letter,                      // I
+    Core::Parser::CharFlags::Letter,                      // J
+    Core::Parser::CharFlags::Letter,                      // K
+    Core::Parser::CharFlags::Letter,                      // L
+    Core::Parser::CharFlags::Letter,                      // M
+    Core::Parser::CharFlags::Letter,                      // N
+    Core::Parser::CharFlags::Letter,                      // O
+    Core::Parser::CharFlags::Letter,                      // P
+    Core::Parser::CharFlags::Letter,                      // Q
+    Core::Parser::CharFlags::Letter,                      // R
+    Core::Parser::CharFlags::Letter,                      // S
+    Core::Parser::CharFlags::Letter,                      // T
+    Core::Parser::CharFlags::Letter,                      // U
+    Core::Parser::CharFlags::Letter,                      // V
+    Core::Parser::CharFlags::Letter,                      // W
+    Core::Parser::CharFlags::Letter,                      // X
+    Core::Parser::CharFlags::Letter,                      // Y
+    Core::Parser::CharFlags::Letter,                      // Z
+    Core::Parser::CharFlags::Punctuation,                 // [
+    Core::Parser::CharFlags::Complex,                     // Backslash
+    Core::Parser::CharFlags::Punctuation,                 // ]
+    Core::Parser::CharFlags::CompoundPunctuationStart,    // ^
+    Core::Parser::CharFlags::Letter,                      // _
 
     // 96 .. 127
-    CharFlags::Complex,     // `
-    CharFlags::Letter,      // a
-    CharFlags::Letter,      // b
-    CharFlags::Letter,      // c
-    CharFlags::Letter,      // d
-    CharFlags::Letter,      // e
-    CharFlags::Letter,      // f
-    CharFlags::Letter,      // g
-    CharFlags::Letter,      // h
-    CharFlags::Letter,      // i
-    CharFlags::Letter,      // j
-    CharFlags::Letter,      // k
-    CharFlags::Letter,      // k
-    CharFlags::Letter,      // m
-    CharFlags::Letter,      // n
-    CharFlags::Letter,      // o
-    CharFlags::Letter,      // p
-    CharFlags::Letter,      // q
-    CharFlags::Letter,      // r
-    CharFlags::Letter,      // s
-    CharFlags::Letter,      // t
-    CharFlags::Letter,      // u
-    CharFlags::Letter,      // v
-    CharFlags::Letter,      // w
-    CharFlags::Letter,      // x
-    CharFlags::Letter,      // y
-    CharFlags::Letter,      // z
-    CharFlags::Complex,     // {
-    CharFlags::Complex,     // |
-    CharFlags::Punctuation, // }
-    CharFlags::Complex,     // ~
-    CharFlags::Complex,     // DEL
+    Core::Parser::CharFlags::Complex,     // `
+    Core::Parser::CharFlags::Letter,      // a
+    Core::Parser::CharFlags::Letter,      // b
+    Core::Parser::CharFlags::Letter,      // c
+    Core::Parser::CharFlags::Letter,      // d
+    Core::Parser::CharFlags::Letter,      // e
+    Core::Parser::CharFlags::Letter,      // f
+    Core::Parser::CharFlags::Letter,      // g
+    Core::Parser::CharFlags::Letter,      // h
+    Core::Parser::CharFlags::Letter,      // i
+    Core::Parser::CharFlags::Letter,      // j
+    Core::Parser::CharFlags::Letter,      // k
+    Core::Parser::CharFlags::Letter,      // k
+    Core::Parser::CharFlags::Letter,      // m
+    Core::Parser::CharFlags::Letter,      // n
+    Core::Parser::CharFlags::Letter,      // o
+    Core::Parser::CharFlags::Letter,      // p
+    Core::Parser::CharFlags::Letter,      // q
+    Core::Parser::CharFlags::Letter,      // r
+    Core::Parser::CharFlags::Letter,      // s
+    Core::Parser::CharFlags::Letter,      // t
+    Core::Parser::CharFlags::Letter,      // u
+    Core::Parser::CharFlags::Letter,      // v
+    Core::Parser::CharFlags::Letter,      // w
+    Core::Parser::CharFlags::Letter,      // x
+    Core::Parser::CharFlags::Letter,      // y
+    Core::Parser::CharFlags::Letter,      // z
+    Core::Parser::CharFlags::Complex,     // {
+    Core::Parser::CharFlags::Complex,     // |
+    Core::Parser::CharFlags::Punctuation, // }
+    Core::Parser::CharFlags::Complex,     // ~
+    Core::Parser::CharFlags::Complex,     // DEL
 
     // 128 .. 159
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
 
     // 160 .. 191
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
 
     // 192 ..
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex,
-    CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex, CharFlags::Complex
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex,
+    Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex, Core::Parser::CharFlags::Complex
 };
 
 static constexpr auto CHAR_PROPERTIES_LENGTH = static_cast<int>(sizeof(CHAR_PROPERTIES) / sizeof(CHAR_PROPERTIES[0]));

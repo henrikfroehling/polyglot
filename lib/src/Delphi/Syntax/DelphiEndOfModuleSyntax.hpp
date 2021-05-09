@@ -2,35 +2,41 @@
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULESYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "DelphiSyntaxNode.hpp"
+
+namespace polyglot::Core::Syntax
+{
+
+class ISyntaxToken;
+class SyntaxFactory;
+
+} // end namespace polyglot::Core::Syntax
 
 namespace polyglot::Delphi::Syntax
 {
 
-class ISyntaxNode;
-class ISyntaxToken;
-class SyntaxFactory;
-
 class DelphiEndOfModuleSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiEndOfModuleSyntax(ISyntaxToken* endKeyword,
-                                     ISyntaxToken* dotToken) noexcept;
+    explicit DelphiEndOfModuleSyntax(Core::Syntax::ISyntaxToken* endKeyword,
+                                     Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
-    virtual ~DelphiEndOfModuleSyntax() noexcept = default;
+    virtual ~DelphiEndOfModuleSyntax() noexcept {}
 
-    inline ISyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
-    inline ISyntaxToken* dotToken() const noexcept { return _pDotToken; }
-    inline pg_size childCount() const noexcept override { return 2; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline Core::Syntax::ISyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
+    inline Core::Syntax::ISyntaxToken* dotToken() const noexcept { return _pDotToken; }
+    inline pg_size childCount() const noexcept override final { return 2; }
+    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
 
-    static DelphiEndOfModuleSyntax* create(SyntaxFactory& syntaxFactory,
-                                           ISyntaxToken* endKeyword,
-                                           ISyntaxToken* dotToken) noexcept;
+    static DelphiEndOfModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
+                                           Core::Syntax::ISyntaxToken* endKeyword,
+                                           Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
 private:
-    ISyntaxToken* _pEndKeyword;
-    ISyntaxToken* _pDotToken;
+    Core::Syntax::ISyntaxToken* _pEndKeyword;
+    Core::Syntax::ISyntaxToken* _pDotToken;
 };
 
 } // end namespace polyglot::Delphi::Syntax

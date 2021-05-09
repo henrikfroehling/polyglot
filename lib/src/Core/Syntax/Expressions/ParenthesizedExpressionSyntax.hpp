@@ -2,6 +2,8 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_PARENTHESIZEDEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/ExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -19,12 +21,12 @@ public:
                                            ExpressionSyntax* expression,
                                            ISyntaxToken* closeParenthesisToken) noexcept;
 
-    virtual ~ParenthesizedExpressionSyntax() noexcept = default;
+    virtual ~ParenthesizedExpressionSyntax() noexcept {}
     inline virtual ISyntaxToken* openParenthesisToken() const noexcept { return _pOpenParenthesisToken; }
     inline virtual ExpressionSyntax* expression() const noexcept { return _pExpression; }
     inline virtual ISyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
-    inline virtual pg_size childCount() const noexcept override { return 3; }
-    virtual ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static ParenthesizedExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  ISyntaxToken* openParenthesisToken,

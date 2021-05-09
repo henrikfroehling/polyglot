@@ -10,6 +10,11 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* head,
                                                      DelphiUsesClauseSyntax* uses,
                                                      ISyntaxToken* EOFToken) noexcept
@@ -19,17 +24,16 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* he
 {
     _position = _pHead->position();
     adjustWidthAndFlags(_pHead);
-    _pHead->setChildNumber(0);
-    adjustWidthAndFlags(_pUses);
-    _pUses->setChildNumber(1);
+    adjustWidthAndFlags(dynamic_cast<SyntaxNode*>(_pUses));
 }
 
-ISyntaxNode* DelphiProgramModuleSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiProgramModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pHead;
-        case 1: return _pUses;
+        case 0: return SyntaxNodeOrToken::asNode(_pHead);
+        case 1: return SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(_pUses));
+        case 2: return SyntaxNodeOrToken::asToken(_pEOFToken);
     }
 
     throw std::out_of_range{"index out of range"};
@@ -43,7 +47,7 @@ DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& synt
     assert(head != nullptr);
     assert(head->syntaxKind() == SyntaxKind::ProgramHead);
     assert(uses != nullptr);
-    assert(uses->syntaxKind() == SyntaxKind::UsesClause);
+    assert(dynamic_cast<SyntaxNode*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
     assert(EOFToken != nullptr);
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 

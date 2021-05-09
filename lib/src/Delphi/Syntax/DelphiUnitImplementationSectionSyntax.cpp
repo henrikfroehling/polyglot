@@ -9,6 +9,11 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(ISyntaxToken* implementationKeyword,
                                                                              DelphiUsesClauseSyntax* uses) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitImplementationSection},
@@ -17,30 +22,26 @@ DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(ISy
 {
     _position = _pImplementationKeyword->position();
     adjustWidthAndFlags(_pImplementationKeyword);
-    _pImplementationKeyword->setChildNumber(0);
 
     if (_pUses != nullptr)
-    {
-        adjustWidthAndFlags(_pUses);
-        _pUses->setChildNumber(1);
-    }
+        adjustWidthAndFlags(dynamic_cast<SyntaxNode*>(_pUses));
 }
 
-ISyntaxNode* DelphiUnitImplementationSectionSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiUnitImplementationSectionSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
         case 1:
         {
             if (index == 0)
-                return _pImplementationKeyword;
+                return SyntaxNodeOrToken::asToken(_pImplementationKeyword);
         }
         case 2:
         {
             switch (index)
             {
-                case 0: return _pImplementationKeyword;
-                case 1: return _pUses;
+                case 0: return SyntaxNodeOrToken::asToken(_pImplementationKeyword);
+                case 1: return SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(_pUses));
             }
         }
     }
@@ -56,7 +57,7 @@ DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::cr
     assert(implementationKeyword->syntaxKind() == SyntaxKind::ImplementationKeyword);
 
     if (uses != nullptr)
-        assert(uses->syntaxKind() == SyntaxKind::UsesClause);
+        assert(dynamic_cast<SyntaxNode*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitImplementationSectionSyntax = std::make_unique<DelphiUnitImplementationSectionSyntax>(implementationKeyword, uses);
     return dynamic_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));

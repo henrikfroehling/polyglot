@@ -9,6 +9,11 @@
 namespace polyglot::Delphi::Syntax
 {
 
+using Core::Syntax::ISyntaxToken;
+using Core::Syntax::SyntaxFactory;
+using Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxNodeOrToken;
+
 DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(ISyntaxToken* interfaceKeyword,
                                                                    DelphiUsesClauseSyntax* uses) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitInterfaceSection},
@@ -17,30 +22,26 @@ DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(ISyntaxToken*
 {
     _position = _pInterfaceKeyword->position();
     adjustWidthAndFlags(_pInterfaceKeyword);
-    _pInterfaceKeyword->setChildNumber(0);
 
     if (_pUses != nullptr)
-    {
-        adjustWidthAndFlags(_pUses);
-        _pUses->setChildNumber(1);
-    }
+        adjustWidthAndFlags(dynamic_cast<SyntaxNode*>(_pUses));
 }
 
-ISyntaxNode* DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
+SyntaxNodeOrToken DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
         case 1:
         {
             if (index == 0)
-                return _pInterfaceKeyword;
+                return SyntaxNodeOrToken::asToken(_pInterfaceKeyword);
         }
         case 2:
         {
             switch (index)
             {
-                case 0: return _pInterfaceKeyword;
-                case 1: return _pUses;
+                case 0: return SyntaxNodeOrToken::asToken(_pInterfaceKeyword);
+                case 1: return SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(_pUses));
             }
         }
     }
@@ -56,7 +57,7 @@ DelphiUnitInterfaceSectionSyntax* DelphiUnitInterfaceSectionSyntax::create(Synta
     assert(interfaceKeyword->syntaxKind() == SyntaxKind::InterfaceKeyword);
 
     if (uses != nullptr)
-        assert(uses->syntaxKind() == SyntaxKind::UsesClause);
+        assert(dynamic_cast<SyntaxNode*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitInterfaceSectionSyntax = std::make_unique<DelphiUnitInterfaceSectionSyntax>(interfaceKeyword, uses);
     return dynamic_cast<DelphiUnitInterfaceSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitInterfaceSectionSyntax)));

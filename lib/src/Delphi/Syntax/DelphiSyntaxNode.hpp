@@ -7,12 +7,12 @@
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiSyntaxNode : public SyntaxNode
+class DelphiSyntaxNode : public Core::Syntax::SyntaxNode
 {
 public:
-    explicit DelphiSyntaxNode(SyntaxKind syntaxKind) noexcept;
-    virtual ~DelphiSyntaxNode() noexcept = default;
-    inline LanguageKind languageKind() const noexcept override { return LanguageKind::Delphi; }
+    explicit DelphiSyntaxNode(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    virtual ~DelphiSyntaxNode() noexcept {}
+    inline Core::LanguageKind languageKind() const noexcept override { return Core::LanguageKind::Delphi; }
 };
 
 } // end namespace polyglot::Delphi::Syntax

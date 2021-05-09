@@ -13,6 +13,12 @@
 namespace polyglot::Delphi::Parser
 {
 
+using namespace Core::Parser;
+using namespace Core::Syntax;
+using namespace Core::Text;
+
+using Core::Parser::TokenInfo;
+
 static const TokenInfo EMPTY_TOKEN_INFO{};
 static constexpr unsigned MAX_KEYWORD_LENGTH{14};
 

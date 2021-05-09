@@ -2,12 +2,13 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_ELSEDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "BranchingDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxFactory;
 
@@ -21,14 +22,14 @@ public:
                                        bool isActive,
                                        bool isBranchTaken) noexcept;
 
-    virtual ~ElseDirectiveTriviaSyntax() noexcept = default;
+    virtual ~ElseDirectiveTriviaSyntax() noexcept {}
     inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
     inline virtual ISyntaxToken* elseKeyword() const noexcept { return _pElseKeyword; }
     inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
-    inline pg_size childCount() const noexcept override { return 3; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 3; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static ElseDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                              ISyntaxToken* startToken,

@@ -15,13 +15,12 @@ IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(ISyntaxToken* ide
 {
     _position = _pIdentifier->position();
     adjustWidthAndFlags(_pIdentifier);
-    _pIdentifier->setChildNumber(0);
 }
 
-ISyntaxNode* IdentifierNameExpressionSyntax::child(pg_size index) const
+SyntaxNodeOrToken IdentifierNameExpressionSyntax::child(pg_size index) const
 {
     if (index == 0)
-        return _pIdentifier;
+        return SyntaxNodeOrToken::asToken(_pIdentifier);
 
     throw std::out_of_range{"index out of range"};
 }

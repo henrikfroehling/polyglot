@@ -20,21 +20,18 @@ EndRegionDirectiveTriviaSyntax::EndRegionDirectiveTriviaSyntax(SyntaxKind syntax
       _isActive{isActive}
 {
     _position = _pStartToken->position();
-    adjustWidthAndFlags(_pStartToken);
-    _pStartToken->setChildNumber(0);
-    adjustWidthAndFlags(_pEndRegionKeyword);
-    _pEndRegionKeyword->setChildNumber(1);
-    adjustWidthAndFlags(_pEndOfDirectiveToken);
-    _pEndOfDirectiveToken->setChildNumber(2);
+    adjustWidth(_pStartToken);
+    adjustWidth(_pEndRegionKeyword);
+    adjustWidth(_pEndOfDirectiveToken);
 }
 
-ISyntaxNode* EndRegionDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxNodeOrToken EndRegionDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pStartToken;
-        case 1: return _pEndRegionKeyword;
-        case 2: return _pEndOfDirectiveToken;
+        case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
+        case 1: return SyntaxNodeOrToken::asToken(_pEndRegionKeyword);
+        case 2: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
     }
 
     throw std::out_of_range{"index out of range"};

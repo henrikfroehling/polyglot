@@ -3,8 +3,8 @@
 
 #include <string_view>
 #include <vector>
+#include "polyglot/Core/Text/SourceText.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "SourceText.hpp"
 
 namespace polyglot::Core::Text
 {

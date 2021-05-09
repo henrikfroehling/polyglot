@@ -8,9 +8,9 @@ DirectiveTriviaSyntax::DirectiveTriviaSyntax(SyntaxKind syntaxKind) noexcept
     : StructuredTriviaSyntax{syntaxKind}
 {}
 
-DirectiveStack DirectiveTriviaSyntax::applyDirectives(DirectiveStack stack) const noexcept
+Parser::DirectiveStack DirectiveTriviaSyntax::applyDirectives(Parser::DirectiveStack stack) const noexcept
 {
-    return stack.add(std::make_shared<Directive>(const_cast<DirectiveTriviaSyntax*>(this)));
+    return stack.add(std::make_shared<Parser::Directive>(const_cast<DirectiveTriviaSyntax*>(this)));
 }
 
 } // end namespace polyglot::Core::Syntax

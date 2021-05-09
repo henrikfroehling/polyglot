@@ -2,7 +2,7 @@
 #include <cassert>
 #include <memory>
 #include <stdexcept>
-#include "polyglot/CodeAnalysis/Syntax/ISyntaxToken.hpp"
+#include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 
 namespace polyglot::Core::Syntax
@@ -19,20 +19,17 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
 {
     _position = _pLeftExpression->position();
     adjustWidthAndFlags(_pLeftExpression);
-    _pLeftExpression->setChildNumber(0);
     adjustWidthAndFlags(_pOperatorToken);
-    _pOperatorToken->setChildNumber(1);
     adjustWidthAndFlags(_pRightExpression);
-    _pRightExpression->setChildNumber(2);
 }
 
-ISyntaxNode* BinaryExpressionSyntax::child(pg_size index) const
+SyntaxNodeOrToken BinaryExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return _pLeftExpression;
-        case 1: return _pOperatorToken;
-        case 2: return _pRightExpression;
+        case 0: return SyntaxNodeOrToken::asNode(_pLeftExpression);
+        case 1: return SyntaxNodeOrToken::asToken(_pOperatorToken);
+        case 2: return SyntaxNodeOrToken::asNode(_pRightExpression);
     }
 
     throw std::out_of_range{"index out of range"};

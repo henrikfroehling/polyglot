@@ -2,12 +2,13 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_SWITCHDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-class ISyntaxNode;
 class ISyntaxToken;
 class SyntaxFactory;
 
@@ -20,14 +21,14 @@ public:
                                          ISyntaxToken* onOffToken,
                                          ISyntaxToken* endOfDirectiveToken) noexcept;
 
-    virtual ~SwitchDirectiveTriviaSyntax() noexcept = default;
+    virtual ~SwitchDirectiveTriviaSyntax() noexcept {}
     inline virtual ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
     inline virtual ISyntaxToken* identifier() const noexcept { return _pIdentifier; }
     inline virtual ISyntaxToken* onOffToken() const noexcept { return _pOnOffToken; }
     inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return false; }
-    inline pg_size childCount() const noexcept override { return 4; }
-    ISyntaxNode* child(pg_size index) const override;
+    inline pg_size childCount() const noexcept override final { return 4; }
+    SyntaxNodeOrToken child(pg_size index) const override final;
 
     static SwitchDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                                ISyntaxToken* startToken,

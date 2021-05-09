@@ -3,18 +3,23 @@
 
 #include "DelphiSyntaxNode.hpp"
 
-namespace polyglot::Delphi::Syntax
+namespace polyglot::Core::Syntax
 {
 
 class SyntaxFactory;
+
+} // end namespace polyglot::Core::Syntax
+
+namespace polyglot::Delphi::Syntax
+{
 
 class DelphiUnitInitializationSectionSyntax : public DelphiSyntaxNode
 {
 public:
     DelphiUnitInitializationSectionSyntax() noexcept;
-    virtual ~DelphiUnitInitializationSectionSyntax() noexcept = default;
+    virtual ~DelphiUnitInitializationSectionSyntax() noexcept {}
 
-    static DelphiUnitInitializationSectionSyntax* create(SyntaxFactory& syntaxFactory) noexcept;
+    static DelphiUnitInitializationSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory) noexcept;
 };
 
 } // end namespace polyglot::Delphi::Syntax
