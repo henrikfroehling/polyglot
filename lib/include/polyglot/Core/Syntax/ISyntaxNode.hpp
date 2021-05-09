@@ -29,9 +29,10 @@ public:
     virtual pg_size fullWidth() const noexcept = 0;
     virtual pg_size position() const noexcept = 0;
     virtual pg_size endPosition() const noexcept = 0;
-    virtual pg_size spanStart() const noexcept = 0;
-    virtual TextSpan span() const noexcept = 0;
-    virtual TextSpan fullSpan() const noexcept = 0;
+    virtual pg_size positionIncludingTrivia() const noexcept = 0;
+    virtual pg_size endPositionIncludingTrivia() const noexcept = 0;
+    virtual Text::TextSpan span() const noexcept = 0;
+    virtual Text::TextSpan fullSpan() const noexcept = 0;
 
     virtual pg_size childCount() const noexcept = 0;
     virtual SyntaxNodeOrToken child(pg_size index) const = 0;

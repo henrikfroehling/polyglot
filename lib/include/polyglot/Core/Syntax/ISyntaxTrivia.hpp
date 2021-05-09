@@ -27,8 +27,7 @@ public:
     virtual pg_size width() const noexcept = 0;
     virtual pg_size position() const noexcept = 0;
     virtual pg_size endPosition() const noexcept = 0;
-    virtual pg_size spanStart() const noexcept = 0;
-    virtual TextSpan span() const noexcept = 0;
+    virtual Text::TextSpan span() const noexcept = 0;
 
     virtual bool isStructuredTrivia() const noexcept = 0;
     virtual bool isDirective() const noexcept = 0;

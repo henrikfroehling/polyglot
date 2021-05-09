@@ -26,13 +26,12 @@ public:
     virtual pg_size width() const noexcept = 0;
     virtual pg_size position() const noexcept = 0;
     virtual pg_size endPosition() const noexcept = 0;
-    virtual pg_size spanStart() const noexcept = 0;
-    virtual TextSpan span() const noexcept = 0;
+    virtual Text::TextSpan span() const noexcept = 0;
 
-    virtual pg_size count() const = 0;
+    virtual pg_size count() const noexcept = 0;
     virtual ISyntaxTrivia* child(pg_size index) const = 0;
-    virtual ISyntaxTrivia* first() const = 0;
-    virtual ISyntaxTrivia* last() const = 0;
+    virtual ISyntaxTrivia* first() const noexcept = 0;
+    virtual ISyntaxTrivia* last() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

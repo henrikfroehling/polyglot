@@ -16,6 +16,10 @@ struct SyntaxNodeOrToken
 
     inline bool isNode() const noexcept { return node != nullptr; }
     inline bool isToken() const noexcept { return token != nullptr; }
+
+    inline static SyntaxNodeOrToken asToken(ISyntaxToken* token) noexcept { return SyntaxNodeOrToken{nullptr, token}; }
+
+    inline static SyntaxNodeOrToken asNode(ISyntaxNode* node) noexcept { return SyntaxNodeOrToken{node, nullptr}; }
 };
 
 } // end namespace polyglot::Core::Syntax
