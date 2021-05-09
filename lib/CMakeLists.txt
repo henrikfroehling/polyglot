@@ -122,24 +122,6 @@ set(SOURCES_CORE_TEXT
   ${SOURCE_DIR}/Core/Text/TextWindow.cpp
 )
 
-set(SOURCES_CODEANALYSIS_CORE
-  ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/ISyntaxTree.cpp
-)
-
-set(SOURCES_CODEANALYSIS_CORE_SYNTAX
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTriviaList.cpp
-)
-
 set(SOURCES_DELPHI_PARSER
   ${SOURCE_DIR}/Delphi/Parser/DelphiDirectiveParser.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexer.cpp
@@ -183,7 +165,6 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES_CORE_SYNTAX_EXPRESSIONS}
   ${SOURCES_CORE_SYNTAX_TRIVIA}
   ${SOURCES_CORE_TEXT}
-  ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
   ${SOURCES_DELPHI_PARSER}
   ${SOURCES_DELPHI_SYNTAX}
 )
