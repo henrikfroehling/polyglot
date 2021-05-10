@@ -2,7 +2,7 @@
 #include <cassert>
 #include <algorithm>
 #include <vector>
-#include "TextUtilities.hpp"
+#include "Core/Text/TextUtilities.hpp"
 
 namespace polyglot::Core::Text
 {

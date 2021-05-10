@@ -1,4 +1,4 @@
-#include "DelphiUnitHeadSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"

@@ -6,7 +6,7 @@
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "TokenInfo.hpp"
+#include "Core/Parser/TokenInfo.hpp"
 
 namespace polyglot::Core::Parser
 {

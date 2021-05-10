@@ -1,4 +1,4 @@
-#include "BinaryExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

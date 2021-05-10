@@ -1,4 +1,4 @@
-#include "UndefDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"

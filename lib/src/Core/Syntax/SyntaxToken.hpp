@@ -9,7 +9,7 @@
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "SyntaxFlags.hpp"
+#include "Core/Syntax/SyntaxFlags.hpp"
 
 namespace polyglot::Core::Syntax
 {

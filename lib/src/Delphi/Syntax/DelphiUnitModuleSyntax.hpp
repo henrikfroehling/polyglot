@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "DelphiCompilationUnitSyntax.hpp"
+#include "Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

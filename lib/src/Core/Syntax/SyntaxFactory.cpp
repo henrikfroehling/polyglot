@@ -1,12 +1,12 @@
-#include "SyntaxFactory.hpp"
+#include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Parser/TokenInfo.hpp"
-#include "SyntaxList.hpp"
-#include "SyntaxMissingToken.hpp"
-#include "SyntaxNode.hpp"
-#include "SyntaxPool.hpp"
-#include "SyntaxToken.hpp"
-#include "SyntaxTrivia.hpp"
-#include "SyntaxTriviaList.hpp"
+#include "Core/Syntax/SyntaxList.hpp"
+#include "Core/Syntax/SyntaxMissingToken.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxPool.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
+#include "Core/Syntax/SyntaxTriviaList.hpp"
 
 namespace polyglot::Core::Syntax
 {

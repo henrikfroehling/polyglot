@@ -1,4 +1,4 @@
-#include "TokenInfo.hpp"
+#include "Core/Parser/TokenInfo.hpp"
 
 namespace polyglot::Core::Parser
 {

@@ -1,4 +1,4 @@
-#include "EndRegionDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

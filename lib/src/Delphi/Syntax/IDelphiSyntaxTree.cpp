@@ -1,6 +1,6 @@
 #include "polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp"
 #include "polyglot/Core/Text/SourceText.hpp"
-#include "DelphiSyntaxTree.hpp"
+#include "Delphi/Syntax/DelphiSyntaxTree.hpp"
 
 namespace polyglot::Delphi::Syntax
 {

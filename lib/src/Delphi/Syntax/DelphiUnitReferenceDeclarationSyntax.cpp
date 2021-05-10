@@ -1,4 +1,4 @@
-#include "DelphiUnitReferenceDeclarationSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"

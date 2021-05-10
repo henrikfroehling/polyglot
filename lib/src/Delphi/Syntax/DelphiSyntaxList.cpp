@@ -1,4 +1,4 @@
-#include "DelphiSyntaxList.hpp"
+#include "Delphi/Syntax/DelphiSyntaxList.hpp"
 #include <vector>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 

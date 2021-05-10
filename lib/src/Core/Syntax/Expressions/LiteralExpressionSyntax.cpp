@@ -1,4 +1,4 @@
-#include "LiteralExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

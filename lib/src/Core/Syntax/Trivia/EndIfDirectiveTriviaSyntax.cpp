@@ -1,4 +1,4 @@
-#include "EndIfDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

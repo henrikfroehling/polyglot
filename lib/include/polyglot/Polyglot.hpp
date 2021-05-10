@@ -10,6 +10,8 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 
+#include "polyglot/Core/Text/LinePosition.hpp"
+#include "polyglot/Core/Text/LinePositionSpan.hpp"
 #include "polyglot/Core/Text/SourceText.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
 

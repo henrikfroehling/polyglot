@@ -1,4 +1,4 @@
-#include "DelphiDirectiveParser.hpp"
+#include "Delphi/Parser/DelphiDirectiveParser.hpp"
 #include <cassert>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
@@ -26,7 +26,7 @@
 #include "Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
 #include "Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
 #include "Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.hpp"
-#include "DelphiSyntaxFacts.hpp"
+#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Parser
 {

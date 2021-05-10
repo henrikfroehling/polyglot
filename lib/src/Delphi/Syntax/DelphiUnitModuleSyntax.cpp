@@ -1,15 +1,15 @@
-#include "DelphiUnitModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "DelphiEndOfModuleSyntax.hpp"
-#include "DelphiUnitFinalizationSectionSyntax.hpp"
-#include "DelphiUnitHeadSyntax.hpp"
-#include "DelphiUnitImplementationSectionSyntax.hpp"
-#include "DelphiUnitInitializationSectionSyntax.hpp"
-#include "DelphiUnitInterfaceSectionSyntax.hpp"
+#include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitInitializationSectionSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {

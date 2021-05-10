@@ -1,4 +1,4 @@
-#include "SwitchDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

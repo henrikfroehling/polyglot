@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_BRANCHINGDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "DirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

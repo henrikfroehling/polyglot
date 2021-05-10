@@ -1,4 +1,4 @@
-#include "DirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 #include "Core/Parser/Directive.hpp"
 
 namespace polyglot::Core::Syntax

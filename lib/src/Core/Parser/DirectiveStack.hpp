@@ -3,7 +3,7 @@
 
 #include <string_view>
 #include "polyglot/Core/Types.hpp"
-#include "DirectiveList.hpp"
+#include "Core/Parser/DirectiveList.hpp"
 
 namespace polyglot::Core::Parser
 {

@@ -1,4 +1,4 @@
-#include "DirectiveParser.hpp"
+#include "Core/Parser/DirectiveParser.hpp"
 
 namespace polyglot::Core::Parser
 {

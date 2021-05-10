@@ -4,8 +4,8 @@
 #include "polyglot/Core/Syntax/ISyntaxTree.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
+#include "Core/Syntax/SyntaxPool.hpp"
 #include "Core/Text/SourceText.hpp"
-#include "SyntaxPool.hpp"
 
 namespace polyglot::Core::Syntax
 {

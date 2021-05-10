@@ -1,10 +1,10 @@
-#include "DelphiUnitInterfaceSectionSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "DelphiUsesClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {

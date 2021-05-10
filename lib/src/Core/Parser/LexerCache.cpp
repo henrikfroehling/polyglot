@@ -1,4 +1,4 @@
-#include "LexerCache.hpp"
+#include "Core/Parser/LexerCache.hpp"
 
 namespace polyglot::Core::Parser
 {

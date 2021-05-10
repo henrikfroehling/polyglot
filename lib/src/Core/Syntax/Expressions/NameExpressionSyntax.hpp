@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_NAMEEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "TypeExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/TypeExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

@@ -1,4 +1,4 @@
-#include "ConditionalDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

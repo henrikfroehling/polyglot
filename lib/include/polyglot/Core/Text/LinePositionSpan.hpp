@@ -1,12 +1,13 @@
 #ifndef POLYGLOT_CORE_TEXT_LINEPOSITIONSPAN_H
 #define POLYGLOT_CORE_TEXT_LINEPOSITIONSPAN_H
 
-#include "LinePosition.hpp"
+#include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Text/LinePosition.hpp"
 
 namespace polyglot::Core::Text
 {
 
-class LinePositionSpan final
+class POLYGLOT_API LinePositionSpan final
 {
 public:
     LinePositionSpan() = delete;

@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_SIMPLENAMEEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "NameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

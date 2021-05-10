@@ -1,4 +1,4 @@
-#include "DelphiSyntaxTree.hpp"
+#include "Delphi/Syntax/DelphiSyntaxTree.hpp"
 #include "Core/Syntax/SyntaxPool.hpp"
 #include "Delphi/Parser/DelphiParser.hpp"
 

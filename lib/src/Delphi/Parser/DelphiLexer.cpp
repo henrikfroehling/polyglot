@@ -1,14 +1,14 @@
-#include "DelphiLexer.hpp"
+#include "Delphi/Parser/DelphiLexer.hpp"
 #include <cassert>
 #include <algorithm>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "Core/Syntax/SyntaxTrivia.hpp"
 #include "Core/Hashing.hpp"
-#include "DelphiDirectiveParser.hpp"
-#include "DelphiLexerFlags.hpp"
-#include "DelphiLexerStates.hpp"
-#include "DelphiSyntaxFacts.hpp"
+#include "Delphi/Parser/DelphiDirectiveParser.hpp"
+#include "Delphi/Parser/DelphiLexerFlags.hpp"
+#include "Delphi/Parser/DelphiLexerStates.hpp"
+#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Parser
 {

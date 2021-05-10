@@ -1,4 +1,4 @@
-#include "DelphiPackageRequiresClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageRequiresClauseSyntax.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::Delphi::Syntax

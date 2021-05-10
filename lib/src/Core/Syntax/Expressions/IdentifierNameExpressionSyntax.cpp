@@ -1,4 +1,4 @@
-#include "IdentifierNameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

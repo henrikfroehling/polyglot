@@ -3,8 +3,8 @@
 
 #include <functional>
 #include <string_view>
-#include "TextKeyedCache.hpp"
-#include "TokenInfo.hpp"
+#include "Core/Parser/TextKeyedCache.hpp"
+#include "Core/Parser/TokenInfo.hpp"
 
 namespace polyglot::Core::Parser
 {

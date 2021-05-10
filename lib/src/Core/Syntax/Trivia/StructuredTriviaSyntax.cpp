@@ -1,4 +1,4 @@
-#include "StructuredTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 

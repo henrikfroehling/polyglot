@@ -1,4 +1,4 @@
-#include "TypeExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/TypeExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

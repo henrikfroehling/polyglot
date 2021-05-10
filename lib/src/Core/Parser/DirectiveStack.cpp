@@ -1,6 +1,6 @@
-#include "DirectiveStack.hpp"
+#include "Core/Parser/DirectiveStack.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "Directive.hpp"
+#include "Core/Parser/Directive.hpp"
 
 namespace polyglot::Core::Parser
 {

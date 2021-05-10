@@ -1,4 +1,4 @@
-#include "RegionDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

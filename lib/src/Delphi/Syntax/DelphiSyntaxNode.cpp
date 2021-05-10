@@ -1,4 +1,4 @@
-#include "DelphiSyntaxNode.hpp"
+#include "Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::Delphi::Syntax
 {

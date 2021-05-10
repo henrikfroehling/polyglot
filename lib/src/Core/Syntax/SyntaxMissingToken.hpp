@@ -4,7 +4,7 @@
 #include <string_view>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "SyntaxToken.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::Core::Syntax
 {

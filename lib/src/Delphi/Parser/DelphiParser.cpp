@@ -1,4 +1,4 @@
-#include "DelphiParser.hpp"
+#include "Delphi/Parser/DelphiParser.hpp"
 #include <cassert>
 #include <iostream>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
@@ -7,6 +7,8 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
+#include "Delphi/Parser/DelphiLexer.hpp"
+#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
@@ -18,8 +20,6 @@
 #include "Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
-#include "DelphiLexer.hpp"
-#include "DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Parser
 {

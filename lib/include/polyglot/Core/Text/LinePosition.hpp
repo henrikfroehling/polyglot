@@ -1,12 +1,13 @@
 #ifndef POLYGLOT_CORE_TEXT_LINEPOSITION_H
 #define POLYGLOT_CORE_TEXT_LINEPOSITION_H
 
+#include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::Core::Text
 {
 
-class LinePosition final
+class POLYGLOT_API LinePosition final
 {
 public:
     LinePosition() noexcept = default;

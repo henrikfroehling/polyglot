@@ -1,4 +1,4 @@
-#include "ElseIfDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

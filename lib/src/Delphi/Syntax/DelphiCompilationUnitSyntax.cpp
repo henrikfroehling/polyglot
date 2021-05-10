@@ -1,4 +1,4 @@
-#include "DelphiCompilationUnitSyntax.hpp"
+#include "Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
 #include <cassert>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"

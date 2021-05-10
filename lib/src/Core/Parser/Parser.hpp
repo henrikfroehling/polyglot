@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Lexer.hpp"
+#include "Core/Parser/Lexer.hpp"
 
 namespace polyglot::Core::Syntax
 {

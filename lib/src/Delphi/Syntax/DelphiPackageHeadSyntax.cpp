@@ -1,4 +1,4 @@
-#include "DelphiPackageHeadSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageHeadSyntax.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::Delphi::Syntax

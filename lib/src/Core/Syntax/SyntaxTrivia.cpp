@@ -1,4 +1,4 @@
-#include "SyntaxTrivia.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::Core::Syntax
 {

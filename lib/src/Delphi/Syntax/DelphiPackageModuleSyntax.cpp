@@ -1,12 +1,12 @@
-#include "DelphiPackageModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "DelphiPackageContainsClauseSyntax.hpp"
-#include "DelphiPackageHeadSyntax.hpp"
-#include "DelphiPackageRequiresClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageContainsClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageHeadSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageRequiresClauseSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {

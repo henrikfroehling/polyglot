@@ -1,4 +1,4 @@
-#include "MessageDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

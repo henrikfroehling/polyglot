@@ -6,7 +6,7 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::Core::Syntax
 {

@@ -1,4 +1,4 @@
-#include "ElseDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

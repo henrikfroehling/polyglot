@@ -1,4 +1,4 @@
-#include "ParenthesizedExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

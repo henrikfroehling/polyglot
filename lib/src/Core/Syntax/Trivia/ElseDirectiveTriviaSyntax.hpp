@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "BranchingDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

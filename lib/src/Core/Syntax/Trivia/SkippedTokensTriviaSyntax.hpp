@@ -5,7 +5,7 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "StructuredTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

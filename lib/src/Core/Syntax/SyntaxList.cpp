@@ -1,8 +1,8 @@
-#include "SyntaxList.hpp"
+#include "Core/Syntax/SyntaxList.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
-#include "SyntaxNode.hpp"
-#include "SyntaxToken.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::Core::Syntax
 {

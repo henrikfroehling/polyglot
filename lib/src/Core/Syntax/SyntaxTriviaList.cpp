@@ -1,5 +1,5 @@
-#include "SyntaxTriviaList.hpp"
-#include "SyntaxTrivia.hpp"
+#include "Core/Syntax/SyntaxTriviaList.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::Core::Syntax
 {

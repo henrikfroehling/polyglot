@@ -1,6 +1,6 @@
-#include "DirectiveList.hpp"
+#include "Core/Parser/DirectiveList.hpp"
 #include <cassert>
-#include "Directive.hpp"
+#include "Core/Parser/Directive.hpp"
 
 namespace polyglot::Core::Parser
 {

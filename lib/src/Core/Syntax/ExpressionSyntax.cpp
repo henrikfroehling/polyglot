@@ -1,4 +1,4 @@
-#include "ExpressionSyntax.hpp"
+#include "Core/Syntax/ExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

@@ -1,4 +1,4 @@
-#include "DelphiSyntaxFacts.hpp"
+#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 #include <algorithm>
 #include <unordered_map>
 

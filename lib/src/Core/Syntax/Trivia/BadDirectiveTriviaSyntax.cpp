@@ -1,4 +1,4 @@
-#include "BadDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/BadDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

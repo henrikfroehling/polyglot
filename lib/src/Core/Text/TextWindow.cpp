@@ -1,4 +1,4 @@
-#include "TextWindow.hpp"
+#include "Core/Text/TextWindow.hpp"
 #include <cassert>
 #include <algorithm>
 #include <limits>

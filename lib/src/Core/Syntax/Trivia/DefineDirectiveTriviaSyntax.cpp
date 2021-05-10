@@ -1,4 +1,4 @@
-#include "DefineDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

@@ -1,4 +1,4 @@
-#include "DelphiUnitFinalizationSectionSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 

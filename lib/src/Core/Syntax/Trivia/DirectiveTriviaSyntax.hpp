@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Parser/DirectiveStack.hpp"
-#include "StructuredTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

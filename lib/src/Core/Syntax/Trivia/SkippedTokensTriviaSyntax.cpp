@@ -1,4 +1,4 @@
-#include "SkippedTokensTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

@@ -1,4 +1,4 @@
-#include "PrefixUnaryExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

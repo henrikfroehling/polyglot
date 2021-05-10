@@ -1,10 +1,10 @@
-#include "QualifiedNameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "SimpleNameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

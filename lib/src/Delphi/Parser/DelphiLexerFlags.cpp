@@ -1,1 +1,1 @@
-#include "DelphiLexerFlags.hpp"
+#include "Delphi/Parser/DelphiLexerFlags.hpp"

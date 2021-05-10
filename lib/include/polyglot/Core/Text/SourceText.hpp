@@ -6,10 +6,11 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Text/LinePosition.hpp"
+#include "polyglot/Core/Text/LinePositionSpan.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "../../../../src/Core/Text/LinePosition.hpp"
-#include "../../../../src/Core/Text/LinePositionSpan.hpp"
 
 namespace polyglot::Core::Text
 {
@@ -21,7 +22,7 @@ class SourceText;
 // TextLine
 // ----------------------------------------------
 
-class TextLine final
+class POLYGLOT_API TextLine final
 {
 public:
     TextLine() noexcept;
@@ -66,7 +67,7 @@ private:
 // TextLineCollection
 // ----------------------------------------------
 
-class TextLineCollection final
+class POLYGLOT_API TextLineCollection final
 {
 public:
     TextLineCollection() = delete;
@@ -95,7 +96,7 @@ private:
 // SourceText
 // ----------------------------------------------
 
-class SourceText final
+class POLYGLOT_API SourceText final
 {
 public:
     SourceText() = delete;

@@ -4,14 +4,14 @@
 #include <limits>
 #include <memory>
 #include "polyglot/Core/Types.hpp"
+#include "Core/Parser/DirectiveStack.hpp"
+#include "Core/Parser/LexerCache.hpp"
+#include "Core/Parser/LexerMode.hpp"
+#include "Core/Parser/TokenInfo.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Syntax/SyntaxPool.hpp"
 #include "Core/Text/SourceText.hpp"
 #include "Core/Text/TextWindow.hpp"
-#include "DirectiveStack.hpp"
-#include "LexerCache.hpp"
-#include "LexerMode.hpp"
-#include "TokenInfo.hpp"
 
 namespace polyglot::Core::Syntax
 {

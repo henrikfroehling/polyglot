@@ -1,5 +1,5 @@
-#include "SyntaxMissingToken.hpp"
-#include "SyntaxNodeFlags.hpp"
+#include "Core/Syntax/SyntaxMissingToken.hpp"
+#include "Core/Syntax/SyntaxFlags.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -7,7 +7,7 @@ namespace polyglot::Core::Syntax
 SyntaxMissingToken::SyntaxMissingToken() noexcept
     : SyntaxToken{}
 {
-    _flags |= SyntaxNodeFlags::IsMissing;
+    _flags |= SyntaxFlags::IsMissing;
 }
 
 SyntaxMissingToken::SyntaxMissingToken(SyntaxKind syntaxKind,
@@ -19,7 +19,7 @@ SyntaxMissingToken::SyntaxMissingToken(SyntaxKind syntaxKind,
                                        ISyntaxNode* parent) noexcept
     : SyntaxToken{syntaxKind, text, position, fullWidth, leadingTrivia, trailingTrivia, parent}
 {
-    _flags |= SyntaxNodeFlags::IsMissing;
+    _flags |= SyntaxFlags::IsMissing;
 }
 
 } // end namespace polyglot::Core::Syntax

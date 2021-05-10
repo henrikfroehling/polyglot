@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "SimpleNameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

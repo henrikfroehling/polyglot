@@ -1,4 +1,4 @@
-#include "DelphiUsesClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 #include <cassert>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"

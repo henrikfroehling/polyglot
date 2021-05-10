@@ -1,4 +1,4 @@
-#include "SourceTree.hpp"
+#include "Core/Syntax/SourceTree.hpp"
 
 namespace polyglot::Core::Syntax
 {

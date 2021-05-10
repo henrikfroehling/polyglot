@@ -1,4 +1,4 @@
-#include "TextUtilities.hpp"
+#include "Core/Text/TextUtilities.hpp"
 #include "polyglot/Core/Text/SourceText.hpp"
 
 namespace polyglot::Core::Text

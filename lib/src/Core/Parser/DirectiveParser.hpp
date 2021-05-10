@@ -2,8 +2,8 @@
 #define POLYGLOT_CORE_PARSER_DELPHIDIRECTIVEPARSER_H
 
 #include "polyglot/Core/Types.hpp"
-#include "Lexer.hpp"
-#include "Parser.hpp"
+#include "Core/Parser/Lexer.hpp"
+#include "Core/Parser/Parser.hpp"
 
 namespace polyglot::Core::Syntax
 {

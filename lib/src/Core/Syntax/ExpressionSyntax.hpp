@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
 
 namespace polyglot::Core::Syntax
 {

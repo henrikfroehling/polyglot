@@ -1,4 +1,4 @@
-#include "LinePosition.hpp"
+#include "polyglot/Core/Text/LinePosition.hpp"
 #include <utility>
 
 namespace polyglot::Core::Text

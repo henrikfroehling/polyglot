@@ -1,4 +1,4 @@
-#include "BranchingDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {

@@ -1,4 +1,4 @@
-#include "IfDefDirectiveTriviaSyntax.hpp"
+#include "Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

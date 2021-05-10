@@ -1,10 +1,10 @@
-#include "SyntaxPool.hpp"
+#include "Core/Syntax/SyntaxPool.hpp"
 #include <cassert>
-#include "SyntaxList.hpp"
-#include "SyntaxNode.hpp"
-#include "SyntaxToken.hpp"
-#include "SyntaxTrivia.hpp"
-#include "SyntaxTriviaList.hpp"
+#include "Core/Syntax/SyntaxList.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
+#include "Core/Syntax/SyntaxTriviaList.hpp"
 
 namespace polyglot::Core::Syntax
 {

@@ -1,4 +1,4 @@
-#include "Directive.hpp"
+#include "Core/Parser/Directive.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.hpp"
 #include "Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.hpp"

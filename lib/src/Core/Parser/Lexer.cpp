@@ -1,4 +1,4 @@
-#include "Lexer.hpp"
+#include "Core/Parser/Lexer.hpp"
 #include <cassert>
 #include <algorithm>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"

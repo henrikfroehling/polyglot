@@ -1,1 +1,1 @@
-#include "SyntaxFlags.hpp"
+#include "Core/Syntax/SyntaxFlags.hpp"
