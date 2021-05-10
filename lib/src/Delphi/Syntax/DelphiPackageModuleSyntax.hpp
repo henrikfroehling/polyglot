@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIPACKAGEMODULESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIPACKAGEMODULESYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DelphiCompilationUnitSyntax.hpp"
 
@@ -34,7 +34,7 @@ public:
     inline DelphiPackageRequiresClauseSyntax* requiresClause() const noexcept { return _pRequiresClause; }
     inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
     inline pg_size childCount() const noexcept override final { return 4; }
-    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     static DelphiPackageModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiPackageHeadSyntax* head,

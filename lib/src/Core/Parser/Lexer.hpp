@@ -51,7 +51,7 @@ public:
     {
         Syntax::SyntaxPool tmp = std::move(_syntaxPool);
         _syntaxPool = Syntax::SyntaxPool{};
-        return std::move(tmp);
+        return tmp;
     }
 
 protected:

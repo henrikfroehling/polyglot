@@ -26,14 +26,14 @@ CallExpressionSyntax::CallExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
-SyntaxNodeOrToken CallExpressionSyntax::child(pg_size index) const
+SyntaxVariant CallExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pIdentifier);
-        case 1: return SyntaxNodeOrToken::asToken(_pOpenParenthesisToken);
-        case 2: return SyntaxNodeOrToken::asNode(_pArgumentExpression);
-        case 3: return SyntaxNodeOrToken::asToken(_pCloseParenthesisToken);
+        case 0: return SyntaxVariant::asToken(_pIdentifier);
+        case 1: return SyntaxVariant::asToken(_pOpenParenthesisToken);
+        case 2: return SyntaxVariant::asNode(_pArgumentExpression);
+        case 3: return SyntaxVariant::asToken(_pCloseParenthesisToken);
     }
 
     throw std::out_of_range{"index out of range"};

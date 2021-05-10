@@ -14,7 +14,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::ISyntaxToken;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* head,
                                                      DelphiPackageRequiresClauseSyntax* requiresClause,
@@ -31,14 +31,14 @@ DelphiPackageModuleSyntax::DelphiPackageModuleSyntax(DelphiPackageHeadSyntax* he
     adjustWidthAndFlags(_pContainsClause);
 }
 
-SyntaxNodeOrToken DelphiPackageModuleSyntax::child(pg_size index) const
+SyntaxVariant DelphiPackageModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asNode(_pHead);
-        case 1: return SyntaxNodeOrToken::asNode(_pRequiresClause);
-        case 2: return SyntaxNodeOrToken::asNode(_pContainsClause);
-        case 3: return SyntaxNodeOrToken::asToken(_pEOFToken);
+        case 0: return SyntaxVariant::asNode(_pHead);
+        case 1: return SyntaxVariant::asNode(_pRequiresClause);
+        case 2: return SyntaxVariant::asNode(_pContainsClause);
+        case 3: return SyntaxVariant::asToken(_pEOFToken);
     }
 
     throw std::out_of_range{"index out of range"};

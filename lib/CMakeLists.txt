@@ -72,12 +72,12 @@ set(SOURCES_CORE_Syntax
   ${SOURCE_DIR}/Core/Syntax/SyntaxKinds.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxMissingToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxNode.cpp
-  ${SOURCE_DIR}/Core/Syntax/SyntaxNodeOrToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxPool.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxToken.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTree.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTrivia.cpp
   ${SOURCE_DIR}/Core/Syntax/SyntaxTriviaList.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxVariant.cpp
 )
 
 set(SOURCES_CORE_SYNTAX_EXPRESSIONS

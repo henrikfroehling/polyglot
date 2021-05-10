@@ -17,10 +17,10 @@ LiteralExpressionSyntax::LiteralExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pLiteral);
 }
 
-SyntaxNodeOrToken LiteralExpressionSyntax::child(pg_size index) const
+SyntaxVariant LiteralExpressionSyntax::child(pg_size index) const
 {
     if (index == 0)
-        return SyntaxNodeOrToken::asToken(_pLiteral);
+        return SyntaxVariant::asToken(_pLiteral);
 
     throw std::out_of_range{"index out of range"};
 }

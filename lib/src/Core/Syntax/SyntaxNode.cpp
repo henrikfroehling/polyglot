@@ -77,7 +77,7 @@ bool SyntaxNode::hasMissingTokens() const noexcept
             if (nodeOrToken->token->isMissing())
                 return true;
         }
-        else
+        else if (nodeOrToken->isNode())
         {
             if (nodeOrToken->node->hasMissingTokens())
                 return true;

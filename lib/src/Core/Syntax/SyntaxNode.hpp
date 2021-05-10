@@ -4,7 +4,7 @@
 #include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -48,7 +48,7 @@ public:
     inline virtual Text::TextSpan fullSpan() const noexcept override { return Text::TextSpan{endPositionIncludingTrivia(), _fullWidth}; }
 
     inline virtual pg_size childCount() const noexcept override { return 0; }
-    inline virtual SyntaxNodeOrToken child(pg_size index) const override { return SyntaxNodeOrToken::empty(); }
+    inline virtual SyntaxVariant child(pg_size index) const override { return SyntaxVariant::empty(); }
 
     inline bool hasLeadingTrivia() const noexcept override final { return leadingTriviaWidth() != 0; }
     inline bool hasTrailingTrivia() const noexcept override final { return trailingTriviaWidth() != 0; }

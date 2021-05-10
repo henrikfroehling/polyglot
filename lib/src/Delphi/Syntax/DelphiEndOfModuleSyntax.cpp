@@ -10,7 +10,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::ISyntaxToken;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(ISyntaxToken* endKeyword,
                                                  ISyntaxToken* dotToken) noexcept
@@ -23,12 +23,12 @@ DelphiEndOfModuleSyntax::DelphiEndOfModuleSyntax(ISyntaxToken* endKeyword,
     adjustWidthAndFlags(_pDotToken);
 }
 
-SyntaxNodeOrToken DelphiEndOfModuleSyntax::child(pg_size index) const
+SyntaxVariant DelphiEndOfModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pEndKeyword);
-        case 1: return SyntaxNodeOrToken::asToken(_pDotToken);
+        case 0: return SyntaxVariant::asToken(_pEndKeyword);
+        case 1: return SyntaxVariant::asToken(_pDotToken);
     }
 
     throw std::out_of_range{"index out of range"};

@@ -4,6 +4,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
 #include "Core/Syntax/Expressions/CallExpressionSyntax.hpp"
 #include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
@@ -310,7 +311,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseSwitchDirective(ISyntaxToken*
 
 ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
 {
-    std::vector<SyntaxNodeOrToken> skippedTokens{};
+    std::vector<SyntaxVariant> skippedTokens{};
 
     if (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
         && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
@@ -320,7 +321,7 @@ ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
         while (currentToken()->syntaxKind() != SyntaxKind::EndOfDirectiveToken
                && currentToken()->syntaxKind() != SyntaxKind::EndOfFileToken)
         {
-            skippedTokens.push_back(SyntaxNodeOrToken::asToken(takeToken()));
+            skippedTokens.push_back(SyntaxVariant::asToken(takeToken()));
         }
     }
 

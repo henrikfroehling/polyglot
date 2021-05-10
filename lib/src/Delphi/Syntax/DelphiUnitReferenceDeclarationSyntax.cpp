@@ -13,7 +13,7 @@ using Core::Syntax::ISyntaxToken;
 using Core::Syntax::NameExpressionSyntax;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
                                                                            ISyntaxToken* inKeyword,
@@ -36,22 +36,24 @@ DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameE
     }
 }
 
-SyntaxNodeOrToken DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
+SyntaxVariant DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
         case 1:
         {
             if (index == 0)
-                return SyntaxNodeOrToken::asNode(_pUnitName);
+                return SyntaxVariant::asNode(_pUnitName);
+
+            break;
         }
         case 3:
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asNode(_pUnitName);
-                case 1: return SyntaxNodeOrToken::asToken(_pInKeyword);
-                case 2: return SyntaxNodeOrToken::asToken(_pSourceFile);
+                case 0: return SyntaxVariant::asNode(_pUnitName);
+                case 1: return SyntaxVariant::asToken(_pInKeyword);
+                case 2: return SyntaxVariant::asToken(_pSourceFile);
             }
         }
     }

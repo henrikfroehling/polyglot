@@ -12,7 +12,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::ISyntaxToken;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(ISyntaxToken* interfaceKeyword,
                                                                    DelphiUsesClauseSyntax* uses) noexcept
@@ -27,21 +27,23 @@ DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(ISyntaxToken*
         adjustWidthAndFlags(dynamic_cast<SyntaxNode*>(_pUses));
 }
 
-SyntaxNodeOrToken DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
+SyntaxVariant DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
         case 1:
         {
             if (index == 0)
-                return SyntaxNodeOrToken::asToken(_pInterfaceKeyword);
+                return SyntaxVariant::asToken(_pInterfaceKeyword);
+
+            break;
         }
         case 2:
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asToken(_pInterfaceKeyword);
-                case 1: return SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(_pUses));
+                case 0: return SyntaxVariant::asToken(_pInterfaceKeyword);
+                case 1: return SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(_pUses));
             }
         }
     }

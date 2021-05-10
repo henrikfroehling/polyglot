@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_ENDIFDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DirectiveTriviaSyntax.hpp"
 
@@ -27,7 +27,7 @@ public:
     inline virtual ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline pg_size childCount() const noexcept override final { return 3; }
-    SyntaxNodeOrToken child(pg_size index) const override final;
+    SyntaxVariant child(pg_size index) const override final;
 
     static EndIfDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                               ISyntaxToken* startToken,

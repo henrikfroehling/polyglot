@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_CALLEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/ExpressionSyntax.hpp"
 
@@ -28,7 +28,7 @@ public:
     inline virtual ExpressionSyntax* argumentExpression() const noexcept { return _pArgumentExpression; }
     inline virtual ISyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
     inline pg_size childCount() const noexcept override final { return 4; }
-    SyntaxNodeOrToken child(pg_size index) const override final;
+    SyntaxVariant child(pg_size index) const override final;
 
     static CallExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                         SyntaxKind syntaxKind,

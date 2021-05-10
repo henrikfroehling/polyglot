@@ -26,14 +26,14 @@ SwitchDirectiveTriviaSyntax::SwitchDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidth(_pEndOfDirectiveToken);
 }
 
-SyntaxNodeOrToken SwitchDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxVariant SwitchDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
-        case 1: return SyntaxNodeOrToken::asToken(_pIdentifier);
-        case 2: return SyntaxNodeOrToken::asToken(_pOnOffToken);
-        case 3: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
+        case 0: return SyntaxVariant::asToken(_pStartToken);
+        case 1: return SyntaxVariant::asToken(_pIdentifier);
+        case 2: return SyntaxVariant::asToken(_pOnOffToken);
+        case 3: return SyntaxVariant::asToken(_pEndOfDirectiveToken);
     }
 
     throw std::out_of_range{"index out of range"};

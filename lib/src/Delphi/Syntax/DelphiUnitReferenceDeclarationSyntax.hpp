@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include "DelphiSyntaxList.hpp"
@@ -29,16 +29,16 @@ public:
     inline Core::Syntax::ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline Core::Syntax::ISyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
     inline pg_size childCount() const noexcept override final { return _pSourceFile != nullptr ? 3 : 1; }
-    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    inline Core::Syntax::SyntaxNodeOrToken first() const noexcept override final { return Core::Syntax::SyntaxNodeOrToken::asNode(_pUnitName); }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pUnitName); }
 
-    inline Core::Syntax::SyntaxNodeOrToken last() const noexcept override final
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final
     {
         if (_pSourceFile != nullptr)
-            return Core::Syntax::SyntaxNodeOrToken::asToken(_pSourceFile);
+            return Core::Syntax::SyntaxVariant::asToken(_pSourceFile);
 
-        return Core::Syntax::SyntaxNodeOrToken::asNode(_pUnitName);
+        return Core::Syntax::SyntaxVariant::asNode(_pUnitName);
     }
 
     static DelphiUnitReferenceDeclarationSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,

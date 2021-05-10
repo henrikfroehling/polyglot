@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DelphiCompilationUnitSyntax.hpp"
 
@@ -31,7 +31,7 @@ public:
     inline DelphiProgramHeadSyntax* head() const noexcept { return _pHead; }
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     inline pg_size childCount() const noexcept override final { return 3; }
-    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     static DelphiProgramModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiProgramHeadSyntax* head,

@@ -20,12 +20,12 @@ PrefixUnaryExpressionSyntax::PrefixUnaryExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pOperandExpression);
 }
 
-SyntaxNodeOrToken PrefixUnaryExpressionSyntax::child(pg_size index) const
+SyntaxVariant PrefixUnaryExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pOperatorToken);
-        case 1: return SyntaxNodeOrToken::asNode(_pOperandExpression);
+        case 0: return SyntaxVariant::asToken(_pOperatorToken);
+        case 1: return SyntaxVariant::asNode(_pOperandExpression);
     }
 
     throw std::out_of_range{"index out of range"};

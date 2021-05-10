@@ -4,6 +4,7 @@
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
 #include "Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
@@ -182,17 +183,17 @@ DelphiProgramModuleSyntax* DelphiParser::parseProgramModule() noexcept
 DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
 {
     ISyntaxToken* pUsesKeyword = takeToken(SyntaxKind::UsesKeyword);
-    std::vector<SyntaxNodeOrToken> unitReferences;
+    std::vector<SyntaxVariant> unitReferences;
 
     DelphiUnitReferenceDeclarationSyntax* pUnitReference = parseUnitReference();
-    unitReferences.push_back(SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
+    unitReferences.push_back(SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
 
     while (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
         ISyntaxToken* pCommaToken = takeToken();
         pUnitReference = parseUnitReference();
-        unitReferences.push_back(SyntaxNodeOrToken::asToken(pCommaToken));
-        unitReferences.push_back(SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
+        unitReferences.push_back(SyntaxVariant::asToken(pCommaToken));
+        unitReferences.push_back(SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
     }
 
     SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList(std::move(unitReferences)));

@@ -28,14 +28,14 @@ DefineDirectiveTriviaSyntax::DefineDirectiveTriviaSyntax(SyntaxKind syntaxKind,
     adjustWidth(_pEndOfDirectiveToken);
 }
 
-SyntaxNodeOrToken DefineDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxVariant DefineDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
-        case 1: return SyntaxNodeOrToken::asToken(_pDefineKeyword);
-        case 2: return SyntaxNodeOrToken::asToken(_pName);
-        case 3: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
+        case 0: return SyntaxVariant::asToken(_pStartToken);
+        case 1: return SyntaxVariant::asToken(_pDefineKeyword);
+        case 2: return SyntaxVariant::asToken(_pName);
+        case 3: return SyntaxVariant::asToken(_pEndOfDirectiveToken);
     }
 
     throw std::out_of_range{"index out of range"};

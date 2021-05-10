@@ -13,7 +13,7 @@ using Core::Syntax::ISyntaxToken;
 using Core::Syntax::NameExpressionSyntax;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
                                            NameExpressionSyntax* name,
@@ -43,7 +43,7 @@ DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
     adjustWidthAndFlags(_pSemiColonToken);
 }
 
-SyntaxNodeOrToken DelphiUnitHeadSyntax::child(pg_size index) const
+SyntaxVariant DelphiUnitHeadSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -51,20 +51,20 @@ SyntaxNodeOrToken DelphiUnitHeadSyntax::child(pg_size index) const
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asToken(_pUnitKeyword);
-                case 1: return SyntaxNodeOrToken::asNode(_pName);
-                case 2: return SyntaxNodeOrToken::asToken(_pSemiColonToken);
+                case 0: return SyntaxVariant::asToken(_pUnitKeyword);
+                case 1: return SyntaxVariant::asNode(_pName);
+                case 2: return SyntaxVariant::asToken(_pSemiColonToken);
             }
         }
         case 5:
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asToken(_pUnitKeyword);
-                case 1: return SyntaxNodeOrToken::asNode(_pName);
-                case 2: return SyntaxNodeOrToken::asToken(_pInKeyword);
-                case 3: return SyntaxNodeOrToken::asToken(_pFilename);
-                case 4: return SyntaxNodeOrToken::asToken(_pSemiColonToken);
+                case 0: return SyntaxVariant::asToken(_pUnitKeyword);
+                case 1: return SyntaxVariant::asNode(_pName);
+                case 2: return SyntaxVariant::asToken(_pInKeyword);
+                case 3: return SyntaxVariant::asToken(_pFilename);
+                case 4: return SyntaxVariant::asToken(_pSemiColonToken);
             }
         }
     }

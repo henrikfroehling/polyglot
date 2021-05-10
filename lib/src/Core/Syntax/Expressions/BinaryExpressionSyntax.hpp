@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_BINARYEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/ExpressionSyntax.hpp"
 
@@ -26,7 +26,7 @@ public:
     inline virtual ISyntaxToken* operatorToken() const noexcept { return _pOperatorToken; }
     inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
     inline pg_size childCount() const noexcept override final { return 3; }
-    SyntaxNodeOrToken child(pg_size index) const override final;
+    SyntaxVariant child(pg_size index) const override final;
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,

@@ -17,7 +17,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::ISyntaxToken;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
@@ -52,7 +52,7 @@ DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
     adjustWidthAndFlags(_pEOFToken);
 }
 
-SyntaxNodeOrToken DelphiUnitModuleSyntax::child(pg_size index) const
+SyntaxVariant DelphiUnitModuleSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -60,36 +60,36 @@ SyntaxNodeOrToken DelphiUnitModuleSyntax::child(pg_size index) const
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asNode(_pHead);
-                case 1: return SyntaxNodeOrToken::asNode(_pInterfaceSection);
-                case 2: return SyntaxNodeOrToken::asNode(_pImplementationSection);
-                case 3: return SyntaxNodeOrToken::asNode(_pEndOfModule);
-                case 4: return SyntaxNodeOrToken::asToken(_pEOFToken);
+                case 0: return SyntaxVariant::asNode(_pHead);
+                case 1: return SyntaxVariant::asNode(_pInterfaceSection);
+                case 2: return SyntaxVariant::asNode(_pImplementationSection);
+                case 3: return SyntaxVariant::asNode(_pEndOfModule);
+                case 4: return SyntaxVariant::asToken(_pEOFToken);
             }
         }
         case 6:
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asNode(_pHead);
-                case 1: return SyntaxNodeOrToken::asNode(_pInterfaceSection);
-                case 2: return SyntaxNodeOrToken::asNode(_pImplementationSection);
-                case 3: return SyntaxNodeOrToken::asNode(_pInitializationSection);
-                case 4: return SyntaxNodeOrToken::asNode(_pEndOfModule);
-                case 5: return SyntaxNodeOrToken::asToken(_pEOFToken);
+                case 0: return SyntaxVariant::asNode(_pHead);
+                case 1: return SyntaxVariant::asNode(_pInterfaceSection);
+                case 2: return SyntaxVariant::asNode(_pImplementationSection);
+                case 3: return SyntaxVariant::asNode(_pInitializationSection);
+                case 4: return SyntaxVariant::asNode(_pEndOfModule);
+                case 5: return SyntaxVariant::asToken(_pEOFToken);
             }
         }
         case 7:
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asNode(_pHead);
-                case 1: return SyntaxNodeOrToken::asNode(_pInterfaceSection);
-                case 2: return SyntaxNodeOrToken::asNode(_pImplementationSection);
-                case 3: return SyntaxNodeOrToken::asNode(_pInitializationSection);
-                case 4: return SyntaxNodeOrToken::asNode(_pFinalizationSection);
-                case 5: return SyntaxNodeOrToken::asNode(_pEndOfModule);
-                case 6: return SyntaxNodeOrToken::asToken(_pEOFToken);
+                case 0: return SyntaxVariant::asNode(_pHead);
+                case 1: return SyntaxVariant::asNode(_pInterfaceSection);
+                case 2: return SyntaxVariant::asNode(_pImplementationSection);
+                case 3: return SyntaxVariant::asNode(_pInitializationSection);
+                case 4: return SyntaxVariant::asNode(_pFinalizationSection);
+                case 5: return SyntaxVariant::asNode(_pEndOfModule);
+                case 6: return SyntaxVariant::asToken(_pEOFToken);
             }
         }
     }

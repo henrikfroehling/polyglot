@@ -108,7 +108,7 @@ ISyntaxList* SyntaxFactory::syntaxList() noexcept
     return _syntaxPool.createSyntaxList();
 }
 
-ISyntaxList* SyntaxFactory::syntaxList(std::vector<SyntaxNodeOrToken>&& syntaxNodes) noexcept
+ISyntaxList* SyntaxFactory::syntaxList(std::vector<SyntaxVariant>&& syntaxNodes) noexcept
 {
     return _syntaxPool.createSyntaxList(std::move(syntaxNodes));
 }

@@ -45,7 +45,7 @@ ISyntaxList* SyntaxPool::createSyntaxList() noexcept
     return _syntaxLists.back().get();
 }
 
-ISyntaxList* SyntaxPool::createSyntaxList(std::vector<SyntaxNodeOrToken>&& nodes) noexcept
+ISyntaxList* SyntaxPool::createSyntaxList(std::vector<SyntaxVariant>&& nodes) noexcept
 {
     _syntaxLists.emplace_back(new SyntaxList{std::move(nodes)});
     return _syntaxLists.back().get();

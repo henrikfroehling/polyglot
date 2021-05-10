@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_IFDEFDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "ConditionalDirectiveTriviaSyntax.hpp"
 
@@ -33,7 +33,7 @@ public:
     inline virtual bool conditionValue() const noexcept override { return false; }
     inline virtual ExpressionSyntax* condition() const noexcept override { return nullptr; }
     inline pg_size childCount() const noexcept override final { return 4; }
-    SyntaxNodeOrToken child(pg_size index) const override final;
+    SyntaxVariant child(pg_size index) const override final;
 
     static IfDefDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                               ISyntaxToken* startToken,

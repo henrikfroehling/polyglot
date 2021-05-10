@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITINTERFACESECTIONSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITINTERFACESECTIONSYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DelphiSyntaxNode.hpp"
 
@@ -28,7 +28,7 @@ public:
     inline Core::Syntax::ISyntaxToken* interfaceKeyword() const noexcept { return _pInterfaceKeyword; }
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     inline pg_size childCount() const noexcept override final { return _pUses != nullptr ? 2 : 1; }
-    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     static DelphiUnitInterfaceSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* interfaceKeyword,

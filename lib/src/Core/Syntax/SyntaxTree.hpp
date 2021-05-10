@@ -17,7 +17,7 @@ class SyntaxTree : public ISyntaxTree
 public:
     virtual ~SyntaxTree() noexcept {}
 
-    inline ISyntaxNode* root() const noexcept override final { return _pRoot; }
+    inline virtual ISyntaxNode* root() const noexcept override { return _pRoot; }
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
 
 protected:

@@ -32,7 +32,7 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
     adjustWidth(_pEndOfDirectiveToken);
 }
 
-SyntaxNodeOrToken MessageDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxVariant MessageDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -40,21 +40,21 @@ SyntaxNodeOrToken MessageDirectiveTriviaSyntax::child(pg_size index) const
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
-                case 1: return SyntaxNodeOrToken::asToken(_pMessageKeyword);
-                case 2: return SyntaxNodeOrToken::asToken(_pMessageLiteralToken);
-                case 3: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
+                case 0: return SyntaxVariant::asToken(_pStartToken);
+                case 1: return SyntaxVariant::asToken(_pMessageKeyword);
+                case 2: return SyntaxVariant::asToken(_pMessageLiteralToken);
+                case 3: return SyntaxVariant::asToken(_pEndOfDirectiveToken);
             }
         }
         case 5:
         {
             switch (index)
             {
-                case 0: return SyntaxNodeOrToken::asToken(_pStartToken);
-                case 1: return SyntaxNodeOrToken::asToken(_pMessageKeyword);
-                case 2: return SyntaxNodeOrToken::asToken(_pMessageTypeToken);
-                case 3: return SyntaxNodeOrToken::asToken(_pMessageLiteralToken);
-                case 4: return SyntaxNodeOrToken::asToken(_pEndOfDirectiveToken);
+                case 0: return SyntaxVariant::asToken(_pStartToken);
+                case 1: return SyntaxVariant::asToken(_pMessageKeyword);
+                case 2: return SyntaxVariant::asToken(_pMessageTypeToken);
+                case 3: return SyntaxVariant::asToken(_pMessageLiteralToken);
+                case 4: return SyntaxVariant::asToken(_pEndOfDirectiveToken);
             }
         }
     }

@@ -8,7 +8,7 @@
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 
 #include "polyglot/Core/Text/SourceText.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"

@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DelphiSyntaxList.hpp"
 
@@ -31,10 +31,10 @@ public:
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
     inline pg_size childCount() const noexcept override final { return 3; }
-    inline Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    inline Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    inline Core::Syntax::SyntaxNodeOrToken first() const noexcept override final { return Core::Syntax::SyntaxNodeOrToken::asToken(_pUsesKeyword); }
-    inline Core::Syntax::SyntaxNodeOrToken last() const noexcept override final { return Core::Syntax::SyntaxNodeOrToken::asToken(_pSemiColonToken); }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUsesKeyword); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
     static DelphiUsesClauseSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           Core::Syntax::ISyntaxToken* usesKeyword,

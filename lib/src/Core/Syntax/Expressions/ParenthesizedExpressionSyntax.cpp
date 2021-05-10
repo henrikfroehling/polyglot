@@ -23,13 +23,13 @@ ParenthesizedExpressionSyntax::ParenthesizedExpressionSyntax(SyntaxKind syntaxKi
     adjustWidthAndFlags(_pCloseParenthesisToken);
 }
 
-SyntaxNodeOrToken ParenthesizedExpressionSyntax::child(pg_size index) const
+SyntaxVariant ParenthesizedExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pOpenParenthesisToken);
-        case 1: return SyntaxNodeOrToken::asNode(_pExpression);
-        case 2: return SyntaxNodeOrToken::asToken(_pCloseParenthesisToken);
+        case 0: return SyntaxVariant::asToken(_pOpenParenthesisToken);
+        case 1: return SyntaxVariant::asNode(_pExpression);
+        case 2: return SyntaxVariant::asToken(_pCloseParenthesisToken);
     }
 
     throw std::out_of_range{"index out of range"};

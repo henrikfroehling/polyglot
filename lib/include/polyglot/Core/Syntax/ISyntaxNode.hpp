@@ -4,7 +4,7 @@
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -35,7 +35,7 @@ public:
     virtual Text::TextSpan fullSpan() const noexcept = 0;
 
     virtual pg_size childCount() const noexcept = 0;
-    virtual SyntaxNodeOrToken child(pg_size index) const = 0;
+    virtual SyntaxVariant child(pg_size index) const = 0;
 
     virtual bool hasLeadingTrivia() const noexcept = 0;
     virtual bool hasTrailingTrivia() const noexcept = 0;

@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITHEADSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITHEADSYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DelphiSyntaxNode.hpp"
 
@@ -33,7 +33,7 @@ public:
     inline Core::Syntax::ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline Core::Syntax::ISyntaxToken* filename() const noexcept { return _pFilename; }
     inline pg_size childCount() const noexcept override final { return _pFilename != nullptr ? 5 : 3; }
-    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     static DelphiUnitHeadSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                         Core::Syntax::ISyntaxToken* unitKeyword,

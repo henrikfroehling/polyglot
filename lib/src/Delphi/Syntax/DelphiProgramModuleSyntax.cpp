@@ -13,7 +13,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::ISyntaxToken;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* head,
                                                      DelphiUsesClauseSyntax* uses,
@@ -27,13 +27,13 @@ DelphiProgramModuleSyntax::DelphiProgramModuleSyntax(DelphiProgramHeadSyntax* he
     adjustWidthAndFlags(dynamic_cast<SyntaxNode*>(_pUses));
 }
 
-SyntaxNodeOrToken DelphiProgramModuleSyntax::child(pg_size index) const
+SyntaxVariant DelphiProgramModuleSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asNode(_pHead);
-        case 1: return SyntaxNodeOrToken::asNode(dynamic_cast<SyntaxNode*>(_pUses));
-        case 2: return SyntaxNodeOrToken::asToken(_pEOFToken);
+        case 0: return SyntaxVariant::asNode(_pHead);
+        case 1: return SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(_pUses));
+        case 2: return SyntaxVariant::asToken(_pEOFToken);
     }
 
     throw std::out_of_range{"index out of range"};

@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_ELSEDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "BranchingDirectiveTriviaSyntax.hpp"
 
@@ -29,7 +29,7 @@ public:
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline pg_size childCount() const noexcept override final { return 3; }
-    SyntaxNodeOrToken child(pg_size index) const override final;
+    SyntaxVariant child(pg_size index) const override final;
 
     static ElseDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                              ISyntaxToken* startToken,

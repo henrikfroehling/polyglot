@@ -17,10 +17,10 @@ IdentifierNameExpressionSyntax::IdentifierNameExpressionSyntax(ISyntaxToken* ide
     adjustWidthAndFlags(_pIdentifier);
 }
 
-SyntaxNodeOrToken IdentifierNameExpressionSyntax::child(pg_size index) const
+SyntaxVariant IdentifierNameExpressionSyntax::child(pg_size index) const
 {
     if (index == 0)
-        return SyntaxNodeOrToken::asToken(_pIdentifier);
+        return SyntaxVariant::asToken(_pIdentifier);
 
     throw std::out_of_range{"index out of range"};
 }

@@ -13,7 +13,7 @@ using Core::Syntax::ISyntaxList;
 using Core::Syntax::ISyntaxToken;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
-using Core::Syntax::SyntaxNodeOrToken;
+using Core::Syntax::SyntaxVariant;
 
 DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
                                                ISyntaxList* unitReferences,
@@ -29,13 +29,13 @@ DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
     adjustWidthAndFlags(_pSemiColonToken);
 }
 
-SyntaxNodeOrToken DelphiUsesClauseSyntax::child(pg_size index) const
+SyntaxVariant DelphiUsesClauseSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asToken(_pUsesKeyword);
-        case 1: return SyntaxNodeOrToken::asNode(_pUnitReferences);
-        case 2: return SyntaxNodeOrToken::asToken(_pSemiColonToken);
+        case 0: return SyntaxVariant::asToken(_pUsesKeyword);
+        case 1: return SyntaxVariant::asList(_pUnitReferences);
+        case 2: return SyntaxVariant::asToken(_pSemiColonToken);
     }
 
     throw std::out_of_range{"index out of range"};

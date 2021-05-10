@@ -23,13 +23,13 @@ BinaryExpressionSyntax::BinaryExpressionSyntax(SyntaxKind syntaxKind,
     adjustWidthAndFlags(_pRightExpression);
 }
 
-SyntaxNodeOrToken BinaryExpressionSyntax::child(pg_size index) const
+SyntaxVariant BinaryExpressionSyntax::child(pg_size index) const
 {
     switch (index)
     {
-        case 0: return SyntaxNodeOrToken::asNode(_pLeftExpression);
-        case 1: return SyntaxNodeOrToken::asToken(_pOperatorToken);
-        case 2: return SyntaxNodeOrToken::asNode(_pRightExpression);
+        case 0: return SyntaxVariant::asNode(_pLeftExpression);
+        case 1: return SyntaxVariant::asToken(_pOperatorToken);
+        case 2: return SyntaxVariant::asNode(_pRightExpression);
     }
 
     throw std::out_of_range{"index out of range"};

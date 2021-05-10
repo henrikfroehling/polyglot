@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_IFDIRECTIVETRIVIASYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "ConditionalDirectiveTriviaSyntax.hpp"
 
@@ -34,7 +34,7 @@ public:
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
     inline pg_size childCount() const noexcept override final { return 4; }
-    SyntaxNodeOrToken child(pg_size index) const override final;
+    SyntaxVariant child(pg_size index) const override final;
 
     static IfDirectiveTriviaSyntax* create(SyntaxFactory& syntaxFactory,
                                            ISyntaxToken* startToken,

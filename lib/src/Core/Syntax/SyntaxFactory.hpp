@@ -10,7 +10,7 @@
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 
 namespace polyglot::Core::Parser
@@ -81,7 +81,7 @@ public:
                                       pg_size position = 0) noexcept;
 
     ISyntaxList* syntaxList() noexcept;
-    ISyntaxList* syntaxList(std::vector<SyntaxNodeOrToken>&& syntaxNodes) noexcept;
+    ISyntaxList* syntaxList(std::vector<SyntaxVariant>&& syntaxNodes) noexcept;
 
     ISyntaxTriviaList* syntaxTriviaList(ISyntaxToken* token = nullptr) noexcept;
 

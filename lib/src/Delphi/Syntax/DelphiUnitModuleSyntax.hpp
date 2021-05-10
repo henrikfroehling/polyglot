@@ -1,7 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITMODULESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITMODULESYNTAX_H
 
-#include "polyglot/Core/Syntax/SyntaxNodeOrToken.hpp"
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "DelphiCompilationUnitSyntax.hpp"
 
@@ -45,7 +45,7 @@ public:
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
     inline DelphiEndOfModuleSyntax* endOfModule() const noexcept { return _pEndOfModule; }
     pg_size childCount() const noexcept override final;
-    Core::Syntax::SyntaxNodeOrToken child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     static DelphiUnitModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,
