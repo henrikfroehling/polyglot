@@ -31,7 +31,7 @@ public:
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
     inline pg_size childCount() const noexcept override final { return 3; }
-    inline Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUsesKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
