@@ -71,6 +71,8 @@ protected:
     void adjustWidthAndFlags(ISyntaxToken* token) noexcept;
 
 protected:
+    friend class SyntaxList;
+
     pg_size _position;
     pg_size _fullWidth;
     SyntaxKind _syntaxKind;

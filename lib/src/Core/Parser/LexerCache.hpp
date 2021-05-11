@@ -16,11 +16,11 @@ public:
 
 public:
     TokenInfo lookupToken(std::string_view chars,
-                          int hashCode,
+                          unsigned long hashCode,
                           std::function<TokenInfo(std::string_view chars)> createTokenInfoFunction) noexcept;
 
     TokenInfo lookupTrivia(std::string_view chars,
-                           int hashCode,
+                           unsigned long hashCode,
                            std::function<TokenInfo()> createTokenInfoFunction) noexcept;
 
 private:

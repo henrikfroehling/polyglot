@@ -52,6 +52,8 @@ public:
     inline virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept { return std::move(stack); }
 
 protected:
+    friend class SyntaxTriviaList;
+
     pg_size _position;
     pg_size _width;
     SyntaxKind _syntaxKind;

@@ -20,7 +20,16 @@ SyntaxList::SyntaxList(SyntaxKind syntaxKind,
       _children{std::move(children)}
 {
     if (_children.size() > 0)
-        _position = _children[0]->position();
+    {
+        SyntaxVariant child = _children[0];
+
+        if (child.isNode())
+            _position = child.node->position();
+        else if (child.isToken())
+            _position = child.token->position();
+        else if (child.isList())
+            _position = child.list->position();
+    }
 
     for (SyntaxVariant& child : _children)
     {
@@ -81,7 +90,7 @@ ISyntaxTriviaList* SyntaxList::trailingTrivia() const noexcept
 
 bool SyntaxList::hasMissingTokens() const noexcept
 {
-    for (SyntaxVariant& nodeOrToken : _children)
+    for (const SyntaxVariant& nodeOrToken : _children)
     {
         if (nodeOrToken.isToken())
         {

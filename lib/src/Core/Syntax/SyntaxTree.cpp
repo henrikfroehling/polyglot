@@ -1,9 +1,9 @@
-#include "Core/Syntax/SourceTree.hpp"
+#include "Core/Syntax/SyntaxTree.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-SyntaxTree::SyntaxTree(SharedPtr<SourceText> sourceText,
+SyntaxTree::SyntaxTree(SharedPtr<Text::SourceText> sourceText,
                         ISyntaxNode* root,
                         SyntaxPool&& syntaxPool) noexcept
     : _ptrSourceText{std::move(sourceText)},

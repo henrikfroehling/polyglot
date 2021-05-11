@@ -69,7 +69,7 @@ QVariant SyntaxTreeModel::headerData(int section,
     return QVariant{};
 }
 
-void SyntaxTreeModel::setSyntaxTree(SharedPtr<polyglot::CodeAnalysis::ISyntaxTree> syntaxTree) noexcept
+void SyntaxTreeModel::setSyntaxTree(SharedPtr<polyglot::Delphi::Syntax::IDelphiSyntaxTree> syntaxTree) noexcept
 {
     _ptrSyntaxTree = std::move(syntaxTree);
 }

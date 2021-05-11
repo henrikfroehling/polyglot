@@ -19,7 +19,7 @@ SyntaxTriviaList::SyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
         adjustWidth(pTrivia);
 }
 
-void SyntaxTriviaList::adjustWidth(ISyntaxTriva* trivia) noexcept
+void SyntaxTriviaList::adjustWidth(ISyntaxTrivia* trivia) noexcept
 {
     if (trivia != nullptr)
     {

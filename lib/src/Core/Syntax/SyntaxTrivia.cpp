@@ -15,7 +15,7 @@ SyntaxTrivia::SyntaxTrivia() noexcept
 SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
                            std::string_view text,
                            pg_size position,
-                           pg_size fullWidth,
+                           pg_size width,
                            ISyntaxToken* token) noexcept
     : ISyntaxTrivia{},
       _position{position},

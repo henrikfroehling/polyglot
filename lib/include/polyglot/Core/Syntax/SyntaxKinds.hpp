@@ -309,6 +309,7 @@ enum class SyntaxKind : unsigned short
     UnitImplementationSection,
     UnitInitializationSection,
     UnitFinalizationSection,
+    UnitReferencesList,
     PackageModule,
     PackageHead,
     ProgramModule,

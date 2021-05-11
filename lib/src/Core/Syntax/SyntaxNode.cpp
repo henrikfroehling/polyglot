@@ -68,18 +68,20 @@ ISyntaxTriviaList* SyntaxNode::trailingTrivia() const noexcept
 
 bool SyntaxNode::hasMissingTokens() const noexcept
 {
+    ISyntaxNode* pNode = const_cast<SyntaxNode*>(this);
+
     for (pg_size i = 0, n = pNode->childCount(); i < n; i++)
     {
-        SyntaxNodeOrToken nodeOrToken = pNode->child(i);
+        SyntaxVariant nodeOrToken = pNode->child(i);
 
-        if (nodeOrToken->isToken())
+        if (nodeOrToken.isToken())
         {
-            if (nodeOrToken->token->isMissing())
+            if (nodeOrToken.token->isMissing())
                 return true;
         }
-        else if (nodeOrToken->isNode())
+        else if (nodeOrToken.isNode())
         {
-            if (nodeOrToken->node->hasMissingTokens())
+            if (nodeOrToken.node->hasMissingTokens())
                 return true;
         }
     }
@@ -95,12 +97,12 @@ ISyntaxToken* SyntaxNode::firstToken() const noexcept
     {
         for (pg_size i = 0, n = pNode->childCount(); i < n; i++)
         {
-            SyntaxNodeOrToken nodeOrToken = pNode->child(i);
+            SyntaxVariant nodeOrToken = pNode->child(i);
 
-            if (nodeOrToken->isToken())
-                return nodeOrToken->token;
+            if (nodeOrToken.isToken())
+                return nodeOrToken.token;
 
-            pNode = nodeOrToken->node;
+            pNode = nodeOrToken.node;
             break;
         }
     }
@@ -117,12 +119,12 @@ ISyntaxToken* SyntaxNode::lastToken() const noexcept
     {
         for (pg_size i = pNode->childCount() - 1; i > -1; i--)
         {
-            SyntaxNodeOrToken nodeOrToken = pNode->child(i);
+            SyntaxVariant nodeOrToken = pNode->child(i);
 
-            if (nodeOrToken->isToken())
-                return nodeOrToken->token;
+            if (nodeOrToken.isToken())
+                return nodeOrToken.token;
 
-            pNode = nodeOrToken->node;
+            pNode = nodeOrToken.node;
             break;
         }
     }

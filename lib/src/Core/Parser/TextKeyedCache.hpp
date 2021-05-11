@@ -14,12 +14,12 @@ namespace polyglot::Core::Parser
 struct CacheEntry final
 {
     CacheEntry() noexcept
-        : hashCode{-1},
+        : hashCode{0},
           item{},
           text{}
     {}
 
-    explicit CacheEntry(int hashCode,
+    explicit CacheEntry(unsigned long hashCode,
                         TokenInfo item,
                         std::string_view text) noexcept
         : hashCode{hashCode},
@@ -32,7 +32,7 @@ struct CacheEntry final
     CacheEntry& operator=(const CacheEntry&) noexcept = default;
     CacheEntry& operator=(CacheEntry&&) noexcept = default;
 
-    int hashCode;
+    unsigned long hashCode;
     TokenInfo item;
     std::string_view text;
 };
@@ -40,17 +40,17 @@ struct CacheEntry final
 class TextKeyedCache final
 {
 private:
-    static constexpr long LOCAL_SIZE_BITS = 11;
-    static constexpr long LOCAL_SIZE = (1 << LOCAL_SIZE_BITS);
-    static constexpr long LOCAL_SIZE_MASK = LOCAL_SIZE - 1;
+    static constexpr unsigned long LOCAL_SIZE_BITS = 11;
+    static constexpr unsigned long LOCAL_SIZE = (1 << LOCAL_SIZE_BITS);
+    static constexpr unsigned long LOCAL_SIZE_MASK = LOCAL_SIZE - 1;
 
-    static constexpr long SHARED_SIZE_BITS = 16;
-    static constexpr long SHARED_SIZE = (1 << SHARED_SIZE_BITS);
-    static constexpr long SHARED_SIZE_MASK = SHARED_SIZE - 1;
+    static constexpr unsigned long SHARED_SIZE_BITS = 16;
+    static constexpr unsigned long SHARED_SIZE = (1 << SHARED_SIZE_BITS);
+    static constexpr unsigned long SHARED_SIZE_MASK = SHARED_SIZE - 1;
 
-    static constexpr long SHARED_BUCKET_BITS = 4;
-    static constexpr long SHARED_BUCKET_SIZE = (1 << SHARED_BUCKET_BITS);
-    static constexpr long SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
+    static constexpr unsigned long SHARED_BUCKET_BITS = 4;
+    static constexpr unsigned long SHARED_BUCKET_SIZE = (1 << SHARED_BUCKET_BITS);
+    static constexpr unsigned long SHARED_BUCKET_SIZE_MASK = SHARED_BUCKET_SIZE - 1;
 
 private:
     std::vector<SharedPtr<CacheEntry>> _localTable;
@@ -63,17 +63,17 @@ public:
     {}
 
     TokenInfo lookupItem(std::string_view chars,
-                         long hashCode) noexcept;
+                         unsigned long hashCode) noexcept;
 
     void addItem(std::string_view chars,
-                 long hashCode,
+                 unsigned long hashCode,
                  TokenInfo item) noexcept;
 
 private:
-    inline constexpr long localIndexFromHash(long hash) const noexcept { return hash & LOCAL_SIZE_MASK; }
-    inline constexpr long sharedIndexFromHash(long hash) const noexcept { return (hash ^ (hash >> LOCAL_SIZE_MASK)) & SHARED_SIZE_MASK; }
+    inline constexpr unsigned long localIndexFromHash(unsigned long hash) const noexcept { return hash & LOCAL_SIZE_MASK; }
+    inline constexpr unsigned long sharedIndexFromHash(unsigned long hash) const noexcept { return (hash ^ (hash >> LOCAL_SIZE_MASK)) & SHARED_SIZE_MASK; }
 
-    inline int nextRandom() const noexcept
+    inline unsigned long nextRandom() const noexcept
     {
         std::random_device device{};
         std::mt19937 generator{device()};
@@ -81,9 +81,9 @@ private:
     }
 
     SharedPtr<CacheEntry> lookupSharedEntry(std::string_view chars,
-                                            long hashCode) noexcept;
+                                            unsigned long hashCode) noexcept;
 
-    void addSharedItem(long hashCode,
+    void addSharedItem(unsigned long hashCode,
                        const SharedPtr<CacheEntry>& cacheEntry) noexcept;
 };
 

@@ -42,9 +42,11 @@ public:
     inline ISyntaxTrivia* last() const noexcept override final { return _children.size() > 0 ? _children.back() : nullptr; }
 
 protected:
-    void adjustWidth(ISyntaxTriva* trivia) noexcept;
+    void adjustWidth(ISyntaxTrivia* trivia) noexcept;
 
 protected:
+    friend class SyntaxToken;
+
     pg_size _position;
     pg_size _width;
     std::vector<ISyntaxTrivia*> _children;

@@ -14,8 +14,7 @@
 #include <QtWidgets/QTreeView>
 #include <string>
 #include <polyglot/Core/Types.hpp>
-#include <polyglot/CodeAnalysis/CodeAnalysis.hpp>
-#include <polyglot/CodeAnalysis/ISyntaxTree.hpp>
+#include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
 #include <polyglot/Version.hpp>
 
 namespace ui
@@ -77,9 +76,10 @@ void MainWindow::openFile() noexcept
 
 void MainWindow::analyzeSourceCode() noexcept
 {
+    using namespace polyglot::Delphi::Syntax;
     const QString editorContent = _pTxtEditor->toPlainText();
     const std::string sourceText = editorContent.toStdString();
-    SharedPtr<polyglot::CodeAnalysis::ISyntaxTree> ptrSyntaxtree = polyglot::CodeAnalysis::Delphi::parseSourceText("", sourceText);
+    SharedPtr<IDelphiSyntaxTree> ptrSyntaxtree = IDelphiSyntaxTree::parseSourceText("", sourceText);
     _pSyntaxTreeModel->setSyntaxTree(ptrSyntaxtree);
 }
 

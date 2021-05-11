@@ -103,19 +103,10 @@ ISyntaxTrivia* SyntaxFactory::createSyntaxTrivia(SyntaxKind syntaxKind,
     return _syntaxPool.createSyntaxTrivia(syntaxKind, text, position);
 }
 
-ISyntaxList* SyntaxFactory::syntaxList() noexcept
+ISyntaxList* SyntaxFactory::syntaxList(SyntaxKind syntaxKind,
+                                       std::vector<SyntaxVariant>&& syntaxNodes) noexcept
 {
-    return _syntaxPool.createSyntaxList();
-}
-
-ISyntaxList* SyntaxFactory::syntaxList(std::vector<SyntaxVariant>&& syntaxNodes) noexcept
-{
-    return _syntaxPool.createSyntaxList(std::move(syntaxNodes));
-}
-
-ISyntaxTriviaList* SyntaxFactory::syntaxTriviaList(ISyntaxToken* token) noexcept
-{
-    return _syntaxPool.createSyntaxTriviaList(token);
+    return _syntaxPool.createSyntaxList(syntaxKind, std::move(syntaxNodes));
 }
 
 ISyntaxTriviaList* SyntaxFactory::syntaxTriviaList(std::initializer_list<ISyntaxTrivia*> trivia,

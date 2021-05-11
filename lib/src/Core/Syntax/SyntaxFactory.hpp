@@ -80,10 +80,8 @@ public:
                                       std::string_view text,
                                       pg_size position = 0) noexcept;
 
-    ISyntaxList* syntaxList() noexcept;
-    ISyntaxList* syntaxList(std::vector<SyntaxVariant>&& syntaxNodes) noexcept;
-
-    ISyntaxTriviaList* syntaxTriviaList(ISyntaxToken* token = nullptr) noexcept;
+    ISyntaxList* syntaxList(SyntaxKind syntaxKind,
+                            std::vector<SyntaxVariant>&& syntaxNodes) noexcept;
 
     ISyntaxTriviaList* syntaxTriviaList(std::initializer_list<ISyntaxTrivia*> trivia,
                                         ISyntaxToken* token = nullptr) noexcept;

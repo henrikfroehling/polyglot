@@ -7,10 +7,10 @@ namespace polyglot
 class Hashing
 {
 public:
-    static constexpr long FNV_OFFSET_BIAS = 2166136261;
-    static constexpr long FNV_PRIME = 16777619;
+    static constexpr unsigned long FNV_OFFSET_BIAS = 2166136261;
+    static constexpr unsigned long FNV_PRIME = 16777619;
 
-    inline static constexpr long combineFNVHash(long hashCode, char character) noexcept
+    inline static constexpr unsigned long combineFNVHash(unsigned long hashCode, char character) noexcept
     {
         return (hashCode ^ character) * Hashing::FNV_PRIME;
     }

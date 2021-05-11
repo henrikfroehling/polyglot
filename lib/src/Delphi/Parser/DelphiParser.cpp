@@ -196,7 +196,7 @@ DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
         unitReferences.push_back(SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
     }
 
-    SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList(std::move(unitReferences)));
+    SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList(SyntaxKind::UnitReferencesList, std::move(unitReferences)));
     ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, pUnitReferences, pSemiColonToken);
 }

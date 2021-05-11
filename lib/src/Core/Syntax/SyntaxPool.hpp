@@ -22,10 +22,8 @@ public:
     SyntaxPool(SyntaxPool&& other) noexcept;
     SyntaxPool& operator=(SyntaxPool&& other) noexcept;
 
-    ISyntaxList* createSyntaxList() noexcept;
-    ISyntaxList* createSyntaxList(std::vector<SyntaxVariant>&& nodes) noexcept;
-
-    ISyntaxNode* createSyntaxNode() noexcept;
+    ISyntaxList* createSyntaxList(SyntaxKind syntaxKind,
+                                  std::vector<SyntaxVariant>&& nodes) noexcept;
 
     ISyntaxToken* createSyntaxToken(SyntaxKind syntaxKind,
                                     std::string_view text,
@@ -38,8 +36,6 @@ public:
                                       std::string_view text,
                                       pg_size position = 0,
                                       ISyntaxToken* token = nullptr) noexcept;
-
-    ISyntaxTriviaList* createSyntaxTriviaList(ISyntaxToken* token = nullptr) noexcept;
 
     ISyntaxTriviaList* createSyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
                                               ISyntaxToken* token = nullptr) noexcept;

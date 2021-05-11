@@ -4,7 +4,7 @@ namespace polyglot::Core::Parser
 {
 
 TokenInfo LexerCache::lookupToken(std::string_view chars,
-                                  int hashCode,
+                                  unsigned long hashCode,
                                   std::function<TokenInfo(std::string_view chars)> createTokenInfoFunction) noexcept
 {
     TokenInfo tokenInfo = _tokenCache.lookupItem(chars, hashCode);
@@ -19,7 +19,7 @@ TokenInfo LexerCache::lookupToken(std::string_view chars,
 }
 
 TokenInfo LexerCache::lookupTrivia(std::string_view chars,
-                                   int hashCode,
+                                   unsigned long hashCode,
                                    std::function<TokenInfo()> createTokenInfoFunction) noexcept
 {
     TokenInfo tokenInfo = _triviaCache.lookupItem(chars, hashCode);

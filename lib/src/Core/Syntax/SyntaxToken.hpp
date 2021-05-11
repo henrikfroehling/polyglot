@@ -61,7 +61,7 @@ public:
     inline virtual bool isIdentifier() const noexcept override { return false; }
     inline virtual bool isLiteral() const noexcept override { return false; }
     inline virtual bool isPunctuation() const noexcept override { return false; }
-    inline bool isMissing() const noexcept override final { return (_flags & SyntaxFlags::IsMssing) != SyntaxFlags::None; }
+    inline bool isMissing() const noexcept override final { return (_flags & SyntaxFlags::IsMissing) != SyntaxFlags::None; }
 
     TokenValue value() const noexcept override;
     bool booleanValue() const noexcept override;
@@ -70,6 +70,9 @@ protected:
     void adjustWidth(ISyntaxTriviaList* trivia) noexcept;
 
 protected:
+    friend class SyntaxNode;
+    friend class SyntaxList;
+
     pg_size _position;
     pg_size _fullWidth;
     SyntaxKind _syntaxKind;

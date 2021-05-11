@@ -4,9 +4,9 @@ namespace polyglot::Core::Parser
 {
 
 TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
-                                     long hashCode) noexcept
+                                     unsigned long hashCode) noexcept
 {
-    const int localIndex = localIndexFromHash(hashCode);
+    const unsigned long localIndex = localIndexFromHash(hashCode);
     SharedPtr<CacheEntry>& ptrLocalEntry = _localTable[localIndex];
 
     if (ptrLocalEntry != nullptr && ptrLocalEntry->hashCode == hashCode && ptrLocalEntry->text == chars)
@@ -32,23 +32,23 @@ TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
 }
 
 void TextKeyedCache::addItem(std::string_view chars,
-                             long hashCode,
+                             unsigned long hashCode,
                              TokenInfo item) noexcept
 {
     auto ptrCacheEntry = std::make_shared<CacheEntry>(hashCode, std::move(item), chars);
     addSharedItem(hashCode, ptrCacheEntry);
 
-    const int localIndex = localIndexFromHash(hashCode);
+    const unsigned long localIndex = localIndexFromHash(hashCode);
     _localTable[localIndex] = ptrCacheEntry;
 }
 
 SharedPtr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view chars,
-                                                        long hashCode) noexcept
+                                                        unsigned long hashCode) noexcept
 {
-    int sharedIndex = sharedIndexFromHash(hashCode);
+    unsigned long sharedIndex = sharedIndexFromHash(hashCode);
     SharedPtr<CacheEntry> ptrSharedEntry = nullptr;
 
-    for (int i = 0; i < SHARED_BUCKET_SIZE + 1; i++)
+    for (unsigned long i = 0; i < SHARED_BUCKET_SIZE + 1; i++)
     {
         ptrSharedEntry = _sharedTable[sharedIndex];
 
@@ -63,13 +63,13 @@ SharedPtr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view chars,
     return nullptr;
 }
 
-void TextKeyedCache::addSharedItem(long hashCode,
+void TextKeyedCache::addSharedItem(unsigned long hashCode,
                                    const SharedPtr<CacheEntry>& cacheEntry) noexcept
 {
-    int sharedIndex = sharedIndexFromHash(hashCode);
-    int currentIndex = sharedIndex;
+    unsigned long sharedIndex = sharedIndexFromHash(hashCode);
+    unsigned long currentIndex = sharedIndex;
 
-    for (int i = 1; i < SHARED_BUCKET_SIZE + 1; i++)
+    for (unsigned long i = 1; i < SHARED_BUCKET_SIZE + 1; i++)
     {
         if (_sharedTable[sharedIndex] == nullptr)
         {
@@ -81,7 +81,7 @@ void TextKeyedCache::addSharedItem(long hashCode,
     }
 
     {
-        int randomIndex = nextRandom() & SHARED_BUCKET_SIZE_MASK;
+        unsigned long randomIndex = nextRandom() & SHARED_BUCKET_SIZE_MASK;
         sharedIndex = (sharedIndex + ((randomIndex * randomIndex + randomIndex) / 2)) & SHARED_SIZE_MASK;
     }
 

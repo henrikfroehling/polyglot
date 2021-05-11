@@ -303,6 +303,7 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UnitImplementationSection: return "UnitImplementationSection";
         case SyntaxKind::UnitInitializationSection: return "UnitInitializationSection";
         case SyntaxKind::UnitFinalizationSection: return "UnitFinalizationSection";
+        case SyntaxKind::UnitReferencesList: return "UnitReferencesList";
         case SyntaxKind::PackageModule: return "PackageModule";
         case SyntaxKind::PackageHead: return "PackageHead";
         case SyntaxKind::ProgramModule: return "ProgramModule";
