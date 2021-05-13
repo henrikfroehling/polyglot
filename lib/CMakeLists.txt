@@ -82,7 +82,6 @@ set(SOURCES_CORE_SYNTAX
 
 set(SOURCES_CORE_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/CallExpressionSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Expressions/NameExpressionSyntax.cpp
@@ -94,24 +93,12 @@ set(SOURCES_CORE_SYNTAX_EXPRESSIONS
 )
 
 set(SOURCES_CORE_SYNTAX_TRIVIA
-  ${SOURCE_DIR}/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
 )
 
@@ -156,6 +143,27 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/IDelphiSyntaxTree.cpp
 )
 
+set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
+)
+
+set(SOURCES_DELPHI_SYNTAX_TRIVIA
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiBadDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiDefineDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiElseDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiElseIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiEndIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiEndRegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiIfDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiIfEndDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiIfNDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiMessageDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiRegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiSwitchDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiUndefDirectiveTriviaSyntax.cpp
+)
+
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(${PROJECT_NAME} SHARED)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -170,6 +178,8 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES_CORE_TEXT}
   ${SOURCES_DELPHI_PARSER}
   ${SOURCES_DELPHI_SYNTAX}
+  ${SOURCES_DELPHI_SYNTAX_EXPRESSIONS}
+  ${SOURCES_DELPHI_SYNTAX_TRIVIA}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE ${CPP_STANDARD})

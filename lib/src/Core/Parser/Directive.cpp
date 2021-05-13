@@ -28,9 +28,9 @@ std::string_view Directive::identifier() const noexcept
     switch (static_cast<SyntaxTrivia*>(_pTrivia)->syntaxKind())
     {
         case SyntaxKind::DefineDirectiveTrivia:
-            return static_cast<DefineDirectiveTriviaSyntax*>(_pTrivia)->name()->text();
+            return static_cast<DefineDirectiveTriviaSyntax*>(_pTrivia)->definitionName();
         case SyntaxKind::UndefDirectiveTrivia:
-            return static_cast<UndefDirectiveTriviaSyntax*>(_pTrivia)->name()->text();
+            return static_cast<UndefDirectiveTriviaSyntax*>(_pTrivia)->definitionName();
         default:
             return std::string_view{};
     }

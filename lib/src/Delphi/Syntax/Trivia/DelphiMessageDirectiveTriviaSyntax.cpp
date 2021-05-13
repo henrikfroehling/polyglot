@@ -1,19 +1,21 @@
-#include "Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.hpp"
+#include "Delphi/Syntax/Trivia/DelphiMessageDirectiveTriviaSyntax.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 
-namespace polyglot::Core::Syntax
+namespace polyglot::Delphi::Syntax
 {
 
-MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind,
-                                                           ISyntaxToken* startToken,
-                                                           ISyntaxToken* messageKeyword,
-                                                           ISyntaxToken* messageTypeToken,
-                                                           ISyntaxToken* messageLiteralToken,
-                                                           ISyntaxToken* endOfDirectiveToken) noexcept
+using namespace Core::Syntax;
+
+DelphiMessageDirectiveTriviaSyntax::DelphiMessageDirectiveTriviaSyntax(SyntaxKind syntaxKind,
+                                                                       ISyntaxToken* startToken,
+                                                                       ISyntaxToken* messageKeyword,
+                                                                       ISyntaxToken* messageTypeToken,
+                                                                       ISyntaxToken* messageLiteralToken,
+                                                                       ISyntaxToken* endOfDirectiveToken) noexcept
     : DirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pMessageKeyword{messageKeyword},
@@ -32,7 +34,7 @@ MessageDirectiveTriviaSyntax::MessageDirectiveTriviaSyntax(SyntaxKind syntaxKind
     adjustWidth(_pEndOfDirectiveToken);
 }
 
-SyntaxVariant MessageDirectiveTriviaSyntax::child(pg_size index) const
+SyntaxVariant DelphiMessageDirectiveTriviaSyntax::child(pg_size index) const
 {
     switch (childCount())
     {
@@ -62,12 +64,12 @@ SyntaxVariant MessageDirectiveTriviaSyntax::child(pg_size index) const
     throw std::out_of_range{"index out of range"};
 }
 
-MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                   ISyntaxToken* startToken,
-                                                                   ISyntaxToken* messageKeyword,
-                                                                   ISyntaxToken* messageTypeToken,
-                                                                   ISyntaxToken* messageLiteralToken,
-                                                                   ISyntaxToken* endOfDirectiveToken) noexcept
+DelphiMessageDirectiveTriviaSyntax* DelphiMessageDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                               ISyntaxToken* startToken,
+                                                                               ISyntaxToken* messageKeyword,
+                                                                               ISyntaxToken* messageTypeToken,
+                                                                               ISyntaxToken* messageLiteralToken,
+                                                                               ISyntaxToken* endOfDirectiveToken) noexcept
 {
     assert(startToken != nullptr);
     assert(messageKeyword != nullptr);
@@ -77,10 +79,10 @@ MessageDirectiveTriviaSyntax* MessageDirectiveTriviaSyntax::create(SyntaxFactory
     assert(endOfDirectiveToken != nullptr);
     assert(endOfDirectiveToken->syntaxKind() == SyntaxKind::EndOfDirectiveToken);
 
-    auto ptrMessageDirectiveTrivia = std::make_unique<MessageDirectiveTriviaSyntax>(SyntaxKind::MessageDirectiveTrivia, startToken, messageKeyword,
-                                                                                    messageTypeToken, messageLiteralToken, endOfDirectiveToken);
+    auto ptrMessageDirectiveTrivia = std::make_unique<DelphiMessageDirectiveTriviaSyntax>(SyntaxKind::MessageDirectiveTrivia, startToken, messageKeyword,
+                                                                                          messageTypeToken, messageLiteralToken, endOfDirectiveToken);
 
-    return dynamic_cast<MessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
+    return dynamic_cast<DelphiMessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
 }
 
-} // end namespace polyglot::Core::Syntax
+} // end namespace polyglot::Delphi::Syntax
