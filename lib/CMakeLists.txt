@@ -39,119 +39,121 @@ set(SOURCES
 
 set(SOURCES_CORE
   ${SOURCE_DIR}/Core/Hashing.cpp
+  ${SOURCE_DIR}/Core/LanguageKind.cpp
   ${SOURCE_DIR}/Core/Types.cpp
 )
 
-set(SOURCES_CODEANALYSIS_CORE
-  ${SOURCE_DIR}/CodeAnalysis/CodeAnalysis.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/ISyntaxTree.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/LanguageKind.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxFactory.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxPool.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/SyntaxKinds.cpp
+set(SOURCES_CORE_PARSER
+  ${SOURCE_DIR}/Core/Parser/CharFlags.cpp
+  ${SOURCE_DIR}/Core/Parser/Directive.cpp
+  ${SOURCE_DIR}/Core/Parser/DirectiveList.cpp
+  ${SOURCE_DIR}/Core/Parser/DirectiveParser.cpp
+  ${SOURCE_DIR}/Core/Parser/DirectiveStack.cpp
+  ${SOURCE_DIR}/Core/Parser/Lexer.cpp
+  ${SOURCE_DIR}/Core/Parser/LexerCache.cpp
+  ${SOURCE_DIR}/Core/Parser/LexerMode.cpp
+  ${SOURCE_DIR}/Core/Parser/Parser.cpp
+  ${SOURCE_DIR}/Core/Parser/QuickScanState.cpp
+  ${SOURCE_DIR}/Core/Parser/TextKeyedCache.cpp
+  ${SOURCE_DIR}/Core/Parser/TokenInfo.cpp
 )
 
-set(SOURCES_CODEANALYSIS_CORE_PARSER
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/CharFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Directive.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/DirectiveStack.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Lexer.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerCache.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/LexerMode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/Parser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/QuickScanState.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TextKeyedCache.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Parser/TokenInfo.cpp
+set(SOURCES_CORE_SYNTAX
+  ${SOURCE_DIR}/Core/Syntax/ExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxList.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxNode.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxTree.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxTrivia.cpp
+  ${SOURCE_DIR}/Core/Syntax/ISyntaxTriviaList.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxFactory.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxFlags.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxKinds.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxList.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxMissingToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxNode.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxPool.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxToken.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxTree.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxTrivia.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxTriviaList.cpp
+  ${SOURCE_DIR}/Core/Syntax/SyntaxVariant.cpp
 )
 
-set(SOURCES_CODEANALYSIS_CORE_SYNTAX
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/CallExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/NameExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/SimpleNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Expressions/TypeExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ExpressionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTrivia.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/ISyntaxTriviaList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxMissingToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxNodeFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxToken.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTrivia.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Syntax/SyntaxTriviaList.cpp
+set(SOURCES_CORE_SYNTAX_EXPRESSIONS
+  ${SOURCE_DIR}/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/CallExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/NameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/SimpleNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Expressions/TypeExpressionSyntax.cpp
 )
 
-set(SOURCES_CODEANALYSIS_CORE_TEXT
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePosition.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/LinePositionSpan.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/SourceText.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextSpan.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextUtilities.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Core/Text/TextWindow.cpp
+set(SOURCES_CORE_SYNTAX_TRIVIA
+  ${SOURCE_DIR}/Core/Syntax/Trivia/BadDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/ElseDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/ElseIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/EndIfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/EndRegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/IfDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/IfDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/IfEndDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/IfNDefDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/MessageDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/RegionDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/StructuredTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/SwitchDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Core/Syntax/Trivia/UndefDirectiveTriviaSyntax.cpp
 )
 
-set(SOURCES_CODEANALYSIS_DELPHI_CORE
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/DelphiSyntaxTree.cpp
+set(SOURCES_CORE_TEXT
+  ${SOURCE_DIR}/Core/Text/LinePosition.cpp
+  ${SOURCE_DIR}/Core/Text/LinePositionSpan.cpp
+  ${SOURCE_DIR}/Core/Text/SourceText.cpp
+  ${SOURCE_DIR}/Core/Text/TextSpan.cpp
+  ${SOURCE_DIR}/Core/Text/TextUtilities.cpp
+  ${SOURCE_DIR}/Core/Text/TextWindow.cpp
 )
 
-set(SOURCES_CODEANALYSIS_DELPHI_PARSER
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiDirectiveParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexer.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexerFlags.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiLexerStates.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiParser.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Parser/DelphiSyntaxFacts.cpp
+set(SOURCES_DELPHI_PARSER
+  ${SOURCE_DIR}/Delphi/Parser/DelphiDirectiveParser.cpp
+  ${SOURCE_DIR}/Delphi/Parser/DelphiLexer.cpp
+  ${SOURCE_DIR}/Delphi/Parser/DelphiLexerFlags.cpp
+  ${SOURCE_DIR}/Delphi/Parser/DelphiLexerStates.cpp
+  ${SOURCE_DIR}/Delphi/Parser/DelphiParser.cpp
+  ${SOURCE_DIR}/Delphi/Parser/DelphiSyntaxFacts.cpp
 )
 
-set(SOURCES_CODEANALYSIS_DELPHI_SYNTAX
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxList.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiSyntaxNode.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitModuleSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.cpp
-  ${SOURCE_DIR}/CodeAnalysis/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
+set(SOURCES_DELPHI_SYNTAX
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxList.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxNode.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxTree.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitInitializationSectionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitInterfaceSectionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiUsesClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/IDelphiSyntaxTree.cpp
 )
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -161,13 +163,13 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES}
   ${SOURCES_CORE}
-  ${SOURCES_CODEANALYSIS_CORE}
-  ${SOURCES_CODEANALYSIS_CORE_PARSER}
-  ${SOURCES_CODEANALYSIS_CORE_SYNTAX}
-  ${SOURCES_CODEANALYSIS_CORE_TEXT}
-  ${SOURCES_CODEANALYSIS_DELPHI_CORE}
-  ${SOURCES_CODEANALYSIS_DELPHI_PARSER}
-  ${SOURCES_CODEANALYSIS_DELPHI_SYNTAX}
+  ${SOURCES_CORE_PARSER}
+  ${SOURCES_CORE_SYNTAX}
+  ${SOURCES_CORE_SYNTAX_EXPRESSIONS}
+  ${SOURCES_CORE_SYNTAX_TRIVIA}
+  ${SOURCES_CORE_TEXT}
+  ${SOURCES_DELPHI_PARSER}
+  ${SOURCES_DELPHI_SYNTAX}
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE ${CPP_STANDARD})
