@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXMISSINGTOKEN_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXMISSINGTOKEN_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -31,6 +32,8 @@ public:
     SyntaxMissingToken(SyntaxMissingToken&&) noexcept = default;
     SyntaxMissingToken& operator=(const SyntaxMissingToken&) noexcept = default;
     SyntaxMissingToken& operator=(SyntaxMissingToken&&) noexcept = default;
+
+    std::string toString() const noexcept override;
 };
 
 } // end namespace polyglot::Core::Syntax

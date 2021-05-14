@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXNODE_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXNODE_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -65,6 +66,8 @@ public:
 
     ISyntaxToken* firstToken() const noexcept;
     ISyntaxToken* lastToken() const noexcept;
+
+    std::string toString() const noexcept override;
 
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;

@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXTRIVIA_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXTRIVIA_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -35,6 +36,8 @@ public:
     virtual bool isWhitespace() const noexcept = 0;
     virtual bool isComment() const noexcept = 0;
     virtual bool isLineEnding() const noexcept = 0;
+
+    virtual std::string toString() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

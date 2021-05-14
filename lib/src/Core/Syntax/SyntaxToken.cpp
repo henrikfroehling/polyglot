@@ -1,4 +1,5 @@
 #include "Core/Syntax/SyntaxToken.hpp"
+#include <sstream>
 #include "Core/Syntax/SyntaxTriviaList.hpp"
 
 namespace polyglot::Core::Syntax
@@ -71,6 +72,13 @@ void SyntaxToken::adjustWidth(ISyntaxTriviaList* trivia) noexcept
         _fullWidth += pSyntaxTriviaList->width();
         pSyntaxTriviaList->_pToken = this;
     }
+}
+
+std::string SyntaxToken::toString() const noexcept
+{
+    std::stringstream str;
+    str << "Token(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << _text << "\"" << "," << width() << ")";
+    return str.str();
 }
 
 } // end namespace polyglot::Core::Syntax

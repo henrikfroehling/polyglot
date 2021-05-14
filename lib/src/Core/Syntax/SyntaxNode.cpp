@@ -1,4 +1,5 @@
 #include "Core/Syntax/SyntaxNode.hpp"
+#include <sstream>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxToken.hpp"
 
@@ -152,6 +153,13 @@ void SyntaxNode::adjustWidthAndFlags(ISyntaxToken* token) noexcept
         _fullWidth += pSyntaxToken->_fullWidth;
         pSyntaxToken->_pParent = this;
     }
+}
+
+std::string SyntaxNode::toString() const noexcept
+{
+    std::stringstream str;
+    str << "Node(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << text() << "\"" << "," << width() << ")";
+    return str.str();
 }
 
 } // end namespace polyglot::Core::Syntax

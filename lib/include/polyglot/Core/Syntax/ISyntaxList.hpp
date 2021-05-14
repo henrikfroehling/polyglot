@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXLIST_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXLIST_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -49,6 +50,8 @@ public:
     virtual ISyntaxTriviaList* trailingTrivia() const noexcept = 0;
 
     virtual bool hasMissingTokens() const noexcept = 0;
+
+    virtual std::string toString() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

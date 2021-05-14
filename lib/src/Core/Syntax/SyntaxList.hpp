@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXLIST_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXLIST_H
 
+#include <string>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -59,6 +60,8 @@ public:
     ISyntaxTriviaList* trailingTrivia() const noexcept override final;
 
     bool hasMissingTokens() const noexcept override final;
+
+    std::string toString() const noexcept override;
 
 protected:
     void adjustWidthAndFlags(ISyntaxList* list) noexcept;

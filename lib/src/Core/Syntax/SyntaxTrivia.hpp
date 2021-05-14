@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIA_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIA_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
@@ -50,6 +51,8 @@ public:
     inline virtual bool isLineEnding() const noexcept override { return false; }
 
     inline virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept { return std::move(stack); }
+
+    std::string toString() const noexcept override;
 
 protected:
     friend class SyntaxTriviaList;

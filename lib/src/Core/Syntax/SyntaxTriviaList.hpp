@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 
+#include <string>
 #include <string_view>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
@@ -40,6 +41,8 @@ public:
     inline ISyntaxTrivia* child(pg_size index) const override final { return _children[index]; }
     inline ISyntaxTrivia* first() const noexcept override final { return _children.size() > 0 ? _children[0] : nullptr; }
     inline ISyntaxTrivia* last() const noexcept override final { return _children.size() > 0 ? _children.back() : nullptr; }
+
+    std::string toString() const noexcept override;
 
 protected:
     void adjustWidth(ISyntaxTrivia* trivia) noexcept;

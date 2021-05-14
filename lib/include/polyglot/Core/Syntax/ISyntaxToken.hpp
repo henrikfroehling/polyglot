@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXTOKEN_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXTOKEN_H
 
+#include <string>
 #include <string_view>
 #include <variant>
 #include "polyglot/polyglot_global.hpp"
@@ -53,6 +54,8 @@ public:
 
     virtual TokenValue value() const noexcept = 0;
     virtual bool booleanValue() const noexcept = 0;
+
+    virtual std::string toString() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

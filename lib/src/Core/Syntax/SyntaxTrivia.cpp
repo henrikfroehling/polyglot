@@ -1,4 +1,5 @@
 #include "Core/Syntax/SyntaxTrivia.hpp"
+#include <sstream>
 
 namespace polyglot::Core::Syntax
 {
@@ -24,5 +25,12 @@ SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
       _text{text},
       _pToken{token}
 {}
+
+std::string SyntaxTrivia::toString() const noexcept
+{
+    std::stringstream str;
+    str << "Trivia(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << _text << "\"" << "," << width() << ")";
+    return str.str();
+}
 
 } // end namespace polyglot::Core::Syntax

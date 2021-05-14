@@ -1,4 +1,5 @@
 #include "Core/Syntax/SyntaxTriviaList.hpp"
+#include <sstream>
 #include "Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::Core::Syntax
@@ -26,6 +27,13 @@ void SyntaxTriviaList::adjustWidth(ISyntaxTrivia* trivia) noexcept
         SyntaxTrivia* pSyntaxTrivia = static_cast<SyntaxTrivia*>(trivia);
         _width += pSyntaxTrivia->_width;
     }
+}
+
+std::string SyntaxTriviaList::toString() const noexcept
+{
+    std::stringstream str;
+    str << "TriviaList(" << _position << ", \"" << text() << "\"" << "," << width() << ")";
+    return str.str();
 }
 
 } // end namespace polyglot::Core::Syntax

@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
@@ -32,6 +33,8 @@ public:
     virtual ISyntaxTrivia* child(pg_size index) const = 0;
     virtual ISyntaxTrivia* first() const noexcept = 0;
     virtual ISyntaxTrivia* last() const noexcept = 0;
+
+    virtual std::string toString() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

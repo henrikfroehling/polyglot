@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXNODE_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXNODE_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -49,6 +50,8 @@ public:
     virtual bool isDeclaration() const noexcept = 0;
     virtual bool isClause() const noexcept = 0;
     virtual bool hasMissingTokens() const noexcept = 0;
+
+    virtual std::string toString() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

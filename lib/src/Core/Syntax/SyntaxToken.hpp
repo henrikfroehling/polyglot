@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXTOKEN_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTOKEN_H
 
+#include <string>
 #include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
@@ -65,6 +66,8 @@ public:
 
     TokenValue value() const noexcept override;
     bool booleanValue() const noexcept override;
+
+    virtual std::string toString() const noexcept override;
 
 protected:
     void adjustWidth(ISyntaxTriviaList* trivia) noexcept;
