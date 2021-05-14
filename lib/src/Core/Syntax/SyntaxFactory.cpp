@@ -39,10 +39,10 @@ ISyntaxToken* SyntaxFactory::tokenWithTrivia(TokenInfo& tokenInfo,
     ISyntaxTriviaList* pLeadingTrivia{nullptr};
     ISyntaxTriviaList* pTrailingTrivia{nullptr};
 
-    if (leadingTrivia.size() > 0)
+    if (!leadingTrivia.empty())
         pLeadingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(leadingTrivia));
 
-    if (trailingTrivia.size() > 0)
+    if (!trailingTrivia.empty())
         pTrailingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(trailingTrivia));
 
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, pLeadingTrivia, pTrailingTrivia);
@@ -52,7 +52,11 @@ ISyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(TokenInfo& tokenInfo,
                                                     std::vector<ISyntaxTrivia*>&& leadingTrivia,
                                                     pg_size position) noexcept
 {
-    ISyntaxTriviaList* pLeadingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(leadingTrivia));
+    ISyntaxTriviaList* pLeadingTrivia = nullptr;
+
+    if (!leadingTrivia.empty())
+        pLeadingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(leadingTrivia));
+
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, pLeadingTrivia);
 }
 
@@ -68,7 +72,11 @@ ISyntaxToken* SyntaxFactory::tokenWithTrailingTrivia(TokenInfo& tokenInfo,
                                                      std::vector<ISyntaxTrivia*>&& trailingTrivia,
                                                      pg_size position) noexcept
 {
-    ISyntaxTriviaList* pTrailingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(trailingTrivia));
+    ISyntaxTriviaList* pTrailingTrivia = nullptr;
+
+    if (!trailingTrivia.empty())
+        pTrailingTrivia = _syntaxPool.createSyntaxTriviaList(std::move(trailingTrivia));
+
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, nullptr, pTrailingTrivia);
 }
                                              
