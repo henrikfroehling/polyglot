@@ -46,7 +46,7 @@ public:
     inline pg_size positionIncludingTrivia() const noexcept override final { return _position - leadingTriviaWidth(); }
     inline pg_size endPositionIncludingTrivia() const noexcept override final { return positionIncludingTrivia() + _fullWidth; }
     inline virtual Text::TextSpan span() const noexcept override { return Text::TextSpan{_position, width()}; }
-    inline virtual Text::TextSpan fullSpan() const noexcept override { return Text::TextSpan{endPositionIncludingTrivia(), _fullWidth}; }
+    inline virtual Text::TextSpan fullSpan() const noexcept override { return Text::TextSpan{positionIncludingTrivia(), _fullWidth}; }
 
     inline virtual pg_size childCount() const noexcept override { return 0; }
     inline virtual SyntaxVariant child(pg_size index) const override { return SyntaxVariant::empty(); }

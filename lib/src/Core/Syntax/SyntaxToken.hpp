@@ -49,7 +49,7 @@ public:
     inline pg_size positionIncludingTrivia() const noexcept override final { return _position - leadingTriviaWidth(); }
     inline pg_size endPositionIncludingTrivia() const noexcept override final { return positionIncludingTrivia() + _fullWidth; }
     inline Text::TextSpan span() const noexcept override final { return Text::TextSpan{_position, width()}; }
-    inline Text::TextSpan fullSpan() const noexcept override final { return Text::TextSpan{endPositionIncludingTrivia(), _fullWidth}; }
+    inline Text::TextSpan fullSpan() const noexcept override final { return Text::TextSpan{positionIncludingTrivia(), _fullWidth}; }
 
     inline bool hasLeadingTrivia() const noexcept override final { return _pLeadingTrivia != nullptr && _pLeadingTrivia->count() > 0; }
     inline bool hasTrailingTrivia() const noexcept override final { return _pTrailingTrivia != nullptr && _pTrailingTrivia->count() > 0; }
