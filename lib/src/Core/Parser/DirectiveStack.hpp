@@ -28,16 +28,16 @@ public:
     DirectiveStack add(SharedPtr<Directive> directive) noexcept;
     inline bool isEmpty() const noexcept { return _directives != nullptr && _directives->head() == nullptr && _directives->tail() == nullptr; }
     bool isPreviousBranchTaken() const noexcept;
-    bool hasUnfinishedIf() const noexcept;
-    bool hasPreviousIfOrElseIf() const noexcept;
+    bool hasUnfinishedIfOrIfN() const noexcept;
+    bool hasPreviousIfOrIfNOrElseIf() const noexcept;
     bool hasUnfinishedRegion() const noexcept;
     DefineState isDefined(std::string_view id) const noexcept;
     inline static DirectiveStack empty() noexcept { return DirectiveStack{DirectiveList::empty()}; }
 
 private:
     explicit DirectiveStack(SharedPtr<DirectiveList> directives) noexcept;
-    SharedPtr<DirectiveList> previousIf() const noexcept;
-    SharedPtr<DirectiveList> previousIfOrElseIfOrElseOrRegion() const noexcept;
+    SharedPtr<DirectiveList> previousIfOrIfN() const noexcept;
+    SharedPtr<DirectiveList> previousIfOrIfNOrElseIfOrElseOrRegion() const noexcept;
     SharedPtr<DirectiveList> previousRegion() const noexcept;
 
     SharedPtr<DirectiveList> completeIf(SharedPtr<DirectiveList> stack,

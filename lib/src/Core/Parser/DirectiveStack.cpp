@@ -21,7 +21,7 @@ DirectiveStack DirectiveStack::add(SharedPtr<Directive> directive) noexcept
     {
         case SyntaxKind::EndIfDirectiveTrivia:
         {
-            SharedPtr<DirectiveList> prevIf = previousIf();
+            SharedPtr<DirectiveList> prevIf = previousIfOrIfN();
 
             if (prevIf == nullptr || !prevIf->any())
                 goto defaultCase;
@@ -48,29 +48,45 @@ bool DirectiveStack::isPreviousBranchTaken() const noexcept
 {
     for (SharedPtr<DirectiveList> current = _directives; current != nullptr && current->any() && current->head() != nullptr; current = current->tail())
     {
-        if (current->head()->isBranchTaken())
-            return true;
-        else if (current->head()->syntaxKind() == SyntaxKind::IfDirectiveTrivia)
-            return false;
+        switch (current->head()->syntaxKind())
+        {
+            case SyntaxKind::IfDirectiveTrivia:
+            case SyntaxKind::IfDefDirectiveTrivia:
+            case SyntaxKind::IfNDefDirectiveTrivia:
+            case SyntaxKind::ElseIfDirectiveTrivia:
+                return current->head()->isBranchTaken();
+            default:
+                return false;
+        }
     }
 
     return false;
 }
 
-bool DirectiveStack::hasUnfinishedIf() const noexcept
+bool DirectiveStack::hasUnfinishedIfOrIfN() const noexcept
 {
-    SharedPtr<DirectiveList> previous = previousIfOrElseIfOrElseOrRegion();
+    SharedPtr<DirectiveList> previous = previousIfOrIfNOrElseIfOrElseOrRegion();
     return previous != nullptr && previous->any() && previous->head() != nullptr && previous->head()->syntaxKind() != SyntaxKind::RegionDirectiveTrivia;
 }
 
-bool DirectiveStack::hasPreviousIfOrElseIf() const noexcept
+bool DirectiveStack::hasPreviousIfOrIfNOrElseIf() const noexcept
 {
-    SharedPtr<DirectiveList> previous = previousIfOrElseIfOrElseOrRegion();
+    SharedPtr<DirectiveList> previous = previousIfOrIfNOrElseIfOrElseOrRegion();
 
     if (previous != nullptr && previous->any() && previous->head() != nullptr)
     {
         const SyntaxKind headSyntaxKind = previous->head()->syntaxKind();
-        return headSyntaxKind == SyntaxKind::IfDirectiveTrivia || headSyntaxKind == SyntaxKind::ElseIfDirectiveTrivia;
+
+        switch (headSyntaxKind)
+        {
+            case SyntaxKind::IfDirectiveTrivia:
+            case SyntaxKind::IfDefDirectiveTrivia:
+            case SyntaxKind::IfNDefDirectiveTrivia:
+            case SyntaxKind::ElseIfDirectiveTrivia:
+                return true;
+            default:
+                return false;
+        }
     }
 
     return false;
@@ -78,7 +94,7 @@ bool DirectiveStack::hasPreviousIfOrElseIf() const noexcept
 
 bool DirectiveStack::hasUnfinishedRegion() const noexcept
 {
-    SharedPtr<DirectiveList> previous = previousIfOrElseIfOrElseOrRegion();
+    SharedPtr<DirectiveList> previous = previousIfOrIfNOrElseIfOrElseOrRegion();
     return previous != nullptr && previous->any() && previous->head() != nullptr && previous->head()->syntaxKind() == SyntaxKind::RegionDirectiveTrivia;
 }
 
@@ -105,14 +121,18 @@ DefineState DirectiveStack::isDefined(std::string_view id) const noexcept
             case SyntaxKind::ElseIfDirectiveTrivia:
             case SyntaxKind::ElseDirectiveTrivia:
             {
+                SyntaxKind currentSyntaxKind = SyntaxKind::None;
+
                 do
                 {
                     current = current->tail();
+                    currentSyntaxKind = current->head()->syntaxKind();
 
                     if (current == nullptr || !current->any())
                         return DefineState::Unspecified;
                 }
-                while (current->head()->syntaxKind() != SyntaxKind::IfDirectiveTrivia);
+                while (currentSyntaxKind != SyntaxKind::IfDirectiveTrivia && currentSyntaxKind != SyntaxKind::IfDefDirectiveTrivia
+                       && currentSyntaxKind != SyntaxKind::IfNDefDirectiveTrivia);
 
                 break;
             }
@@ -122,22 +142,7 @@ DefineState DirectiveStack::isDefined(std::string_view id) const noexcept
     return DefineState::Unspecified;
 }
 
-SharedPtr<DirectiveList> DirectiveStack::previousIf() const noexcept
-{
-    SharedPtr<DirectiveList> current = _directives;
-
-    while (current != nullptr && current->any() && current->head() != nullptr)
-    {
-        if (current->head()->syntaxKind() == SyntaxKind::IfDirectiveTrivia)
-            return current;
-
-        current = current->tail();
-    }
-
-    return current;
-}
-
-SharedPtr<DirectiveList> DirectiveStack::previousIfOrElseIfOrElseOrRegion() const noexcept
+SharedPtr<DirectiveList> DirectiveStack::previousIfOrIfN() const noexcept
 {
     SharedPtr<DirectiveList> current = _directives;
 
@@ -146,6 +151,28 @@ SharedPtr<DirectiveList> DirectiveStack::previousIfOrElseIfOrElseOrRegion() cons
         switch (current->head()->syntaxKind())
         {
             case SyntaxKind::IfDirectiveTrivia:
+            case SyntaxKind::IfDefDirectiveTrivia:
+            case SyntaxKind::IfNDefDirectiveTrivia:
+                return current;
+        }
+
+        current = current->tail();
+    }
+
+    return current;
+}
+
+SharedPtr<DirectiveList> DirectiveStack::previousIfOrIfNOrElseIfOrElseOrRegion() const noexcept
+{
+    SharedPtr<DirectiveList> current = _directives;
+
+    while (current != nullptr && current->any() && current->head() != nullptr)
+    {
+        switch (current->head()->syntaxKind())
+        {
+            case SyntaxKind::IfDirectiveTrivia:
+            case SyntaxKind::IfDefDirectiveTrivia:
+            case SyntaxKind::IfNDefDirectiveTrivia:
             case SyntaxKind::ElseIfDirectiveTrivia:
             case SyntaxKind::ElseDirectiveTrivia:
             case SyntaxKind::RegionDirectiveTrivia:
@@ -177,10 +204,18 @@ SharedPtr<DirectiveList> DirectiveStack::completeIf(SharedPtr<DirectiveList> sta
         return stack;
     }
 
-    if (stack->head() != nullptr && stack->head()->syntaxKind() == SyntaxKind::IfDirectiveTrivia)
+    if (stack->head() != nullptr)
     {
-        include = stack->head()->isBranchTaken();
-        return stack->tail();
+        const SyntaxKind headSyntaxKind = stack->head()->syntaxKind();
+
+        switch (headSyntaxKind)
+        {
+            case SyntaxKind::IfDirectiveTrivia:
+            case SyntaxKind::IfDefDirectiveTrivia:
+            case SyntaxKind::IfNDefDirectiveTrivia:
+                include = stack->head()->isBranchTaken();
+                return stack->tail();
+        }
     }
 
     SharedPtr<DirectiveList> newStack = completeIf(stack->tail(), include);
