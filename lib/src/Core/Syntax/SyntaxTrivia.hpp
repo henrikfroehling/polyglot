@@ -17,8 +17,6 @@ namespace polyglot::Core::Syntax
 class SyntaxTrivia : public ISyntaxTrivia
 {
 public:
-    SyntaxTrivia() noexcept;
-
     explicit SyntaxTrivia(SyntaxKind syntaxKind,
                           std::string_view text,
                           pg_size position = 0,

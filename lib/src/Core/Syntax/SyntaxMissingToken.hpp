@@ -16,8 +16,6 @@ class ISyntaxTriviaList;
 class SyntaxMissingToken : public SyntaxToken
 {
 public:
-    SyntaxMissingToken() noexcept;
-
     explicit SyntaxMissingToken(SyntaxKind syntaxKind,
                                 std::string_view text,
                                 pg_size position = 0,

@@ -20,8 +20,6 @@ class ISyntaxTrivia;
 class SyntaxToken : public ISyntaxToken
 {
 public:
-    SyntaxToken() noexcept;
-
     explicit SyntaxToken(SyntaxKind syntaxKind,
                          std::string_view text,
                          pg_size position = 0,

@@ -4,15 +4,6 @@
 namespace polyglot::Core::Syntax
 {
 
-SyntaxTrivia::SyntaxTrivia() noexcept
-    : ISyntaxTrivia{},
-      _position{},
-      _width{},
-      _syntaxKind{SyntaxKind::None},
-      _text{},
-      _pToken{nullptr}
-{}
-
 SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
                            std::string_view text,
                            pg_size position,

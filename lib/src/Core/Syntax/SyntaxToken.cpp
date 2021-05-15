@@ -5,19 +5,6 @@
 namespace polyglot::Core::Syntax
 {
 
-SyntaxToken::SyntaxToken() noexcept
-    : ISyntaxToken{},
-      _position{},
-      _fullWidth{},
-      _syntaxKind{SyntaxKind::None},
-      _flags{SyntaxFlags::None},
-      _pParent{nullptr},
-      _pTrivia{nullptr},
-      _text{},
-      _pLeadingTrivia{nullptr},
-      _pTrailingTrivia{nullptr}
-{}
-
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
                          std::string_view text,
                          pg_size position,

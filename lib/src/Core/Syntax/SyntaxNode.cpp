@@ -6,16 +6,6 @@
 namespace polyglot::Core::Syntax
 {
 
-SyntaxNode::SyntaxNode() noexcept
-    : ISyntaxNode{},
-      _position{},
-      _fullWidth{},
-      _syntaxKind{SyntaxKind::None},
-      _flags{SyntaxFlags::None},
-      _pParent{nullptr},
-      _pTrivia{nullptr}
-{}
-
 SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
                        pg_size position,
                        pg_size fullWidth,

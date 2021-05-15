@@ -20,8 +20,6 @@ class ISyntaxTriviaList;
 class SyntaxNode : public ISyntaxNode
 {
 public:
-    SyntaxNode() noexcept;
-
     explicit SyntaxNode(SyntaxKind syntaxKind,
                         pg_size position = 0,
                         pg_size fullWidth = 0,

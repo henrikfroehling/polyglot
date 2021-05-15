@@ -5,12 +5,6 @@
 namespace polyglot::Core::Syntax
 {
 
-SyntaxMissingToken::SyntaxMissingToken() noexcept
-    : SyntaxToken{}
-{
-    _flags |= SyntaxFlags::IsMissing;
-}
-
 SyntaxMissingToken::SyntaxMissingToken(SyntaxKind syntaxKind,
                                        std::string_view text,
                                        pg_size position,
