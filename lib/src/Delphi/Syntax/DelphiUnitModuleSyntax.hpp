@@ -4,6 +4,8 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
+#include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -16,9 +18,7 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiEndOfModuleSyntax;
 class DelphiUnitFinalizationSectionSyntax;
-class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
 class DelphiUnitInitializationSectionSyntax;
 class DelphiUnitInterfaceSectionSyntax;
@@ -46,6 +46,8 @@ public:
     inline DelphiEndOfModuleSyntax* endOfModule() const noexcept { return _pEndOfModule; }
     pg_size childCount() const noexcept override final;
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pHead->firstToken(); }
+    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pEndOfModule->lastToken(); }
 
     static DelphiUnitModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,

@@ -83,50 +83,6 @@ bool SyntaxNode::hasMissingTokens() const noexcept
     return false;
 }
 
-ISyntaxToken* SyntaxNode::firstToken() const noexcept
-{
-    ISyntaxNode* pNode = const_cast<SyntaxNode*>(this);
-
-    do
-    {
-        for (pg_size i = 0, n = pNode->childCount(); i < n; i++)
-        {
-            SyntaxVariant nodeOrToken = pNode->child(i);
-
-            if (nodeOrToken.isToken())
-                return nodeOrToken.token;
-
-            pNode = nodeOrToken.node;
-            break;
-        }
-    }
-    while (pNode != nullptr && pNode->childCount() > 0);
-
-    return nullptr;
-}
-
-ISyntaxToken* SyntaxNode::lastToken() const noexcept
-{
-    ISyntaxNode* pNode = const_cast<SyntaxNode*>(this);
-
-    do
-    {
-        for (pg_size i = pNode->childCount() - 1; i > -1; i--)
-        {
-            SyntaxVariant nodeOrToken = pNode->child(i);
-
-            if (nodeOrToken.isToken())
-                return nodeOrToken.token;
-
-            pNode = nodeOrToken.node;
-            break;
-        }
-    }
-    while (pNode != nullptr && pNode->childCount() > 0);
-
-    return nullptr;
-}
-
 void SyntaxNode::adjustWidthAndFlags(ISyntaxNode* node) noexcept
 {
     if (node != nullptr)

@@ -27,6 +27,8 @@ public:
     inline virtual ExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
     inline pg_size childCount() const noexcept override final { return 3; }
     SyntaxVariant child(pg_size index) const override final;
+    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pLeftExpression->firstToken(); }
+    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pRightExpression->lastToken(); }
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,

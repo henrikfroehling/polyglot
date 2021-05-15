@@ -4,6 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
+#include "Delphi/Syntax/DelphiPackageHeadSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -17,7 +18,6 @@ namespace polyglot::Delphi::Syntax
 {
 
 class DelphiPackageContainsClauseSyntax;
-class DelphiPackageHeadSyntax;
 class DelphiPackageRequiresClauseSyntax;
 
 class DelphiPackageModuleSyntax : public DelphiCompilationUnitSyntax
@@ -35,6 +35,8 @@ public:
     inline DelphiPackageContainsClauseSyntax* containsClause() const noexcept { return _pContainsClause; }
     inline pg_size childCount() const noexcept override final { return 4; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pHead->firstToken(); }
+    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pEOFToken; }
 
     static DelphiPackageModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiPackageHeadSyntax* head,

@@ -65,8 +65,8 @@ public:
     inline virtual bool isClause() const noexcept override { return false; }
     bool hasMissingTokens() const noexcept override final;
 
-    ISyntaxToken* firstToken() const noexcept;
-    ISyntaxToken* lastToken() const noexcept;
+    virtual ISyntaxToken* firstToken() const noexcept = 0;
+    virtual ISyntaxToken* lastToken() const noexcept = 0;
 
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
 

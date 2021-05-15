@@ -23,6 +23,8 @@ public:
     inline virtual ISyntaxToken* token() const noexcept { return _pLiteral; }
     inline pg_size childCount() const noexcept override final { return 1; }
     SyntaxVariant child(pg_size index) const override final;
+    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pLiteral; }
+    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pLiteral; }
 
     static LiteralExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                            SyntaxKind syntaxKind,

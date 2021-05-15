@@ -6,6 +6,7 @@
 namespace polyglot::Core::Syntax
 {
 
+class ISyntaxToken;
 class SyntaxFactory;
 
 } // end namespace polyglot::Core::Syntax
@@ -18,6 +19,9 @@ class DelphiUnitFinalizationSectionSyntax : public DelphiSyntaxNode
 public:
     DelphiUnitFinalizationSectionSyntax() noexcept;
     virtual ~DelphiUnitFinalizationSectionSyntax() noexcept {}
+
+    virtual Core::Syntax::ISyntaxToken* firstToken() const noexcept override { return nullptr; }
+    virtual Core::Syntax::ISyntaxToken* lastToken() const noexcept override { return nullptr; }
 
     static DelphiUnitFinalizationSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory) noexcept;
 };

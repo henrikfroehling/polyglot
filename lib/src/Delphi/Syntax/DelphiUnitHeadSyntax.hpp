@@ -34,6 +34,8 @@ public:
     inline Core::Syntax::ISyntaxToken* filename() const noexcept { return _pFilename; }
     inline pg_size childCount() const noexcept override final { return _pFilename != nullptr ? 5 : 3; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pUnitKeyword; }
+    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pSemiColonToken; }
 
     static DelphiUnitHeadSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                         Core::Syntax::ISyntaxToken* unitKeyword,

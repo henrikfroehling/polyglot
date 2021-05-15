@@ -4,13 +4,13 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
 class ISyntaxNode;
 class ISyntaxToken;
-class SimpleNameExpressionSyntax;
 class SyntaxFactory;
 
 class QualifiedNameExpressionSyntax : public NameExpressionSyntax
@@ -26,6 +26,8 @@ public:
     inline virtual SimpleNameExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
     inline pg_size childCount() const noexcept override final { return 3; }
     SyntaxVariant child(pg_size index) const override final;
+    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pLeftExpression->firstToken(); }
+    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pRightExpression->lastToken(); }
 
     static QualifiedNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  NameExpressionSyntax* leftExpression,

@@ -4,6 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
+#include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -16,8 +17,6 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiUsesClauseSyntax;
-
 class DelphiUnitInterfaceSectionSyntax : public DelphiSyntaxNode
 {
 public:
@@ -29,6 +28,8 @@ public:
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     inline pg_size childCount() const noexcept override final { return _pUses != nullptr ? 2 : 1; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pInterfaceKeyword; }
+    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pUses->last().token; }
 
     static DelphiUnitInterfaceSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* interfaceKeyword,
