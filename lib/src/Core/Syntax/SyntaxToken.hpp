@@ -15,6 +15,8 @@
 namespace polyglot::Core::Syntax
 {
 
+class ISyntaxTrivia;
+
 class SyntaxToken : public ISyntaxToken
 {
 public:
@@ -26,7 +28,8 @@ public:
                          pg_size fullWidth = 0,
                          ISyntaxTriviaList* leadingTrivia = nullptr,
                          ISyntaxTriviaList* trailingTrivia = nullptr,
-                         ISyntaxNode* parent = nullptr) noexcept;
+                         ISyntaxNode* parent = nullptr,
+                         ISyntaxTrivia* trivia = nullptr) noexcept;
 
     virtual ~SyntaxToken() noexcept {}
 
@@ -36,6 +39,7 @@ public:
     SyntaxToken& operator=(SyntaxToken&&) noexcept = default;
 
     inline ISyntaxNode* parent() const noexcept override final { return _pParent; }
+    inline ISyntaxTrivia* trivia() const noexcept override final { return _pTrivia; }
 
     inline LanguageKind languageKind() const noexcept override final { return _pParent != nullptr ? _pParent->languageKind() : LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
@@ -67,6 +71,8 @@ public:
     TokenValue value() const noexcept override;
     bool booleanValue() const noexcept override;
 
+    void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
+
     virtual std::string toString() const noexcept override;
 
 protected:
@@ -81,6 +87,7 @@ protected:
     SyntaxKind _syntaxKind;
     SyntaxFlags _flags;
     ISyntaxNode* _pParent;
+    ISyntaxTrivia* _pTrivia;
     std::string_view _text;
     ISyntaxTriviaList* _pLeadingTrivia;
     ISyntaxTriviaList* _pTrailingTrivia;

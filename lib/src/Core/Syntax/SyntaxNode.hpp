@@ -14,6 +14,7 @@
 namespace polyglot::Core::Syntax
 {
 
+class ISyntaxTrivia;
 class ISyntaxTriviaList;
 
 class SyntaxNode : public ISyntaxNode
@@ -24,7 +25,8 @@ public:
     explicit SyntaxNode(SyntaxKind syntaxKind,
                         pg_size position = 0,
                         pg_size fullWidth = 0,
-                        ISyntaxNode* parent = nullptr) noexcept;
+                        ISyntaxNode* parent = nullptr,
+                        ISyntaxTrivia* trivia = nullptr) noexcept;
 
     virtual ~SyntaxNode() noexcept {}
 
@@ -34,6 +36,7 @@ public:
     SyntaxNode& operator=(SyntaxNode&&) noexcept = default;
 
     inline ISyntaxNode* parent() const noexcept override final { return _pParent; }
+    inline ISyntaxTrivia* trivia() const noexcept override final { return _pTrivia; }
 
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
@@ -67,6 +70,8 @@ public:
     ISyntaxToken* firstToken() const noexcept;
     ISyntaxToken* lastToken() const noexcept;
 
+    void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
+
     std::string toString() const noexcept override;
 
 protected:
@@ -81,6 +86,7 @@ protected:
     SyntaxKind _syntaxKind;
     SyntaxFlags _flags;
     ISyntaxNode* _pParent;
+    ISyntaxTrivia* _pTrivia;
 };
 
 } // end namespace polyglot::Core::Syntax

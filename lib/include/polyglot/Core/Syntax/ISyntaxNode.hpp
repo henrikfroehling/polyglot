@@ -13,6 +13,7 @@
 namespace polyglot::Core::Syntax
 {
 
+class ISyntaxTrivia;
 class ISyntaxTriviaList;
 
 class POLYGLOT_API ISyntaxNode
@@ -21,6 +22,7 @@ public:
     virtual ~ISyntaxNode() noexcept {}
 
     virtual ISyntaxNode* parent() const noexcept = 0;
+    virtual ISyntaxTrivia* trivia() const noexcept = 0; // if node is part of structured trivia
 
     virtual LanguageKind languageKind() const noexcept = 0;
     virtual SyntaxKind syntaxKind() const noexcept = 0;

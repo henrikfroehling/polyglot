@@ -14,6 +14,7 @@ namespace polyglot::Core::Syntax
 {
 
 class ISyntaxNode;
+class ISyntaxTrivia;
 class ISyntaxTriviaList;
 
 using TokenValue = std::variant<std::monostate, bool, char, int, float, double, std::string_view>;
@@ -24,6 +25,7 @@ public:
     virtual ~ISyntaxToken() noexcept {}
 
     virtual ISyntaxNode* parent() const noexcept = 0;
+    virtual ISyntaxTrivia* trivia() const noexcept = 0; // if token is part of structured trivia
 
     virtual LanguageKind languageKind() const noexcept = 0;
     virtual SyntaxKind syntaxKind() const noexcept = 0;

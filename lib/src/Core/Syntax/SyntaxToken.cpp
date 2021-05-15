@@ -12,6 +12,7 @@ SyntaxToken::SyntaxToken() noexcept
       _syntaxKind{SyntaxKind::None},
       _flags{SyntaxFlags::None},
       _pParent{nullptr},
+      _pTrivia{nullptr},
       _text{},
       _pLeadingTrivia{nullptr},
       _pTrailingTrivia{nullptr}
@@ -23,13 +24,15 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
                          pg_size fullWidth,
                          ISyntaxTriviaList* leadingTrivia,
                          ISyntaxTriviaList* trailingTrivia,
-                         ISyntaxNode* parent) noexcept
+                         ISyntaxNode* parent,
+                         ISyntaxTrivia* trivia) noexcept
     : ISyntaxToken{},
       _position{position},
       _fullWidth{fullWidth},
       _syntaxKind{syntaxKind},
       _flags{SyntaxFlags::None},
       _pParent{parent},
+      _pTrivia{trivia},
       _text{text},
       _pLeadingTrivia{leadingTrivia},
       _pTrailingTrivia{trailingTrivia}
@@ -72,6 +75,12 @@ void SyntaxToken::adjustWidth(ISyntaxTriviaList* trivia) noexcept
         _fullWidth += pSyntaxTriviaList->width();
         pSyntaxTriviaList->setToken(this);
     }
+}
+
+void SyntaxToken::setTriviaParent(ISyntaxTrivia* trivia) noexcept
+{
+    _pParent = nullptr;
+    _pTrivia = trivia;
 }
 
 std::string SyntaxToken::toString() const noexcept

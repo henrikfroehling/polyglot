@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -22,10 +23,16 @@ DelphiSwitchDirectiveTriviaSyntax::DelphiSwitchDirectiveTriviaSyntax(SyntaxKind 
       _pEndOfDirectiveToken{endOfDirectiveToken}
 {
     _position = _pStartToken->position();
+
     adjustWidth(_pStartToken);
     adjustWidth(_pIdentifier);
     adjustWidth(_pOnOffToken);
     adjustWidth(_pEndOfDirectiveToken);
+
+    static_cast<SyntaxToken*>(_pStartToken)->setTriviaParent(this);
+    static_cast<SyntaxToken*>(_pIdentifier)->setTriviaParent(this);
+    static_cast<SyntaxToken*>(_pOnOffToken)->setTriviaParent(this);
+    static_cast<SyntaxToken*>(_pEndOfDirectiveToken)->setTriviaParent(this);
 }
 
 SyntaxVariant DelphiSwitchDirectiveTriviaSyntax::child(pg_size index) const

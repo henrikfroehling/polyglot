@@ -12,19 +12,22 @@ SyntaxNode::SyntaxNode() noexcept
       _fullWidth{},
       _syntaxKind{SyntaxKind::None},
       _flags{SyntaxFlags::None},
-      _pParent{nullptr}
+      _pParent{nullptr},
+      _pTrivia{nullptr}
 {}
 
 SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
                        pg_size position,
                        pg_size fullWidth,
-                       ISyntaxNode* parent) noexcept
+                       ISyntaxNode* parent,
+                       ISyntaxTrivia* trivia) noexcept
     : ISyntaxNode{},
       _position{position},
       _fullWidth{fullWidth},
       _syntaxKind{syntaxKind},
       _flags{SyntaxFlags::None},
-      _pParent{parent}
+      _pParent{parent},
+      _pTrivia{trivia}
 {}
 
 pg_size SyntaxNode::leadingTriviaWidth() const noexcept
@@ -153,6 +156,12 @@ void SyntaxNode::adjustWidthAndFlags(ISyntaxToken* token) noexcept
         _fullWidth += pSyntaxToken->_fullWidth;
         pSyntaxToken->_pParent = this;
     }
+}
+
+void SyntaxNode::setTriviaParent(ISyntaxTrivia* trivia) noexcept
+{
+    _pParent = nullptr;
+    _pTrivia = trivia;
 }
 
 std::string SyntaxNode::toString() const noexcept

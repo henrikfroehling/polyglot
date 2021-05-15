@@ -5,6 +5,8 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/ExpressionSyntax.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Core/Syntax/SyntaxNode.hpp"
+#include "Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -29,10 +31,16 @@ DelphiElseIfDirectiveTriviaSyntax::DelphiElseIfDirectiveTriviaSyntax(SyntaxKind 
       _conditionValue{conditionValue}
 {
     _position = _pStartToken->position();
+
     adjustWidth(_pStartToken);
     adjustWidth(_pElseIfKeyword);
     adjustWidth(_pCondition);
     adjustWidth(_pEndOfDirectiveToken);
+
+    static_cast<SyntaxToken*>(_pStartToken)->setTriviaParent(this);
+    static_cast<SyntaxToken*>(_pElseIfKeyword)->setTriviaParent(this);
+    static_cast<SyntaxNode*>(_pCondition)->setTriviaParent(this);
+    static_cast<SyntaxToken*>(_pEndOfDirectiveToken)->setTriviaParent(this);
 }
 
 SyntaxVariant DelphiElseIfDirectiveTriviaSyntax::child(pg_size index) const
