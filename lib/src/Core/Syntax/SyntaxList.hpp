@@ -67,6 +67,7 @@ protected:
     void adjustWidthAndFlags(ISyntaxList* list) noexcept;
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;
     void adjustWidthAndFlags(ISyntaxToken* token) noexcept;
+    void setParent(ISyntaxNode* parent) noexcept;
 
 protected:
     pg_size _position;

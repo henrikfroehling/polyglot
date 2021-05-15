@@ -38,6 +38,8 @@ SyntaxList::SyntaxList(SyntaxKind syntaxKind,
             adjustWidthAndFlags(child.node);
         else if (child.isToken())
             adjustWidthAndFlags(child.token);
+        else if (child.isList())
+            _position = child.list->position();
     }
 }
 
@@ -114,6 +116,7 @@ void SyntaxList::adjustWidthAndFlags(ISyntaxList* list) noexcept
     {
         SyntaxList* pSyntaxList = static_cast<SyntaxList*>(list);
         _fullWidth += pSyntaxList->_fullWidth;
+        pSyntaxList->setParent(_pParent);
     }
 }
 
@@ -123,6 +126,7 @@ void SyntaxList::adjustWidthAndFlags(ISyntaxNode* node) noexcept
     {
         SyntaxNode* pSyntaxNode = static_cast<SyntaxNode*>(node);
         _fullWidth += pSyntaxNode->_fullWidth;
+        pSyntaxNode->_pParent = _pParent;
     }
 }
 
@@ -132,6 +136,31 @@ void SyntaxList::adjustWidthAndFlags(ISyntaxToken* token) noexcept
     {
         SyntaxToken* pSyntaxToken = static_cast<SyntaxToken*>(token);
         _fullWidth += pSyntaxToken->_fullWidth;
+        pSyntaxToken->_pParent = _pParent;
+    }
+}
+
+void SyntaxList::setParent(ISyntaxNode* parent) noexcept
+{
+    _pParent = parent;
+
+    for (SyntaxVariant& child : _children)
+    {
+        if (child.isNode())
+        {
+            SyntaxNode* pSyntaxNode = static_cast<SyntaxNode*>(child.node);
+            pSyntaxNode->_pParent = _pParent;
+        }
+        else if (child.isToken())
+        {
+            SyntaxToken* pSyntaxToken = static_cast<SyntaxToken*>(child.token);
+            pSyntaxToken->_pParent = _pParent;
+        }
+        else if (child.isList())
+        {
+            SyntaxList* pSyntaxList = static_cast<SyntaxList*>(child.list);
+            pSyntaxList->_pParent = _pParent;
+        }
     }
 }
 

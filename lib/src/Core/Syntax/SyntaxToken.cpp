@@ -70,7 +70,7 @@ void SyntaxToken::adjustWidth(ISyntaxTriviaList* trivia) noexcept
     {
         SyntaxTriviaList* pSyntaxTriviaList = static_cast<SyntaxTriviaList*>(trivia);
         _fullWidth += pSyntaxTriviaList->width();
-        pSyntaxTriviaList->_pToken = this;
+        pSyntaxTriviaList->setToken(this);
     }
 }
 

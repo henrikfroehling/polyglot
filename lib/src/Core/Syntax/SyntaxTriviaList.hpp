@@ -46,6 +46,7 @@ public:
 
 protected:
     void adjustWidth(ISyntaxTrivia* trivia) noexcept;
+    void setToken(ISyntaxToken* token) noexcept;
 
 protected:
     friend class SyntaxToken;

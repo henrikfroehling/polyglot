@@ -26,6 +26,18 @@ void SyntaxTriviaList::adjustWidth(ISyntaxTrivia* trivia) noexcept
     {
         SyntaxTrivia* pSyntaxTrivia = static_cast<SyntaxTrivia*>(trivia);
         _width += pSyntaxTrivia->_width;
+        pSyntaxTrivia->_pToken = _pToken;
+    }
+}
+
+void SyntaxTriviaList::setToken(ISyntaxToken* token) noexcept
+{
+    _pToken = token;
+
+    for (ISyntaxTrivia* trivia : _children)
+    {
+        SyntaxTrivia* pSyntaxTrivia = static_cast<SyntaxTrivia*>(trivia);
+        pSyntaxTrivia->_pToken = token;
     }
 }
 
