@@ -26,6 +26,8 @@ public:
     inline Core::Syntax::ISyntaxNode* root() const noexcept override final { return Core::Syntax::SyntaxTree::root(); }
     inline Core::LanguageKind languageKind() const noexcept override final { return Core::LanguageKind::Delphi; }
 
+    inline const SharedPtr<Core::Text::SourceText>& sourceText() const noexcept override { return Core::Syntax::SyntaxTree::sourceText(); }
+
     static SharedPtr<IDelphiSyntaxTree> parseSourceText(SharedPtr<Core::Text::SourceText> sourceText) noexcept;
 };
 

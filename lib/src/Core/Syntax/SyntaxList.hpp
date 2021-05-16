@@ -35,7 +35,8 @@ public:
 
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
-    inline virtual std::string_view text() const noexcept override { return std::string_view{}; }
+    virtual std::string_view text() const noexcept override;
+    virtual std::string_view textIncludingTrivia() const noexcept override;
 
     inline virtual pg_size width() const noexcept override { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }

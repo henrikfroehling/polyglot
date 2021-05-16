@@ -30,7 +30,7 @@ public:
     inline ISyntaxToken* token() const noexcept override final { return _pToken; }
 
     inline LanguageKind languageKind() const noexcept override final { return _pToken != nullptr ? _pToken->languageKind() : LanguageKind::Unknown; }
-    inline std::string_view text() const noexcept override final { return std::string_view{}; }
+    std::string_view text() const noexcept override final;
 
     inline pg_size width() const noexcept override final { return _width; }
     inline pg_size position() const noexcept override final { return _position; }

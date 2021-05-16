@@ -29,7 +29,7 @@ public:
     inline pg_size childCount() const noexcept override final { return _pUses != nullptr ? 2 : 1; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pInterfaceKeyword; }
-    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pUses->last().token; }
+    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pUses != nullptr ? _pUses->last().token : _pInterfaceKeyword; }
 
     static DelphiUnitInterfaceSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* interfaceKeyword,

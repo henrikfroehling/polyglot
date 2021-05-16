@@ -4,8 +4,10 @@
 #include <string>
 #include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
+#include "polyglot/Core/Syntax/ISyntaxTree.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
+#include "polyglot/Core/Text/SourceText.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -35,10 +37,12 @@ public:
 
     inline ISyntaxNode* parent() const noexcept override final { return _pParent; }
     inline ISyntaxTrivia* trivia() const noexcept override final { return _pTrivia; }
+    inline ISyntaxTree* syntaxTree() const noexcept override final { return _pSyntaxTree; }
 
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
-    inline virtual std::string_view text() const noexcept override { return std::string_view{}; }
+    virtual std::string_view text() const noexcept override;
+    virtual std::string_view textIncludingTrivia() const noexcept override;
 
     inline virtual pg_size width() const noexcept override { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }
@@ -69,6 +73,7 @@ public:
     virtual ISyntaxToken* lastToken() const noexcept = 0;
 
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
+    void setSyntaxTree(ISyntaxTree* syntaxTree) noexcept;
 
     std::string toString() const noexcept override;
 
@@ -85,6 +90,7 @@ protected:
     SyntaxFlags _flags;
     ISyntaxNode* _pParent;
     ISyntaxTrivia* _pTrivia;
+    ISyntaxTree* _pSyntaxTree;
 };
 
 } // end namespace polyglot::Core::Syntax

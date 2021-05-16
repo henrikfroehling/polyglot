@@ -13,6 +13,7 @@
 namespace polyglot::Core::Syntax
 {
 
+class ISyntaxTree;
 class ISyntaxTrivia;
 class ISyntaxTriviaList;
 
@@ -23,10 +24,12 @@ public:
 
     virtual ISyntaxNode* parent() const noexcept = 0;
     virtual ISyntaxTrivia* trivia() const noexcept = 0; // if node is part of structured trivia
+    virtual ISyntaxTree* syntaxTree() const noexcept = 0;
 
     virtual LanguageKind languageKind() const noexcept = 0;
     virtual SyntaxKind syntaxKind() const noexcept = 0;
     virtual std::string_view text() const noexcept = 0;
+    virtual std::string_view textIncludingTrivia() const noexcept = 0;
 
     virtual pg_size width() const noexcept = 0;
     virtual pg_size fullWidth() const noexcept = 0;

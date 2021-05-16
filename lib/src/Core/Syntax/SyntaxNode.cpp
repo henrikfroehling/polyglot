@@ -17,8 +17,25 @@ SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
       _syntaxKind{syntaxKind},
       _flags{SyntaxFlags::None},
       _pParent{parent},
-      _pTrivia{trivia}
+      _pTrivia{trivia},
+      _pSyntaxTree{nullptr}
 {}
+
+std::string_view SyntaxNode::text() const noexcept
+{
+    if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
+        return _pParent->syntaxTree()->sourceText()->toString(span());
+
+    return _pSyntaxTree != nullptr ? _pSyntaxTree->sourceText()->toString(span()) : std::string_view{};
+}
+
+std::string_view SyntaxNode::textIncludingTrivia() const noexcept
+{
+    if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
+        return _pParent->syntaxTree()->sourceText()->toString(fullSpan());
+
+    return _pSyntaxTree != nullptr ? _pSyntaxTree->sourceText()->toString(fullSpan()) : std::string_view{};
+}
 
 pg_size SyntaxNode::leadingTriviaWidth() const noexcept
 {
@@ -108,6 +125,11 @@ void SyntaxNode::setTriviaParent(ISyntaxTrivia* trivia) noexcept
 {
     _pParent = nullptr;
     _pTrivia = trivia;
+}
+
+void SyntaxNode::setSyntaxTree(ISyntaxTree* syntaxTree) noexcept
+{
+    _pSyntaxTree = syntaxTree;
 }
 
 std::string SyntaxNode::toString() const noexcept

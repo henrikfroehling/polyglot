@@ -1,5 +1,8 @@
 #include "Core/Syntax/SyntaxToken.hpp"
 #include <sstream>
+#include "polyglot/Core/Syntax/ISyntaxNode.hpp"
+#include "polyglot/Core/Syntax/ISyntaxTree.hpp"
+#include "polyglot/Core/Text/SourceText.hpp"
 #include "Core/Syntax/SyntaxTriviaList.hpp"
 
 namespace polyglot::Core::Syntax
@@ -29,6 +32,14 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
 
     if (_pTrailingTrivia != nullptr)
         adjustWidth(_pTrailingTrivia);
+}
+
+std::string_view SyntaxToken::textIncludingTrivia() const noexcept
+{
+    if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
+        return _pParent->syntaxTree()->sourceText()->toString(fullSpan());
+
+    return std::string_view{};
 }
 
 TokenValue SyntaxToken::value() const noexcept

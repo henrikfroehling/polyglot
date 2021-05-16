@@ -43,6 +43,94 @@ SyntaxList::SyntaxList(SyntaxKind syntaxKind,
     }
 }
 
+std::string_view SyntaxList::text() const noexcept
+{
+    if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
+    {
+        SyntaxVariant firstChild = first();
+
+        if (!firstChild.isEmpty())
+        {
+            pg_size position = 0;
+            pg_size endPosition = 0;
+
+            if (firstChild.isNode())
+            {
+                position = firstChild.node->position();
+                endPosition = firstChild.node->endPosition();
+            }
+            else if (firstChild.isToken())
+            {
+                position = firstChild.token->position();
+                endPosition = firstChild.token->endPosition();
+            }
+            else if (firstChild.isList())
+            {
+                position = firstChild.list->position();
+                endPosition = firstChild.list->endPosition();
+            }
+
+            SyntaxVariant lastChild = last();
+
+            if (lastChild.isNode())
+                endPosition = lastChild.node->endPosition();
+            else if (lastChild.isToken())
+                endPosition = lastChild.token->endPosition();
+            else if (lastChild.isList())
+                endPosition = lastChild.list->endPosition();
+
+            const Text::TextSpan span = Text::TextSpan::fromBounds(position, endPosition);
+            return _pParent->syntaxTree()->sourceText()->toString(span);
+        }
+    }
+
+    return std::string_view{};
+}
+
+std::string_view SyntaxList::textIncludingTrivia() const noexcept
+{
+    if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
+    {
+        SyntaxVariant firstChild = first();
+
+        if (!firstChild.isEmpty())
+        {
+            pg_size position = 0;
+            pg_size endPosition = 0;
+
+            if (firstChild.isNode())
+            {
+                position = firstChild.node->positionIncludingTrivia();
+                endPosition = firstChild.node->endPositionIncludingTrivia();
+            }
+            else if (firstChild.isToken())
+            {
+                position = firstChild.token->positionIncludingTrivia();
+                endPosition = firstChild.token->endPositionIncludingTrivia();
+            }
+            else if (firstChild.isList())
+            {
+                position = firstChild.list->positionIncludingTrivia();
+                endPosition = firstChild.list->endPositionIncludingTrivia();
+            }
+
+            SyntaxVariant lastChild = last();
+
+            if (lastChild.isNode())
+                endPosition = lastChild.node->endPositionIncludingTrivia();
+            else if (lastChild.isToken())
+                endPosition = lastChild.token->endPositionIncludingTrivia();
+            else if (lastChild.isList())
+                endPosition = lastChild.list->endPositionIncludingTrivia();
+
+            const Text::TextSpan span = Text::TextSpan::fromBounds(position, endPosition);
+            return _pParent->syntaxTree()->sourceText()->toString(span);
+        }
+    }
+
+    return std::string_view{};
+}
+
 pg_size SyntaxList::leadingTriviaWidth() const noexcept
 {
     SyntaxVariant nodeOrToken = first();

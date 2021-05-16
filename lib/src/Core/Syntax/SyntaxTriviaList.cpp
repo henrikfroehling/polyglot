@@ -1,5 +1,9 @@
 #include "Core/Syntax/SyntaxTriviaList.hpp"
 #include <sstream>
+#include "polyglot/Core/Syntax/ISyntaxNode.hpp"
+#include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "polyglot/Core/Syntax/ISyntaxTree.hpp"
+#include "polyglot/Core/Text/SourceText.hpp"
 #include "Core/Syntax/SyntaxTrivia.hpp"
 
 namespace polyglot::Core::Syntax
@@ -18,6 +22,29 @@ SyntaxTriviaList::SyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
 
     for (ISyntaxTrivia* pTrivia : _children)
         adjustWidth(pTrivia);
+}
+
+std::string_view SyntaxTriviaList::text() const noexcept
+{
+    if (_pToken != nullptr && _pToken->parent() != nullptr && _pToken->parent()->syntaxTree() != nullptr)
+    {
+        ISyntaxTrivia* pFirstTrivia = first();
+
+        if (pFirstTrivia != nullptr)
+        {
+            ISyntaxTrivia* pLastTrivia = last();
+            const pg_size position = pFirstTrivia->position();
+            pg_size endPosition = pFirstTrivia->endPosition();
+
+            if (pLastTrivia != nullptr)
+                endPosition = pLastTrivia->endPosition();
+
+            const Text::TextSpan triviaSpan = Text::TextSpan::fromBounds(position, endPosition);
+            return _pToken->parent()->syntaxTree()->sourceText()->toString(triviaSpan);
+        }
+    }
+
+    return std::string_view{};
 }
 
 void SyntaxTriviaList::adjustWidth(ISyntaxTrivia* trivia) noexcept

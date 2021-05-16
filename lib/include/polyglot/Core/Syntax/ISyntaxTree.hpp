@@ -3,6 +3,14 @@
 
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
+#include "polyglot/Core/Types.hpp"
+
+namespace polyglot::Core::Text
+{
+
+class SourceText;
+
+} // end namespace polyglot::Core::Text
 
 namespace polyglot::Core::Syntax
 {
@@ -16,6 +24,8 @@ public:
 
     virtual ISyntaxNode* root() const noexcept = 0;
     virtual LanguageKind languageKind() const noexcept = 0;
+
+    virtual const SharedPtr<Text::SourceText>& sourceText() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

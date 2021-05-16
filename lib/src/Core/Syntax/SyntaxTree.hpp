@@ -20,6 +20,8 @@ public:
     inline virtual ISyntaxNode* root() const noexcept override { return _pRoot; }
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
 
+    inline const SharedPtr<Text::SourceText>& sourceText() const noexcept override { return _ptrSourceText; }
+
 protected:
     explicit SyntaxTree(SharedPtr<Text::SourceText> sourceText,
                         ISyntaxNode* root,

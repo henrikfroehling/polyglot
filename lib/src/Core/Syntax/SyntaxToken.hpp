@@ -42,7 +42,7 @@ public:
     inline LanguageKind languageKind() const noexcept override final { return _pParent != nullptr ? _pParent->languageKind() : LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
     inline std::string_view text() const noexcept override final { return _text; }
-    inline std::string_view textIncludingTrivia() const noexcept override final { return std::string_view{}; }
+    std::string_view textIncludingTrivia() const noexcept override final;
 
     inline pg_size width() const noexcept override final { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }

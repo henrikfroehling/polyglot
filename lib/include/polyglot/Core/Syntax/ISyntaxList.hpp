@@ -26,6 +26,7 @@ public:
     virtual LanguageKind languageKind() const noexcept = 0;
     virtual SyntaxKind syntaxKind() const noexcept = 0;
     virtual std::string_view text() const noexcept = 0;
+    virtual std::string_view textIncludingTrivia() const noexcept = 0;
 
     virtual pg_size width() const noexcept = 0;
     virtual pg_size fullWidth() const noexcept = 0;
