@@ -45,23 +45,13 @@ QVariant SyntaxTreeItem::data() const noexcept
         return QVariant{};
 
     if (_value.isNode())
-        return QString::fromLatin1(_value.node->toString());
+        return QString::fromLatin1(_value.node->toShortString());
     else if (_value.isToken())
-        return QString::fromLatin1(_value.token->toString());
+        return QString::fromLatin1(_value.token->toShortString());
     else if (_value.isList())
-        return QString::fromLatin1(_value.list->toString());
+        return QString::fromLatin1(_value.list->toShortString());
     else if (_value.isTrivia())
-    {
-        QString valuePrefix{};
-
-        if (_value.trivia->isLeading())
-            valuePrefix = QStringLiteral("Lead: ");
-        else if (_value.trivia->isTrailing())
-            valuePrefix = QStringLiteral("Trail: ");
-
-        const QString value = valuePrefix + QString::fromLatin1(_value.trivia->toString());
-        return value;
-    }
+        return QString::fromLatin1(_value.trivia->toShortString());
 
     return QVariant{};
 }

@@ -72,6 +72,7 @@ public:
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
 
     virtual std::string toString() const noexcept override;
+    virtual std::string toShortString() const noexcept override;
 
 protected:
     void adjustWidth(ISyntaxTriviaList* trivia) noexcept;

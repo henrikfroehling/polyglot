@@ -105,4 +105,11 @@ std::string SyntaxToken::toString() const noexcept
     return str.str();
 }
 
+std::string SyntaxToken::toShortString() const noexcept
+{
+    std::stringstream str;
+    str << "Token: " << syntaxKindName(_syntaxKind) << fullSpan();
+    return str.str();
+}
+
 } // end namespace polyglot::Core::Syntax

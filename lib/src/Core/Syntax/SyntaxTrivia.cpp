@@ -26,4 +26,17 @@ std::string SyntaxTrivia::toString() const noexcept
     return str.str();
 }
 
+std::string SyntaxTrivia::toShortString() const noexcept
+{
+    std::stringstream str;
+
+    if (_isLeading)
+        str << "Lead: ";
+    else if (_isTrailing)
+        str << "Trail: ";
+
+    str << "Trivia: " << syntaxKindName(_syntaxKind) << span();
+    return str.str();
+}
+
 } // end namespace polyglot::Core::Syntax

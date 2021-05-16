@@ -69,4 +69,12 @@ bool operator!=(const TextSpan& lhs,
     return !(lhs == rhs);
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         const TextSpan& textSpan) noexcept
+{
+    const pg_size end = textSpan._length + textSpan._start;
+    os << "[" << textSpan._start << ".." << end << "]";
+    return os;
+}
+
 } // end namespace polyglot::Core::Text

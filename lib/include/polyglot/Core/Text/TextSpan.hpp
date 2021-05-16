@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_TEXT_TEXTSPAN_H
 #define POLYGLOT_CORE_TEXT_TEXTSPAN_H
 
+#include <ostream>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 
@@ -39,6 +40,9 @@ public:
 
     friend bool operator!=(const TextSpan& lhs,
                            const TextSpan& rhs) noexcept;
+
+    friend std::ostream& operator<<(std::ostream& os,
+                                    const TextSpan& textSpan) noexcept;
 
 private:
     pg_size _start;

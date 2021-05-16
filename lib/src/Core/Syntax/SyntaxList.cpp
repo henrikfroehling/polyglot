@@ -259,4 +259,11 @@ std::string SyntaxList::toString() const noexcept
     return str.str();
 }
 
+std::string SyntaxList::toShortString() const noexcept
+{
+    std::stringstream str;
+    str << "SyntaxList: " << syntaxKindName(_syntaxKind) << fullSpan();
+    return str.str();
+}
+
 } // end namespace polyglot::Core::Syntax

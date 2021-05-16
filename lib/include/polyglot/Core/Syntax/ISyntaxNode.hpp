@@ -57,6 +57,7 @@ public:
     virtual bool hasMissingTokens() const noexcept = 0;
 
     virtual std::string toString() const noexcept = 0;
+    virtual std::string toShortString() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

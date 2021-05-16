@@ -24,4 +24,11 @@ std::string SyntaxMissingToken::toString() const noexcept
     return str.str();
 }
 
+std::string SyntaxMissingToken::toShortString() const noexcept
+{
+    std::stringstream str;
+    str << "MissingToken: " << syntaxKindName(_syntaxKind) << fullSpan();
+    return str.str();
+}
+
 } // end namespace polyglot::Core::Syntax

@@ -139,4 +139,11 @@ std::string SyntaxNode::toString() const noexcept
     return str.str();
 }
 
+std::string SyntaxNode::toShortString() const noexcept
+{
+    std::stringstream str;
+    str << "Node: " << syntaxKindName(_syntaxKind) << fullSpan();
+    return str.str();
+}
+
 } // end namespace polyglot::Core::Syntax

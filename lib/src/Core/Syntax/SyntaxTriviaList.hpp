@@ -43,6 +43,7 @@ public:
     inline ISyntaxTrivia* last() const noexcept override final { return _children.size() > 0 ? _children.back() : nullptr; }
 
     std::string toString() const noexcept override;
+    std::string toShortString() const noexcept override;
 
 protected:
     void adjustWidth(ISyntaxTrivia* trivia) noexcept;

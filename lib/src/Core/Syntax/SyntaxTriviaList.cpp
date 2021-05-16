@@ -75,4 +75,11 @@ std::string SyntaxTriviaList::toString() const noexcept
     return str.str();
 }
 
+std::string SyntaxTriviaList::toShortString() const noexcept
+{
+    std::stringstream str;
+    str << "TriviaList: " << span();
+    return str.str();
+}
+
 } // end namespace polyglot::Core::Syntax

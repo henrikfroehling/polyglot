@@ -32,6 +32,7 @@ public:
     SyntaxMissingToken& operator=(SyntaxMissingToken&&) noexcept = default;
 
     std::string toString() const noexcept override;
+    std::string toShortString() const noexcept override;
 };
 
 } // end namespace polyglot::Core::Syntax

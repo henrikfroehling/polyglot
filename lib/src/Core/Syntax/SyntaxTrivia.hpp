@@ -53,6 +53,7 @@ public:
     inline virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept { return std::move(stack); }
 
     std::string toString() const noexcept override;
+    std::string toShortString() const noexcept override;
 
 protected:
     friend class SyntaxToken;

@@ -63,6 +63,7 @@ public:
     bool hasMissingTokens() const noexcept override final;
 
     std::string toString() const noexcept override;
+    std::string toShortString() const noexcept override;
 
 protected:
     void adjustWidthAndFlags(ISyntaxList* list) noexcept;
