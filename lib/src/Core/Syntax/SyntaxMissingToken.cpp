@@ -27,7 +27,7 @@ std::string SyntaxMissingToken::toString() const noexcept
 std::string SyntaxMissingToken::toShortString() const noexcept
 {
     std::stringstream str;
-    str << "MissingToken: " << syntaxKindName(_syntaxKind) << fullSpan();
+    str << "MissingToken: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
     return str.str();
 }
 

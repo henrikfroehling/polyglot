@@ -262,7 +262,7 @@ std::string SyntaxList::toString() const noexcept
 std::string SyntaxList::toShortString() const noexcept
 {
     std::stringstream str;
-    str << "SyntaxList: " << syntaxKindName(_syntaxKind) << fullSpan();
+    str << "SyntaxList: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
     return str.str();
 }
 

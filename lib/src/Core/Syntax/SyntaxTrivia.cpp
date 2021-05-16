@@ -35,7 +35,7 @@ std::string SyntaxTrivia::toShortString() const noexcept
     else if (_isTrailing)
         str << "Trail: ";
 
-    str << "Trivia: " << syntaxKindName(_syntaxKind) << span();
+    str << "Trivia: " << syntaxKindName(_syntaxKind) << " " << span();
     return str.str();
 }
 

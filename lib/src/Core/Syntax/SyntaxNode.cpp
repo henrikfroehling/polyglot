@@ -142,7 +142,7 @@ std::string SyntaxNode::toString() const noexcept
 std::string SyntaxNode::toShortString() const noexcept
 {
     std::stringstream str;
-    str << "Node: " << syntaxKindName(_syntaxKind) << fullSpan();
+    str << "Node: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
     return str.str();
 }
 
