@@ -47,12 +47,15 @@ public:
     inline virtual bool isWhitespace() const noexcept override { return false; }
     inline virtual bool isComment() const noexcept override { return false; }
     inline virtual bool isLineEnding() const noexcept override { return false; }
+    inline bool isLeading() const noexcept override final { return _isLeading; }
+    inline bool isTrailing() const noexcept override final { return _isTrailing; }
 
     inline virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept { return std::move(stack); }
 
     std::string toString() const noexcept override;
 
 protected:
+    friend class SyntaxToken;
     friend class SyntaxTriviaList;
 
     pg_size _position;
@@ -60,6 +63,8 @@ protected:
     SyntaxKind _syntaxKind;
     std::string_view _text;
     ISyntaxToken* _pToken;
+    bool _isLeading;
+    bool _isTrailing;
 };
 
 } // end namespace polyglot::Core::Syntax

@@ -3,6 +3,7 @@
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTree.hpp"
 #include "polyglot/Core/Text/SourceText.hpp"
+#include "Core/Syntax/SyntaxTrivia.hpp"
 #include "Core/Syntax/SyntaxTriviaList.hpp"
 
 namespace polyglot::Core::Syntax
@@ -28,10 +29,26 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
       _pTrailingTrivia{trailingTrivia}
 {
     if (_pLeadingTrivia != nullptr)
+    {
         adjustWidth(_pLeadingTrivia);
 
+        for (pg_size i = 0; i < _pLeadingTrivia->count(); i++)
+        {
+            SyntaxTrivia* pTrivia = static_cast<SyntaxTrivia*>(_pLeadingTrivia->child(i));
+            pTrivia->_isLeading = true;
+        }
+    }
+
     if (_pTrailingTrivia != nullptr)
+    {
         adjustWidth(_pTrailingTrivia);
+
+        for (pg_size i = 0; i < _pTrailingTrivia->count(); i++)
+        {
+            SyntaxTrivia* pTrivia = static_cast<SyntaxTrivia*>(_pTrailingTrivia->child(i));
+            pTrivia->_isTrailing = true;
+        }
+    }
 }
 
 std::string_view SyntaxToken::textIncludingTrivia() const noexcept

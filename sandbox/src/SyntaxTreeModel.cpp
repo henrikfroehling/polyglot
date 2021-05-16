@@ -4,6 +4,8 @@
 #include <polyglot/Core/Syntax/ISyntaxList.hpp>
 #include <polyglot/Core/Syntax/ISyntaxNode.hpp>
 #include <polyglot/Core/Syntax/ISyntaxToken.hpp>
+#include <polyglot/Core/Syntax/ISyntaxTrivia.hpp>
+#include <polyglot/Core/Syntax/ISyntaxTriviaList.hpp>
 
 namespace models
 {
@@ -43,18 +45,21 @@ QVariant SyntaxTreeItem::data() const noexcept
         return QVariant{};
 
     if (_value.isNode())
-    {
-        const QString value = QString::fromLatin1(_value.node->toString());
-        return value;
-    }
+        return QString::fromLatin1(_value.node->toString());
     else if (_value.isToken())
-    {
-        const QString value = QString::fromLatin1(_value.token->toString());
-        return value;
-    }
+        return QString::fromLatin1(_value.token->toString());
     else if (_value.isList())
+        return QString::fromLatin1(_value.list->toString());
+    else if (_value.isTrivia())
     {
-        const QString value = QString::fromLatin1(_value.list->toString());
+        QString valuePrefix{};
+
+        if (_value.trivia->isLeading())
+            valuePrefix = QStringLiteral("Lead: ");
+        else if (_value.trivia->isTrailing())
+            valuePrefix = QStringLiteral("Trail: ");
+
+        const QString value = valuePrefix + QString::fromLatin1(_value.trivia->toString());
         return value;
     }
 
@@ -75,6 +80,18 @@ void SyntaxTreeItem::add(SyntaxVariant value) noexcept
     }
     else if (value.isToken())
     {
+        if (value.token->hasLeadingTrivia())
+        {
+            for (int i = 0; i < value.token->leadingTrivia()->count(); i++)
+                item->add(SyntaxVariant::asTrivia(value.token->leadingTrivia()->child(i)));
+        }
+
+        if (value.token->hasTrailingTrivia())
+        {
+            for (int i = 0; i < value.token->trailingTrivia()->count(); i++)
+                item->add(SyntaxVariant::asTrivia(value.token->trailingTrivia()->child(i)));
+        }
+
         _children.push_back(std::move(item));
         _children.back().get()->setRow(_children.size() - 1);
     }
@@ -83,6 +100,11 @@ void SyntaxTreeItem::add(SyntaxVariant value) noexcept
         for (int i = 0; i < value.list->childCount(); i++)
             item->add(value.list->child(i));
 
+        _children.push_back(std::move(item));
+        _children.back().get()->setRow(_children.size() - 1);
+    }
+    else if (value.isTrivia())
+    {
         _children.push_back(std::move(item));
         _children.back().get()->setRow(_children.size() - 1);
     }

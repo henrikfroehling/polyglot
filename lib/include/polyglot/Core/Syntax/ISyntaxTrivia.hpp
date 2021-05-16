@@ -36,6 +36,8 @@ public:
     virtual bool isWhitespace() const noexcept = 0;
     virtual bool isComment() const noexcept = 0;
     virtual bool isLineEnding() const noexcept = 0;
+    virtual bool isLeading() const noexcept = 0;
+    virtual bool isTrailing() const noexcept = 0;
 
     virtual std::string toString() const noexcept = 0;
 };

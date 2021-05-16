@@ -14,7 +14,9 @@ SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
       _width{width},
       _syntaxKind{syntaxKind},
       _text{text},
-      _pToken{token}
+      _pToken{token},
+      _isLeading{false},
+      _isTrailing{false}
 {}
 
 std::string SyntaxTrivia::toString() const noexcept
