@@ -52,7 +52,9 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     setCentralWidget(_pTxtEditor);
     statusBar();
 
+    _pSyntaxTreeModel->setView(_pTreeViewSyntaxVisualizer);
     _pTreeViewSyntaxVisualizer->setModel(_pSyntaxTreeModel);
+    _pTreeViewSyntaxVisualizer->setUniformRowHeights(true);
     _pDockTreeView->setWidget(_pTreeViewSyntaxVisualizer);
     addDockWidget(Qt::LeftDockWidgetArea, _pDockTreeView);
 

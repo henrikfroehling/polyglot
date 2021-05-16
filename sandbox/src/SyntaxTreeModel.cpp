@@ -1,5 +1,6 @@
 #include "SyntaxTreeModel.hpp"
 #include <QtCore/QString>
+#include <QtWidgets/QTreeView>
 #include <polyglot/Core/Syntax/ISyntaxList.hpp>
 #include <polyglot/Core/Syntax/ISyntaxNode.hpp>
 #include <polyglot/Core/Syntax/ISyntaxToken.hpp>
@@ -102,7 +103,8 @@ void SyntaxTreeItem::clear() noexcept
 SyntaxTreeModel::SyntaxTreeModel(QObject* parent) noexcept
     : QAbstractItemModel{parent},
       _ptrSyntaxTree{nullptr},
-      _ptrRootItem{std::make_unique<SyntaxTreeItem>()}
+      _ptrRootItem{std::make_unique<SyntaxTreeItem>()},
+      _pView{nullptr}
 {}
 
 QModelIndex SyntaxTreeModel::index(int row,
@@ -192,6 +194,9 @@ void SyntaxTreeModel::setSyntaxTree(SharedPtr<polyglot::Delphi::Syntax::IDelphiS
     _ptrRootItem->clear();
     _ptrRootItem->add(SyntaxVariant::asNode(pRootNode));
     endInsertRows();
+
+    if (_pView != nullptr)
+        _pView->expandAll();
 }
 
 SyntaxTreeItem* SyntaxTreeModel::itemFromIndex(const QModelIndex& index) const noexcept

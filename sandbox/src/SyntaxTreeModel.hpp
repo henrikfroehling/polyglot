@@ -8,6 +8,8 @@
 #include <polyglot/Core/Syntax/SyntaxVariant.hpp>
 #include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
 
+class QTreeView;
+
 namespace models
 {
 
@@ -71,6 +73,7 @@ public:
     bool hasChildren(const QModelIndex& parent) const override;
 
     void setSyntaxTree(SharedPtr<polyglot::Delphi::Syntax::IDelphiSyntaxTree> syntaxTree) noexcept;
+    inline void setView(QTreeView* view) noexcept { _pView = view; }
 
 private:
     SyntaxTreeItem* invisibleRootItem() const noexcept;
@@ -80,6 +83,7 @@ private:
 private:
     SharedPtr<polyglot::Delphi::Syntax::IDelphiSyntaxTree> _ptrSyntaxTree;
     std::unique_ptr<SyntaxTreeItem> _ptrRootItem;
+    QTreeView* _pView;
 };
 
 } // end namespace models
