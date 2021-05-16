@@ -283,6 +283,9 @@ std::string syntaxKindName(SyntaxKind syntaxKind) noexcept
 
         // directives
         case SyntaxKind::IfDirectiveKeyword: return "IfDirectiveKeyword";
+        case SyntaxKind::IfDefDirectiveKeyword: return "IfDefDirectiveKeyword";
+        case SyntaxKind::IfNDefDirectiveKeyword: return "IfNDefDirectiveKeyword";
+        case SyntaxKind::IfEndDirectiveKeyword: return "IfEndDirectiveKeyword";
         case SyntaxKind::ElseIfDirectiveKeyword: return "ElseIfDirectiveKeyword";
         case SyntaxKind::ElseDirectiveKeyword: return "ElseDirectiveKeyword";
         case SyntaxKind::EndIfDirectiveKeyword: return "EndIfDirectiveKeyword";
