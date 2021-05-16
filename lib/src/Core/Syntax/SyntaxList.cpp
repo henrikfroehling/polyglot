@@ -255,7 +255,7 @@ void SyntaxList::setParent(ISyntaxNode* parent) noexcept
 std::string SyntaxList::toString() const noexcept
 {
     std::stringstream str;
-    str << "SyntaxList(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << text() << "\"" << "," << width() << ")";
+    str << "SyntaxList(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Width: " << width() << ")";
     return str.str();
 }
 

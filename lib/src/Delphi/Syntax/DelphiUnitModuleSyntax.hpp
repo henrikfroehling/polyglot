@@ -49,6 +49,8 @@ public:
     inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pHead->firstToken(); }
     inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pEndOfModule->lastToken(); }
 
+    virtual std::string toString() const noexcept override;
+
     static DelphiUnitModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,
                                           DelphiUnitInterfaceSectionSyntax* interfaceSection,

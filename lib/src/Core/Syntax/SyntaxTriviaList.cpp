@@ -71,7 +71,7 @@ void SyntaxTriviaList::setToken(ISyntaxToken* token) noexcept
 std::string SyntaxTriviaList::toString() const noexcept
 {
     std::stringstream str;
-    str << "TriviaList(" << _position << ", \"" << text() << "\"" << "," << width() << ")";
+    str << "TriviaList(Position: " << _position << ", Width: " << width() << ")";
     return str.str();
 }
 

@@ -1,5 +1,6 @@
 #include "Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
 #include <cassert>
+#include <sstream>
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -108,6 +109,13 @@ pg_size DelphiUnitModuleSyntax::childCount() const noexcept
         count++;
 
     return count;
+}
+
+std::string DelphiUnitModuleSyntax::toString() const noexcept
+{
+    std::stringstream str;
+    str << "DelphiUnitModuleSyntax(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Width: " << width() << ")";
+    return str.str();
 }
 
 DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFactory,

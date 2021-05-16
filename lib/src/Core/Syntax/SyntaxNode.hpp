@@ -75,7 +75,7 @@ public:
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
     void setSyntaxTree(ISyntaxTree* syntaxTree) noexcept;
 
-    std::string toString() const noexcept override;
+    virtual std::string toString() const noexcept override;
 
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;

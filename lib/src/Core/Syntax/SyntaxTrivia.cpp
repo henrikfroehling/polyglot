@@ -20,7 +20,7 @@ SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
 std::string SyntaxTrivia::toString() const noexcept
 {
     std::stringstream str;
-    str << "Trivia(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << _text << "\"" << "," << width() << ")";
+    str << "Trivia(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Value: \"" << _text << "\"" << ", Width: " << width() << ")";
     return str.str();
 }
 

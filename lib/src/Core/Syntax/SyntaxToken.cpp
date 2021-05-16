@@ -84,7 +84,7 @@ void SyntaxToken::setTriviaParent(ISyntaxTrivia* trivia) noexcept
 std::string SyntaxToken::toString() const noexcept
 {
     std::stringstream str;
-    str << "Token(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << _text << "\"" << "," << width() << ")";
+    str << "Token(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Value: \"" << _text << "\"" << ", Width: " << width() << ")";
     return str.str();
 }
 

@@ -135,7 +135,7 @@ void SyntaxNode::setSyntaxTree(ISyntaxTree* syntaxTree) noexcept
 std::string SyntaxNode::toString() const noexcept
 {
     std::stringstream str;
-    str << "Node(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << text() << "\"" << "," << width() << ")";
+    str << "Node(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Value: \"" << text() << "\"" << ", Width: " << width() << ")";
     return str.str();
 }
 
