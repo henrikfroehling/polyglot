@@ -26,8 +26,8 @@ public:
     inline virtual bool isPackageModule() const noexcept { return false; }
     inline virtual bool isProgramModule() const noexcept { return false; }
     inline Core::Syntax::ISyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
-    inline virtual Core::Syntax::ISyntaxToken* firstToken() const noexcept override { return nullptr; }
-    inline virtual Core::Syntax::ISyntaxToken* lastToken() const noexcept override { return _pEOFToken; }
+    inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
+    inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pEOFToken); }
 
     static DelphiCompilationUnitSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                Core::Syntax::SyntaxKind syntaxKind,

@@ -20,8 +20,8 @@ public:
     virtual ISyntaxToken* identifier() const noexcept override { return _pIdentifier; }
     inline pg_size childCount() const noexcept override final { return 1; }
     SyntaxVariant child(pg_size index) const override final;
-    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pIdentifier; }
-    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pIdentifier; }
+    inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pIdentifier); }
+    inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pIdentifier); }
 
     static IdentifierNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                   ISyntaxToken* identifier) noexcept;

@@ -24,7 +24,7 @@ DelphiUnitImplementationSectionSyntax::DelphiUnitImplementationSectionSyntax(ISy
     adjustWidthAndFlags(_pImplementationKeyword);
 
     if (_pUses != nullptr)
-        adjustWidthAndFlags(static_cast<SyntaxNode*>(_pUses));
+        adjustWidthAndFlags(_pUses);
 }
 
 SyntaxVariant DelphiUnitImplementationSectionSyntax::child(pg_size index) const
@@ -43,7 +43,7 @@ SyntaxVariant DelphiUnitImplementationSectionSyntax::child(pg_size index) const
             switch (index)
             {
                 case 0: return SyntaxVariant::asToken(_pImplementationKeyword);
-                case 1: return SyntaxVariant::asNode(static_cast<SyntaxNode*>(_pUses));
+                case 1: return SyntaxVariant::asNode(_pUses);
             }
         }
     }
@@ -59,7 +59,7 @@ DelphiUnitImplementationSectionSyntax* DelphiUnitImplementationSectionSyntax::cr
     assert(implementationKeyword->syntaxKind() == SyntaxKind::ImplementationKeyword);
 
     if (uses != nullptr)
-        assert(static_cast<SyntaxNode*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
+        assert(uses->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitImplementationSectionSyntax = std::make_unique<DelphiUnitImplementationSectionSyntax>(implementationKeyword, uses);
     return static_cast<DelphiUnitImplementationSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitImplementationSectionSyntax)));

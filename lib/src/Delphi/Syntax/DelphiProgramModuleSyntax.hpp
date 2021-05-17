@@ -32,8 +32,8 @@ public:
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     inline pg_size childCount() const noexcept override final { return 3; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
-    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pHead->firstToken(); }
-    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pEOFToken; }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pHead); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEOFToken); }
 
     static DelphiProgramModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiProgramHeadSyntax* head,

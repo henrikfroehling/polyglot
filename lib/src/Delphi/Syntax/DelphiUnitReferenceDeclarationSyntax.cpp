@@ -18,7 +18,7 @@ using Core::Syntax::SyntaxVariant;
 DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(NameExpressionSyntax* unitName,
                                                                            ISyntaxToken* inKeyword,
                                                                            ISyntaxToken* sourceFile) noexcept
-    : DelphiSyntaxList{SyntaxKind::UnitReference},
+    : DelphiSyntaxNode{SyntaxKind::UnitReference},
       _pUnitName{unitName},
       _pInKeyword{inKeyword},
       _pSourceFile{sourceFile}
@@ -78,7 +78,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
     }
 
     auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile);
-    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUnitReferenceDeclarationSyntax)));
+    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

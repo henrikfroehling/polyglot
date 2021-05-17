@@ -18,7 +18,7 @@ using Core::Syntax::SyntaxVariant;
 DelphiUsesClauseSyntax::DelphiUsesClauseSyntax(ISyntaxToken* usesKeyword,
                                                ISyntaxList* unitReferences,
                                                ISyntaxToken* semiColonToken) noexcept
-    : DelphiSyntaxList{SyntaxKind::UsesClause},
+    : DelphiSyntaxNode{SyntaxKind::UsesClause},
       _pUsesKeyword{usesKeyword},
       _pUnitReferences{unitReferences},
       _pSemiColonToken{semiColonToken}
@@ -49,12 +49,11 @@ DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFact
     assert(usesKeyword != nullptr);
     assert(usesKeyword->syntaxKind() == SyntaxKind::UsesKeyword);
     assert(unitReferences != nullptr);
-    assert(unitReferences->childCount() > 0);
     assert(semiColonToken != nullptr);
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
     auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, unitReferences, semiColonToken);
-    return static_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUsesClauseSyntax)));
+    return static_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUsesClauseSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

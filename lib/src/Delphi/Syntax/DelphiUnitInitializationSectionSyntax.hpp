@@ -20,8 +20,8 @@ public:
     DelphiUnitInitializationSectionSyntax() noexcept;
     virtual ~DelphiUnitInitializationSectionSyntax() noexcept {}
 
-    virtual Core::Syntax::ISyntaxToken* firstToken() const noexcept override { return nullptr; }
-    virtual Core::Syntax::ISyntaxToken* lastToken() const noexcept override { return nullptr; }
+    virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
+    virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
 
     static DelphiUnitInitializationSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory) noexcept;
 };

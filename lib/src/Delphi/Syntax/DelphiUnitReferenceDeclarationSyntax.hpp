@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
-#include "Delphi/Syntax/DelphiSyntaxList.hpp"
+#include "Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -17,7 +17,7 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxList
+class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
 public:
     explicit DelphiUnitReferenceDeclarationSyntax(Core::Syntax::NameExpressionSyntax* unitName,
@@ -30,7 +30,6 @@ public:
     inline Core::Syntax::ISyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
     inline pg_size childCount() const noexcept override final { return _pSourceFile != nullptr ? 3 : 1; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
-
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pUnitName); }
 
     inline Core::Syntax::SyntaxVariant last() const noexcept override final

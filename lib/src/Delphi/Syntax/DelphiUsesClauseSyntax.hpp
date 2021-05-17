@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Delphi/Syntax/DelphiSyntaxList.hpp"
+#include "Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -17,7 +17,7 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiUsesClauseSyntax : public DelphiSyntaxList
+class DelphiUsesClauseSyntax : public DelphiSyntaxNode
 {
 public:
     explicit DelphiUsesClauseSyntax(Core::Syntax::ISyntaxToken* usesKeyword,
@@ -29,10 +29,8 @@ public:
     inline Core::Syntax::ISyntaxToken* usesKeyword() const noexcept { return _pUsesKeyword; }
     inline Core::Syntax::ISyntaxList* unitReferences() const noexcept { return _pUnitReferences; }
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
-
     inline pg_size childCount() const noexcept override final { return 3; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
-
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUsesKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 

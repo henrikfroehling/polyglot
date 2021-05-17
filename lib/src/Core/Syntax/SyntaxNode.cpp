@@ -1,6 +1,7 @@
 #include "Core/Syntax/SyntaxNode.hpp"
 #include <sstream>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
+#include "Core/Syntax/SyntaxList.hpp"
 #include "Core/Syntax/SyntaxToken.hpp"
 
 namespace polyglot::Core::Syntax
@@ -39,40 +40,64 @@ std::string_view SyntaxNode::textIncludingTrivia() const noexcept
 
 pg_size SyntaxNode::leadingTriviaWidth() const noexcept
 {
-    ISyntaxToken* pFirstToken = firstToken();
+    SyntaxVariant firstChild = first();
 
-    if (pFirstToken != nullptr)
-        return pFirstToken->leadingTriviaWidth();
+    if (firstChild.isToken())
+        return firstChild.token->leadingTriviaWidth();
+
+    if (firstChild.isNode())
+        return firstChild.node->leadingTriviaWidth();
+
+    if (firstChild.isList())
+        return firstChild.list->leadingTriviaWidth();
 
     return 0;
 }
 
 pg_size SyntaxNode::trailingTriviaWidth() const noexcept
 {
-    ISyntaxToken* pLastToken = lastToken();
+    SyntaxVariant lastChild = last();
 
-    if (pLastToken != nullptr)
-        return pLastToken->trailingTriviaWidth();
+    if (lastChild.isToken())
+        return lastChild.token->trailingTriviaWidth();
+
+    if (lastChild.isNode())
+        return lastChild.node->trailingTriviaWidth();
+
+    if (lastChild.isList())
+        return lastChild.list->trailingTriviaWidth();
 
     return 0;
 }
 
 ISyntaxTriviaList* SyntaxNode::leadingTrivia() const noexcept
 {
-    ISyntaxToken* pFirstToken = firstToken();
+    SyntaxVariant firstChild = first();
 
-    if (pFirstToken != nullptr)
-        return pFirstToken->leadingTrivia();
+    if (firstChild.isToken())
+        return firstChild.token->leadingTrivia();
+
+    if (firstChild.isNode())
+        return firstChild.node->leadingTrivia();
+
+    if (firstChild.isList())
+        return firstChild.list->leadingTrivia();
 
     return nullptr;
 }
 
 ISyntaxTriviaList* SyntaxNode::trailingTrivia() const noexcept
 {
-    ISyntaxToken* pLastToken = lastToken();
+    SyntaxVariant lastChild = last();
 
-    if (pLastToken != nullptr)
-        return pLastToken->trailingTrivia();
+    if (lastChild.isToken())
+        return lastChild.token->trailingTrivia();
+
+    if (lastChild.isNode())
+        return lastChild.node->trailingTrivia();
+
+    if (lastChild.isList())
+        return lastChild.list->trailingTrivia();
 
     return nullptr;
 }
@@ -118,6 +143,16 @@ void SyntaxNode::adjustWidthAndFlags(ISyntaxToken* token) noexcept
         SyntaxToken* pSyntaxToken = static_cast<SyntaxToken*>(token);
         _fullWidth += pSyntaxToken->_fullWidth;
         pSyntaxToken->_pParent = this;
+    }
+}
+
+void SyntaxNode::adjustWidthAndFlags(ISyntaxList* list) noexcept
+{
+    if (list != nullptr)
+    {
+        SyntaxList* pSyntaxList = static_cast<SyntaxList*>(list);
+        _fullWidth += pSyntaxList->_fullWidth;
+        pSyntaxList->_pParent = this;
     }
 }
 

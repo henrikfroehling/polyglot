@@ -16,6 +16,7 @@
 namespace polyglot::Core::Syntax
 {
 
+class ISyntaxList;
 class ISyntaxTrivia;
 class ISyntaxTriviaList;
 
@@ -69,9 +70,6 @@ public:
     inline virtual bool isClause() const noexcept override { return false; }
     bool hasMissingTokens() const noexcept override final;
 
-    virtual ISyntaxToken* firstToken() const noexcept = 0;
-    virtual ISyntaxToken* lastToken() const noexcept = 0;
-
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
     void setSyntaxTree(ISyntaxTree* syntaxTree) noexcept;
 
@@ -81,6 +79,7 @@ public:
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;
     void adjustWidthAndFlags(ISyntaxToken* token) noexcept;
+    void adjustWidthAndFlags(ISyntaxList* list) noexcept;
 
 protected:
     friend class SyntaxList;

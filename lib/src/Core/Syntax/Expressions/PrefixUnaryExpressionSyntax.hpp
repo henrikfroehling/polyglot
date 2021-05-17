@@ -25,8 +25,8 @@ public:
     inline virtual ExpressionSyntax* operandExpression() const noexcept { return _pOperandExpression; }
     inline pg_size childCount() const noexcept override final { return 2; }
     SyntaxVariant child(pg_size index) const override final;
-    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pOperatorToken; }
-    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pOperandExpression->lastToken(); }
+    inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pOperatorToken); }
+    inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pOperandExpression); }
 
     static PrefixUnaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                SyntaxKind syntaxKind,

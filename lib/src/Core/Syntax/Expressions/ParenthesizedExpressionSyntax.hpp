@@ -27,8 +27,8 @@ public:
     inline virtual ISyntaxToken* closeParenthesisToken() const noexcept { return _pCloseParenthesisToken; }
     inline pg_size childCount() const noexcept override final { return 3; }
     SyntaxVariant child(pg_size index) const override final;
-    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pOpenParenthesisToken; }
-    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pCloseParenthesisToken; }
+    inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pOpenParenthesisToken); }
+    inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pCloseParenthesisToken); }
 
     static ParenthesizedExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  ISyntaxToken* openParenthesisToken,

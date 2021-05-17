@@ -26,8 +26,8 @@ public:
     inline virtual SimpleNameExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
     inline pg_size childCount() const noexcept override final { return 3; }
     SyntaxVariant child(pg_size index) const override final;
-    inline virtual ISyntaxToken* firstToken() const noexcept override { return _pLeftExpression->firstToken(); }
-    inline virtual ISyntaxToken* lastToken() const noexcept override { return _pRightExpression->lastToken(); }
+    inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asNode(_pLeftExpression); }
+    inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pRightExpression); }
 
     static QualifiedNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  NameExpressionSyntax* leftExpression,

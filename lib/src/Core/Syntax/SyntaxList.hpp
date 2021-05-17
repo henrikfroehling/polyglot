@@ -72,6 +72,8 @@ protected:
     void setParent(ISyntaxNode* parent) noexcept;
 
 protected:
+    friend class SyntaxNode;
+
     pg_size _position;
     pg_size _fullWidth;
     SyntaxKind _syntaxKind;

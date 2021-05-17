@@ -28,8 +28,15 @@ public:
     inline DelphiUsesClauseSyntax* uses() const noexcept { return _pUses; }
     inline pg_size childCount() const noexcept override final { return _pUses != nullptr ? 2 : 1; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
-    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pImplementationKeyword; }
-    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pUses != nullptr ? _pUses->last().token : _pImplementationKeyword; }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pImplementationKeyword); }
+
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final
+    {
+        if (_pUses != nullptr)
+            return Core::Syntax::SyntaxVariant::asNode(_pUses);
+
+        return Core::Syntax::SyntaxVariant::asToken(_pImplementationKeyword);
+    }
 
     static DelphiUnitImplementationSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                          Core::Syntax::ISyntaxToken* implementationKeyword,

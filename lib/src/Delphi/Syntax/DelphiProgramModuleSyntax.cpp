@@ -32,7 +32,7 @@ SyntaxVariant DelphiProgramModuleSyntax::child(pg_size index) const
     switch (index)
     {
         case 0: return SyntaxVariant::asNode(_pHead);
-        case 1: return SyntaxVariant::asNode(static_cast<SyntaxNode*>(_pUses));
+        case 1: return SyntaxVariant::asNode(_pUses);
         case 2: return SyntaxVariant::asToken(_pEOFToken);
     }
 
@@ -47,7 +47,7 @@ DelphiProgramModuleSyntax* DelphiProgramModuleSyntax::create(SyntaxFactory& synt
     assert(head != nullptr);
     assert(head->syntaxKind() == SyntaxKind::ProgramHead);
     assert(uses != nullptr);
-    assert(static_cast<SyntaxNode*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
+    assert(uses->syntaxKind() == SyntaxKind::UsesClause);
     assert(EOFToken != nullptr);
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 

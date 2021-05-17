@@ -43,6 +43,9 @@ public:
     virtual pg_size childCount() const noexcept = 0;
     virtual SyntaxVariant child(pg_size index) const = 0;
 
+    virtual SyntaxVariant first() const noexcept = 0;
+    virtual SyntaxVariant last() const noexcept = 0;
+
     virtual bool hasLeadingTrivia() const noexcept = 0;
     virtual bool hasTrailingTrivia() const noexcept = 0;
     virtual pg_size leadingTriviaWidth() const noexcept = 0;

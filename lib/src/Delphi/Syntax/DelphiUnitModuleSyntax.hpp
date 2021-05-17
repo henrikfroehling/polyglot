@@ -46,8 +46,8 @@ public:
     inline DelphiEndOfModuleSyntax* endOfModule() const noexcept { return _pEndOfModule; }
     pg_size childCount() const noexcept override final;
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
-    inline Core::Syntax::ISyntaxToken* firstToken() const noexcept override final { return _pHead->firstToken(); }
-    inline Core::Syntax::ISyntaxToken* lastToken() const noexcept override final { return _pEndOfModule->lastToken(); }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pHead); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pEndOfModule); }
 
     virtual std::string toString() const noexcept override;
 
