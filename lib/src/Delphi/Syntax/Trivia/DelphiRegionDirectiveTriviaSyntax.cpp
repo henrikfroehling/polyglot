@@ -60,7 +60,7 @@ DelphiRegionDirectiveTriviaSyntax* DelphiRegionDirectiveTriviaSyntax::create(Syn
     auto ptrRegionDirectiveTrivia = std::make_unique<DelphiRegionDirectiveTriviaSyntax>(SyntaxKind::RegionDirectiveTrivia, startToken,
                                                                                         regionKeyword, endOfDirectiveToken, isActive);
 
-    return dynamic_cast<DelphiRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
+    return static_cast<DelphiRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

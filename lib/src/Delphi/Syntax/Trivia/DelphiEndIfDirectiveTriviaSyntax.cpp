@@ -60,7 +60,7 @@ DelphiEndIfDirectiveTriviaSyntax* DelphiEndIfDirectiveTriviaSyntax::create(Synta
     auto ptrEndIfDirectiveTrivia = std::make_unique<DelphiEndIfDirectiveTriviaSyntax>(SyntaxKind::EndIfDirectiveTrivia, startToken,
                                                                                       endIfKeyword, endOfDirectiveToken, isActive);
 
-    return dynamic_cast<DelphiEndIfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndIfDirectiveTrivia)));
+    return static_cast<DelphiEndIfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndIfDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

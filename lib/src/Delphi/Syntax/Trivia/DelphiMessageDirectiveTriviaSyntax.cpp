@@ -92,7 +92,7 @@ DelphiMessageDirectiveTriviaSyntax* DelphiMessageDirectiveTriviaSyntax::create(S
     auto ptrMessageDirectiveTrivia = std::make_unique<DelphiMessageDirectiveTriviaSyntax>(SyntaxKind::MessageDirectiveTrivia, startToken, messageKeyword,
                                                                                           messageTypeToken, messageLiteralToken, endOfDirectiveToken);
 
-    return dynamic_cast<DelphiMessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
+    return static_cast<DelphiMessageDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrMessageDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

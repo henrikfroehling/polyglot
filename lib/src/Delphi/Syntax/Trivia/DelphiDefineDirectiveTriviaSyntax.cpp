@@ -67,7 +67,7 @@ DelphiDefineDirectiveTriviaSyntax* DelphiDefineDirectiveTriviaSyntax::create(Syn
     auto ptrDefineDirectiveTrivia = std::make_unique<DelphiDefineDirectiveTriviaSyntax>(SyntaxKind::DefineDirectiveTrivia, startToken,
                                                                                         defineKeyword, name, endOfDirectiveToken, isActive);
 
-    return dynamic_cast<DelphiDefineDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrDefineDirectiveTrivia)));
+    return static_cast<DelphiDefineDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrDefineDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

@@ -76,7 +76,7 @@ DelphiElseIfDirectiveTriviaSyntax* DelphiElseIfDirectiveTriviaSyntax::create(Syn
                                                                                         elseIfKeyword, condition, endOfDirectiveToken,
                                                                                         isActive, isBranchTaken, conditionValue);
 
-    return dynamic_cast<DelphiElseIfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrElseIfDirectiveTrivia)));
+    return static_cast<DelphiElseIfDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrElseIfDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

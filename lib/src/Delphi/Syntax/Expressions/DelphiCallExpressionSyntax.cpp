@@ -59,7 +59,7 @@ DelphiCallExpressionSyntax* DelphiCallExpressionSyntax::create(SyntaxFactory& sy
     auto ptrCallExpression = std::make_unique<DelphiCallExpressionSyntax>(syntaxKind, identifier, openParenthesisToken,
                                                                           argumentExpression, closeParenthesisToken);
 
-    return dynamic_cast<DelphiCallExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCallExpression)));
+    return static_cast<DelphiCallExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCallExpression)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

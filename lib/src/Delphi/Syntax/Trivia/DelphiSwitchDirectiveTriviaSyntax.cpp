@@ -65,7 +65,7 @@ DelphiSwitchDirectiveTriviaSyntax* DelphiSwitchDirectiveTriviaSyntax::create(Syn
     auto ptrSwitchDirectiveTrivia = std::make_unique<DelphiSwitchDirectiveTriviaSyntax>(SyntaxKind::SwitchDirectiveTrivia, startToken,
                                                                                         identifier, onOffToken, endOfDirectiveToken);
 
-    return dynamic_cast<DelphiSwitchDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrSwitchDirectiveTrivia)));
+    return static_cast<DelphiSwitchDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrSwitchDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

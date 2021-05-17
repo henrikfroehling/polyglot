@@ -60,7 +60,7 @@ DelphiEndRegionDirectiveTriviaSyntax* DelphiEndRegionDirectiveTriviaSyntax::crea
     auto ptrEndRegionDirectiveTrivia = std::make_unique<DelphiEndRegionDirectiveTriviaSyntax>(SyntaxKind::EndRegionDirectiveTrivia, startToken,
                                                                                               endRegionKeyword, endOfDirectiveToken, isActive);
 
-    return dynamic_cast<DelphiEndRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndRegionDirectiveTrivia)));
+    return static_cast<DelphiEndRegionDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrEndRegionDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

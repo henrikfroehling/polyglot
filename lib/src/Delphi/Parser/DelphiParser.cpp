@@ -186,17 +186,17 @@ DelphiUsesClauseSyntax* DelphiParser::parseUsesClause() noexcept
     std::vector<SyntaxVariant> unitReferences;
 
     DelphiUnitReferenceDeclarationSyntax* pUnitReference = parseUnitReference();
-    unitReferences.push_back(SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
+    unitReferences.push_back(SyntaxVariant::asNode(static_cast<SyntaxNode*>(pUnitReference)));
 
     while (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
         ISyntaxToken* pCommaToken = takeToken();
         pUnitReference = parseUnitReference();
         unitReferences.push_back(SyntaxVariant::asToken(pCommaToken));
-        unitReferences.push_back(SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(pUnitReference)));
+        unitReferences.push_back(SyntaxVariant::asNode(static_cast<SyntaxNode*>(pUnitReference)));
     }
 
-    SyntaxList* pUnitReferences = dynamic_cast<SyntaxList*>(_syntaxFactory.syntaxList(SyntaxKind::UnitReferencesList, std::move(unitReferences)));
+    SyntaxList* pUnitReferences = static_cast<SyntaxList*>(_syntaxFactory.syntaxList(SyntaxKind::UnitReferencesList, std::move(unitReferences)));
     ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return DelphiUsesClauseSyntax::create(_syntaxFactory, pUsesKeyword, pUnitReferences, pSemiColonToken);
 }

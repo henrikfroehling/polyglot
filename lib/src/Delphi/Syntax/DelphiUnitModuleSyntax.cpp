@@ -151,7 +151,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
                                                                         endOfModule, EOFToken,
                                                                         initializationSection, finalizationSection);
 
-    return dynamic_cast<DelphiUnitModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitModuleSyntax)));
+    return static_cast<DelphiUnitModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitModuleSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

@@ -59,7 +59,7 @@ DelphiBadDirectiveTriviaSyntax* DelphiBadDirectiveTriviaSyntax::create(SyntaxFac
     auto ptrBadDirectiveTrivia = std::make_unique<DelphiBadDirectiveTriviaSyntax>(SyntaxKind::BadDirectiveTrivia, startToken,
                                                                                   identifier, endOfDirectiveToken, isActive);
 
-    return dynamic_cast<DelphiBadDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
+    return static_cast<DelphiBadDirectiveTriviaSyntax*>(syntaxFactory.addSyntaxTrivia(std::move(ptrBadDirectiveTrivia)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

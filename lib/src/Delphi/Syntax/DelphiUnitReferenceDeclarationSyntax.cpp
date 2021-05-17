@@ -78,7 +78,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::crea
     }
 
     auto ptrUnitReferenceDeclarationSyntax = std::make_unique<DelphiUnitReferenceDeclarationSyntax>(unitName, inKeyword, sourceFile);
-    return dynamic_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUnitReferenceDeclarationSyntax)));
+    return static_cast<DelphiUnitReferenceDeclarationSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUnitReferenceDeclarationSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

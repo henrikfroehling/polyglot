@@ -60,13 +60,13 @@ DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(SyntaxFactory& synt
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 
     auto ptrPackageModuleSyntax = std::make_unique<DelphiPackageModuleSyntax>(head, requiresClause, containsClause, EOFToken);
-    return dynamic_cast<DelphiPackageModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPackageModuleSyntax)));
+    return static_cast<DelphiPackageModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPackageModuleSyntax)));
 }
 
 DelphiPackageModuleSyntax* DelphiPackageModuleSyntax::create(SyntaxFactory& syntaxFactory) noexcept
 {
     auto ptrPackageModuleSyntax = std::make_unique<DelphiPackageModuleSyntax>(nullptr, nullptr, nullptr, nullptr);
-    return dynamic_cast<DelphiPackageModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPackageModuleSyntax)));
+    return static_cast<DelphiPackageModuleSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPackageModuleSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

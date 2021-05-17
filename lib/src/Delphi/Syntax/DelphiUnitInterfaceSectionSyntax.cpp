@@ -4,6 +4,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Core/Syntax/SyntaxList.hpp"
 #include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
@@ -24,7 +25,7 @@ DelphiUnitInterfaceSectionSyntax::DelphiUnitInterfaceSectionSyntax(ISyntaxToken*
     adjustWidthAndFlags(_pInterfaceKeyword);
 
     if (_pUses != nullptr)
-        adjustWidthAndFlags(dynamic_cast<SyntaxNode*>(_pUses));
+        adjustWidthAndFlags(static_cast<SyntaxNode*>(_pUses));
 }
 
 SyntaxVariant DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
@@ -43,7 +44,7 @@ SyntaxVariant DelphiUnitInterfaceSectionSyntax::child(pg_size index) const
             switch (index)
             {
                 case 0: return SyntaxVariant::asToken(_pInterfaceKeyword);
-                case 1: return SyntaxVariant::asNode(dynamic_cast<SyntaxNode*>(_pUses));
+                case 1: return SyntaxVariant::asNode(static_cast<SyntaxNode*>(_pUses));
             }
         }
     }
@@ -59,10 +60,10 @@ DelphiUnitInterfaceSectionSyntax* DelphiUnitInterfaceSectionSyntax::create(Synta
     assert(interfaceKeyword->syntaxKind() == SyntaxKind::InterfaceKeyword);
 
     if (uses != nullptr)
-        assert(dynamic_cast<SyntaxNode*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
+        assert(static_cast<Core::Syntax::SyntaxList*>(uses)->syntaxKind() == SyntaxKind::UsesClause);
 
     auto ptrUnitInterfaceSectionSyntax = std::make_unique<DelphiUnitInterfaceSectionSyntax>(interfaceKeyword, uses);
-    return dynamic_cast<DelphiUnitInterfaceSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitInterfaceSectionSyntax)));
+    return static_cast<DelphiUnitInterfaceSectionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrUnitInterfaceSectionSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

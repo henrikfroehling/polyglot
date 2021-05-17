@@ -54,7 +54,7 @@ DelphiUsesClauseSyntax* DelphiUsesClauseSyntax::create(SyntaxFactory& syntaxFact
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
     auto ptrUsesClauseSyntax = std::make_unique<DelphiUsesClauseSyntax>(usesKeyword, unitReferences, semiColonToken);
-    return dynamic_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUsesClauseSyntax)));
+    return static_cast<DelphiUsesClauseSyntax*>(syntaxFactory.addSyntaxList(std::move(ptrUsesClauseSyntax)));
 }
 
 } // end namespace polyglot::Delphi::Syntax

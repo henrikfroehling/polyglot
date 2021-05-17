@@ -921,7 +921,7 @@ void DelphiLexer::lexSingleDirective(bool isActive,
     DelphiDirectiveParser directiveParser{shared_from_this(), _directives};
     ISyntaxTrivia* pDirective = directiveParser.parseDirective(isActive, endIsActive, afterFirstToken, afterNonWhitespaceOnLine);
     triviaList.push_back(pDirective);
-    _directives = dynamic_cast<SyntaxTrivia*>(pDirective)->applyDirectives(_directives);
+    _directives = static_cast<SyntaxTrivia*>(pDirective)->applyDirectives(_directives);
     setMode(saveMode);
 }
 
