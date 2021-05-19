@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIPROGRAMMODULESYNTAX_H
 
+#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
@@ -34,6 +35,8 @@ public:
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pHead); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEOFToken); }
+
+    virtual std::string typeName() const noexcept override { return "DelphiProgramModuleSyntax"; }
 
     static DelphiProgramModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiProgramHeadSyntax* head,

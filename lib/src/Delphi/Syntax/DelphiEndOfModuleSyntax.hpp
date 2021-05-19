@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULESYNTAX_H
 
+#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -31,6 +32,8 @@ public:
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pDotToken); }
+
+    virtual std::string typeName() const noexcept override { return "DelphiEndOfModuleSyntax"; }
 
     static DelphiEndOfModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                            Core::Syntax::ISyntaxToken* endKeyword,

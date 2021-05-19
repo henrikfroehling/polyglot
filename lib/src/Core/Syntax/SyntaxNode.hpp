@@ -75,6 +75,7 @@ public:
 
     virtual std::string toString() const noexcept override;
     virtual std::string toShortString() const noexcept override;
+    virtual std::string typeName() const noexcept override { return "SyntaxNode"; }
 
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;

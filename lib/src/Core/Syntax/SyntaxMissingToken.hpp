@@ -33,6 +33,7 @@ public:
 
     std::string toString() const noexcept override;
     std::string toShortString() const noexcept override;
+    virtual std::string typeName() const noexcept override { return "SyntaxMissingToken"; }
 };
 
 } // end namespace polyglot::Core::Syntax

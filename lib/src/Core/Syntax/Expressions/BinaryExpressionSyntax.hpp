@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_BINARYEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_BINARYEXPRESSIONSYNTAX_H
 
+#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -29,6 +30,8 @@ public:
     SyntaxVariant child(pg_size index) const override final;
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asNode(_pLeftExpression); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pRightExpression); }
+
+    virtual std::string typeName() const noexcept override { return "BinaryExpressionSyntax"; }
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,

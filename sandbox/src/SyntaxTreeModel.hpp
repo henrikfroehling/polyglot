@@ -1,54 +1,17 @@
 #ifndef POLYGLOT_SANDBOX_SYNTAXTREEMODEL_H
 #define POLYGLOT_SANDBOX_SYNTAXTREEMODEL_H
 
-#include <memory>
-#include <vector>
 #include <QtCore/QAbstractItemModel>
+#include <memory>
 #include <polyglot/Core/Types.hpp>
 #include <polyglot/Core/Syntax/SyntaxVariant.hpp>
 #include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
+#include "SyntaxTreeItem.hpp"
 
 class QTreeView;
 
 namespace models
 {
-
-// ----------------------------------------
-// SyntaxTreeItem
-// ----------------------------------------
-
-class SyntaxTreeItem
-{
-public:
-    SyntaxTreeItem() noexcept;
-
-    explicit SyntaxTreeItem(polyglot::Core::Syntax::SyntaxVariant value,
-                            SyntaxTreeItem* parent = nullptr) noexcept;
-
-    ~SyntaxTreeItem() noexcept {}
-
-    inline SyntaxTreeItem* parentItem() const noexcept { return _pParentItem; }
-    inline int childCount() const noexcept { return _children.size(); }
-    inline int row() const noexcept { return _row; }
-    inline const polyglot::Core::Syntax::SyntaxVariant& value() const noexcept { return _value; }
-    SyntaxTreeItem* child(int row) const noexcept;
-    QVariant data() const noexcept;
-    void add(polyglot::Core::Syntax::SyntaxVariant value) noexcept;
-    void clear() noexcept;
-
-private:
-    inline void setRow(int row) noexcept { _row = row; }
-
-private:
-    std::vector<std::unique_ptr<SyntaxTreeItem>> _children;
-    polyglot::Core::Syntax::SyntaxVariant _value;
-    int _row;
-    SyntaxTreeItem* _pParentItem;
-};
-
-// ----------------------------------------
-// SyntaxTreeModel
-// ----------------------------------------
 
 class SyntaxTreeModel : public QAbstractItemModel
 {

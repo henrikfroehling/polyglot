@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHICOMPILATIONUNITSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHICOMPILATIONUNITSYNTAX_H
 
+#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
 
@@ -28,6 +29,8 @@ public:
     inline Core::Syntax::ISyntaxToken* EOFToken() const noexcept { return _pEOFToken; }
     inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
     inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pEOFToken); }
+
+    virtual std::string typeName() const noexcept override { return "DelphiCompilationUnitSyntax"; }
 
     static DelphiCompilationUnitSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                Core::Syntax::SyntaxKind syntaxKind,

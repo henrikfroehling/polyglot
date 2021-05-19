@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_EXPRESSIONS_DELPHICALLEXPRESSIONSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_EXPRESSIONS_DELPHICALLEXPRESSIONSYNTAX_H
 
+#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -36,6 +37,8 @@ public:
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pIdentifier); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pCloseParenthesisToken); }
+
+    virtual std::string typeName() const noexcept override { return "DelphiCallExpressionSyntax"; }
 
     static DelphiCallExpressionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                               Core::Syntax::SyntaxKind syntaxKind,

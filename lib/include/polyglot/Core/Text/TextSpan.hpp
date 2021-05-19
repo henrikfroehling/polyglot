@@ -32,6 +32,8 @@ public:
     bool intersectsWith(const TextSpan& otherTextSpan) const noexcept;
     TextSpan intersectionOf(const TextSpan& otherTextSpan) const noexcept;
 
+    std::string toString() const noexcept;
+
     static TextSpan fromBounds(const pg_size start,
                                const pg_size end) noexcept;
 

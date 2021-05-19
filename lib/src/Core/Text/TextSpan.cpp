@@ -1,5 +1,6 @@
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include <algorithm>
+#include <sstream>
 
 namespace polyglot::Core::Text
 {
@@ -49,6 +50,13 @@ TextSpan TextSpan::intersectionOf(const TextSpan& otherTextSpan) const noexcept
     const pg_size maxStart = std::max(_start, otherTextSpan._start);
     const pg_size minEnd = std::min(end(), otherTextSpan.end());
     return maxStart <= minEnd ? TextSpan::fromBounds(maxStart, minEnd) : TextSpan{};
+}
+
+std::string TextSpan::toString() const noexcept
+{
+    std::stringstream str;
+    str << *this;
+    return str.str();
 }
 
 TextSpan TextSpan::fromBounds(const pg_size start,

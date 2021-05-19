@@ -4,9 +4,7 @@
 #include <QtCore/QSettings>
 #include <QtWidgets/QMainWindow>
 
-class QDockWidget;
 class QPlainTextEdit;
-class QTreeView;
 
 namespace models
 {
@@ -17,6 +15,8 @@ class SyntaxTreeModel;
 
 namespace ui
 {
+
+class SyntaxVisualizationDockWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -34,9 +34,7 @@ private:
 private:
     QSettings _settings;
     QPlainTextEdit* _pTxtEditor;
-    QDockWidget* _pDockTreeView;
-    QTreeView* _pTreeViewSyntaxVisualizer;
-    models::SyntaxTreeModel* _pSyntaxTreeModel;
+    SyntaxVisualizationDockWidget* _pSyntaxVisualizerDockWidget;
 };
 
 } // end namespace ui

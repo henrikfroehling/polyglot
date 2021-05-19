@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_TRIVIA_DELPHIIFDIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_TRIVIA_DELPHIIFDIRECTIVETRIVIASYNTAX_H
 
+#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -40,6 +41,8 @@ public:
     inline virtual bool conditionValue() const noexcept override { return _conditionValue; }
     inline pg_size childCount() const noexcept override final { return 4; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
+    virtual std::string typeName() const noexcept override { return "DelphiIfDirectiveTriviaSyntax"; }
 
     static DelphiIfDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                  Core::Syntax::ISyntaxToken* startToken,

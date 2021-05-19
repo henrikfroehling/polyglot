@@ -73,6 +73,7 @@ public:
 
     virtual std::string toString() const noexcept override;
     virtual std::string toShortString() const noexcept override;
+    virtual std::string typeName() const noexcept override { return "SyntaxToken"; }
 
 protected:
     void adjustWidth(ISyntaxTriviaList* trivia) noexcept;

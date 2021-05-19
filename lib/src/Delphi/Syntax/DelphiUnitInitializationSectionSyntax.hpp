@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITINITIALIZATIONSECTIONSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITINITIALIZATIONSECTIONSYNTAX_H
 
+#include <string>
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::Core::Syntax
@@ -22,6 +23,8 @@ public:
 
     virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
     virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
+
+    virtual std::string typeName() const noexcept override { return "DelphiUnitInitializationSectionSyntax"; }
 
     static DelphiUnitInitializationSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory) noexcept;
 };

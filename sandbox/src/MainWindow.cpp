@@ -1,5 +1,4 @@
 #include "MainWindow.hpp"
-#include "SyntaxTreeModel.hpp"
 #include <QtCore/QFile>
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
@@ -16,6 +15,7 @@
 #include <polyglot/Core/Types.hpp>
 #include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
 #include <polyglot/Version.hpp>
+#include "SyntaxVisualizationDockWidget.hpp"
 
 namespace ui
 {
@@ -24,11 +24,21 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     : QMainWindow{parent},
       _settings{},
       _pTxtEditor{new QPlainTextEdit{this}},
-      _pDockTreeView{new QDockWidget{QStringLiteral("Syntax Visualizer"), this}},
-      _pTreeViewSyntaxVisualizer{new QTreeView{this}},
-      _pSyntaxTreeModel{new models::SyntaxTreeModel{this}}
+      _pSyntaxVisualizerDockWidget{new SyntaxVisualizationDockWidget{this}}
 {
-    resize(1280, 720);
+    QScreen* pScreen = QApplication::primaryScreen();
+    pScreen->size().width();
+
+    int nScreenWidth = pScreen->size().width();
+    int nScreenHeight = pScreen->size().height();
+    int nWidth = nScreenWidth * 0.8f;
+    int nHeight = nScreenHeight * 0.8f;
+    int nPosX = (nScreenWidth - nWidth) / 2;
+    int nPosY = (nScreenHeight - nHeight) / 2;
+
+    resize(nWidth, nHeight);
+    move(nPosX, nPosY);
+
     setWindowTitle(QStringLiteral("polyglot Sandbox - %1").arg(QString::fromStdString(polyglot::Version::LIBRARY_NAME_WITH_VERSION)));
 
     QMenu* menu = menuBar()->addMenu(QStringLiteral("File"));
@@ -52,11 +62,7 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     setCentralWidget(_pTxtEditor);
     statusBar();
 
-    _pSyntaxTreeModel->setView(_pTreeViewSyntaxVisualizer);
-    _pTreeViewSyntaxVisualizer->setModel(_pSyntaxTreeModel);
-    _pTreeViewSyntaxVisualizer->setUniformRowHeights(true);
-    _pDockTreeView->setWidget(_pTreeViewSyntaxVisualizer);
-    addDockWidget(Qt::LeftDockWidgetArea, _pDockTreeView);
+    addDockWidget(Qt::LeftDockWidgetArea, _pSyntaxVisualizerDockWidget);
 
     _pTxtEditor->setPlainText(_settings.value(QStringLiteral("editor-content")).toString());
 }
@@ -82,7 +88,7 @@ void MainWindow::analyzeSourceCode() noexcept
     const QString editorContent = _pTxtEditor->toPlainText();
     const std::string sourceText = editorContent.toStdString();
     SharedPtr<IDelphiSyntaxTree> ptrSyntaxtree = IDelphiSyntaxTree::parseSourceText("", sourceText);
-    _pSyntaxTreeModel->setSyntaxTree(ptrSyntaxtree);
+    _pSyntaxVisualizerDockWidget->setSyntaxTree(ptrSyntaxtree);
 }
 
 void MainWindow::quitApplication() noexcept

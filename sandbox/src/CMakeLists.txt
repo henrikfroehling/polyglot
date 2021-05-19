@@ -16,7 +16,11 @@ set(CMAKE_AUTORCC ON)
 set(SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/MainWindow.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SyntaxPropertiesWidget.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SyntaxTreeItem.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SyntaxTreeModel.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SyntaxTreeWidget.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/SyntaxVisualizationDockWidget.cpp
 )
 
 add_executable(${PROJECT_NAME})
