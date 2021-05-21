@@ -11,7 +11,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets)
+
+if (NOT Qt6_FOUND)
+  find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+endif()
 
 set(SOURCES
   ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
@@ -30,13 +34,13 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE ${CPP_STANDARD})
-target_link_libraries(${PROJECT_NAME} PRIVATE polyglot Qt5::Gui Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE polyglot Qt::Gui Qt::Widgets)
 
 target_compile_definitions(${PROJECT_NAME}
   PRIVATE
     QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII QT_USE_FAST_OPERATOR_PLUS
-    ${Qt5Gui_DEFINITIONS}
-    ${Qt5Widgets_DEFINITIONS}
+    ${QtGui_DEFINITIONS}
+    ${QtWidgets_DEFINITIONS}
 )
 
 target_compile_options(${PROJECT_NAME}
@@ -51,8 +55,8 @@ target_include_directories(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
+    ${QtGui_INCLUDE_DIRS}
+    ${QtWidgets_INCLUDE_DIRS}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

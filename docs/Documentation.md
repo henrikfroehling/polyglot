@@ -38,6 +38,8 @@ CMake will use default values for all build parameters. See the [Options](https:
 cmake --build .
 ```
 
+The built binaries are written to `your-build-directory/output`.
+
 ##### *For building and developing the polyglot-sandbox project the usage of Qt Creator is recommend.*
 ---
 #### Options
