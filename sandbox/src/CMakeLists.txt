@@ -7,7 +7,7 @@ endif()
 
 project(polyglot-sandbox LANGUAGES CXX)
 
-find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -30,12 +30,12 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_compile_features(${PROJECT_NAME} PRIVATE ${CPP_STANDARD})
-target_link_libraries(${PROJECT_NAME} PRIVATE polyglot Qt6::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE polyglot Qt5::Widgets)
 
 target_compile_definitions(${PROJECT_NAME}
   PRIVATE
     QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII QT_USE_FAST_OPERATOR_PLUS
-    ${Qt6Widgets_DEFINITIONS}
+    ${Qt5Widgets_DEFINITIONS}
 )
 
 target_compile_options(${PROJECT_NAME}
@@ -50,7 +50,7 @@ target_include_directories(${PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}
-    ${Qt6Widgets_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

@@ -13,7 +13,7 @@
 
 #### Optional Prerequisites
 
-- Qt 6 Version >= 6.0.2 (required for the polyglot-sandbox project)
+- Qt 5 (required for the polyglot-sandbox project)
 
 #### How to build the library from command line
 
