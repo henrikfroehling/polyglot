@@ -32,6 +32,7 @@ cd build
 cmake path/to/polyglot/source/root
 ```
 CMake will use default values for all build parameters. See the [Options](https://github.com/henrikfroehling/polyglot/blob/develop/docs/Documentation.md#options) section for a list of build parameters that you can modify.
+
 4. After CMake has finished running, start the build from the build directory.
 ```
 cmake --build .
