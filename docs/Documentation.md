@@ -6,6 +6,8 @@
 - polyglot-driver: A console application for running analysis.
 - polyglot-sandbox: A UI application for conveniently testing the library.
 
+![](https://raw.githubusercontent.com/henrikfroehling/polyglot/develop/screenshots/polyglot-sandbox.png)
+
 #### Common Required Prerequisites
 
 - CMake Version >= 3.16.0
