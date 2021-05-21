@@ -3,7 +3,8 @@
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
-#include <QtGui/QAction>
+#include <QtGui/QScreen>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QFileDialog>
