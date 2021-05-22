@@ -1,5 +1,7 @@
+#include <codecvt>
 #include <fstream>
 #include <iostream>
+#include <locale>
 #include <streambuf>
 #include <polyglot/Core/Types.hpp>
 #include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
@@ -7,10 +9,15 @@
 pg_string readFile(const pg_string& filename);
 
 int main(int argc,
-         pg_char** argv)
+         char** argv)
 {
-    const pg_string sourceText = readFile(argv[1]);
-    auto ptrSyntaxTree = polyglot::Delphi::Syntax::IDelphiSyntaxTree::parseSourceText(argv[1], sourceText);
+    const std::string filenameArgument{argv[1]};
+
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    pg_string filename = converter.from_bytes(filenameArgument);
+
+    const pg_string sourceText = readFile(filename);
+    auto ptrSyntaxTree = polyglot::Delphi::Syntax::IDelphiSyntaxTree::parseSourceText(filename, sourceText);
 
     std::string str;
     std::getline(std::cin, str);
