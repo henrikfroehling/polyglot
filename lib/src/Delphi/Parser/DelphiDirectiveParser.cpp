@@ -336,7 +336,7 @@ ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
     if (skippedTokens.size() > 0)
     {
         auto ptrSkippedTokensTrivia = std::make_unique<SkippedTokensTriviaSyntax>(SyntaxKind::SkippedTokensTrivia, std::move(skippedTokens));
-        SkippedTokensTriviaSyntax* skippedTokensTrivia = dynamic_cast<SkippedTokensTriviaSyntax*>(_syntaxFactory.addSyntaxTrivia(std::move(ptrSkippedTokensTrivia)));
+        SkippedTokensTriviaSyntax* skippedTokensTrivia = static_cast<SkippedTokensTriviaSyntax*>(_syntaxFactory.addSyntaxTrivia(std::move(ptrSkippedTokensTrivia)));
 
         pEndOfDirective = _syntaxFactory.tokenWithLeadingTrivia(pEndOfDirective->syntaxKind(), pEndOfDirective->text(), pEndOfDirective->position(),
                                                                 _syntaxFactory.syntaxTriviaList({skippedTokensTrivia}));

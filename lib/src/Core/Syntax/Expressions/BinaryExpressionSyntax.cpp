@@ -46,7 +46,7 @@ BinaryExpressionSyntax* BinaryExpressionSyntax::create(SyntaxFactory& syntaxFact
     assert(rightExpression != nullptr);
 
     auto ptrBinaryExpression = std::make_unique<BinaryExpressionSyntax>(syntaxKind, leftExpression, operatorToken, rightExpression);
-    return dynamic_cast<BinaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrBinaryExpression)));
+    return static_cast<BinaryExpressionSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrBinaryExpression)));
 }
 
 } // end namespace polyglot::Core::Syntax
