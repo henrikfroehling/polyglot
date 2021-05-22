@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CORE_SYNTAX_TRIVIA_DIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_DIRECTIVETRIVIASYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Parser/DirectiveStack.hpp"
 #include "Core/Syntax/Trivia/StructuredTriviaSyntax.hpp"
 
@@ -22,7 +22,7 @@ public:
     virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept override;
     inline bool isDirective() const noexcept override final { return true; }
 
-    virtual std::string typeName() const noexcept override { return "DirectiveTriviaSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"DirectiveTriviaSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

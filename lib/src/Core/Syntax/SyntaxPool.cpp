@@ -47,7 +47,7 @@ ISyntaxList* SyntaxPool::createSyntaxList(SyntaxKind syntaxKind,
 }
 
 ISyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
-                                            std::string_view text,
+                                            pg_string_view text,
                                             pg_size position,
                                             ISyntaxTriviaList* leadingTrivia,
                                             ISyntaxTriviaList* trailingTrivia,
@@ -58,7 +58,7 @@ ISyntaxToken* SyntaxPool::createSyntaxToken(SyntaxKind syntaxKind,
 }
 
 ISyntaxTrivia* SyntaxPool::createSyntaxTrivia(SyntaxKind syntaxKind,
-                                              std::string_view text,
+                                              pg_string_view text,
                                               pg_size position,
                                               ISyntaxToken* token) noexcept
 {

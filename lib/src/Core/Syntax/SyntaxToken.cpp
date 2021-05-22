@@ -1,5 +1,4 @@
 #include "Core/Syntax/SyntaxToken.hpp"
-#include <sstream>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTree.hpp"
 #include "polyglot/Core/Text/SourceText.hpp"
@@ -10,7 +9,7 @@ namespace polyglot::Core::Syntax
 {
 
 SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
-                         std::string_view text,
+                         pg_string_view text,
                          pg_size position,
                          pg_size fullWidth,
                          ISyntaxTriviaList* leadingTrivia,
@@ -51,12 +50,12 @@ SyntaxToken::SyntaxToken(SyntaxKind syntaxKind,
     }
 }
 
-std::string_view SyntaxToken::textIncludingTrivia() const noexcept
+pg_string_view SyntaxToken::textIncludingTrivia() const noexcept
 {
     if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
         return _pParent->syntaxTree()->sourceText()->toString(fullSpan());
 
-    return std::string_view{};
+    return pg_string_view{};
 }
 
 TokenValue SyntaxToken::value() const noexcept
@@ -98,17 +97,17 @@ void SyntaxToken::setTriviaParent(ISyntaxTrivia* trivia) noexcept
     _pTrivia = trivia;
 }
 
-std::string SyntaxToken::toString() const noexcept
+pg_string SyntaxToken::toString() const noexcept
 {
-    std::stringstream str;
-    str << "Token(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Value: \"" << _text << "\"" << ", Width: " << width() << ")";
+    pg_stringstream str;
+    str << L"Token(Position: " << _position << L", Kind: " << syntaxKindName(_syntaxKind) << L", Value: \"" << _text << L"\", Width: " << width() << L")";
     return str.str();
 }
 
-std::string SyntaxToken::toShortString() const noexcept
+pg_string SyntaxToken::toShortString() const noexcept
 {
-    std::stringstream str;
-    str << "Token: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
+    pg_stringstream str;
+    str << L"Token: " << syntaxKindName(_syntaxKind) << L" " << fullSpan();
     return str.str();
 }
 

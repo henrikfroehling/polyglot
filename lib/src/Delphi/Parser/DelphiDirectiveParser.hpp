@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_PARSER_DELPHIDIRECTIVEPARSER_H
 #define POLYGLOT_DELPHI_PARSER_DELPHIDIRECTIVEPARSER_H
 
-#include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Parser/DirectiveParser.hpp"
@@ -100,7 +99,7 @@ private:
     Core::Syntax::ExpressionSyntax* parsePrimary() noexcept;
     Core::Syntax::ExpressionSyntax* parseCallExpression(Core::Syntax::ISyntaxToken* identifier) noexcept;
     bool evaluateBool(Core::Syntax::ExpressionSyntax* expression) const noexcept;
-    bool isDefined(std::string_view id) const noexcept;
+    bool isDefined(pg_string_view id) const noexcept;
 
 private:
     Core::Syntax::SyntaxFactory _syntaxFactory;

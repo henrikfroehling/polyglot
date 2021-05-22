@@ -1,5 +1,4 @@
 #include "Core/Syntax/SyntaxList.hpp"
-#include <sstream>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxNode.hpp"
@@ -43,7 +42,7 @@ SyntaxList::SyntaxList(SyntaxKind syntaxKind,
     }
 }
 
-std::string_view SyntaxList::text() const noexcept
+pg_string_view SyntaxList::text() const noexcept
 {
     if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
     {
@@ -84,10 +83,10 @@ std::string_view SyntaxList::text() const noexcept
         }
     }
 
-    return std::string_view{};
+    return pg_string_view{};
 }
 
-std::string_view SyntaxList::textIncludingTrivia() const noexcept
+pg_string_view SyntaxList::textIncludingTrivia() const noexcept
 {
     if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
     {
@@ -128,7 +127,7 @@ std::string_view SyntaxList::textIncludingTrivia() const noexcept
         }
     }
 
-    return std::string_view{};
+    return pg_string_view{};
 }
 
 pg_size SyntaxList::leadingTriviaWidth() const noexcept
@@ -252,17 +251,17 @@ void SyntaxList::setParent(ISyntaxNode* parent) noexcept
     }
 }
 
-std::string SyntaxList::toString() const noexcept
+pg_string SyntaxList::toString() const noexcept
 {
-    std::stringstream str;
-    str << "SyntaxList(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Width: " << width() << ")";
+    pg_stringstream str;
+    str << L"SyntaxList(Position: " << _position << L", Kind: " << syntaxKindName(_syntaxKind) << L", Width: " << width() << L")";
     return str.str();
 }
 
-std::string SyntaxList::toShortString() const noexcept
+pg_string SyntaxList::toShortString() const noexcept
 {
-    std::stringstream str;
-    str << "SyntaxList: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
+    pg_stringstream str;
+    str << L"SyntaxList: " << syntaxKindName(_syntaxKind) << L" " << fullSpan();
     return str.str();
 }
 

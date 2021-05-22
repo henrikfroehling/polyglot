@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_IDENTIFIERNAMEEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_IDENTIFIERNAMEEXPRESSIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/SimpleNameExpressionSyntax.hpp"
@@ -24,7 +23,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pIdentifier); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pIdentifier); }
 
-    virtual std::string typeName() const noexcept override { return "IdentifierNameExpressionSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"IdentifierNameExpressionSyntax"; }
 
     static IdentifierNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                   ISyntaxToken* identifier) noexcept;

@@ -8,7 +8,7 @@ namespace polyglot::Core::Text
 
 class SourceText;
 
-bool isAnyLineBreakCharacter(const char character) noexcept;
+bool isAnyLineBreakCharacter(const pg_char character) noexcept;
 
 pg_size lengthOfLineBreak(const SourceText& sourceText,
                           const pg_size index) noexcept;

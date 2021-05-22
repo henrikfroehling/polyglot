@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_PREFIXUNARYEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_PREFIXUNARYEXPRESSIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -29,7 +28,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pOperatorToken); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pOperandExpression); }
 
-    virtual std::string typeName() const noexcept override { return "PrefixUnaryExpressionSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"PrefixUnaryExpressionSyntax"; }
 
     static PrefixUnaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                SyntaxKind syntaxKind,

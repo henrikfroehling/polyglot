@@ -1,8 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXTOKEN_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTOKEN_H
 
-#include <string>
-#include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTriviaList.hpp"
@@ -21,7 +19,7 @@ class SyntaxToken : public ISyntaxToken
 {
 public:
     explicit SyntaxToken(SyntaxKind syntaxKind,
-                         std::string_view text,
+                         pg_string_view text,
                          pg_size position = 0,
                          pg_size fullWidth = 0,
                          ISyntaxTriviaList* leadingTrivia = nullptr,
@@ -41,8 +39,8 @@ public:
 
     inline LanguageKind languageKind() const noexcept override final { return _pParent != nullptr ? _pParent->languageKind() : LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
-    inline std::string_view text() const noexcept override final { return _text; }
-    std::string_view textIncludingTrivia() const noexcept override final;
+    inline pg_string_view text() const noexcept override final { return _text; }
+    pg_string_view textIncludingTrivia() const noexcept override final;
 
     inline pg_size width() const noexcept override final { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }
@@ -71,9 +69,9 @@ public:
 
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
 
-    virtual std::string toString() const noexcept override;
-    virtual std::string toShortString() const noexcept override;
-    virtual std::string typeName() const noexcept override { return "SyntaxToken"; }
+    virtual pg_string toString() const noexcept override;
+    virtual pg_string toShortString() const noexcept override;
+    virtual pg_string typeName() const noexcept override { return L"SyntaxToken"; }
 
 protected:
     void adjustWidth(ISyntaxTriviaList* trivia) noexcept;
@@ -88,7 +86,7 @@ protected:
     SyntaxFlags _flags;
     ISyntaxNode* _pParent;
     ISyntaxTrivia* _pTrivia;
-    std::string_view _text;
+    pg_string_view _text;
     ISyntaxTriviaList* _pLeadingTrivia;
     ISyntaxTriviaList* _pTrailingTrivia;
 };

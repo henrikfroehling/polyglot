@@ -5,8 +5,8 @@
 namespace polyglot::Delphi::Syntax
 {
 
-SharedPtr<IDelphiSyntaxTree> IDelphiSyntaxTree::parseSourceText(std::string filename,
-                                                                std::string source) noexcept
+SharedPtr<IDelphiSyntaxTree> IDelphiSyntaxTree::parseSourceText(pg_string filename,
+                                                                pg_string source) noexcept
 {
     SharedPtr<Core::Text::SourceText> ptrSourceText = std::make_unique<Core::Text::SourceText>(std::move(filename), std::move(source));
     ptrSourceText->parseLineStarts();

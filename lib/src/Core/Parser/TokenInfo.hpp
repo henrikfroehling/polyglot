@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_PARSER_TOKENINFO_H
 #define POLYGLOT_CORE_PARSER_TOKENINFO_H
 
-#include <string_view>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 
 namespace polyglot::Core::Parser
@@ -23,7 +22,7 @@ struct TokenInfo final
                            const TokenInfo& rhs) noexcept;
 
     Syntax::SyntaxKind kind = Syntax::SyntaxKind::None;
-    std::string_view text{};
+    pg_string_view text{};
 };
 
 } // end namespace polyglot::Core::Parser

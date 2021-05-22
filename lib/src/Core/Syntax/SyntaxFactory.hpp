@@ -2,7 +2,6 @@
 #define POLYGLOT_CORE_SYNTAX_SYNTAXFACTORY_H
 
 #include <initializer_list>
-#include <string_view>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
@@ -39,7 +38,7 @@ public:
                         pg_size position = 0) noexcept;
 
     ISyntaxToken* missingToken(SyntaxKind syntaxKind,
-                               std::string_view text = "",
+                               pg_string_view text = L"",
                                pg_size position = 0) noexcept;
 
     ISyntaxToken* tokenWithTrivia(Parser::TokenInfo& tokenInfo,
@@ -52,7 +51,7 @@ public:
                                          pg_size position = 0) noexcept;
 
     ISyntaxToken* tokenWithLeadingTrivia(SyntaxKind syntaxKind,
-                                         std::string_view text,
+                                         pg_string_view text,
                                          pg_size position = 0,
                                          ISyntaxTriviaList* leadingTrivia = nullptr) noexcept;
 
@@ -60,24 +59,24 @@ public:
                                           std::vector<ISyntaxTrivia*>&& trailingTrivia,
                                           pg_size position = 0) noexcept;
 
-    inline ISyntaxTrivia* carriageReturnLineFeed(pg_size position = 0) noexcept { return endOfLine("\r\n", position); }
-    inline ISyntaxTrivia* lineFeed(pg_size position = 0) noexcept { return endOfLine("\n", position); }
-    inline ISyntaxTrivia* carriageReturn(pg_size position = 0) noexcept { return endOfLine("\r", position); }
+    inline ISyntaxTrivia* carriageReturnLineFeed(pg_size position = 0) noexcept { return endOfLine(L"\r\n", position); }
+    inline ISyntaxTrivia* lineFeed(pg_size position = 0) noexcept { return endOfLine(L"\n", position); }
+    inline ISyntaxTrivia* carriageReturn(pg_size position = 0) noexcept { return endOfLine(L"\r", position); }
 
-    ISyntaxTrivia* endOfLine(std::string_view text,
+    ISyntaxTrivia* endOfLine(pg_string_view text,
                              pg_size position = 0) noexcept;
 
-    ISyntaxTrivia* whiteSpace(std::string_view text,
+    ISyntaxTrivia* whiteSpace(pg_string_view text,
                               pg_size position = 0) noexcept;
 
-    ISyntaxTrivia* singleLineComment(std::string_view text,
+    ISyntaxTrivia* singleLineComment(pg_string_view text,
                                      pg_size position = 0) noexcept;
 
-    ISyntaxTrivia* multiLineComment(std::string_view text,
+    ISyntaxTrivia* multiLineComment(pg_string_view text,
                                     pg_size position = 0) noexcept;
 
     ISyntaxTrivia* createSyntaxTrivia(SyntaxKind syntaxKind,
-                                      std::string_view text,
+                                      pg_string_view text,
                                       pg_size position = 0) noexcept;
 
     ISyntaxList* syntaxList(SyntaxKind syntaxKind,

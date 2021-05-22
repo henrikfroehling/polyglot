@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUSESCLAUSESYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
@@ -35,7 +34,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUsesKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
-    virtual std::string typeName() const noexcept override { return "DelphiUsesClauseSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"DelphiUsesClauseSyntax"; }
 
     static DelphiUsesClauseSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           Core::Syntax::ISyntaxToken* usesKeyword,

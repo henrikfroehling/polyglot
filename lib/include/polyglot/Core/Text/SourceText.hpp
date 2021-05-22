@@ -2,9 +2,6 @@
 #define POLYGLOT_CORE_TEXT_SOURCETEXT_H
 
 #include <memory>
-#include <ostream>
-#include <string>
-#include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Text/LinePosition.hpp"
@@ -47,8 +44,8 @@ public:
     friend bool operator!=(const TextLine& lhs,
                            const TextLine& rhs) noexcept;
 
-    friend std::ostream& operator<<(std::ostream& os,
-                                    const TextLine& textLine) noexcept;
+    friend pg_ostream& operator<<(pg_ostream& os,
+                                  const TextLine& textLine) noexcept;
 
 private:
     explicit TextLine(SourceText* sourceText,
@@ -101,27 +98,27 @@ class POLYGLOT_API SourceText final
 public:
     SourceText() = delete;
 
-    explicit SourceText(std::string filename,
-                        std::string sourceText) noexcept;
+    explicit SourceText(pg_string filename,
+                        pg_string sourceText) noexcept;
 
     SourceText(const SourceText&) noexcept = default;
     SourceText(SourceText&&) noexcept = default;
     SourceText& operator=(const SourceText&) noexcept = default;
     SourceText& operator=(SourceText&&) noexcept = default;
-    inline std::string filename() const noexcept { return _filename; }
+    inline pg_string filename() const noexcept { return _filename; }
     pg_size length() const noexcept;
-    std::string_view content() const noexcept;
+    pg_string_view content() const noexcept;
     inline const TextLineCollection& textLines() const noexcept { return _lineStarts; }
     pg_size indexOf(const pg_size position) const noexcept;
     void parseLineStarts() noexcept;
-    const char& operator[](const pg_size index) const noexcept;
-    std::string_view toString(const TextSpan& textSpan) const noexcept;
+    const pg_char& operator[](const pg_size index) const noexcept;
+    pg_string_view toString(const TextSpan& textSpan) const noexcept;
 
-    std::string_view toString(const pg_size start,
-                              const pg_size length) const noexcept;
+    pg_string_view toString(const pg_size start,
+                            const pg_size length) const noexcept;
 
     void copyTo(const pg_size sourceIndex,
-                std::vector<char>& destination,
+                std::vector<pg_char>& destination,
                 const pg_size destinationIndex,
                 const pg_size count) const noexcept;
 
@@ -131,12 +128,12 @@ public:
     friend bool operator!=(const SourceText& lhs,
                            const SourceText& rhs) noexcept;
 
-    friend std::ostream& operator<<(std::ostream& os,
-                                    const SourceText& sourceText) noexcept;
+    friend pg_ostream& operator<<(pg_ostream& os,
+                                  const SourceText& sourceText) noexcept;
 
 private:
-    std::string _filename;
-    std::string _sourceText;
+    pg_string _filename;
+    pg_string _sourceText;
     TextLineCollection _lineStarts;
 };
 

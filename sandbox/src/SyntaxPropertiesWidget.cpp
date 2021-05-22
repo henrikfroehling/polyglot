@@ -1,15 +1,14 @@
 #include "SyntaxPropertiesWidget.hpp"
 #include <QtCore/QString>
+#include <QtCore/QStringView>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QTableWidgetItem>
 #include <QtWidgets/QVBoxLayout>
-#include <sstream>
-#include <string>
-#include <string_view>
 #include <polyglot/Core/LanguageKind.hpp>
+#include <polyglot/Core/Types.hpp>
 #include <polyglot/Core/Syntax/ISyntaxList.hpp>
 #include <polyglot/Core/Syntax/ISyntaxNode.hpp>
 #include <polyglot/Core/Syntax/ISyntaxToken.hpp>
@@ -82,7 +81,7 @@ void SyntaxPropertiesWidget::onSyntaxSelected(const QModelIndex& index) noexcept
         {
             const SyntaxVariant& syntaxItem = pSelectedItem->value();
             SyntaxKind syntaxKind = SyntaxKind::None;
-            std::string typeName;
+            pg_string typeName;
 
             if (syntaxItem.isNode())
             {
@@ -109,18 +108,10 @@ void SyntaxPropertiesWidget::onSyntaxSelected(const QModelIndex& index) noexcept
                 updateValues(syntaxItem.list);
             }
 
-            _pPropertiesHeader->setTypeName(QString::fromStdString(typeName));
-            _pPropertiesHeader->setSyntaxKindName(QString::fromStdString(syntaxKindName(syntaxKind)));
+            _pPropertiesHeader->setTypeName(QString::fromStdWString(typeName));
+            _pPropertiesHeader->setSyntaxKindName(QString::fromStdWString(syntaxKindName(syntaxKind)));
         }
     }
-}
-
-QString convertStrViewToStr(std::string_view value) noexcept
-{
-    std::stringstream str;
-    str << value;
-    const std::string strValue = str.str();
-    return QString::fromStdString(strValue);
 }
 
 void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxList* syntaxList) noexcept
@@ -133,14 +124,17 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxList* s
         _pTblProperties->setColumnWidth(0, 150);
         _pTblProperties->setColumnWidth(1, 200);
 
+        QString text = QStringView{syntaxList->text().data()}.toString();
+        QString textInclTrivia = QStringView{syntaxList->textIncludingTrivia().data()}.toString();
+
         addPropertyRow(0, 0, QStringLiteral("LanguageKind"));
-        addPropertyRow(0, 1, QString::fromStdString(polyglot::Core::languageKindName(syntaxList->languageKind())));
+        addPropertyRow(0, 1, QString::fromStdWString(polyglot::Core::languageKindName(syntaxList->languageKind())));
 
         addPropertyRow(1, 0, QStringLiteral("Text"));
-        addPropertyRow(1, 1, convertStrViewToStr(syntaxList->text()));
+        addPropertyRow(1, 1, text);
 
         addPropertyRow(2, 0, QStringLiteral("Text incl. Trivia"));
-        addPropertyRow(2, 1, convertStrViewToStr(syntaxList->textIncludingTrivia()));
+        addPropertyRow(2, 1, textInclTrivia);
 
         addPropertyRow(3, 0, QStringLiteral("Has Missing Tokens"));
         addPropertyRow(3, 1, syntaxList->hasMissingTokens() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -155,7 +149,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxList* s
         addPropertyRow(6, 1, QStringLiteral("%1").arg(syntaxList->width()));
 
         addPropertyRow(7, 0, QStringLiteral("Span"));
-        addPropertyRow(7, 1, QString::fromStdString(syntaxList->span().toString()));
+        addPropertyRow(7, 1, QString::fromStdWString(syntaxList->span().toString()));
 
         addPropertyRow(8, 0, QStringLiteral("Position incl. Trivia"));
         addPropertyRow(8, 1, QStringLiteral("%1").arg(syntaxList->positionIncludingTrivia()));
@@ -167,7 +161,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxList* s
         addPropertyRow(10, 1, QStringLiteral("%1").arg(syntaxList->fullWidth()));
 
         addPropertyRow(11, 0, QStringLiteral("Full Span"));
-        addPropertyRow(11, 1, QString::fromStdString(syntaxList->fullSpan().toString()));
+        addPropertyRow(11, 1, QString::fromStdWString(syntaxList->fullSpan().toString()));
 
         addPropertyRow(12, 0, QStringLiteral("Has Leading Trivia"));
         addPropertyRow(12, 1, syntaxList->hasLeadingTrivia() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -193,14 +187,17 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxNode* s
         _pTblProperties->setColumnWidth(0, 150);
         _pTblProperties->setColumnWidth(1, 200);
 
+        QString text = QStringView{syntaxNode->text().data()}.toString();
+        QString textInclTrivia = QStringView{syntaxNode->textIncludingTrivia().data()}.toString();
+
         addPropertyRow(0, 0, QStringLiteral("LanguageKind"));
-        addPropertyRow(0, 1, QString::fromStdString(polyglot::Core::languageKindName(syntaxNode->languageKind())));
+        addPropertyRow(0, 1, QString::fromStdWString(polyglot::Core::languageKindName(syntaxNode->languageKind())));
 
         addPropertyRow(1, 0, QStringLiteral("Text"));
-        addPropertyRow(1, 1, convertStrViewToStr(syntaxNode->text()));
+        addPropertyRow(1, 1, text);
 
         addPropertyRow(2, 0, QStringLiteral("Text incl. Trivia"));
-        addPropertyRow(2, 1, convertStrViewToStr(syntaxNode->textIncludingTrivia()));
+        addPropertyRow(2, 1, textInclTrivia);
 
         addPropertyRow(3, 0, QStringLiteral("Is Expression"));
         addPropertyRow(3, 1, syntaxNode->isExpression() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -227,7 +224,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxNode* s
         addPropertyRow(10, 1, QStringLiteral("%1").arg(syntaxNode->width()));
 
         addPropertyRow(11, 0, QStringLiteral("Span"));
-        addPropertyRow(11, 1, QString::fromStdString(syntaxNode->span().toString()));
+        addPropertyRow(11, 1, QString::fromStdWString(syntaxNode->span().toString()));
 
         addPropertyRow(12, 0, QStringLiteral("Position incl. Trivia"));
         addPropertyRow(12, 1, QStringLiteral("%1").arg(syntaxNode->positionIncludingTrivia()));
@@ -236,7 +233,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxNode* s
         addPropertyRow(13, 1, QStringLiteral("%1").arg(syntaxNode->endPositionIncludingTrivia()));
 
         addPropertyRow(14, 0, QStringLiteral("Full Span"));
-        addPropertyRow(14, 1, QString::fromStdString(syntaxNode->fullSpan().toString()));
+        addPropertyRow(14, 1, QString::fromStdWString(syntaxNode->fullSpan().toString()));
 
         addPropertyRow(15, 0, QStringLiteral("Has Leading Trivia"));
         addPropertyRow(15, 1, syntaxNode->hasLeadingTrivia() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -262,14 +259,17 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxToken* 
         _pTblProperties->setColumnWidth(0, 150);
         _pTblProperties->setColumnWidth(1, 200);
 
+        QString text = QStringView{syntaxToken->text().data()}.toString();
+        QString textInclTrivia = QStringView{syntaxToken->textIncludingTrivia().data()}.toString();
+
         addPropertyRow(0, 0, QStringLiteral("LanguageKind"));
-        addPropertyRow(0, 1, QString::fromStdString(polyglot::Core::languageKindName(syntaxToken->languageKind())));
+        addPropertyRow(0, 1, QString::fromStdWString(polyglot::Core::languageKindName(syntaxToken->languageKind())));
 
         addPropertyRow(1, 0, QStringLiteral("Text"));
-        addPropertyRow(1, 1, convertStrViewToStr(syntaxToken->text()));
+        addPropertyRow(1, 1, text);
 
         addPropertyRow(2, 0, QStringLiteral("Text incl. Trivia"));
-        addPropertyRow(2, 1, convertStrViewToStr(syntaxToken->textIncludingTrivia()));
+        addPropertyRow(2, 1, textInclTrivia);
 
         addPropertyRow(3, 0, QStringLiteral("Is Identifier"));
         addPropertyRow(3, 1, syntaxToken->isIdentifier() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -296,7 +296,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxToken* 
         addPropertyRow(10, 1, QStringLiteral("%1").arg(syntaxToken->width()));
 
         addPropertyRow(11, 0, QStringLiteral("Span"));
-        addPropertyRow(11, 1, QString::fromStdString(syntaxToken->span().toString()));
+        addPropertyRow(11, 1, QString::fromStdWString(syntaxToken->span().toString()));
 
         addPropertyRow(12, 0, QStringLiteral("Position incl. Trivia"));
         addPropertyRow(12, 1, QStringLiteral("%1").arg(syntaxToken->positionIncludingTrivia()));
@@ -305,7 +305,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxToken* 
         addPropertyRow(13, 1, QStringLiteral("%1").arg(syntaxToken->endPositionIncludingTrivia()));
 
         addPropertyRow(14, 0, QStringLiteral("Full Span"));
-        addPropertyRow(14, 1, QString::fromStdString(syntaxToken->fullSpan().toString()));
+        addPropertyRow(14, 1, QString::fromStdWString(syntaxToken->fullSpan().toString()));
 
         addPropertyRow(15, 0, QStringLiteral("Has Leading Trivia"));
         addPropertyRow(15, 1, syntaxToken->hasLeadingTrivia() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -331,11 +331,13 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxTrivia*
         _pTblProperties->setColumnWidth(0, 150);
         _pTblProperties->setColumnWidth(1, 200);
 
+        QString text = QStringView{syntaxTrivia->text().data()}.toString();
+
         addPropertyRow(0, 0, QStringLiteral("LanguageKind"));
-        addPropertyRow(0, 1, QString::fromStdString(polyglot::Core::languageKindName(syntaxTrivia->languageKind())));
+        addPropertyRow(0, 1, QString::fromStdWString(polyglot::Core::languageKindName(syntaxTrivia->languageKind())));
 
         addPropertyRow(1, 0, QStringLiteral("Text"));
-        addPropertyRow(1, 1, convertStrViewToStr(syntaxTrivia->text()));
+        addPropertyRow(1, 1, text);
 
         addPropertyRow(2, 0, QStringLiteral("Is Leading"));
         addPropertyRow(2, 1, syntaxTrivia->isLeading() ? QStringLiteral("True") : QStringLiteral("False"));
@@ -371,7 +373,7 @@ void SyntaxPropertiesWidget::updateValues(polyglot::Core::Syntax::ISyntaxTrivia*
         addPropertyRow(11, 1, QStringLiteral("%1").arg(syntaxTrivia->width()));
 
         addPropertyRow(12, 0, QStringLiteral("Span"));
-        addPropertyRow(12, 1, QString::fromStdString(syntaxTrivia->span().toString()));
+        addPropertyRow(12, 1, QString::fromStdWString(syntaxTrivia->span().toString()));
     }
 }
 

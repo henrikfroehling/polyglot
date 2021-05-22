@@ -111,10 +111,10 @@ pg_size DelphiUnitModuleSyntax::childCount() const noexcept
     return count;
 }
 
-std::string DelphiUnitModuleSyntax::toString() const noexcept
+pg_string DelphiUnitModuleSyntax::toString() const noexcept
 {
-    std::stringstream str;
-    str << "DelphiUnitModuleSyntax(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Width: " << width() << ")";
+    pg_stringstream str;
+    str << L"DelphiUnitModuleSyntax(Position: " << _position << L", Kind: " << syntaxKindName(_syntaxKind) << L", Width: " << width() << L")";
     return str.str();
 }
 

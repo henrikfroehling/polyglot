@@ -6,7 +6,7 @@ namespace polyglot::Core::Syntax
 {
 
 StructuredTriviaSyntax::StructuredTriviaSyntax(SyntaxKind syntaxKind) noexcept
-    : SyntaxTrivia{syntaxKind, ""}
+    : SyntaxTrivia{syntaxKind, L""}
 {}
 
 void StructuredTriviaSyntax::adjustWidth(ISyntaxNode* node) noexcept

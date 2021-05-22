@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_SIMPLENAMEEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_SIMPLENAMEEXPRESSIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -17,7 +17,7 @@ public:
     virtual ~SimpleNameExpressionSyntax() noexcept {}
     virtual ISyntaxToken* identifier() const noexcept = 0;
 
-    virtual std::string typeName() const noexcept override { return "SimpleNameExpressionSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"SimpleNameExpressionSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

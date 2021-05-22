@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITHEADSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITHEADSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
@@ -38,7 +37,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUnitKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
-    virtual std::string typeName() const noexcept override { return "DelphiUnitHeadSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"DelphiUnitHeadSyntax"; }
 
     static DelphiUnitHeadSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                         Core::Syntax::ISyntaxToken* unitKeyword,

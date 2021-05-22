@@ -2,7 +2,7 @@
 #define POLYGLOT_CORE_PARSER_LEXERCACHE_H
 
 #include <functional>
-#include <string_view>
+#include "polyglot/Core/Types.hpp"
 #include "Core/Parser/TextKeyedCache.hpp"
 #include "Core/Parser/TokenInfo.hpp"
 
@@ -15,11 +15,11 @@ public:
     static constexpr pg_size MAX_CACHED_TOKEN_SIZE = 50;
 
 public:
-    TokenInfo lookupToken(std::string_view chars,
+    TokenInfo lookupToken(pg_string_view chars,
                           unsigned long hashCode,
-                          std::function<TokenInfo(std::string_view chars)> createTokenInfoFunction) noexcept;
+                          std::function<TokenInfo(pg_string_view chars)> createTokenInfoFunction) noexcept;
 
-    TokenInfo lookupTrivia(std::string_view chars,
+    TokenInfo lookupTrivia(pg_string_view chars,
                            unsigned long hashCode,
                            std::function<TokenInfo()> createTokenInfoFunction) noexcept;
 

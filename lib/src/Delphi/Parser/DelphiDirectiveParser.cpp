@@ -331,7 +331,7 @@ ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
     if (currentToken()->syntaxKind() == SyntaxKind::EndOfDirectiveToken)
         pEndOfDirective = takeToken();
     else
-        pEndOfDirective = _syntaxFactory.missingToken(SyntaxKind::EndOfDirectiveToken, "", currentToken()->position());
+        pEndOfDirective = _syntaxFactory.missingToken(SyntaxKind::EndOfDirectiveToken, L"", currentToken()->position());
 
     if (skippedTokens.size() > 0)
     {
@@ -490,7 +490,7 @@ bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noe
     return false;
 }
 
-bool DelphiDirectiveParser::isDefined(std::string_view id) const noexcept
+bool DelphiDirectiveParser::isDefined(pg_string_view id) const noexcept
 {
     DefineState state = _context.isDefined(id);
 

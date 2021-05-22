@@ -23,7 +23,7 @@ bool Directive::isBranchTaken() const noexcept
     return false;
 }
 
-std::string_view Directive::identifier() const noexcept
+pg_string_view Directive::identifier() const noexcept
 {
     switch (static_cast<SyntaxTrivia*>(_pTrivia)->syntaxKind())
     {
@@ -32,7 +32,7 @@ std::string_view Directive::identifier() const noexcept
         case SyntaxKind::UndefDirectiveTrivia:
             return static_cast<UndefDirectiveTriviaSyntax*>(_pTrivia)->definitionName();
         default:
-            return std::string_view{};
+            return pg_string_view{};
     }
 }
 

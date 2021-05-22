@@ -40,13 +40,13 @@ QVariant SyntaxTreeItem::data() const noexcept
         return QVariant{};
 
     if (_value.isNode())
-        return QString::fromStdString(_value.node->toShortString());
+        return QString::fromStdWString(_value.node->toShortString());
     else if (_value.isToken())
-        return QString::fromStdString(_value.token->toShortString());
+        return QString::fromStdWString(_value.token->toShortString());
     else if (_value.isList())
-        return QString::fromStdString(_value.list->toShortString());
+        return QString::fromStdWString(_value.list->toShortString());
     else if (_value.isTrivia())
-        return QString::fromStdString(_value.trivia->toShortString());
+        return QString::fromStdWString(_value.trivia->toShortString());
 
     return QVariant{};
 }

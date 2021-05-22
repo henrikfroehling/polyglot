@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CORE_PARSER_DIRECTIVE_H
 #define POLYGLOT_CORE_PARSER_DIRECTIVE_H
 
-#include <string_view>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 #include "Core/Syntax/SyntaxTrivia.hpp"
 
@@ -17,7 +17,7 @@ public:
     inline Syntax::SyntaxKind syntaxKind() const noexcept { return _pTrivia != nullptr ? static_cast<Syntax::SyntaxTrivia*>(_pTrivia)->syntaxKind() : Syntax::SyntaxKind::None; }
     inline bool isActive() const noexcept { return _pTrivia != nullptr ? _pTrivia->isActive() : false; }
     bool isBranchTaken() const noexcept;
-    std::string_view identifier() const noexcept;
+    pg_string_view identifier() const noexcept;
 
     friend bool operator==(const Directive& lhs,
                            const Directive& rhs) noexcept;

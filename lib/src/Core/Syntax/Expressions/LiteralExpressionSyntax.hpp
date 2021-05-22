@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_LITERALEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_LITERALEXPRESSIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -27,7 +26,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pLiteral); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pLiteral); }
 
-    virtual std::string typeName() const noexcept override { return "LiteralExpressionSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"LiteralExpressionSyntax"; }
 
     static LiteralExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                            SyntaxKind syntaxKind,

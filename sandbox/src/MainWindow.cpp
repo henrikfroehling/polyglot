@@ -87,8 +87,8 @@ void MainWindow::analyzeSourceCode() noexcept
 {
     using namespace polyglot::Delphi::Syntax;
     const QString editorContent = _pTxtEditor->toPlainText();
-    const std::string sourceText = editorContent.toStdString();
-    SharedPtr<IDelphiSyntaxTree> ptrSyntaxtree = IDelphiSyntaxTree::parseSourceText("", sourceText);
+    const pg_string sourceText = editorContent.toStdWString();
+    SharedPtr<IDelphiSyntaxTree> ptrSyntaxtree = IDelphiSyntaxTree::parseSourceText(L"", sourceText);
     _pSyntaxVisualizerDockWidget->setSyntaxTree(ptrSyntaxtree);
 }
 

@@ -24,7 +24,7 @@ ISyntaxToken* SyntaxFactory::token(TokenInfo& tokenInfo,
 }
 
 ISyntaxToken* SyntaxFactory::missingToken(SyntaxKind syntaxKind,
-                                          std::string_view text,
+                                          pg_string_view text,
                                           pg_size position) noexcept
 {
     auto ptrMissingToken = std::make_unique<SyntaxMissingToken>(syntaxKind, text, position, text.length());
@@ -61,7 +61,7 @@ ISyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(TokenInfo& tokenInfo,
 }
 
 ISyntaxToken* SyntaxFactory::tokenWithLeadingTrivia(SyntaxKind syntaxKind,
-                                                    std::string_view text,
+                                                    pg_string_view text,
                                                     pg_size position,
                                                     ISyntaxTriviaList* leadingTrivia) noexcept
 {
@@ -80,32 +80,32 @@ ISyntaxToken* SyntaxFactory::tokenWithTrailingTrivia(TokenInfo& tokenInfo,
     return _syntaxPool.createSyntaxToken(tokenInfo.kind, tokenInfo.text, position, nullptr, pTrailingTrivia);
 }
                                              
-ISyntaxTrivia* SyntaxFactory::endOfLine(std::string_view text,
+ISyntaxTrivia* SyntaxFactory::endOfLine(pg_string_view text,
                                         pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::EndOfLineTrivia, text, position);
 }
 
-ISyntaxTrivia* SyntaxFactory::whiteSpace(std::string_view text,
+ISyntaxTrivia* SyntaxFactory::whiteSpace(pg_string_view text,
                                          pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::WhitespaceTrivia, text, position);
 }
 
-ISyntaxTrivia* SyntaxFactory::singleLineComment(std::string_view text,
+ISyntaxTrivia* SyntaxFactory::singleLineComment(pg_string_view text,
                                                 pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::SingleLineCommentTrivia, text, position);
 }
 
-ISyntaxTrivia* SyntaxFactory::multiLineComment(std::string_view text,
+ISyntaxTrivia* SyntaxFactory::multiLineComment(pg_string_view text,
                                                pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(SyntaxKind::MultiLineCommentTrivia, text, position);
 }
 
 ISyntaxTrivia* SyntaxFactory::createSyntaxTrivia(SyntaxKind syntaxKind,
-                                                 std::string_view text,
+                                                 pg_string_view text,
                                                  pg_size position) noexcept
 {
     return _syntaxPool.createSyntaxTrivia(syntaxKind, text, position);

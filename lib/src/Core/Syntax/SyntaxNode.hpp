@@ -1,8 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXNODE_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXNODE_H
 
-#include <string>
-#include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTree.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -42,8 +40,8 @@ public:
 
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
-    virtual std::string_view text() const noexcept override;
-    virtual std::string_view textIncludingTrivia() const noexcept override;
+    virtual pg_string_view text() const noexcept override;
+    virtual pg_string_view textIncludingTrivia() const noexcept override;
 
     inline virtual pg_size width() const noexcept override { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }
@@ -73,9 +71,9 @@ public:
     void setTriviaParent(ISyntaxTrivia* trivia) noexcept;
     void setSyntaxTree(ISyntaxTree* syntaxTree) noexcept;
 
-    virtual std::string toString() const noexcept override;
-    virtual std::string toShortString() const noexcept override;
-    virtual std::string typeName() const noexcept override { return "SyntaxNode"; }
+    virtual pg_string toString() const noexcept override;
+    virtual pg_string toShortString() const noexcept override;
+    virtual pg_string typeName() const noexcept override { return L"SyntaxNode"; }
 
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;

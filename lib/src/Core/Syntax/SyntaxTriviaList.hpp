@@ -1,8 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIALIST_H
 
-#include <string>
-#include <string_view>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
@@ -30,7 +28,7 @@ public:
     inline ISyntaxToken* token() const noexcept override final { return _pToken; }
 
     inline LanguageKind languageKind() const noexcept override final { return _pToken != nullptr ? _pToken->languageKind() : LanguageKind::Unknown; }
-    std::string_view text() const noexcept override final;
+    pg_string_view text() const noexcept override final;
 
     inline pg_size width() const noexcept override final { return _width; }
     inline pg_size position() const noexcept override final { return _position; }
@@ -42,9 +40,9 @@ public:
     inline ISyntaxTrivia* first() const noexcept override final { return _children.size() > 0 ? _children[0] : nullptr; }
     inline ISyntaxTrivia* last() const noexcept override final { return _children.size() > 0 ? _children.back() : nullptr; }
 
-    std::string toString() const noexcept override;
-    std::string toShortString() const noexcept override;
-    virtual std::string typeName() const noexcept override { return "SyntaxTriviaList"; }
+    pg_string toString() const noexcept override;
+    pg_string toShortString() const noexcept override;
+    virtual pg_string typeName() const noexcept override { return L"SyntaxTriviaList"; }
 
 protected:
     void adjustWidth(ISyntaxTrivia* trivia) noexcept;

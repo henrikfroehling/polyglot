@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_DELPHI_PARSER_DELPHISYNTAXFACTS_H
 #define POLYGLOT_DELPHI_PARSER_DELPHISYNTAXFACTS_H
 
-#include <string_view>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Parser/LexerMode.hpp"
 
 namespace polyglot::Delphi::Parser
@@ -19,7 +19,7 @@ public:
     static bool isKeyword(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isModuleStart(Core::Syntax::SyntaxKind syntaxKind) noexcept;
 
-    static Core::Syntax::SyntaxKind keywordKind(std::string_view text,
+    static Core::Syntax::SyntaxKind keywordKind(pg_string_view text,
                                                 Core::Parser::LexerMode mode = Core::Parser::LexerMode::Syntax) noexcept;
 };
 
