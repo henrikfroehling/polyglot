@@ -6,7 +6,7 @@
 #include <polyglot/Core/Types.hpp>
 #include <polyglot/Delphi/Syntax/IDelphiSyntaxTree.hpp>
 
-pg_string readFile(const pg_string& filename);
+pg_string readFile(const std::string& filename);
 
 int main(int argc,
          char** argv)
@@ -16,7 +16,7 @@ int main(int argc,
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     pg_string filename = converter.from_bytes(filenameArgument);
 
-    const pg_string sourceText = readFile(filename);
+    const pg_string sourceText = readFile(filenameArgument);
     auto ptrSyntaxTree = polyglot::Delphi::Syntax::IDelphiSyntaxTree::parseSourceText(filename, sourceText);
 
     std::string str;
@@ -25,7 +25,7 @@ int main(int argc,
     return 0;
 }
 
-pg_string readFile(const pg_string& filename)
+pg_string readFile(const std::string& filename)
 {
     std::wifstream file{filename};
     pg_string str;
