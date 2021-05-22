@@ -5,6 +5,7 @@
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
+#include "polyglot/Core/LanguageKind.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/SyntaxNode.hpp"
 
@@ -32,7 +33,7 @@ public:
 
     inline ISyntaxNode* parent() const noexcept override final { return _pParent; }
 
-    inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
+    inline virtual LanguageKind languageKind() const noexcept override { return _pParent != nullptr ? _pParent->languageKind() : LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
     virtual pg_string_view text() const noexcept override;
     virtual pg_string_view textIncludingTrivia() const noexcept override;

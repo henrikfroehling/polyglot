@@ -38,7 +38,7 @@ SyntaxList::SyntaxList(SyntaxKind syntaxKind,
         else if (child.isToken())
             adjustWidthAndFlags(child.token);
         else if (child.isList())
-            _position = child.list->position();
+            adjustWidthAndFlags(child.list);
     }
 }
 

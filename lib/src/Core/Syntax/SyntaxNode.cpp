@@ -151,7 +151,7 @@ void SyntaxNode::adjustWidthAndFlags(ISyntaxList* list) noexcept
     {
         SyntaxList* pSyntaxList = static_cast<SyntaxList*>(list);
         _fullWidth += pSyntaxList->_fullWidth;
-        pSyntaxList->_pParent = this;
+        pSyntaxList->setParent(this);
     }
 }
 
