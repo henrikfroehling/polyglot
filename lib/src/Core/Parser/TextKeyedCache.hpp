@@ -2,7 +2,6 @@
 #define POLYGLOT_CORE_PARSER_TEXTKEYEDCACHE_H
 
 #include <random>
-#include <string_view>
 #include <vector>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -21,7 +20,7 @@ struct CacheEntry final
 
     explicit CacheEntry(unsigned long hashCode,
                         TokenInfo item,
-                        std::string_view text) noexcept
+                        pg_string_view text) noexcept
         : hashCode{hashCode},
           item{std::move(item)},
           text{text}
@@ -34,7 +33,7 @@ struct CacheEntry final
 
     unsigned long hashCode;
     TokenInfo item;
-    std::string_view text;
+    pg_string_view text;
 };
 
 class TextKeyedCache final
@@ -62,10 +61,10 @@ public:
           _sharedTable(SHARED_SIZE)
     {}
 
-    TokenInfo lookupItem(std::string_view chars,
+    TokenInfo lookupItem(pg_string_view chars,
                          unsigned long hashCode) noexcept;
 
-    void addItem(std::string_view chars,
+    void addItem(pg_string_view chars,
                  unsigned long hashCode,
                  TokenInfo item) noexcept;
 
@@ -80,7 +79,7 @@ private:
         return generator();
     }
 
-    SharedPtr<CacheEntry> lookupSharedEntry(std::string_view chars,
+    SharedPtr<CacheEntry> lookupSharedEntry(pg_string_view chars,
                                             unsigned long hashCode) noexcept;
 
     void addSharedItem(unsigned long hashCode,

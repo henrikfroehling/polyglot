@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXKINDS_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXKINDS_H
 
-#include <string>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -337,7 +337,7 @@ enum class SyntaxKind : unsigned short
     EndOfModule
 };
 
-std::string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
+pg_string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
 
 } // end namespace polyglot::Core::Syntax
 

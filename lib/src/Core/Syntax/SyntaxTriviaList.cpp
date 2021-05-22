@@ -1,5 +1,4 @@
 #include "Core/Syntax/SyntaxTriviaList.hpp"
-#include <sstream>
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTree.hpp"
@@ -24,7 +23,7 @@ SyntaxTriviaList::SyntaxTriviaList(std::vector<ISyntaxTrivia*>&& trivia,
         adjustWidth(pTrivia);
 }
 
-std::string_view SyntaxTriviaList::text() const noexcept
+pg_string_view SyntaxTriviaList::text() const noexcept
 {
     if (_pToken != nullptr && _pToken->parent() != nullptr && _pToken->parent()->syntaxTree() != nullptr)
     {
@@ -44,7 +43,7 @@ std::string_view SyntaxTriviaList::text() const noexcept
         }
     }
 
-    return std::string_view{};
+    return pg_string_view{};
 }
 
 void SyntaxTriviaList::adjustWidth(ISyntaxTrivia* trivia) noexcept
@@ -68,17 +67,17 @@ void SyntaxTriviaList::setToken(ISyntaxToken* token) noexcept
     }
 }
 
-std::string SyntaxTriviaList::toString() const noexcept
+pg_string SyntaxTriviaList::toString() const noexcept
 {
-    std::stringstream str;
-    str << "TriviaList(Position: " << _position << ", Width: " << width() << ")";
+    pg_stringstream str;
+    str << L"TriviaList(Position: " << _position << L", Width: " << width() << L")";
     return str.str();
 }
 
-std::string SyntaxTriviaList::toShortString() const noexcept
+pg_string SyntaxTriviaList::toShortString() const noexcept
 {
-    std::stringstream str;
-    str << "TriviaList: " << span();
+    pg_stringstream str;
+    str << L"TriviaList: " << span();
     return str.str();
 }
 

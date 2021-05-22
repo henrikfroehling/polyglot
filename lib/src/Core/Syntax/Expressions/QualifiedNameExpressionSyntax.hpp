@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_EXPRESSIONS_QUALIFIEDNAMEEXPRESSIONSYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_EXPRESSIONS_QUALIFIEDNAMEEXPRESSIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
@@ -30,7 +29,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asNode(_pLeftExpression); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pRightExpression); }
 
-    virtual std::string typeName() const noexcept override { return "QualifiedNameExpressionSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"QualifiedNameExpressionSyntax"; }
 
     static QualifiedNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  NameExpressionSyntax* leftExpression,

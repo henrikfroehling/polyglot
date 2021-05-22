@@ -1,12 +1,11 @@
 #include "Core/Syntax/SyntaxMissingToken.hpp"
-#include <sstream>
 #include "Core/Syntax/SyntaxFlags.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
 SyntaxMissingToken::SyntaxMissingToken(SyntaxKind syntaxKind,
-                                       std::string_view text,
+                                       pg_string_view text,
                                        pg_size position,
                                        pg_size fullWidth,
                                        ISyntaxTriviaList* leadingTrivia,
@@ -17,17 +16,17 @@ SyntaxMissingToken::SyntaxMissingToken(SyntaxKind syntaxKind,
     _flags |= SyntaxFlags::IsMissing;
 }
 
-std::string SyntaxMissingToken::toString() const noexcept
+pg_string SyntaxMissingToken::toString() const noexcept
 {
-    std::stringstream str;
-    str << "MissingToken(" << _position << ", " << syntaxKindName(_syntaxKind) << ", \"" << _text << "\"" << "," << width() << ")";
+    pg_stringstream str;
+    str << L"MissingToken(" << _position << L", " << syntaxKindName(_syntaxKind) << L", \"" << _text << L"\", " << width() << L")";
     return str.str();
 }
 
-std::string SyntaxMissingToken::toShortString() const noexcept
+pg_string SyntaxMissingToken::toShortString() const noexcept
 {
-    std::stringstream str;
-    str << "MissingToken: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
+    pg_stringstream str;
+    str << L"MissingToken: " << syntaxKindName(_syntaxKind) << L" " << fullSpan();
     return str.str();
 }
 

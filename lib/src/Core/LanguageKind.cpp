@@ -3,15 +3,15 @@
 namespace polyglot::Core
 {
 
-std::string POLYGLOT_API languageKindName(LanguageKind languageKind) noexcept
+pg_string POLYGLOT_API languageKindName(LanguageKind languageKind) noexcept
 {
     switch (languageKind)
     {
-        case LanguageKind::Unknown: return "Unknown";
-        case LanguageKind::Delphi: return "Delphi";
+        case LanguageKind::Unknown: return L"Unknown";
+        case LanguageKind::Delphi: return L"Delphi";
     }
 
-    return "";
+    return L"";
 }
 
 } // end namespace polyglot::Core

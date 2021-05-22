@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_TEXT_TEXTWINDOW_H
 #define POLYGLOT_CORE_TEXT_TEXTWINDOW_H
 
-#include <string_view>
 #include <vector>
 #include "polyglot/Core/Text/SourceText.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -26,18 +25,18 @@ public:
     inline void start() noexcept { _lexemeStart = _offset; }
     void reset(const pg_size position) noexcept;
     bool isAtEnd() const noexcept;
-    inline std::string_view content() const noexcept { return _ptrSourceText->content(); }
+    inline pg_string_view content() const noexcept { return _ptrSourceText->content(); }
 
-    std::string_view substring(const pg_size start,
-                               const pg_size length) const noexcept;
+    pg_string_view substring(const pg_size start,
+                             const pg_size length) const noexcept;
 
-    std::string_view substringUntilCurrentPosition(const pg_size start) const noexcept;
+    pg_string_view substringUntilCurrentPosition(const pg_size start) const noexcept;
     inline void advanceCharacter(const pg_size n = 1) noexcept { _offset += n; }
-    char nextCharacter() noexcept;
-    char peekCharacter() noexcept;
-    char peekCharacter(const pg_size offset) noexcept;
-    char peekPreviousCharacter(const pg_size offset) noexcept;
-    std::string_view lexemeText() const noexcept;
+    pg_char nextCharacter() noexcept;
+    pg_char peekCharacter() noexcept;
+    pg_char peekCharacter(const pg_size offset) noexcept;
+    pg_char peekPreviousCharacter(const pg_size offset) noexcept;
+    pg_string_view lexemeText() const noexcept;
 
 private:
     SourceTextPtr _ptrSourceText;

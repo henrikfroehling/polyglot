@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITREFERENCEDECLARATIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
@@ -41,7 +40,7 @@ public:
         return Core::Syntax::SyntaxVariant::asNode(_pUnitName);
     }
 
-    virtual std::string typeName() const noexcept override { return "DelphiUnitReferenceDeclarationSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"DelphiUnitReferenceDeclarationSyntax"; }
 
     static DelphiUnitReferenceDeclarationSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                         Core::Syntax::NameExpressionSyntax* unitName,

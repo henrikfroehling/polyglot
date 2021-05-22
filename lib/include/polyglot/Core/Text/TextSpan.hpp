@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_TEXT_TEXTSPAN_H
 #define POLYGLOT_CORE_TEXT_TEXTSPAN_H
 
-#include <ostream>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Types.hpp"
 
@@ -32,7 +31,7 @@ public:
     bool intersectsWith(const TextSpan& otherTextSpan) const noexcept;
     TextSpan intersectionOf(const TextSpan& otherTextSpan) const noexcept;
 
-    std::string toString() const noexcept;
+    pg_string toString() const noexcept;
 
     static TextSpan fromBounds(const pg_size start,
                                const pg_size end) noexcept;
@@ -43,8 +42,8 @@ public:
     friend bool operator!=(const TextSpan& lhs,
                            const TextSpan& rhs) noexcept;
 
-    friend std::ostream& operator<<(std::ostream& os,
-                                    const TextSpan& textSpan) noexcept;
+    friend pg_ostream& operator<<(pg_ostream& os,
+                                  const TextSpan& textSpan) noexcept;
 
 private:
     pg_size _start;

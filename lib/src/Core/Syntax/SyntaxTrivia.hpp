@@ -1,8 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIA_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXTRIVIA_H
 
-#include <string>
-#include <string_view>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -18,7 +16,7 @@ class SyntaxTrivia : public ISyntaxTrivia
 {
 public:
     explicit SyntaxTrivia(SyntaxKind syntaxKind,
-                          std::string_view text,
+                          pg_string_view text,
                           pg_size position = 0,
                           pg_size width = 0,
                           ISyntaxToken* token = nullptr) noexcept;
@@ -34,7 +32,7 @@ public:
 
     inline LanguageKind languageKind() const noexcept override final { return _pToken != nullptr ? _pToken->languageKind() : LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
-    inline std::string_view text() const noexcept override final { return _text; }
+    inline pg_string_view text() const noexcept override final { return _text; }
 
     inline pg_size width() const noexcept override final { return _width; }
     inline pg_size position() const noexcept override final { return _position; }
@@ -52,9 +50,9 @@ public:
 
     inline virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept { return std::move(stack); }
 
-    std::string toString() const noexcept override;
-    std::string toShortString() const noexcept override;
-    virtual std::string typeName() const noexcept override { return "SyntaxTrivia"; }
+    pg_string toString() const noexcept override;
+    pg_string toShortString() const noexcept override;
+    virtual pg_string typeName() const noexcept override { return L"SyntaxTrivia"; }
 
 protected:
     friend class SyntaxToken;
@@ -63,7 +61,7 @@ protected:
     pg_size _position;
     pg_size _width;
     SyntaxKind _syntaxKind;
-    std::string_view _text;
+    pg_string_view _text;
     ISyntaxToken* _pToken;
     bool _isLeading;
     bool _isTrailing;

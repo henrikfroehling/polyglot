@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_TRIVIA_DELPHISWITCHDIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_TRIVIA_DELPHISWITCHDIRECTIVETRIVIASYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
@@ -36,7 +35,7 @@ public:
     inline pg_size childCount() const noexcept override final { return 4; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    virtual std::string typeName() const noexcept override { return "DelphiSwitchDirectiveTriviaSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"DelphiSwitchDirectiveTriviaSyntax"; }
 
     static DelphiSwitchDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                      Core::Syntax::ISyntaxToken* startToken,

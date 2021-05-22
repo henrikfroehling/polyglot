@@ -1,8 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXTOKEN_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXTOKEN_H
 
-#include <string>
-#include <string_view>
 #include <variant>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -29,8 +27,8 @@ public:
 
     virtual LanguageKind languageKind() const noexcept = 0;
     virtual SyntaxKind syntaxKind() const noexcept = 0;
-    virtual std::string_view text() const noexcept = 0;
-    virtual std::string_view textIncludingTrivia() const noexcept = 0;
+    virtual pg_string_view text() const noexcept = 0;
+    virtual pg_string_view textIncludingTrivia() const noexcept = 0;
 
     virtual pg_size width() const noexcept = 0;
     virtual pg_size fullWidth() const noexcept = 0;
@@ -57,9 +55,9 @@ public:
     virtual TokenValue value() const noexcept = 0;
     virtual bool booleanValue() const noexcept = 0;
 
-    virtual std::string toString() const noexcept = 0;
-    virtual std::string toShortString() const noexcept = 0;
-    virtual std::string typeName() const noexcept = 0;
+    virtual pg_string toString() const noexcept = 0;
+    virtual pg_string toShortString() const noexcept = 0;
+    virtual pg_string typeName() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

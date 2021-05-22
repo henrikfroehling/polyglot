@@ -98,7 +98,7 @@ bool DirectiveStack::hasUnfinishedRegion() const noexcept
     return previous != nullptr && previous->any() && previous->head() != nullptr && previous->head()->syntaxKind() == SyntaxKind::RegionDirectiveTrivia;
 }
 
-DefineState DirectiveStack::isDefined(std::string_view id) const noexcept
+DefineState DirectiveStack::isDefined(pg_string_view id) const noexcept
 {
     for (SharedPtr<DirectiveList> current = _directives; current != nullptr && current->any() && current->head() != nullptr; current = current->tail())
     {

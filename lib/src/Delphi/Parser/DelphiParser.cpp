@@ -1,6 +1,5 @@
 #include "Delphi/Parser/DelphiParser.hpp"
 #include <cassert>
-#include <iostream>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"

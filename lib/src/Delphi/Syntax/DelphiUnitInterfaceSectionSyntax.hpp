@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIUNITINTERFACESECTIONSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_DELPHIUNITINTERFACESECTIONSYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
@@ -39,7 +38,7 @@ public:
         return Core::Syntax::SyntaxVariant::asToken(_pInterfaceKeyword);
     }
 
-    virtual std::string typeName() const noexcept override { return "DelphiUnitInterfaceSectionSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"DelphiUnitInterfaceSectionSyntax"; }
 
     static DelphiUnitInterfaceSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* interfaceKeyword,

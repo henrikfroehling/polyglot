@@ -1,11 +1,10 @@
 #include "Core/Syntax/SyntaxTrivia.hpp"
-#include <sstream>
 
 namespace polyglot::Core::Syntax
 {
 
 SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
-                           std::string_view text,
+                           pg_string_view text,
                            pg_size position,
                            pg_size width,
                            ISyntaxToken* token) noexcept
@@ -19,23 +18,23 @@ SyntaxTrivia::SyntaxTrivia(SyntaxKind syntaxKind,
       _isTrailing{false}
 {}
 
-std::string SyntaxTrivia::toString() const noexcept
+pg_string SyntaxTrivia::toString() const noexcept
 {
-    std::stringstream str;
-    str << "Trivia(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Value: \"" << _text << "\"" << ", Width: " << width() << ")";
+    pg_stringstream str;
+    str << L"Trivia(Position: " << _position << L", Kind: " << syntaxKindName(_syntaxKind) << L", Value: \"" << _text << L"\", Width: " << width() << L")";
     return str.str();
 }
 
-std::string SyntaxTrivia::toShortString() const noexcept
+pg_string SyntaxTrivia::toShortString() const noexcept
 {
-    std::stringstream str;
+    pg_stringstream str;
 
     if (_isLeading)
-        str << "Lead: ";
+        str << L"Lead: ";
     else if (_isTrailing)
-        str << "Trail: ";
+        str << L"Trail: ";
 
-    str << "Trivia: " << syntaxKindName(_syntaxKind) << " " << span();
+    str << L"Trivia: " << syntaxKindName(_syntaxKind) << L" " << span();
     return str.str();
 }
 

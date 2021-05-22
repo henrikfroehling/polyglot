@@ -1,5 +1,4 @@
 #include "Core/Syntax/SyntaxNode.hpp"
-#include <sstream>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "Core/Syntax/SyntaxList.hpp"
 #include "Core/Syntax/SyntaxToken.hpp"
@@ -22,20 +21,20 @@ SyntaxNode::SyntaxNode(SyntaxKind syntaxKind,
       _pSyntaxTree{nullptr}
 {}
 
-std::string_view SyntaxNode::text() const noexcept
+pg_string_view SyntaxNode::text() const noexcept
 {
     if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
         return _pParent->syntaxTree()->sourceText()->toString(span());
 
-    return _pSyntaxTree != nullptr ? _pSyntaxTree->sourceText()->toString(span()) : std::string_view{};
+    return _pSyntaxTree != nullptr ? _pSyntaxTree->sourceText()->toString(span()) : pg_string_view{};
 }
 
-std::string_view SyntaxNode::textIncludingTrivia() const noexcept
+pg_string_view SyntaxNode::textIncludingTrivia() const noexcept
 {
     if (_pParent != nullptr && _pParent->syntaxTree() != nullptr)
         return _pParent->syntaxTree()->sourceText()->toString(fullSpan());
 
-    return _pSyntaxTree != nullptr ? _pSyntaxTree->sourceText()->toString(fullSpan()) : std::string_view{};
+    return _pSyntaxTree != nullptr ? _pSyntaxTree->sourceText()->toString(fullSpan()) : pg_string_view{};
 }
 
 pg_size SyntaxNode::leadingTriviaWidth() const noexcept
@@ -167,17 +166,17 @@ void SyntaxNode::setSyntaxTree(ISyntaxTree* syntaxTree) noexcept
     _pSyntaxTree = syntaxTree;
 }
 
-std::string SyntaxNode::toString() const noexcept
+pg_string SyntaxNode::toString() const noexcept
 {
-    std::stringstream str;
-    str << "Node(Position: " << _position << ", Kind: " << syntaxKindName(_syntaxKind) << ", Value: \"" << text() << "\"" << ", Width: " << width() << ")";
+    pg_stringstream str;
+    str << L"Node(Position: " << _position << L", Kind: " << syntaxKindName(_syntaxKind) << L", Value: \"" << text() << L"\", Width: " << width() << L")";
     return str.str();
 }
 
-std::string SyntaxNode::toShortString() const noexcept
+pg_string SyntaxNode::toShortString() const noexcept
 {
-    std::stringstream str;
-    str << "Node: " << syntaxKindName(_syntaxKind) << " " << fullSpan();
+    pg_stringstream str;
+    str << L"Node: " << syntaxKindName(_syntaxKind) << L" " << fullSpan();
     return str.str();
 }
 

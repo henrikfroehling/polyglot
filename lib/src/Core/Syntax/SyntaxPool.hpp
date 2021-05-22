@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXPOOL_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXPOOL_H
 
-#include <string_view>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
@@ -26,14 +25,14 @@ public:
                                   std::vector<SyntaxVariant>&& nodes) noexcept;
 
     ISyntaxToken* createSyntaxToken(SyntaxKind syntaxKind,
-                                    std::string_view text,
+                                    pg_string_view text,
                                     pg_size position = 0,
                                     ISyntaxTriviaList* leadingTrivia = nullptr,
                                     ISyntaxTriviaList* trailingTrivia = nullptr,
                                     ISyntaxNode* parent = nullptr) noexcept;
 
     ISyntaxTrivia* createSyntaxTrivia(SyntaxKind syntaxKind,
-                                      std::string_view text,
+                                      pg_string_view text,
                                       pg_size position = 0,
                                       ISyntaxToken* token = nullptr) noexcept;
 

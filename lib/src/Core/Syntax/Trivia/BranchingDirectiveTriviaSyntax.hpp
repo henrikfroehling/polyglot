@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CORE_SYNTAX_TRIVIA_BRANCHINGDIRECTIVETRIVIASYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_BRANCHINGDIRECTIVETRIVIASYNTAX_H
 
-#include <string>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
+#include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/Trivia/DirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -15,7 +15,7 @@ public:
     virtual ~BranchingDirectiveTriviaSyntax() noexcept {}
     virtual bool isBranchTaken() const noexcept = 0;
 
-    virtual std::string typeName() const noexcept override { return "BranchingDirectiveTriviaSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"BranchingDirectiveTriviaSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_SYNTAXLIST_H
 #define POLYGLOT_CORE_SYNTAX_SYNTAXLIST_H
 
-#include <string>
 #include <vector>
 #include "polyglot/Core/Syntax/ISyntaxList.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
@@ -35,8 +34,8 @@ public:
 
     inline virtual LanguageKind languageKind() const noexcept override { return LanguageKind::Unknown; }
     inline SyntaxKind syntaxKind() const noexcept override final { return _syntaxKind; }
-    virtual std::string_view text() const noexcept override;
-    virtual std::string_view textIncludingTrivia() const noexcept override;
+    virtual pg_string_view text() const noexcept override;
+    virtual pg_string_view textIncludingTrivia() const noexcept override;
 
     inline virtual pg_size width() const noexcept override { return _fullWidth - leadingTriviaWidth() - trailingTriviaWidth(); }
     inline pg_size fullWidth() const noexcept override final { return _fullWidth; }
@@ -62,9 +61,9 @@ public:
 
     bool hasMissingTokens() const noexcept override final;
 
-    std::string toString() const noexcept override;
-    std::string toShortString() const noexcept override;
-    virtual std::string typeName() const noexcept override { return "SyntaxList"; }
+    pg_string toString() const noexcept override;
+    pg_string toShortString() const noexcept override;
+    virtual pg_string typeName() const noexcept override { return L"SyntaxList"; }
 
 protected:
     void adjustWidthAndFlags(ISyntaxList* list) noexcept;

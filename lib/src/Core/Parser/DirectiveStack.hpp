@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_PARSER_DIRECTIVESTACK_H
 #define POLYGLOT_CORE_PARSER_DIRECTIVESTACK_H
 
-#include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "Core/Parser/DirectiveList.hpp"
 
@@ -31,7 +30,7 @@ public:
     bool hasUnfinishedIfOrIfN() const noexcept;
     bool hasPreviousIfOrIfNOrElseIf() const noexcept;
     bool hasUnfinishedRegion() const noexcept;
-    DefineState isDefined(std::string_view id) const noexcept;
+    DefineState isDefined(pg_string_view id) const noexcept;
     inline static DirectiveStack empty() noexcept { return DirectiveStack{DirectiveList::empty()}; }
 
 private:

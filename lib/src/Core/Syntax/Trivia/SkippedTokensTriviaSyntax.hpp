@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_TRIVIA_SKIPPEDTOKENSTRIVIASYNTAX_H
 #define POLYGLOT_CORE_SYNTAX_TRIVIA_SKIPPEDTOKENSTRIVIASYNTAX_H
 
-#include <string>
 #include <vector>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
@@ -23,7 +22,7 @@ public:
     inline pg_size childCount() const noexcept override final { return _skippedTokens.size(); }
     inline SyntaxVariant child(pg_size index) const override final { return _skippedTokens[index]; }
 
-    virtual std::string typeName() const noexcept override { return "SkippedTokensTriviaSyntax"; }
+    virtual pg_string typeName() const noexcept override { return L"SkippedTokensTriviaSyntax"; }
 
 private:
     std::vector<SyntaxVariant> _skippedTokens;

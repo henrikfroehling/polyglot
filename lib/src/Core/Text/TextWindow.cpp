@@ -38,21 +38,21 @@ bool TextWindow::isAtEnd() const noexcept
     return position() >= _textEnd;
 }
 
-std::string_view TextWindow::substring(const pg_size start,
-                                       const pg_size length) const noexcept
+pg_string_view TextWindow::substring(const pg_size start,
+                                     const pg_size length) const noexcept
 {
     return _ptrSourceText->content().substr(start, length);
 }
 
-std::string_view TextWindow::substringUntilCurrentPosition(const pg_size start) const noexcept
+pg_string_view TextWindow::substringUntilCurrentPosition(const pg_size start) const noexcept
 {
     assert(start <= position());
     return _ptrSourceText->content().substr(start, position() - start);
 }
 
-char TextWindow::nextCharacter() noexcept
+pg_char TextWindow::nextCharacter() noexcept
 {
-    const char character = peekCharacter();
+    const pg_char character = peekCharacter();
 
     if (character != Lexer::INVALID_CHARACTER)
         advanceCharacter();
@@ -60,7 +60,7 @@ char TextWindow::nextCharacter() noexcept
     return character;
 }
 
-char TextWindow::peekCharacter() noexcept
+pg_char TextWindow::peekCharacter() noexcept
 {
     if (_offset >= _textEnd)
         return Lexer::INVALID_CHARACTER;
@@ -68,10 +68,10 @@ char TextWindow::peekCharacter() noexcept
     return (*_ptrSourceText)[_offset];
 }
 
-char TextWindow::peekCharacter(const pg_size offset) noexcept
+pg_char TextWindow::peekCharacter(const pg_size offset) noexcept
 {
     advanceCharacter(offset);
-    char character{};
+    pg_char character{};
 
     if (_offset >= _textEnd)
         character = Lexer::INVALID_CHARACTER;
@@ -82,9 +82,9 @@ char TextWindow::peekCharacter(const pg_size offset) noexcept
     return character;
 }
 
-char TextWindow::peekPreviousCharacter(const pg_size offset) noexcept
+pg_char TextWindow::peekPreviousCharacter(const pg_size offset) noexcept
 {
-    char character{};
+    pg_char character{};
     const pg_size position = _offset - offset;
 
     if (position >= _textEnd)
@@ -95,46 +95,46 @@ char TextWindow::peekPreviousCharacter(const pg_size offset) noexcept
     return character;
 }
 
-std::string_view TextWindow::lexemeText() const noexcept
+pg_string_view TextWindow::lexemeText() const noexcept
 {
     pg_size offset = lexemeStartPosition() - _basis;
 
     switch (width())
     {
         case 0:
-            return "";
+            return L"";
         case 1:
         {
-            if ((*_ptrSourceText)[offset] == ' ')
-                return " ";
+            if ((*_ptrSourceText)[offset] == L' ')
+                return L" ";
 
-            if ((*_ptrSourceText)[offset] == '\n')
-                return "\n";
+            if ((*_ptrSourceText)[offset] == L'\n')
+                return L"\n";
 
             break;
         }
         case 2:
         {
-            char firstCharacter = (*_ptrSourceText)[offset];
+            pg_char firstCharacter = (*_ptrSourceText)[offset];
 
-            if (firstCharacter == '\r' && (*_ptrSourceText)[offset + 1] == '\n')
-                return "\r\n";
+            if (firstCharacter == L'\r' && (*_ptrSourceText)[offset + 1] == L'\n')
+                return L"\r\n";
 
-            if (firstCharacter == '/' && (*_ptrSourceText)[offset + 1] == '/')
-                return "//";
+            if (firstCharacter == L'/' && (*_ptrSourceText)[offset + 1] == L'/')
+                return L"//";
 
             break;
         }
         case 3:
         {
-            if ((*_ptrSourceText)[offset] == '/' && (*_ptrSourceText)[offset + 1] == '/' && (*_ptrSourceText)[offset + 2] == ' ')
-                return "//";
+            if ((*_ptrSourceText)[offset] == L'/' && (*_ptrSourceText)[offset + 1] == L'/' && (*_ptrSourceText)[offset + 2] == L' ')
+                return L"//";
 
             break;
         }
     }
 
-    return std::string_view{_ptrSourceText->content().data() + offset, width()};
+    return pg_string_view{_ptrSourceText->content().data() + offset, width()};
 }
 
 } // end namespace polyglot::Core::Text

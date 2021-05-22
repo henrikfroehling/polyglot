@@ -104,8 +104,8 @@ bool operator!=(const TextLine& lhs,
     return !(lhs == rhs);
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         const TextLine& textLine) noexcept
+pg_ostream& operator<<(pg_ostream& os,
+                       const TextLine& textLine) noexcept
 {
     if (textLine._pSourceText->length() > 0)
         os << textLine._pSourceText->toString(textLine.span());
@@ -235,7 +235,7 @@ void TextLineCollection::parseLineStarts() noexcept
     bool lastWasCR{false};
     pg_size position{};
     const pg_size length = _pSourceText->length();
-    auto ptrCharBuffer = std::make_unique<std::vector<char>>(CHAR_BUFFER_SIZE);
+    auto ptrCharBuffer = std::make_unique<std::vector<pg_char>>(CHAR_BUFFER_SIZE);
 
     auto parseContent = [&, this](const pg_size& contentLength)
     {
@@ -252,7 +252,7 @@ void TextLineCollection::parseLineStarts() noexcept
 
         while (index < contentLength)
         {
-            const char character = (*ptrCharBuffer)[index];
+            const pg_char character = (*ptrCharBuffer)[index];
             index++;
 
             if (character >= 32 && character < 127)
@@ -288,8 +288,8 @@ void TextLineCollection::parseLineStarts() noexcept
 // SourceText
 // ----------------------------------------------
 
-SourceText::SourceText(std::string filename,
-                       std::string sourceText) noexcept
+SourceText::SourceText(pg_string filename,
+                       pg_string sourceText) noexcept
     : _filename{std::move(filename)},
       _sourceText{std::move(sourceText)},
       _lineStarts{this}
@@ -300,7 +300,7 @@ pg_size SourceText::length() const noexcept
     return _sourceText.length();
 }
 
-std::string_view SourceText::content() const noexcept
+pg_string_view SourceText::content() const noexcept
 {
     return _sourceText;
 }
@@ -315,23 +315,23 @@ void SourceText::parseLineStarts() noexcept
     _lineStarts.parseLineStarts();
 }
 
-const char& SourceText::operator[](const pg_size index) const noexcept
+const pg_char& SourceText::operator[](const pg_size index) const noexcept
 {
     return _sourceText[index];
 }
 
-std::string_view SourceText::toString(const TextSpan& textSpan) const noexcept
+pg_string_view SourceText::toString(const TextSpan& textSpan) const noexcept
 {
     assert(textSpan.end() <= length());
 
     if (textSpan.start() == 0 && textSpan.length() == length())
         return _sourceText;
 
-    return std::string_view{_sourceText}.substr(textSpan.start(), textSpan.length());
+    return pg_string_view{_sourceText}.substr(textSpan.start(), textSpan.length());
 }
 
-std::string_view SourceText::toString(const pg_size start,
-                                      const pg_size length) const noexcept
+pg_string_view SourceText::toString(const pg_size start,
+                                    const pg_size length) const noexcept
 {
     assert(start <= this->length());
     assert(start + length <= this->length());
@@ -339,17 +339,17 @@ std::string_view SourceText::toString(const pg_size start,
     if (start == 0 && length == this->length())
         return _sourceText;
 
-    return std::string_view{_sourceText}.substr(start, length);
+    return pg_string_view{_sourceText}.substr(start, length);
 }
 
 void SourceText::copyTo(const pg_size sourceIndex,
-                        std::vector<char>& destination,
+                        std::vector<pg_char>& destination,
                         const pg_size destinationIndex,
                         const pg_size count) const noexcept
 {
-    std::copy(std::cbegin(_sourceText) + static_cast<std::vector<char>::difference_type>(sourceIndex),
-              std::cbegin(_sourceText) + static_cast<std::vector<char>::difference_type>(sourceIndex + count),
-              std::begin(destination) + static_cast<std::vector<char>::difference_type>(destinationIndex));
+    std::copy(std::cbegin(_sourceText) + static_cast<std::vector<pg_char>::difference_type>(sourceIndex),
+              std::cbegin(_sourceText) + static_cast<std::vector<pg_char>::difference_type>(sourceIndex + count),
+              std::begin(destination) + static_cast<std::vector<pg_char>::difference_type>(destinationIndex));
 }
 
 bool operator==(const SourceText& lhs,
@@ -364,8 +364,8 @@ bool operator!=(const SourceText& lhs,
     return !(lhs == rhs);
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         const SourceText& sourceText) noexcept
+pg_ostream& operator<<(pg_ostream& os,
+                       const SourceText& sourceText) noexcept
 {
     os << sourceText._sourceText;
     return os;

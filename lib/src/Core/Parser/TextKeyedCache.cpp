@@ -3,7 +3,7 @@
 namespace polyglot::Core::Parser
 {
 
-TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
+TokenInfo TextKeyedCache::lookupItem(pg_string_view chars,
                                      unsigned long hashCode) noexcept
 {
     const unsigned long localIndex = localIndexFromHash(hashCode);
@@ -31,7 +31,7 @@ TokenInfo TextKeyedCache::lookupItem(std::string_view chars,
     return TokenInfo{};
 }
 
-void TextKeyedCache::addItem(std::string_view chars,
+void TextKeyedCache::addItem(pg_string_view chars,
                              unsigned long hashCode,
                              TokenInfo item) noexcept
 {
@@ -42,7 +42,7 @@ void TextKeyedCache::addItem(std::string_view chars,
     _localTable[localIndex] = ptrCacheEntry;
 }
 
-SharedPtr<CacheEntry> TextKeyedCache::lookupSharedEntry(std::string_view chars,
+SharedPtr<CacheEntry> TextKeyedCache::lookupSharedEntry(pg_string_view chars,
                                                         unsigned long hashCode) noexcept
 {
     unsigned long sharedIndex = sharedIndexFromHash(hashCode);

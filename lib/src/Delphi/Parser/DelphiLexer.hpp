@@ -1,7 +1,6 @@
 #ifndef POLYGLOT_DELPHI_PARSER_DELPHILEXER_H
 #define POLYGLOT_DELPHI_PARSER_DELPHILEXER_H
 
-#include <string_view>
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Parser/Lexer.hpp"
@@ -28,7 +27,7 @@ private:
     Core::Syntax::ISyntaxToken* lexToken() noexcept override;
     Core::Parser::TokenInfo quickScanSyntaxToken() noexcept;
     Core::Parser::TokenInfo lexSyntaxToken() noexcept;
-    Core::Parser::TokenInfo lexSyntaxTokenLiteral(std::string_view chars) noexcept;
+    Core::Parser::TokenInfo lexSyntaxTokenLiteral(pg_string_view chars) noexcept;
 
     void lexSyntaxTrivia(bool afterFirstToken,
                          bool isTrailing,
@@ -42,7 +41,7 @@ private:
     void scanStringLiteral(Core::Parser::TokenInfo& tokenInfo) noexcept;
     void scanIdentifierOrKeyword(Core::Parser::TokenInfo& tokenInfo) noexcept;
 
-    void scanIdentifierOrKeyword(std::string_view chars,
+    void scanIdentifierOrKeyword(pg_string_view chars,
                                  Core::Parser::TokenInfo& tokenInfo) noexcept;
 
     bool scanIdentifier(Core::Parser::TokenInfo& token) noexcept;

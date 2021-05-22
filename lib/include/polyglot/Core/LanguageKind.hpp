@@ -1,8 +1,8 @@
 #ifndef POLYGLOT_CORE_LANGUAGEKIND_H
 #define POLYGLOT_CORE_LANGUAGEKIND_H
 
-#include <string>
 #include "polyglot/polyglot_global.hpp"
+#include "polyglot/Core/Types.hpp"
 
 namespace polyglot::Core
 {
@@ -13,7 +13,7 @@ enum class LanguageKind : unsigned short
     Delphi
 };
 
-std::string POLYGLOT_API languageKindName(LanguageKind languageKind) noexcept;
+pg_string POLYGLOT_API languageKindName(LanguageKind languageKind) noexcept;
 
 } // end namespace polyglot::Core
 

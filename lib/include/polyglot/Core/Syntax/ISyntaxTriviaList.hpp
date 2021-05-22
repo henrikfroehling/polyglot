@@ -1,8 +1,6 @@
 #ifndef POLYGLOT_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
 #define POLYGLOT_CORE_SYNTAX_ISYNTAXTRIVIALIST_H
 
-#include <string>
-#include <string_view>
 #include "polyglot/polyglot_global.hpp"
 #include "polyglot/Core/Text/TextSpan.hpp"
 #include "polyglot/Core/LanguageKind.hpp"
@@ -22,7 +20,7 @@ public:
     virtual ISyntaxToken* token() const noexcept = 0;
 
     virtual LanguageKind languageKind() const noexcept = 0;
-    virtual std::string_view text() const noexcept = 0;
+    virtual pg_string_view text() const noexcept = 0;
 
     virtual pg_size width() const noexcept = 0;
     virtual pg_size position() const noexcept = 0;
@@ -34,9 +32,9 @@ public:
     virtual ISyntaxTrivia* first() const noexcept = 0;
     virtual ISyntaxTrivia* last() const noexcept = 0;
 
-    virtual std::string toString() const noexcept = 0;
-    virtual std::string toShortString() const noexcept = 0;
-    virtual std::string typeName() const noexcept = 0;
+    virtual pg_string toString() const noexcept = 0;
+    virtual pg_string toShortString() const noexcept = 0;
+    virtual pg_string typeName() const noexcept = 0;
 };
 
 } // end namespace polyglot::Core::Syntax

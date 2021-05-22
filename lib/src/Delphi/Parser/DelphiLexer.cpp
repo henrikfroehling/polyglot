@@ -62,7 +62,7 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
     CharFlags flags = CharFlags::Complex;
     long hashCode = Hashing::FNV_OFFSET_BIAS;
     pg_size offset = _textWindow.offset();
-    const std::string_view content = _textWindow.content();
+    const pg_string_view content = _textWindow.content();
 
     for (; offset < _textWindow.content().length(); offset++)
     {
@@ -87,7 +87,7 @@ exitFor:
     if (state == QuickScanState::Done)
     {
         TokenInfo tokenInfo = _lexerCache.lookupToken(_textWindow.lexemeText(), hashCode,
-            [&](std::string_view chars)
+            [&](pg_string_view chars)
             {
                 if (previousState == QuickScanState::Identifier)
                     return lexSyntaxTokenLiteral(chars);
@@ -115,7 +115,7 @@ TokenInfo DelphiLexer::lexSyntaxToken() noexcept
     return tokenInfo;
 }
 
-TokenInfo DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
+TokenInfo DelphiLexer::lexSyntaxTokenLiteral(pg_string_view chars) noexcept
 {
     TokenInfo tokenInfo{};
     scanIdentifierOrKeyword(chars, tokenInfo);
@@ -125,28 +125,28 @@ TokenInfo DelphiLexer::lexSyntaxTokenLiteral(std::string_view chars) noexcept
 
 void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 {
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
     switch (character)
     {
-        case '\0':
+        case L'\0':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::EndOfFileToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '.':
+        case L'.':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '.':
+                case L'.':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::DotDotToken;
                     tokenInfo.text = _textWindow.lexemeText();
                     break;
-                case ')':
+                case L')':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::DotCloseParenthesisToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -159,24 +159,24 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case ',':
+        case L',':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::CommaToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case ';':
+        case L';':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::SemiColonToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case ':':
+        case L':':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '=':
+                case L'=':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::ColonEqualToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -189,19 +189,19 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '=':
+        case L'=':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::EqualToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '^':
+        case L'^':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '.':
+                case L'.':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::CaretDotToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -214,19 +214,19 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '<':
+        case L'<':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '=':
+                case L'=':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::LessThanEqualToken;
                     tokenInfo.text = _textWindow.lexemeText();
                     break;
-                case '>':
+                case L'>':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::LessThanGreaterThanToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -239,14 +239,14 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '>':
+        case L'>':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '=':
+                case L'=':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::GreaterThanEqualToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -259,14 +259,14 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '(':
+        case L'(':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '.':
+                case L'.':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::OpenParenthesisDotToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -279,29 +279,29 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case ')':
+        case L')':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::CloseParenthesisToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '[':
+        case L'[':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::OpenBracketToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case ']':
+        case L']':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::CloseBracketToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '{':
+        case L'{':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '$':
+                case L'$':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::OpenBraceDollarToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -314,19 +314,19 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '}':
+        case L'}':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::CloseBraceToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '@':
+        case L'@':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '@':
+                case L'@':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::AtAtToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -339,19 +339,19 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '+':
+        case L'+':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::PlusToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '-':
+        case L'-':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '-':
+                case L'-':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::MinusMinusToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -364,19 +364,19 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '*':
+        case L'*':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::AsteriskToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '/':
+        case L'/':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '/':
+                case L'/':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::SlashSlashToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -389,43 +389,43 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
 
             break;
         }
-        case '&':
+        case L'&':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::AmpersandToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '$':
+        case L'$':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::DollarToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '#':
+        case L'#':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::HashToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '!':
+        case L'!':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::ExclamationMarkToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '\'':
-        case '"':
+        case L'\'':
+        case L'"':
             scanStringLiteral(tokenInfo);
             break;
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9':
+        case L'0': case L'1': case L'2': case L'3': case L'4':
+        case L'5': case L'6': case L'7': case L'8': case L'9':
             scanNumericLiteral(tokenInfo);
             break;
-        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H':
-        case 'I': case 'J': case 'K': case 'L': case 'M': case 'N': case 'O': case 'P':
-        case 'Q': case 'R': case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
-        case 'Y': case 'Z':
-        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h':
-        case 'i': case 'j': case 'k': case 'l': case 'm': case 'n': case 'o': case 'p':
-        case 'q': case 'r': case 's': case 't': case 'u': case 'v': case 'w': case 'x':
-        case 'y': case 'z':
-        case '_':
+        case L'A': case L'B': case L'C': case L'D': case L'E': case L'F': case L'G': case L'H':
+        case L'I': case L'J': case L'K': case L'L': case L'M': case L'N': case L'O': case L'P':
+        case L'Q': case L'R': case L'S': case L'T': case L'U': case L'V': case L'W': case L'X':
+        case L'Y': case L'Z':
+        case L'a': case L'b': case L'c': case L'd': case L'e': case L'f': case L'g': case L'h':
+        case L'i': case L'j': case L'k': case L'l': case L'm': case L'n': case L'o': case L'p':
+        case L'q': case L'r': case L's': case L't': case L'u': case L'v': case L'w': case L'x':
+        case L'y': case L'z':
+        case L'_':
 lettercase:
             scanIdentifierOrKeyword(tokenInfo);
             break;
@@ -438,7 +438,7 @@ lettercase:
             break;
         default:
 defaultcase:
-            if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || character == '_')
+            if ((character >= L'a' && character <= L'z') || (character >= L'A' && character <= L'Z') || character == L'_')
                 goto lettercase;
 
             _textWindow.advanceCharacter();
@@ -449,23 +449,23 @@ defaultcase:
 
 void DelphiLexer::scanStringLiteral(TokenInfo& tokenInfo) noexcept
 {
-    const char quoteCharacter = _textWindow.peekCharacter();
+    const pg_char quoteCharacter = _textWindow.peekCharacter();
 
-    if (quoteCharacter == '\'' || quoteCharacter == '"')
+    if (quoteCharacter == L'\'' || quoteCharacter == L'"')
     {
-        std::string text{quoteCharacter};
+        pg_string text{quoteCharacter};
         _textWindow.advanceCharacter();
 
         while (true)
         {
-            char character = _textWindow.peekCharacter();
+            pg_char character = _textWindow.peekCharacter();
 
             if (character != quoteCharacter)
             {
                 switch (character)
                 {
-                    case '\r':
-                    case '\n':
+                    case L'\r':
+                    case L'\n':
                         goto loopBreakout;
                     case INVALID_CHARACTER:
                     {
@@ -493,7 +493,7 @@ loopBreakout:
 
         tokenInfo.text = _textWindow.lexemeText();
 
-        if (quoteCharacter == '\'')
+        if (quoteCharacter == L'\'')
             tokenInfo.kind = SyntaxKind::SingleQuotationStringLiteralToken;
         else
             tokenInfo.kind = SyntaxKind::DoubleQuotationStringLiteralToken;
@@ -508,7 +508,7 @@ void DelphiLexer::scanIdentifierOrKeyword(TokenInfo& tokenInfo) noexcept
         scanIdentifierOrKeyword(tokenInfo.text, tokenInfo);
 }
 
-void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
+void DelphiLexer::scanIdentifierOrKeyword(pg_string_view chars,
                                           TokenInfo& tokenInfo) noexcept
 {
     if (chars.length() > MAX_KEYWORD_LENGTH)
@@ -527,7 +527,7 @@ void DelphiLexer::scanIdentifierOrKeyword(std::string_view chars,
 bool DelphiLexer::scanIdentifier(TokenInfo& tokenInfo) noexcept
 {
     pg_size currentOffset = _textWindow.offset();
-    const std::string_view content = _textWindow.content();
+    const pg_string_view content = _textWindow.content();
     pg_size startOffset = currentOffset;
 
     while (true)
@@ -537,59 +537,59 @@ bool DelphiLexer::scanIdentifier(TokenInfo& tokenInfo) noexcept
 
         switch (content[currentOffset])
         {
-            case '&':
-            case '\0':
-            case ' ':
-            case '\r':
-            case '\n':
-            case '\t':
-            case '!':
-            case '%':
-            case '(':
-            case ')':
-            case '*':
-            case '+':
-            case ',':
-            case '-':
-            case '.':
-            case '/':
-            case ':':
-            case ';':
-            case '<':
-            case '=':
-            case '>':
-            case '?':
-            case '[':
-            case ']':
-            case '^':
-            case '{':
-            case '|':
-            case '}':
-            case '~':
-            case '"':
-            case '\'':
+            case L'&':
+            case L'\0':
+            case L' ':
+            case L'\r':
+            case L'\n':
+            case L'\t':
+            case L'!':
+            case L'%':
+            case L'(':
+            case L')':
+            case L'*':
+            case L'+':
+            case L',':
+            case L'-':
+            case L'.':
+            case L'/':
+            case L':':
+            case L';':
+            case L'<':
+            case L'=':
+            case L'>':
+            case L'?':
+            case L'[':
+            case L']':
+            case L'^':
+            case L'{':
+            case L'|':
+            case L'}':
+            case L'~':
+            case L'"':
+            case L'\'':
             {
                 _textWindow.advanceCharacter(currentOffset - startOffset);
                 tokenInfo.text = _textWindow.lexemeText();
                 return true;
             }
-            case '0': case '1': case '2': case '3': case '4':
-            case '5': case '6': case '7': case '8': case '9':
+            case L'0': case L'1': case L'2': case L'3': case L'4':
+            case L'5': case L'6': case L'7': case L'8': case L'9':
             {
                 if (currentOffset == startOffset)
                     return false;
                 else
                     goto letter;
             }
-            case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H':
-            case 'I': case 'J': case 'K': case 'L': case 'M': case 'N': case 'O': case 'P':
-            case 'Q': case 'R': case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
-            case 'Y': case 'Z':
-            case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h':
-            case 'i': case 'j': case 'k': case 'l': case 'm': case 'n': case 'o': case 'p':
-            case 'q': case 'r': case 's': case 't': case 'u': case 'v': case 'w': case 'x':
-            case 'y': case 'z':
-            case '_':
+            case L'A': case L'B': case L'C': case L'D': case L'E': case L'F': case L'G': case L'H':
+            case L'I': case L'J': case L'K': case L'L': case L'M': case L'N': case L'O': case L'P':
+            case L'Q': case L'R': case L'S': case L'T': case L'U': case L'V': case L'W': case L'X':
+            case L'Y': case L'Z':
+            case L'a': case L'b': case L'c': case L'd': case L'e': case L'f': case L'g': case L'h':
+            case L'i': case L'j': case L'k': case L'l': case L'm': case L'n': case L'o': case L'p':
+            case L'q': case L'r': case L's': case L't': case L'u': case L'v': case L'w': case L'x':
+            case L'y': case L'z':
+            case L'_':
 letter:
                 currentOffset++;
                 continue;
@@ -605,9 +605,9 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
 
     while (true)
     {
-        const char character = _textWindow.peekCharacter();
+        const pg_char character = _textWindow.peekCharacter();
 
-        if (character >= '0' && character <= '9')
+        if (character >= L'0' && character <= L'9')
             _textWindow.advanceCharacter();
         else if (character == '.')
         {
@@ -615,9 +615,9 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
                 break;
 
             isAfterDot = true;
-            const char character2 = _textWindow.peekCharacter(1);
+            const pg_char character2 = _textWindow.peekCharacter(1);
 
-            if (character2 >= '0' && character <= '9')
+            if (character2 >= L'0' && character <= L'9')
                 _textWindow.advanceCharacter();
         }
         else
@@ -637,38 +637,38 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
     while (true)
     {
         _currentTriviaPosition = _textWindow.position();
-        char character = _textWindow.peekCharacter();
+        pg_char character = _textWindow.peekCharacter();
 
-        if (character == ' ')
+        if (character == L' ')
         {
             triviaList.push_back(scanWhitespace());
             continue;
         }
         else if (character > 127)
         {
-            if (character == ' ' || character == '\t' || character == '\v' || character == '\f')
-                character = ' ';
-            else if (character == '\r' || character == '\n')
-                character = '\n';
+            if (character == L' ' || character == L'\t' || character == L'\v' || character == L'\f')
+                character = L' ';
+            else if (character == L'\r' || character == L'\n')
+                character = L'\n';
         }
 
         switch (character)
         {
-            case ' ':
-            case '\t':
-            case '\v':
-            case '\f':
+            case L' ':
+            case L'\t':
+            case L'\v':
+            case L'\f':
             {
                 triviaList.push_back(scanWhitespace());
                 break;
             }
-            case '/':
+            case L'/':
                 character = _textWindow.peekCharacter(1);
 
-                if (character == '/')
+                if (character == L'/')
                 {
                     scanToEndOfLine();
-                    const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
+                    const pg_string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
                     ISyntaxTrivia* pSyntaxTrivia = _syntaxFactory.singleLineComment(text, _currentTriviaPosition);
                     triviaList.push_back(pSyntaxTrivia);
                     onlyWhitespaceOnLine = false;
@@ -676,10 +676,10 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 }
 
                 return;
-            case '{':
+            case L'{':
                 character = _textWindow.peekCharacter(1);
 
-                if (character != '$')
+                if (character != L'$')
                 {
                     bool isTerminated{false};
                     scanMultiLineComment(isTerminated);
@@ -689,7 +689,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                         // TODO error handling
                     }
 
-                    const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
+                    const pg_string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
                     ISyntaxTrivia* pSyntaxTrivia = _syntaxFactory.multiLineComment(text, _currentTriviaPosition);
                     triviaList.push_back(pSyntaxTrivia);
                     onlyWhitespaceOnLine = false;
@@ -701,10 +701,10 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                 }
 
                 break;
-            case '(':
+            case L'(':
                 character = _textWindow.peekCharacter(1);
 
-                if (character == '*')
+                if (character == L'*')
                 {
                     bool isTerminated{false};
                     scanMultiLineComment(isTerminated);
@@ -714,7 +714,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                         // TODO error handling
                     }
 
-                    const std::string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
+                    const pg_string_view text = _textWindow.substringUntilCurrentPosition(_currentTriviaPosition);
                     ISyntaxTrivia* pSyntaxTrivia = _syntaxFactory.multiLineComment(text, _currentTriviaPosition);
                     triviaList.push_back(pSyntaxTrivia);
                     onlyWhitespaceOnLine = false;
@@ -724,8 +724,8 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     _textWindow.reset(_textWindow.position() - 1);
 
                 return;
-            case '\r':
-            case '\n':
+            case L'\r':
+            case L'\n':
             {
                 triviaList.push_back(scanEndOfLine());
 
@@ -747,30 +747,30 @@ ISyntaxTrivia* DelphiLexer::scanWhitespace() noexcept
     bool onlySpaces = true;
 
 top:
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
     switch (character)
     {
-        case '\t':
-        case '\v':
-        case '\f':
+        case L'\t':
+        case L'\v':
+        case L'\f':
 nonspaces:
             onlySpaces = false;
             goto space;
-        case ' ':
+        case L' ':
 space:
             _textWindow.advanceCharacter();
             hashCode = Hashing::combineFNVHash(hashCode, character);
             goto top;
-        case '\r':
-        case '\n':
+        case L'\r':
+        case L'\n':
             break;
         default:
             if (character > 127)
             {
                 if (character == ' ')
                     goto space;
-                else if (character == '\t' || character == '\v' || character == '\f')
+                else if (character == L'\t' || character == L'\v' || character == L'\f')
                     goto nonspaces;
             }
 
@@ -778,7 +778,7 @@ space:
     }
 
     const pg_size width = _textWindow.position() - _currentTriviaPosition;
-    const std::string_view text = _textWindow.content().substr(_currentTriviaPosition, width);
+    const pg_string_view text = _textWindow.content().substr(_currentTriviaPosition, width);
 
     if (width == 1 && onlySpaces)
         return _syntaxFactory.whiteSpace(text, _currentTriviaPosition);
@@ -801,9 +801,9 @@ space:
 
 void DelphiLexer::scanToEndOfLine() noexcept
 {
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
-    while (!(character == '\r' || character == '\n') && (character != INVALID_CHARACTER || !_textWindow.isAtEnd()))
+    while (!(character == L'\r' || character == L'\n') && (character != INVALID_CHARACTER || !_textWindow.isAtEnd()))
     {
         _textWindow.advanceCharacter();
         character = _textWindow.peekCharacter();
@@ -812,13 +812,13 @@ void DelphiLexer::scanToEndOfLine() noexcept
 
 void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
 {
-    const char previousCharacter = _textWindow.peekPreviousCharacter(1);
-    const char currentCharacter = _textWindow.peekCharacter();
+    const pg_char previousCharacter = _textWindow.peekPreviousCharacter(1);
+    const pg_char currentCharacter = _textWindow.peekCharacter();
 
-    if (previousCharacter == '(' && currentCharacter == '*')
+    if (previousCharacter == L'(' && currentCharacter == L'*')
     {
         _textWindow.advanceCharacter();
-        char character{};
+        pg_char character{};
 
         while (true)
         {
@@ -829,7 +829,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
                 isTerminated = false;
                 break;
             }
-            else if (character == '*' && _textWindow.peekCharacter(1) == ')')
+            else if (character == L'*' && _textWindow.peekCharacter(1) == L')')
             {
                 _textWindow.advanceCharacter();
                 isTerminated = true;
@@ -839,10 +839,10 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
                 _textWindow.advanceCharacter();
         }
     }
-    else if (previousCharacter == '{' && currentCharacter != '$')
+    else if (previousCharacter == L'{' && currentCharacter != L'$')
     {
         _textWindow.advanceCharacter();
-        char character{};
+        pg_char character{};
 
         while (true)
         {
@@ -853,7 +853,7 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
                 isTerminated = false;
                 break;
             }
-            else if (character == '}')
+            else if (character == L'}')
             {
                 _textWindow.advanceCharacter();
                 isTerminated = true;
@@ -869,15 +869,15 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
 
 ISyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
 {
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
     switch (character)
     {
-        case '\r':
+        case L'\r':
         {
             _textWindow.advanceCharacter();
 
-            if (_textWindow.peekCharacter() == '\n')
+            if (_textWindow.peekCharacter() == L'\n')
             {
                 _textWindow.advanceCharacter();
                 return _syntaxFactory.carriageReturnLineFeed(_currentTriviaPosition);
@@ -885,20 +885,20 @@ ISyntaxTrivia* DelphiLexer::scanEndOfLine() noexcept
 
             return _syntaxFactory.carriageReturn(_currentTriviaPosition);
         }
-        case '\n':
+        case L'\n':
         {
             _textWindow.advanceCharacter();
             return _syntaxFactory.lineFeed(_currentTriviaPosition);
         }
         default:
         {
-            if (character == '\r' || character == '\n')
+            if (character == L'\r' || character == L'\n')
             {
                 _textWindow.advanceCharacter();
-                return _syntaxFactory.endOfLine(std::string{character}, _currentTriviaPosition);
+                return _syntaxFactory.endOfLine(pg_string{character}, _currentTriviaPosition);
             }
 
-            return _syntaxFactory.createSyntaxTrivia(SyntaxKind::None, "");
+            return _syntaxFactory.createSyntaxTrivia(SyntaxKind::None, L"");
         }
     }
 }
@@ -909,9 +909,9 @@ void DelphiLexer::lexSingleDirective(bool isActive,
                                      bool afterNonWhitespaceOnLine,
                                      std::vector<ISyntaxTrivia*>& triviaList) noexcept
 {
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
-    if (character == '\t' || character == '\v' || character == '\f' || character == '\r' || character == '\n')
+    if (character == L'\t' || character == L'\v' || character == L'\f' || character == L'\r' || character == L'\n')
     {
         start();
         triviaList.push_back(scanWhitespace());
@@ -937,7 +937,7 @@ ISyntaxToken* DelphiLexer::lexDirectiveToken() noexcept
 
 void DelphiLexer::scanDirectiveToken(TokenInfo& tokenInfo) noexcept
 {
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
     switch (character)
     {
@@ -947,50 +947,50 @@ void DelphiLexer::scanDirectiveToken(TokenInfo& tokenInfo) noexcept
 
             tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
             break;
-        case '\r':
-        case '\n':
+        case L'\r':
+        case L'\n':
 newLine:
             tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case ')':
+        case L')':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::CloseParenthesisToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '!':
+        case L'!':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::ExclamationMarkToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '=':
+        case L'=':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::EqualToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '+':
+        case L'+':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::PlusToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '-':
+        case L'-':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::MinusToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case ',':
+        case L',':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::CommaToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '{':
+        case L'{':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '$':
+                case L'$':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::OpenBraceDollarToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -1003,19 +1003,19 @@ newLine:
 
             break;
         }
-        case '}':
+        case L'}':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
             tokenInfo.text = _textWindow.lexemeText();
             break;
-        case '(':
+        case L'(':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '$':
+                case L'$':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::OpenParenthesisDollarToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -1028,19 +1028,19 @@ newLine:
 
             break;
         }
-        case '<':
+        case L'<':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '=':
+                case L'=':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::LessThanEqualToken;
                     tokenInfo.text = _textWindow.lexemeText();
                     break;
-                case '>':
+                case L'>':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::LessThanGreaterThanToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -1053,14 +1053,14 @@ newLine:
 
             break;
         }
-        case '>':
+        case L'>':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case '=':
+                case L'=':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::GreaterThanEqualToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -1073,14 +1073,14 @@ newLine:
 
             break;
         }
-        case '*':
+        case L'*':
         {
             _textWindow.advanceCharacter();
             character = _textWindow.peekCharacter();
 
             switch (character)
             {
-                case ')':
+                case L')':
                     _textWindow.advanceCharacter();
                     tokenInfo.kind = SyntaxKind::EndOfDirectiveToken;
                     tokenInfo.text = _textWindow.lexemeText();
@@ -1093,32 +1093,32 @@ newLine:
 
             break;
         }
-        case '\'':
-        case '"':
+        case L'\'':
+        case L'"':
             scanStringLiteral(tokenInfo);
             break;
-        case '0': case '1': case '2': case '3': case '4':
-        case '5': case '6': case '7': case '8': case '9':
+        case L'0': case L'1': case L'2': case L'3': case L'4':
+        case L'5': case L'6': case L'7': case L'8': case L'9':
             scanNumericLiteral(tokenInfo);
             break;
-        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H':
-        case 'I': case 'J': case 'K': case 'L': case 'M': case 'N': case 'O': case 'P':
-        case 'Q': case 'R': case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
-        case 'Y': case 'Z':
-        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h':
-        case 'i': case 'j': case 'k': case 'l': case 'm': case 'n': case 'o': case 'p':
-        case 'q': case 'r': case 's': case 't': case 'u': case 'v': case 'w': case 'x':
-        case 'y': case 'z':
-        case '_':
+        case L'A': case L'B': case L'C': case L'D': case L'E': case L'F': case L'G': case L'H':
+        case L'I': case L'J': case L'K': case L'L': case L'M': case L'N': case L'O': case L'P':
+        case L'Q': case L'R': case L'S': case L'T': case L'U': case L'V': case L'W': case L'X':
+        case L'Y': case L'Z':
+        case L'a': case L'b': case L'c': case L'd': case L'e': case L'f': case L'g': case L'h':
+        case L'i': case L'j': case L'k': case L'l': case L'm': case L'n': case L'o': case L'p':
+        case L'q': case L'r': case L's': case L't': case L'u': case L'v': case L'w': case L'x':
+        case L'y': case L'z':
+        case L'_':
 letterCase:
             scanIdentifierOrKeyword(tokenInfo);
             break;
         default:
 defaultCase:
-            if (character == '\r' || character == '\n')
+            if (character == L'\r' || character == L'\n')
                 goto newLine;
 
-            if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || character == '_')
+            if ((character >= L'a' && character <= L'z') || (character >= L'A' && character <= L'Z') || character == L'_')
                 goto letterCase;
 
             _textWindow.advanceCharacter();
@@ -1157,23 +1157,23 @@ void DelphiLexer::lexDirectiveTrailingTrivia(std::vector<ISyntaxTrivia*>& trivia
 
 ISyntaxTrivia* DelphiLexer::lexDirectiveTrivia() noexcept
 {
-    char character = _textWindow.peekCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
     switch (character)
     {
-        case ' ':
-        case '\t':
-        case '\v':
-        case '\f':
+        case L' ':
+        case L'\t':
+        case L'\v':
+        case L'\f':
             return scanDirectiveWhitespace();
-        case '\r':
-        case '\n':
+        case L'\r':
+        case L'\n':
             return scanEndOfLine();
-        case '/':
+        case L'/':
         {
             character = _textWindow.peekCharacter(1);
 
-            if (character == '/')
+            if (character == L'/')
             {
                 scanToEndOfLine();
                 return _syntaxFactory.singleLineComment(_textWindow.lexemeText(), _currentTriviaPosition);
@@ -1192,14 +1192,14 @@ ISyntaxTrivia* DelphiLexer::scanDirectiveWhitespace() noexcept
 
     while (true)
     {
-        char character = _textWindow.peekCharacter();
+        pg_char character = _textWindow.peekCharacter();
 
         switch (character)
         {
-            case ' ':
-            case '\t':
-            case '\v':
-            case '\f':
+            case L' ':
+            case L'\t':
+            case L'\v':
+            case L'\f':
                 _textWindow.advanceCharacter();
                 break;
             default:
