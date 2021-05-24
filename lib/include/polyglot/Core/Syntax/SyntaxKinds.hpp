@@ -259,6 +259,7 @@ enum class SyntaxKind : unsigned short
 
     SingleQuotationStringLiteralToken = 2000,
     DoubleQuotationStringLiteralToken,
+    SingleQuotationSingleCharLiteralToken,
     NumberLiteralToken,
     IntegerNumberLiteralToken,
     RealNumberLiteralToken,

@@ -521,7 +521,12 @@ loopBreakout:
         tokenInfo.text = _textWindow.lexemeText();
 
         if (quoteCharacter == L'\'')
-            tokenInfo.kind = SyntaxKind::SingleQuotationStringLiteralToken;
+        {
+            if ((tokenInfo.text.length() - 2) == 1)
+                tokenInfo.kind = SyntaxKind::SingleQuotationSingleCharLiteralToken;
+            else
+                tokenInfo.kind = SyntaxKind::SingleQuotationStringLiteralToken;
+        }
         else
             tokenInfo.kind = SyntaxKind::DoubleQuotationStringLiteralToken;
     }
