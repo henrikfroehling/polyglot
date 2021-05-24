@@ -239,4 +239,74 @@ DelphiEndOfModuleSyntax* DelphiParser::parseEndOfModule() noexcept
     return DelphiEndOfModuleSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
+DelphiCompoundStatementSyntax* DelphiParser::parseCompoundStatement() noexcept
+{
+    ISyntaxToken* pBeginToken = takeToken(SyntaxKind::BeginKeyword);
+    DelphiStatementListSyntax* pStatementList = parseStatementList();
+    ISyntaxToken* pEndToken = takeToken(SyntaxKind::EndKeyword);
+    return DelphiCompoundStatementSyntax::create(_syntaxFactory, pBeginToken, pStatementList, pEndToken);
+}
+
+DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
+{
+    std::vector<SyntaxVariant> statements{};
+    DelphiStatementSyntax* pStatement = parseStatement();
+    statements.push_back(SyntaxVariant::asNode(pStatement));
+
+    while (DelphiSyntaxFacts::isStatementStart(currentToken()->syntaxKind()))
+    {
+        pStatement = parseStatement();
+        statements.push_back(SyntaxVariant::asNode(pStatement));
+
+        if (DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
+        {
+            // if there is another statement following, a semicolon is required, otherwise it's optional
+            ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+            statements.push_back(SyntaxVariant::asToken(pSemiColonToken));
+        }
+        else if (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken)
+        {
+            // take semicolon, if there's one
+            statements.push_back(SyntaxVariant::asToken(takeToken()));
+        }
+    }
+
+    return DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements));
+}
+
+DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
+{
+    // statement => [identifier | int num literal | hex num literal ':'],
+    //              If Statement | Case Statement | Repeat Statement | While Statement | For Statement | With Statement
+    //              | Try Statement | Raise Statement | Assembler Statement | Compound Statement | Simple Statement
+
+    SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+    switch (currentSyntaxKind)
+    {
+        case SyntaxKind::IfKeyword: // If Statement
+            return nullptr;
+        case SyntaxKind::CaseKeyword: // Case Statement
+            return nullptr;
+        case SyntaxKind::RepeatKeyword: // Repeat Statement
+            return nullptr;
+        case SyntaxKind::WhileKeyword: // While Statement
+            return nullptr;
+        case SyntaxKind::ForKeyword: // For Statement
+            return nullptr;
+        case SyntaxKind::WithKeyword: // With Statement
+            return nullptr;
+        case SyntaxKind::TryKeyword: // Try Statement
+            return nullptr;
+        case SyntaxKind::RaiseKeyword: // Raise Statement
+            return nullptr;
+        case SyntaxKind::AssemblerKeyword: // Assembler Statement
+            return nullptr;
+        case SyntaxKind::BeginKeyword: // Compound Statement
+            return nullptr;
+    }
+
+    return nullptr;
+}
+
 } // end namespace polyglot::Delphi::Parser

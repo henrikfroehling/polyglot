@@ -112,9 +112,9 @@ ISyntaxTrivia* SyntaxFactory::createSyntaxTrivia(SyntaxKind syntaxKind,
 }
 
 ISyntaxList* SyntaxFactory::syntaxList(SyntaxKind syntaxKind,
-                                       std::vector<SyntaxVariant>&& syntaxNodes) noexcept
+                                       std::vector<SyntaxVariant>&& children) noexcept
 {
-    return _syntaxPool.createSyntaxList(syntaxKind, std::move(syntaxNodes));
+    return _syntaxPool.createSyntaxList(syntaxKind, std::move(children));
 }
 
 ISyntaxTriviaList* SyntaxFactory::syntaxTriviaList(std::initializer_list<ISyntaxTrivia*> trivia,

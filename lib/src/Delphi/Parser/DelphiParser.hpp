@@ -20,9 +20,12 @@ namespace polyglot::Delphi::Syntax
 {
 
 class DelphiCompilationUnitSyntax;
+class DelphiCompoundStatementSyntax;
 class DelphiEndOfModuleSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiProgramModuleSyntax;
+class DelphiStatementListSyntax;
+class DelphiStatementSyntax;
 class DelphiUnitFinalizationSectionSyntax;
 class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
@@ -63,6 +66,10 @@ private:
 
     Core::Syntax::IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
     Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
+
+    Syntax::DelphiCompoundStatementSyntax* parseCompoundStatement() noexcept;
+    Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
+    Syntax::DelphiStatementSyntax* parseStatement() noexcept;
 
 private:
     Core::Syntax::SyntaxFactory _syntaxFactory;

@@ -318,6 +318,8 @@ enum class SyntaxKind : unsigned short
     PackageHead,
     ProgramModule,
     ProgramHead,
+    StatementList,
+    CompoundStatement,
 
     PackageRequiresClause,
     PackageContainsClause,

@@ -315,6 +315,8 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::PackageHead: return L"PackageHead";
         case SyntaxKind::ProgramModule: return L"ProgramModule";
         case SyntaxKind::ProgramHead: return L"ProgramHead";
+        case SyntaxKind::StatementList: return L"StatementList";
+        case SyntaxKind::CompoundStatement: return L"CompoundStatement";
 
         case SyntaxKind::PackageRequiresClause: return L"PackageRequiresClause";
         case SyntaxKind::PackageContainsClause: return L"PackageContainsClause";

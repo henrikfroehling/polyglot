@@ -542,6 +542,26 @@ bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
+bool DelphiSyntaxFacts::isStatementStart(Core::Syntax::SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::IfKeyword:
+        case SyntaxKind::CaseKeyword:
+        case SyntaxKind::RepeatKeyword:
+        case SyntaxKind::WhileKeyword:
+        case SyntaxKind::ForKeyword:
+        case SyntaxKind::WithKeyword:
+        case SyntaxKind::TryKeyword:
+        case SyntaxKind::RaiseKeyword:
+        case SyntaxKind::AssemblerKeyword:
+        case SyntaxKind::BeginKeyword:
+            return true;
+    }
+
+    return false;
+}
+
 SyntaxKind DelphiSyntaxFacts::keywordKind(pg_string_view text,
                                           Core::Parser::LexerMode mode) noexcept
 {
