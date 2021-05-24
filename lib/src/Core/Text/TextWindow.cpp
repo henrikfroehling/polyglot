@@ -70,6 +70,7 @@ pg_char TextWindow::peekCharacter() noexcept
 
 pg_char TextWindow::peekCharacter(const pg_size offset) noexcept
 {
+    const pg_size currentOffset{_offset};
     advanceCharacter(offset);
     pg_char character{};
 
@@ -78,7 +79,7 @@ pg_char TextWindow::peekCharacter(const pg_size offset) noexcept
     else
         character = (*_ptrSourceText)[_offset];
 
-    reset(position());
+    reset(currentOffset);
     return character;
 }
 

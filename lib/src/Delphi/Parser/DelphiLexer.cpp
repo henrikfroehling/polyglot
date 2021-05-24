@@ -695,10 +695,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     onlyWhitespaceOnLine = false;
                 }
                 else
-                {
-                    _textWindow.reset(_textWindow.position() - 1);
                     lexSingleDirective(true, true, afterFirstToken, isTrailing || !onlyWhitespaceOnLine, triviaList);
-                }
 
                 break;
             case L'(':
@@ -812,13 +809,13 @@ void DelphiLexer::scanToEndOfLine() noexcept
 
 void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
 {
-    const pg_char previousCharacter = _textWindow.peekPreviousCharacter(1);
-    const pg_char currentCharacter = _textWindow.peekCharacter();
+    const pg_char startCharacter = _textWindow.peekCharacter();
+    _textWindow.advanceCharacter();
+    pg_char character = _textWindow.peekCharacter();
 
-    if (previousCharacter == L'(' && currentCharacter == L'*')
+    if (startCharacter == L'(' && character == L'*')
     {
         _textWindow.advanceCharacter();
-        pg_char character{};
 
         while (true)
         {
@@ -839,10 +836,9 @@ void DelphiLexer::scanMultiLineComment(bool &isTerminated) noexcept
                 _textWindow.advanceCharacter();
         }
     }
-    else if (previousCharacter == L'{' && currentCharacter != L'$')
+    else if (startCharacter == L'{' && character != L'$')
     {
         _textWindow.advanceCharacter();
-        pg_char character{};
 
         while (true)
         {
