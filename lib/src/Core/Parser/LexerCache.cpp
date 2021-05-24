@@ -18,19 +18,4 @@ TokenInfo LexerCache::lookupToken(pg_string_view chars,
     return tokenInfo;
 }
 
-TokenInfo LexerCache::lookupTrivia(pg_string_view chars,
-                                   unsigned long hashCode,
-                                   std::function<TokenInfo()> createTokenInfoFunction) noexcept
-{
-    TokenInfo tokenInfo = _triviaCache.lookupItem(chars, hashCode);
-
-    if (tokenInfo == TokenInfo{})
-    {
-        tokenInfo = createTokenInfoFunction();
-        _triviaCache.addItem(chars, hashCode, tokenInfo);
-    }
-
-    return tokenInfo;
-}
-
 } // end namespace polyglot::Core::Parser

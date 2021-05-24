@@ -19,13 +19,8 @@ public:
                           unsigned long hashCode,
                           std::function<TokenInfo(pg_string_view chars)> createTokenInfoFunction) noexcept;
 
-    TokenInfo lookupTrivia(pg_string_view chars,
-                           unsigned long hashCode,
-                           std::function<TokenInfo()> createTokenInfoFunction) noexcept;
-
 private:
     TextKeyedCache _tokenCache{};
-    TextKeyedCache _triviaCache{};
 };
 
 } // end namespace polyglot::Core::Parser
