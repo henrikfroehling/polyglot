@@ -136,25 +136,32 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
             break;
         case L'.':
         {
-            _textWindow.advanceCharacter();
-            character = _textWindow.peekCharacter();
+            const pg_char nextCharacter = _textWindow.peekCharacter(1);
 
-            switch (character)
+            if (nextCharacter >= L'0' && nextCharacter <= L'9')
+                scanNumericLiteral(tokenInfo);
+            else
             {
-                case L'.':
-                    _textWindow.advanceCharacter();
-                    tokenInfo.kind = SyntaxKind::DotDotToken;
-                    tokenInfo.text = _textWindow.lexemeText();
-                    break;
-                case L')':
-                    _textWindow.advanceCharacter();
-                    tokenInfo.kind = SyntaxKind::DotCloseParenthesisToken;
-                    tokenInfo.text = _textWindow.lexemeText();
-                    break;
-                default:
-                    tokenInfo.kind = SyntaxKind::DotToken;
-                    tokenInfo.text = _textWindow.lexemeText();
-                    break;
+                _textWindow.advanceCharacter();
+                character = _textWindow.peekCharacter();
+
+                switch (character)
+                {
+                    case L'.':
+                        _textWindow.advanceCharacter();
+                        tokenInfo.kind = SyntaxKind::DotDotToken;
+                        tokenInfo.text = _textWindow.lexemeText();
+                        break;
+                    case L')':
+                        _textWindow.advanceCharacter();
+                        tokenInfo.kind = SyntaxKind::DotCloseParenthesisToken;
+                        tokenInfo.text = _textWindow.lexemeText();
+                        break;
+                    default:
+                        tokenInfo.kind = SyntaxKind::DotToken;
+                        tokenInfo.text = _textWindow.lexemeText();
+                        break;
+                }
             }
 
             break;
@@ -395,15 +402,35 @@ void DelphiLexer::scanSyntaxToken(TokenInfo& tokenInfo) noexcept
             tokenInfo.text = _textWindow.lexemeText();
             break;
         case L'$':
-            _textWindow.advanceCharacter();
-            tokenInfo.kind = SyntaxKind::DollarToken;
-            tokenInfo.text = _textWindow.lexemeText();
+        {
+            const pg_char nextCharacter = _textWindow.peekCharacter(1);
+
+            if (nextCharacter >= L'0' && nextCharacter <= L'9')
+                scanNumericLiteral(tokenInfo);
+            else
+            {
+                _textWindow.advanceCharacter();
+                tokenInfo.kind = SyntaxKind::DollarToken;
+                tokenInfo.text = _textWindow.lexemeText();
+            }
+
             break;
+        }
         case L'#':
-            _textWindow.advanceCharacter();
-            tokenInfo.kind = SyntaxKind::HashToken;
-            tokenInfo.text = _textWindow.lexemeText();
+        {
+            const pg_char nextCharacter = _textWindow.peekCharacter(1);
+
+            if (nextCharacter >= L'0' && nextCharacter <= L'9' || nextCharacter == L'$')
+                scanNumericLiteral(tokenInfo);
+            else
+            {
+                _textWindow.advanceCharacter();
+                tokenInfo.kind = SyntaxKind::HashToken;
+                tokenInfo.text = _textWindow.lexemeText();
+            }
+
             break;
+        }
         case L'!':
             _textWindow.advanceCharacter();
             tokenInfo.kind = SyntaxKind::ExclamationMarkToken;
@@ -599,33 +626,120 @@ letter:
     }
 }
 
-void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
+void DelphiLexer::scanNumbers(bool isHex) noexcept
 {
-    bool isAfterDot{false};
+    bool breakLoop{false};
 
     while (true)
     {
-        const pg_char character = _textWindow.peekCharacter();
+        pg_char character = _textWindow.peekCharacter();
 
         if (character >= L'0' && character <= L'9')
             _textWindow.advanceCharacter();
-        else if (character == '.')
+        else if (isHex)
         {
-            if (isAfterDot) // TODO error handling
-                break;
-
-            isAfterDot = true;
-            const pg_char character2 = _textWindow.peekCharacter(1);
-
-            if (character2 >= L'0' && character <= L'9')
-                _textWindow.advanceCharacter();
+            switch (character)
+            {
+                case L'A': case L'B': case L'C': case L'D': case L'E': case L'F':
+                case L'a': case L'b': case L'c': case L'd': case L'e': case L'f':
+                    _textWindow.advanceCharacter();
+                    break;
+                default:
+                    breakLoop = true;
+                    break;
+            }
         }
         else
             break;
+
+        if (breakLoop)
+            break;
+    }
+}
+
+void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
+{
+    bool isHex{false};
+    bool hasDecimal{false};
+    bool hasExponent{false};
+    bool isControlCharacter{false};
+
+    pg_char character = _textWindow.peekCharacter();
+
+    if (character == L'$')
+    {
+        _textWindow.advanceCharacter();
+        isHex = true;
+    }
+    else if (character == L'.')
+    {
+        _textWindow.advanceCharacter();
+        hasDecimal = true;
+    }
+    else if (character == L'#')
+    {
+        _textWindow.advanceCharacter();
+        isControlCharacter = true;
+        character = _textWindow.peekCharacter();
+
+        if (character == L'$')
+        {
+            _textWindow.advanceCharacter();
+            isHex = true;
+            scanNumbers(true);
+        }
+        else
+            scanNumbers();
+    }
+
+    if (isHex && !isControlCharacter)
+        scanNumbers(true);
+    else if (!isControlCharacter)
+    {
+        scanNumbers();
+        character = _textWindow.peekCharacter();
+
+        if (!hasDecimal && character == L'.')
+        {
+            const pg_char nextCharacter = _textWindow.peekCharacter(1);
+
+            if (nextCharacter >= L'0' && nextCharacter <= L'9')
+            {
+                hasDecimal = true;
+                _textWindow.advanceCharacter();
+                scanNumbers();
+            }
+        }
+
+        character = _textWindow.peekCharacter();
+
+        if (character == L'E' || character == L'e')
+        {
+            hasExponent = true;
+            _textWindow.advanceCharacter();
+            character = _textWindow.peekCharacter();
+
+            if (character == L'+' || character == L'-')
+                _textWindow.advanceCharacter();
+
+            character = _textWindow.peekCharacter();
+
+            if (character < L'0' || character > L'9')
+            {
+                // missing number after exponential character
+                // TODO error handling => invalid decimal
+            }
+            else
+                scanNumbers();
+        }
     }
 
     tokenInfo.text = _textWindow.lexemeText();
-    tokenInfo.kind = SyntaxKind::NumberLiteralToken;
+
+    if (isControlCharacter)
+        tokenInfo.kind = SyntaxKind::ControlCharacterLiteral;
+    else
+        tokenInfo.kind = hasDecimal ? SyntaxKind::RealNumberLiteralToken : SyntaxKind::IntegerNumberLiteralToken;
 }
 
 void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,

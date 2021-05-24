@@ -260,6 +260,9 @@ enum class SyntaxKind : unsigned short
     SingleQuotationStringLiteralToken = 2000,
     DoubleQuotationStringLiteralToken,
     NumberLiteralToken,
+    IntegerNumberLiteralToken,
+    RealNumberLiteralToken,
+    ControlCharacterLiteral,
     IdentifierToken,
 
     // trivia

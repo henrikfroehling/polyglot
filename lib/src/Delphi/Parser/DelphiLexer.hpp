@@ -45,6 +45,7 @@ private:
                                  Core::Parser::TokenInfo& tokenInfo) noexcept;
 
     bool scanIdentifier(Core::Parser::TokenInfo& token) noexcept;
+    void scanNumbers(bool isHex = false) noexcept;
     void scanNumericLiteral(Core::Parser::TokenInfo& tokenInfo) noexcept;
 
     void lexSingleDirective(bool isActive,

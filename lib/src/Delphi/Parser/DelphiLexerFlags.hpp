@@ -27,7 +27,7 @@ static constexpr Core::Parser::CharFlags CHAR_PROPERTIES[255]
     Core::Parser::CharFlags::White,                       // SPC
     Core::Parser::CharFlags::Punctuation,                 // !
     Core::Parser::CharFlags::Complex,                     // "
-    Core::Parser::CharFlags::Punctuation,                 // #
+    Core::Parser::CharFlags::Complex,                     // #
     Core::Parser::CharFlags::Punctuation,                 // $
     Core::Parser::CharFlags::Complex,                     // %
     Core::Parser::CharFlags::Punctuation,                 // &

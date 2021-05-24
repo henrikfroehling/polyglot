@@ -258,6 +258,9 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::SingleQuotationStringLiteralToken: return L"SingleQuotationStringLiteralToken";
         case SyntaxKind::DoubleQuotationStringLiteralToken: return L"DoubleQuotationStringLiteralToken";
         case SyntaxKind::NumberLiteralToken: return L"NumberLiteralToken";
+        case SyntaxKind::IntegerNumberLiteralToken: return L"IntegerNumberLiteralToken";
+        case SyntaxKind::RealNumberLiteralToken: return L"RealNumberLiteralToken";
+        case SyntaxKind::ControlCharacterLiteral: return L"ControlCharacterLiteral";
         case SyntaxKind::IdentifierToken: return L"IdentifierToken";
 
         // trivia
