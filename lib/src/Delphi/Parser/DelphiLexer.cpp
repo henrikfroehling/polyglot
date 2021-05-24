@@ -739,7 +739,7 @@ void DelphiLexer::scanNumericLiteral(TokenInfo& tokenInfo) noexcept
     if (isControlCharacter)
         tokenInfo.kind = SyntaxKind::ControlCharacterLiteral;
     else
-        tokenInfo.kind = hasDecimal ? SyntaxKind::RealNumberLiteralToken : SyntaxKind::IntegerNumberLiteralToken;
+        tokenInfo.kind = hasDecimal || hasExponent ? SyntaxKind::RealNumberLiteralToken : SyntaxKind::IntegerNumberLiteralToken;
 }
 
 void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
