@@ -77,42 +77,18 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
     DelphiUnitInitializationSectionSyntax* pInitializationSection = nullptr; // optional
     DelphiUnitFinalizationSectionSyntax* pFinalizationSection = nullptr; // optional, but requires initialization section
 
-    while (true)
+    pHead = parseUnitHead();
+    pInterfaceSection = parseUnitInterfaceSection();
+    pImplementationSection = parseUnitImplementationSection();
+
+    if (currentToken()->syntaxKind() == SyntaxKind::InitializationKeyword)
     {
-        ISyntaxToken* pCurrentToken = currentToken();
+        pInitializationSection = parseUnitInitializationSection();
 
-        switch (pCurrentToken->syntaxKind())
-        {
-            case SyntaxKind::UnitKeyword:
-                pHead = parseUnitHead();
-                break;
-            case SyntaxKind::InterfaceKeyword:
-                pInterfaceSection = parseUnitInterfaceSection();
-                break;
-            case SyntaxKind::ImplementationKeyword:
-                pImplementationSection = parseUnitImplementationSection();
-                break;
-            case SyntaxKind::InitializationKeyword:
-                pInitializationSection = parseUnitInitializationSection();
-                advance();
-                break;
-            case SyntaxKind::FinalizationKeyword:
-                pFinalizationSection = parseUnitFinalizationSection();
-                advance();
-                break;
-            case SyntaxKind::EndKeyword:
-            {
-                if (peekToken(2)->syntaxKind() == SyntaxKind::DotToken)
-                    goto endOfUnit;
-
-                break;
-            }
-            case SyntaxKind::EndOfFileToken:
-                goto endOfUnit;
-        }
+        if (currentToken()->syntaxKind() == SyntaxKind::FinalizationKeyword)
+            pFinalizationSection = parseUnitFinalizationSection();
     }
 
-endOfUnit:
     DelphiEndOfModuleSyntax* endOfModule = parseEndOfModule();
     ISyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
