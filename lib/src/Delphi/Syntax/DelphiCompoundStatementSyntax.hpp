@@ -30,10 +30,10 @@ public:
     inline DelphiStatementListSyntax* statementList() const noexcept { return _pStatementList; }
     inline Core::Syntax::ISyntaxToken* endToken() const noexcept { return _pEndToken; }
 
-    inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pBeginToken); }
-    inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pEndToken); }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pBeginToken); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiCompoundStatementSyntax"; }
+    inline pg_string typeName() const noexcept override final { return L"DelphiCompoundStatementSyntax"; }
 
     inline bool isCompoundStatement() const noexcept override final { return true; }
 

@@ -14,7 +14,7 @@ public:
     virtual ~UndefDirectiveTriviaSyntax() noexcept {}
     inline virtual pg_string_view definitionName() const noexcept = 0;
 
-    virtual pg_string typeName() const noexcept override { return L"UndefDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"UndefDirectiveTriviaSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

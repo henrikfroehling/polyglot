@@ -17,7 +17,7 @@ public:
     virtual ~SimpleNameExpressionSyntax() noexcept {}
     virtual ISyntaxToken* identifier() const noexcept = 0;
 
-    virtual pg_string typeName() const noexcept override { return L"SimpleNameExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SimpleNameExpressionSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

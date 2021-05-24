@@ -28,7 +28,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pOperatorToken); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pOperandExpression); }
 
-    virtual pg_string typeName() const noexcept override { return L"PrefixUnaryExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"PrefixUnaryExpressionSyntax"; }
 
     static PrefixUnaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                SyntaxKind syntaxKind,

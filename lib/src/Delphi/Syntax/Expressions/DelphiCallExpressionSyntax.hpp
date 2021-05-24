@@ -37,7 +37,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pIdentifier); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pCloseParenthesisToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiCallExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiCallExpressionSyntax"; }
 
     static DelphiCallExpressionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                               Core::Syntax::SyntaxKind syntaxKind,

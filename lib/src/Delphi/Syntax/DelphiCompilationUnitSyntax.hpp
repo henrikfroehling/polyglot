@@ -30,7 +30,7 @@ public:
     inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
     inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pEOFToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiCompilationUnitSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiCompilationUnitSyntax"; }
 
     static DelphiCompilationUnitSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                Core::Syntax::SyntaxKind syntaxKind,

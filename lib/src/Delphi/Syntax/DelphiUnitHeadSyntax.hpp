@@ -37,7 +37,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUnitKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUnitHeadSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUnitHeadSyntax"; }
 
     static DelphiUnitHeadSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                         Core::Syntax::ISyntaxToken* unitKeyword,

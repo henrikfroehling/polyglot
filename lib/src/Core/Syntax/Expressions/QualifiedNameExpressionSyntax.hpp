@@ -29,7 +29,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asNode(_pLeftExpression); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pRightExpression); }
 
-    virtual pg_string typeName() const noexcept override { return L"QualifiedNameExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"QualifiedNameExpressionSyntax"; }
 
     static QualifiedNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  NameExpressionSyntax* leftExpression,

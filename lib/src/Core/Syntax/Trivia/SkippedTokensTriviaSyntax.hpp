@@ -22,7 +22,7 @@ public:
     inline pg_size childCount() const noexcept override final { return _skippedTokens.size(); }
     inline SyntaxVariant child(pg_size index) const override final { return _skippedTokens[index]; }
 
-    virtual pg_string typeName() const noexcept override { return L"SkippedTokensTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SkippedTokensTriviaSyntax"; }
 
 private:
     std::vector<SyntaxVariant> _skippedTokens;

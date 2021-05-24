@@ -52,7 +52,7 @@ public:
 
     pg_string toString() const noexcept override;
     pg_string toShortString() const noexcept override;
-    virtual pg_string typeName() const noexcept override { return L"SyntaxTrivia"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SyntaxTrivia"; }
 
 protected:
     friend class SyntaxToken;

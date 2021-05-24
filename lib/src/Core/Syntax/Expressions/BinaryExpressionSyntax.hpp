@@ -30,7 +30,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asNode(_pLeftExpression); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asNode(_pRightExpression); }
 
-    virtual pg_string typeName() const noexcept override { return L"BinaryExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"BinaryExpressionSyntax"; }
 
     static BinaryExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                           SyntaxKind syntaxKind,

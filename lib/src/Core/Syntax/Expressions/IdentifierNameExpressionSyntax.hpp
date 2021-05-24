@@ -23,7 +23,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pIdentifier); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pIdentifier); }
 
-    virtual pg_string typeName() const noexcept override { return L"IdentifierNameExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"IdentifierNameExpressionSyntax"; }
 
     static IdentifierNameExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                   ISyntaxToken* identifier) noexcept;

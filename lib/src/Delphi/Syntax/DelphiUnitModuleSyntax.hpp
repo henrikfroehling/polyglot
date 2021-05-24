@@ -51,7 +51,7 @@ public:
 
     virtual pg_string toString() const noexcept override;
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUnitModuleSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUnitModuleSyntax"; }
 
     static DelphiUnitModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,

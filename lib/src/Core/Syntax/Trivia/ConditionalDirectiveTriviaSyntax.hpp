@@ -18,7 +18,7 @@ public:
     virtual ExpressionSyntax* condition() const noexcept = 0;
     virtual bool conditionValue() const noexcept = 0;
 
-    virtual pg_string typeName() const noexcept override { return L"ConditionalDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"ConditionalDirectiveTriviaSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

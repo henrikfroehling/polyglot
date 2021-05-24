@@ -30,7 +30,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pOpenParenthesisToken); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pCloseParenthesisToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"ParenthesizedExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"ParenthesizedExpressionSyntax"; }
 
     static ParenthesizedExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                                  ISyntaxToken* openParenthesisToken,

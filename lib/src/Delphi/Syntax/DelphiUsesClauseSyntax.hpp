@@ -34,7 +34,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pUsesKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUsesClauseSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUsesClauseSyntax"; }
 
     static DelphiUsesClauseSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           Core::Syntax::ISyntaxToken* usesKeyword,

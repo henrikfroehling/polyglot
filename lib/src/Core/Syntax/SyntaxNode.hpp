@@ -73,7 +73,7 @@ public:
 
     virtual pg_string toString() const noexcept override;
     virtual pg_string toShortString() const noexcept override;
-    virtual pg_string typeName() const noexcept override { return L"SyntaxNode"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SyntaxNode"; }
 
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;

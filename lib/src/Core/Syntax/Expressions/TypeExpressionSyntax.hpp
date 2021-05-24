@@ -14,7 +14,7 @@ public:
     explicit TypeExpressionSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~TypeExpressionSyntax() noexcept {}
 
-    virtual pg_string typeName() const noexcept override { return L"TypeExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"TypeExpressionSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

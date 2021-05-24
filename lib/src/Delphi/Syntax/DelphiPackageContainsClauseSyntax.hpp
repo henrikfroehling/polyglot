@@ -20,10 +20,10 @@ public:
     DelphiPackageContainsClauseSyntax() noexcept;
     virtual ~DelphiPackageContainsClauseSyntax() noexcept {}
 
-    virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
-    virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
+    inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
+    inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::empty(); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiPackageContainsClauseSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiPackageContainsClauseSyntax"; }
 };
 
 } // end namespace polyglot::Delphi::Syntax

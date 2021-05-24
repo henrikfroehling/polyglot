@@ -14,8 +14,7 @@ public:
     explicit DelphiSyntaxNode(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     virtual ~DelphiSyntaxNode() noexcept {}
     inline Core::LanguageKind languageKind() const noexcept override { return Core::LanguageKind::Delphi; }
-
-    virtual pg_string typeName() const noexcept override { return L"DelphiSyntaxNode"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiSyntaxNode"; }
 };
 
 } // end namespace polyglot::Delphi::Syntax

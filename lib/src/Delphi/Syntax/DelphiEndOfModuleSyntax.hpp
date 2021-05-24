@@ -32,7 +32,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pDotToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiEndOfModuleSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiEndOfModuleSyntax"; }
 
     static DelphiEndOfModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                            Core::Syntax::ISyntaxToken* endKeyword,

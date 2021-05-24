@@ -26,7 +26,7 @@ public:
     inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::asToken(_pLiteral); }
     inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::asToken(_pLiteral); }
 
-    virtual pg_string typeName() const noexcept override { return L"LiteralExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"LiteralExpressionSyntax"; }
 
     static LiteralExpressionSyntax* create(SyntaxFactory& syntaxFactory,
                                            SyntaxKind syntaxKind,

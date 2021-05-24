@@ -15,8 +15,7 @@ public:
     virtual ~DelphiStatementSyntax() noexcept {}
 
     inline bool isStatement() const noexcept override final { return true; }
-
-    virtual pg_string typeName() const noexcept override { return L"DelphiStatementSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiStatementSyntax"; }
 
     inline virtual bool isIfStatement() const noexcept { return false; }
     inline virtual bool isCaseStatement() const noexcept { return false; }

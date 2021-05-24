@@ -31,7 +31,7 @@ public:
 
     pg_string toString() const noexcept override;
     pg_string toShortString() const noexcept override;
-    virtual pg_string typeName() const noexcept override { return L"SyntaxMissingToken"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SyntaxMissingToken"; }
 };
 
 } // end namespace polyglot::Core::Syntax

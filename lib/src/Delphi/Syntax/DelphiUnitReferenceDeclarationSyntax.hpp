@@ -40,7 +40,7 @@ public:
         return Core::Syntax::SyntaxVariant::asNode(_pUnitName);
     }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUnitReferenceDeclarationSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUnitReferenceDeclarationSyntax"; }
 
     static DelphiUnitReferenceDeclarationSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                         Core::Syntax::NameExpressionSyntax* unitName,

@@ -71,7 +71,7 @@ public:
 
     virtual pg_string toString() const noexcept override;
     virtual pg_string toShortString() const noexcept override;
-    virtual pg_string typeName() const noexcept override { return L"SyntaxToken"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SyntaxToken"; }
 
 protected:
     void adjustWidth(ISyntaxTriviaList* trivia) noexcept;
