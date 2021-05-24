@@ -859,60 +859,41 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
 
 ISyntaxTrivia* DelphiLexer::scanWhitespace() noexcept
 {
-    long hashCode = Hashing::FNV_OFFSET_BIAS;
-    bool onlySpaces = true;
+    bool loopBreak{false};
 
-top:
-    pg_char character = _textWindow.peekCharacter();
-
-    switch (character)
+    while (true)
     {
-        case L'\t':
-        case L'\v':
-        case L'\f':
-nonspaces:
-            onlySpaces = false;
-            goto space;
-        case L' ':
-space:
-            _textWindow.advanceCharacter();
-            hashCode = Hashing::combineFNVHash(hashCode, character);
-            goto top;
-        case L'\r':
-        case L'\n':
-            break;
-        default:
-            if (character > 127)
-            {
-                if (character == ' ')
-                    goto space;
-                else if (character == L'\t' || character == L'\v' || character == L'\f')
-                    goto nonspaces;
-            }
+        pg_char character = _textWindow.peekCharacter();
 
+        switch (character)
+        {
+            case L'\t':
+            case L'\v':
+            case L'\f':
+            case L' ':
+space:
+                _textWindow.advanceCharacter();
+                break;
+            case L'\r':
+            case L'\n':
+                loopBreak = true;
+                break;
+            default:
+                if (character > 127 && character == ' ')
+                    goto space;
+                else
+                    loopBreak = true;
+
+                break;
+        }
+
+        if (loopBreak)
             break;
     }
 
     const pg_size width = _textWindow.position() - _currentTriviaPosition;
     const pg_string_view text = _textWindow.content().substr(_currentTriviaPosition, width);
-
-    if (width == 1 && onlySpaces)
-        return _syntaxFactory.whiteSpace(text, _currentTriviaPosition);
-    else
-    {
-        //if (width < LexerCache::MAX_CACHED_TOKEN_SIZE)
-        //{
-        //    TokenInfo tokenInfo = _lexerCache.lookupTrivia(text, hashCode,
-        //        [&]()
-        //        {
-        //            return TokenInfo{SyntaxKind::WhitespaceTrivia, text };
-        //        });
-
-        //    return DelphiSyntaxFactory::createTrivia(SyntaxKind::WhitespaceTrivia, text, _currentTriviaPosition);
-        //}
-        //else
-        return _syntaxFactory.whiteSpace(text, _currentTriviaPosition);
-    }
+    return _syntaxFactory.whiteSpace(text, _currentTriviaPosition);
 }
 
 void DelphiLexer::scanToEndOfLine() noexcept
