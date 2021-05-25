@@ -19,13 +19,20 @@ class NameExpressionSyntax;
 namespace polyglot::Delphi::Syntax
 {
 
+class DelphiAssemblerStatementSyntax;
+class DelphiCaseStatementSyntax;
 class DelphiCompilationUnitSyntax;
 class DelphiCompoundStatementSyntax;
 class DelphiEndOfModuleSyntax;
+class DelphiForStatementSyntax;
+class DelphiIfStatementSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiProgramModuleSyntax;
+class DelphiRaiseStatementSyntax;
+class DelphiRepeatStatementSyntax;
 class DelphiStatementListSyntax;
 class DelphiStatementSyntax;
+class DelphiTryStatementSyntax;
 class DelphiUnitFinalizationSectionSyntax;
 class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
@@ -34,6 +41,8 @@ class DelphiUnitInterfaceSectionSyntax;
 class DelphiUnitModuleSyntax;
 class DelphiUnitReferenceDeclarationSyntax;
 class DelphiUsesClauseSyntax;
+class DelphiWhileStatementSyntax;
+class DelphiWithStatementSyntax;
 
 } // end namespace polyglot::Delphi::Syntax
 
@@ -70,6 +79,15 @@ private:
     Syntax::DelphiCompoundStatementSyntax* parseCompoundStatement() noexcept;
     Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;
+    Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;
+    Syntax::DelphiCaseStatementSyntax* parseCaseStatement() noexcept;
+    Syntax::DelphiRepeatStatementSyntax* parseRepeatStatement() noexcept;
+    Syntax::DelphiWhileStatementSyntax* parseWhileStatement() noexcept;
+    Syntax::DelphiForStatementSyntax* parseForStatement() noexcept;
+    Syntax::DelphiWithStatementSyntax* parseWithStatement() noexcept;
+    Syntax::DelphiTryStatementSyntax* parseTryStatement() noexcept;
+    Syntax::DelphiRaiseStatementSyntax* parseRaiseStatement() noexcept;
+    Syntax::DelphiAssemblerStatementSyntax* parseAssemblerStatement() noexcept;
 
 private:
     Core::Syntax::SyntaxFactory _syntaxFactory;

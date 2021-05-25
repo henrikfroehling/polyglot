@@ -8,12 +8,19 @@
 #include "Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
 #include "Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/DelphiAssemblerStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiCompoundStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiForStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiIfStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiRaiseStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiRepeatStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiStatementListSyntax.hpp"
 #include "Delphi/Syntax/DelphiStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
@@ -22,6 +29,8 @@
 #include "Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiWhileStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiWithStatementSyntax.hpp"
 
 namespace polyglot::Delphi::Parser
 {
@@ -254,11 +263,13 @@ DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
 {
     std::vector<SyntaxVariant> statements{};
     DelphiStatementSyntax* pStatement = parseStatement();
+    assert(pStatement != nullptr);
     statements.push_back(SyntaxVariant::asNode(pStatement));
 
     while (DelphiSyntaxFacts::isStatementStart(currentToken()->syntaxKind()))
     {
         pStatement = parseStatement();
+        assert(pStatement != nullptr);
         statements.push_back(SyntaxVariant::asNode(pStatement));
 
         if (DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
@@ -285,30 +296,77 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
 
     SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
 
+    // Structured Statements
     switch (currentSyntaxKind)
     {
-        case SyntaxKind::IfKeyword: // If Statement
-            return nullptr;
-        case SyntaxKind::CaseKeyword: // Case Statement
-            return nullptr;
-        case SyntaxKind::RepeatKeyword: // Repeat Statement
-            return nullptr;
-        case SyntaxKind::WhileKeyword: // While Statement
-            return nullptr;
-        case SyntaxKind::ForKeyword: // For Statement
-            return nullptr;
-        case SyntaxKind::WithKeyword: // With Statement
-            return nullptr;
-        case SyntaxKind::TryKeyword: // Try Statement
-            return nullptr;
-        case SyntaxKind::RaiseKeyword: // Raise Statement
-            return nullptr;
-        case SyntaxKind::AssemblerKeyword: // Assembler Statement
-            return nullptr;
-        case SyntaxKind::BeginKeyword: // Compound Statement
-            return nullptr;
+        case SyntaxKind::IfKeyword:
+            return parseIfStatement();
+        case SyntaxKind::CaseKeyword:
+            return parseCaseStatement();
+        case SyntaxKind::RepeatKeyword:
+            return parseRepeatStatement();
+        case SyntaxKind::WhileKeyword:
+            return parseWhileStatement();
+        case SyntaxKind::ForKeyword:
+            return parseForStatement();
+        case SyntaxKind::WithKeyword:
+            return parseWithStatement();
+        case SyntaxKind::TryKeyword:
+            return parseTryStatement();
+        case SyntaxKind::RaiseKeyword:
+            return parseRaiseStatement();
+        case SyntaxKind::AssemblerKeyword:
+            return parseAssemblerStatement();
+        case SyntaxKind::BeginKeyword:
+            return parseCompoundStatement();
     }
 
+    // Simple Statement
+    return nullptr;
+}
+
+DelphiIfStatementSyntax* DelphiParser::parseIfStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiCaseStatementSyntax* DelphiParser::parseCaseStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiRepeatStatementSyntax* DelphiParser::parseRepeatStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiWhileStatementSyntax* DelphiParser::parseWhileStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiForStatementSyntax* DelphiParser::parseForStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiWithStatementSyntax* DelphiParser::parseWithStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiTryStatementSyntax* DelphiParser::parseTryStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiRaiseStatementSyntax* DelphiParser::parseRaiseStatement() noexcept
+{
+    return nullptr;
+}
+
+DelphiAssemblerStatementSyntax* DelphiParser::parseAssemblerStatement() noexcept
+{
     return nullptr;
 }
 

@@ -315,13 +315,21 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::PackageHead: return L"PackageHead";
         case SyntaxKind::ProgramModule: return L"ProgramModule";
         case SyntaxKind::ProgramHead: return L"ProgramHead";
-        case SyntaxKind::StatementList: return L"StatementList";
-        case SyntaxKind::CompoundStatement: return L"CompoundStatement";
-
         case SyntaxKind::PackageRequiresClause: return L"PackageRequiresClause";
         case SyntaxKind::PackageContainsClause: return L"PackageContainsClause";
         case SyntaxKind::UsesClause: return L"UsesClause";
         case SyntaxKind::UnitReference: return L"UnitReference";
+        case SyntaxKind::StatementList: return L"StatementList";
+        case SyntaxKind::CompoundStatement: return L"CompoundStatement";
+        case SyntaxKind::IfStatement: return L"IfStatement";
+        case SyntaxKind::CaseStatement: return L"CaseStatement";
+        case SyntaxKind::RepeatStatement: return L"RepeatStatement";
+        case SyntaxKind::WhileStatement: return L"WhileStatement";
+        case SyntaxKind::ForStatement: return L"ForStatement";
+        case SyntaxKind::WithStatement: return L"WithStatement";
+        case SyntaxKind::TryStatement: return L"TryStatement";
+        case SyntaxKind::RaiseStatement: return L"RaiseStatement";
+        case SyntaxKind::AssemblerStatement: return L"AssemblerStatement";
 
         // expressions
         case SyntaxKind::LogicalNotExpression: return L"LogicalNotExpression";
