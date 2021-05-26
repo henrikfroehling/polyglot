@@ -76,9 +76,9 @@ private:
     Core::Syntax::IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
     Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
 
+    Syntax::DelphiStatementSyntax* parseStatement() noexcept;
     Syntax::DelphiCompoundStatementSyntax* parseCompoundStatement() noexcept;
     Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
-    Syntax::DelphiStatementSyntax* parseStatement() noexcept;
     Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;
     Syntax::DelphiCaseStatementSyntax* parseCaseStatement() noexcept;
     Syntax::DelphiRepeatStatementSyntax* parseRepeatStatement() noexcept;

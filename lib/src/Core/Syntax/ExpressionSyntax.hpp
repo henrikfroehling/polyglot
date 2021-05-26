@@ -14,7 +14,7 @@ class ExpressionSyntax : public SyntaxNode
 public:
     explicit ExpressionSyntax(SyntaxKind syntaxKind) noexcept;
     virtual ~ExpressionSyntax() noexcept {}
-    inline LanguageKind languageKind() const noexcept override final { return _pParent != nullptr ? _pParent->languageKind() : LanguageKind::Unknown; }
+    inline virtual LanguageKind languageKind() const noexcept override { return _pParent != nullptr ? _pParent->languageKind() : LanguageKind::Unknown; }
     inline bool isExpression() const noexcept override { return true; }
     inline virtual pg_string typeName() const noexcept override { return L"ExpressionSyntax"; }
 };

@@ -251,43 +251,6 @@ DelphiEndOfModuleSyntax* DelphiParser::parseEndOfModule() noexcept
     return DelphiEndOfModuleSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
-DelphiCompoundStatementSyntax* DelphiParser::parseCompoundStatement() noexcept
-{
-    ISyntaxToken* pBeginToken = takeToken(SyntaxKind::BeginKeyword);
-    DelphiStatementListSyntax* pStatementList = parseStatementList();
-    ISyntaxToken* pEndToken = takeToken(SyntaxKind::EndKeyword);
-    return DelphiCompoundStatementSyntax::create(_syntaxFactory, pBeginToken, pStatementList, pEndToken);
-}
-
-DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
-{
-    std::vector<SyntaxVariant> statements{};
-    DelphiStatementSyntax* pStatement = parseStatement();
-    assert(pStatement != nullptr);
-    statements.push_back(SyntaxVariant::asNode(pStatement));
-
-    while (DelphiSyntaxFacts::isStatementStart(currentToken()->syntaxKind()))
-    {
-        pStatement = parseStatement();
-        assert(pStatement != nullptr);
-        statements.push_back(SyntaxVariant::asNode(pStatement));
-
-        if (DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
-        {
-            // if there is another statement following, a semicolon is required, otherwise it's optional
-            ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-            statements.push_back(SyntaxVariant::asToken(pSemiColonToken));
-        }
-        else if (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken)
-        {
-            // take semicolon, if there's one
-            statements.push_back(SyntaxVariant::asToken(takeToken()));
-        }
-    }
-
-    return DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements));
-}
-
 DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
 {
     // statement => [identifier | int num literal | hex num literal ':'],
@@ -325,9 +288,53 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
     return nullptr;
 }
 
+DelphiCompoundStatementSyntax* DelphiParser::parseCompoundStatement() noexcept
+{
+    ISyntaxToken* pBeginKeyword = takeToken(SyntaxKind::BeginKeyword);
+    DelphiStatementListSyntax* pStatementList = parseStatementList();
+    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    return DelphiCompoundStatementSyntax::create(_syntaxFactory, pBeginKeyword, pStatementList, pEndKeyword);
+}
+
+DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
+{
+    std::vector<SyntaxVariant> statements{};
+    DelphiStatementSyntax* pStatement = parseStatement();
+    statements.push_back(SyntaxVariant::asNode(pStatement));
+
+    while (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken && DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
+    {
+        ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+        statements.push_back(SyntaxVariant::asToken(pSemiColonToken));
+
+        pStatement = parseStatement();
+        statements.push_back(SyntaxVariant::asNode(pStatement));
+    }
+
+    return DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements));
+}
+
 DelphiIfStatementSyntax* DelphiParser::parseIfStatement() noexcept
 {
-    return nullptr;
+    ISyntaxToken* pIfKeyword = takeToken(SyntaxKind::IfKeyword);
+    // parse expression
+    ISyntaxToken* pThenKeyword = takeToken(SyntaxKind::ThenKeyword);
+
+    std::vector<SyntaxVariant> statements{};
+    DelphiStatementSyntax* pStatement = parseStatement();
+    statements.push_back(SyntaxVariant::asNode(pStatement));
+
+    while (currentToken()->syntaxKind() == SyntaxKind::ElseKeyword && DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
+    {
+        ISyntaxToken* pElseKeyword = takeToken(SyntaxKind::ElseKeyword);
+        statements.push_back(SyntaxVariant::asToken(pElseKeyword));
+
+        pStatement = parseStatement();
+        statements.push_back(SyntaxVariant::asNode(pStatement));
+    }
+
+    DelphiStatementListSyntax* pStatements = DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements));
+    return DelphiIfStatementSyntax::create(_syntaxFactory, pIfKeyword, nullptr, pThenKeyword, pStatements);
 }
 
 DelphiCaseStatementSyntax* DelphiParser::parseCaseStatement() noexcept

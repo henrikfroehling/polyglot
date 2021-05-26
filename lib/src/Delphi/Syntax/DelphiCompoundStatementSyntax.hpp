@@ -20,32 +20,32 @@ class DelphiStatementListSyntax;
 class DelphiCompoundStatementSyntax : public DelphiStatementSyntax
 {
 public:
-    explicit DelphiCompoundStatementSyntax(Core::Syntax::ISyntaxToken* beginToken,
+    explicit DelphiCompoundStatementSyntax(Core::Syntax::ISyntaxToken* beginKeyword,
                                            DelphiStatementListSyntax* statementList,
-                                           Core::Syntax::ISyntaxToken* endToken) noexcept;
+                                           Core::Syntax::ISyntaxToken* endKeyword) noexcept;
 
     virtual ~DelphiCompoundStatementSyntax() noexcept {}
 
-    inline Core::Syntax::ISyntaxToken* beginToken() const noexcept { return _pBeginToken; }
+    inline Core::Syntax::ISyntaxToken* beginKeyword() const noexcept { return _pBeginKeyword; }
     inline DelphiStatementListSyntax* statementList() const noexcept { return _pStatementList; }
-    inline Core::Syntax::ISyntaxToken* endToken() const noexcept { return _pEndToken; }
+    inline Core::Syntax::ISyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
 
-    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pBeginToken); }
-    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndToken); }
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pBeginKeyword); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndKeyword); }
 
     inline pg_string typeName() const noexcept override final { return L"DelphiCompoundStatementSyntax"; }
 
     inline bool isCompoundStatement() const noexcept override final { return true; }
 
     static DelphiCompoundStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                 Core::Syntax::ISyntaxToken* beginToken,
+                                                 Core::Syntax::ISyntaxToken* beginKeyword,
                                                  DelphiStatementListSyntax* statementList,
-                                                 Core::Syntax::ISyntaxToken* endToken) noexcept;
+                                                 Core::Syntax::ISyntaxToken* endKeyword) noexcept;
 
 private:
-    Core::Syntax::ISyntaxToken* _pBeginToken;
+    Core::Syntax::ISyntaxToken* _pBeginKeyword;
     DelphiStatementListSyntax* _pStatementList;
-    Core::Syntax::ISyntaxToken* _pEndToken;
+    Core::Syntax::ISyntaxToken* _pEndKeyword;
 };
 
 } // end namespace polyglot::Delphi::Syntax

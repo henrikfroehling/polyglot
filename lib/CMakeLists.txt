@@ -126,6 +126,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompoundStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiForStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiIfStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp

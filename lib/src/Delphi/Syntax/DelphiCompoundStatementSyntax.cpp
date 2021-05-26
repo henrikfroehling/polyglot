@@ -10,28 +10,28 @@ namespace polyglot::Delphi::Syntax
 
 using Core::Syntax::SyntaxKind;
 
-DelphiCompoundStatementSyntax::DelphiCompoundStatementSyntax(Core::Syntax::ISyntaxToken* beginToken,
+DelphiCompoundStatementSyntax::DelphiCompoundStatementSyntax(Core::Syntax::ISyntaxToken* beginKeyword,
                                                              DelphiStatementListSyntax* statementList,
-                                                             Core::Syntax::ISyntaxToken* endToken) noexcept
+                                                             Core::Syntax::ISyntaxToken* endKeyword) noexcept
     : DelphiStatementSyntax{SyntaxKind::CompoundStatement},
-      _pBeginToken{beginToken},
+      _pBeginKeyword{beginKeyword},
       _pStatementList{statementList},
-      _pEndToken{endToken}
+      _pEndKeyword{endKeyword}
 {}
 
 DelphiCompoundStatementSyntax* DelphiCompoundStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                     Core::Syntax::ISyntaxToken* beginToken,
+                                                                     Core::Syntax::ISyntaxToken* beginKeyword,
                                                                      DelphiStatementListSyntax* statementList,
-                                                                     Core::Syntax::ISyntaxToken* endToken) noexcept
+                                                                     Core::Syntax::ISyntaxToken* endKeyword) noexcept
 {
-    assert(beginToken != nullptr);
-    assert(beginToken->syntaxKind() == SyntaxKind::BeginKeyword);
+    assert(beginKeyword != nullptr);
+    assert(beginKeyword->syntaxKind() == SyntaxKind::BeginKeyword);
     assert(statementList != nullptr);
     assert(statementList->syntaxKind() == SyntaxKind::StatementList);
-    assert(endToken != nullptr);
-    assert(endToken->syntaxKind() == SyntaxKind::EndKeyword);
+    assert(endKeyword != nullptr);
+    assert(endKeyword->syntaxKind() == SyntaxKind::EndKeyword);
 
-    auto ptrCompoundStatementSyntax = std::make_unique<DelphiCompoundStatementSyntax>(beginToken, statementList, endToken);
+    auto ptrCompoundStatementSyntax = std::make_unique<DelphiCompoundStatementSyntax>(beginKeyword, statementList, endKeyword);
     return static_cast<DelphiCompoundStatementSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrCompoundStatementSyntax)));
 }
 
