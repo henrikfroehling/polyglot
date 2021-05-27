@@ -122,12 +122,16 @@ set(SOURCES_DELPHI_PARSER
 
 set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiAssemblerStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiBreakStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompoundStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiContinueStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExitStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiForStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiGotoStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiIfStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
@@ -137,6 +141,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiRaiseStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiRepeatStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSimpleStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiStatementListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxList.cpp

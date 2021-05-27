@@ -5,14 +5,19 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
+#include "Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
 #include "Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
 #include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 #include "Delphi/Syntax/DelphiAssemblerStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiBreakStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiCompoundStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiContinueStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiExitStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiForStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiGotoStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiIfStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
@@ -45,13 +50,18 @@ DelphiParser::DelphiParser(SharedPtr<Core::Text::SourceText> sourceText) noexcep
 
 ISyntaxNode* DelphiParser::parseRoot() noexcept
 {
-    if (DelphiSyntaxFacts::isModuleStart(currentToken()->syntaxKind()))
-        return parseCompilationUnit();
-    else
-    {
-        // TODO parse different entry points
-        return nullptr;
-    }
+    if (DelphiSyntaxFacts::isStatementStart(currentToken()->syntaxKind()))
+        return parseStatement();
+
+    return nullptr;
+
+//    if (DelphiSyntaxFacts::isModuleStart(currentToken()->syntaxKind()))
+//        return parseCompilationUnit();
+//    else
+//    {
+//        // TODO parse different entry points
+//        return nullptr;
+//    }
 }
 
 DelphiCompilationUnitSyntax* DelphiParser::parseCompilationUnit() noexcept
@@ -282,6 +292,14 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
             return parseAssemblerStatement();
         case SyntaxKind::BeginKeyword:
             return parseCompoundStatement();
+        case SyntaxKind::BreakKeyword:
+            return parseBreakStatement();
+        case SyntaxKind::ContinueKeyword:
+            return parseContinueStatement();
+        case SyntaxKind::ExitKeyword:
+            return parseExitStatement();
+        case SyntaxKind::GotoKeyword:
+            return parseGotoStatement();
     }
 
     // Simple Statement
@@ -375,6 +393,45 @@ DelphiRaiseStatementSyntax* DelphiParser::parseRaiseStatement() noexcept
 DelphiAssemblerStatementSyntax* DelphiParser::parseAssemblerStatement() noexcept
 {
     return nullptr;
+}
+
+DelphiBreakStatementSyntax* DelphiParser::parseBreakStatement() noexcept
+{
+    ISyntaxToken* pBreakKeyword = takeToken(SyntaxKind::BreakKeyword);
+    return DelphiBreakStatementSyntax::create(_syntaxFactory, pBreakKeyword);
+}
+
+DelphiContinueStatementSyntax* DelphiParser::parseContinueStatement() noexcept
+{
+    ISyntaxToken* pContinueKeyword = takeToken(SyntaxKind::ContinueKeyword);
+    return DelphiContinueStatementSyntax::create(_syntaxFactory, pContinueKeyword);
+}
+
+DelphiExitStatementSyntax* DelphiParser::parseExitStatement() noexcept
+{
+    ISyntaxToken* pExitKeyword = takeToken(SyntaxKind::ExitKeyword);
+    ParenthesizedExpressionSyntax* pExpression{nullptr};
+
+    if (currentToken()->syntaxKind() == SyntaxKind::OpenParenthesisToken)
+    {
+        // TODO parseExpression
+    }
+
+    return DelphiExitStatementSyntax::create(_syntaxFactory, pExitKeyword, pExpression);
+}
+
+DelphiGotoStatementSyntax* DelphiParser::parseGotoStatement() noexcept
+{
+    ISyntaxToken* pGotoKeyword = takeToken(SyntaxKind::GotoKeyword);
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+    ISyntaxToken* pLabelToken{nullptr};
+
+    if (currentSyntaxKind == SyntaxKind::IdentifierToken || currentSyntaxKind == SyntaxKind::IntegerNumberLiteralToken)
+        pLabelToken = takeToken(currentSyntaxKind);
+    else
+        pLabelToken = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, currentToken()->text(), currentToken()->position());
+
+    return DelphiGotoStatementSyntax::create(_syntaxFactory, pGotoKeyword, pLabelToken);
 }
 
 } // end namespace polyglot::Delphi::Parser

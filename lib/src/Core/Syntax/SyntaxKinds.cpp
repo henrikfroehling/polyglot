@@ -76,13 +76,14 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ElseKeyword: return L"ElseKeyword";
         case SyntaxKind::EndKeyword: return L"EndKeyword";
         case SyntaxKind::ExceptKeyword: return L"ExceptKeyword";
+        case SyntaxKind::ExitKeyword: return L"ExitKeyword";
         case SyntaxKind::ExportsKeyword: return L"ExportsKeyword";
         case SyntaxKind::FileKeyword: return L"FileKeyword";
         case SyntaxKind::FinalizationKeyword: return L"FinalizationKeyword";
         case SyntaxKind::FinallyKeyword: return L"FinallyKeyword";
         case SyntaxKind::ForKeyword: return L"ForKeyword";
         case SyntaxKind::FunctionKeyword: return L"FunctionKeyword";
-        case SyntaxKind::GoToKeyword: return L"GoToKeyword";
+        case SyntaxKind::GotoKeyword: return L"GotoKeyword";
         case SyntaxKind::IfKeyword: return L"IfKeyword";
         case SyntaxKind::ImplementationKeyword: return L"ImplementationKeyword";
         case SyntaxKind::InKeyword: return L"InKeyword";
@@ -330,6 +331,10 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::TryStatement: return L"TryStatement";
         case SyntaxKind::RaiseStatement: return L"RaiseStatement";
         case SyntaxKind::AssemblerStatement: return L"AssemblerStatement";
+        case SyntaxKind::BreakStatement: return L"BreakStatement";
+        case SyntaxKind::ContinueStatement: return L"ContinueStatement";
+        case SyntaxKind::GotoStatement: return L"GotoStatement";
+        case SyntaxKind::ExitStatement: return L"ExitStatement";
 
         // expressions
         case SyntaxKind::LogicalNotExpression: return L"LogicalNotExpression";

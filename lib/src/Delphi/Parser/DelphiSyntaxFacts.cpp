@@ -26,13 +26,14 @@ static const std::unordered_map<pg_string, SyntaxKind> SYNTAXKEYWORDS =
     { L"else", SyntaxKind::ElseKeyword },
     { L"end", SyntaxKind::EndKeyword },
     { L"except", SyntaxKind::ExceptKeyword },
+    { L"exit", SyntaxKind::ExitKeyword },
     { L"exports", SyntaxKind::ExportsKeyword },
     { L"file", SyntaxKind::FileKeyword },
     { L"finalization", SyntaxKind::FinalizationKeyword },
     { L"finally", SyntaxKind::FinallyKeyword },
     { L"for", SyntaxKind::ForKeyword },
     { L"function", SyntaxKind::FunctionKeyword },
-    { L"goto", SyntaxKind::GoToKeyword },
+    { L"goto", SyntaxKind::GotoKeyword },
     { L"implementation", SyntaxKind::ImplementationKeyword },
     { L"in", SyntaxKind::InKeyword },
     { L"inherited", SyntaxKind::InheritedKeyword },
@@ -347,13 +348,14 @@ bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ElseKeyword:
         case SyntaxKind::EndKeyword:
         case SyntaxKind::ExceptKeyword:
+        case SyntaxKind::ExitKeyword:
         case SyntaxKind::ExportsKeyword:
         case SyntaxKind::FileKeyword:
         case SyntaxKind::FinalizationKeyword:
         case SyntaxKind::FinallyKeyword:
         case SyntaxKind::ForKeyword:
         case SyntaxKind::FunctionKeyword:
-        case SyntaxKind::GoToKeyword:
+        case SyntaxKind::GotoKeyword:
         case SyntaxKind::IfKeyword:
         case SyntaxKind::ImplementationKeyword:
         case SyntaxKind::InKeyword:
@@ -556,6 +558,10 @@ bool DelphiSyntaxFacts::isStatementStart(Core::Syntax::SyntaxKind syntaxKind) no
         case SyntaxKind::RaiseKeyword:
         case SyntaxKind::AssemblerKeyword:
         case SyntaxKind::BeginKeyword:
+        case SyntaxKind::BreakKeyword:
+        case SyntaxKind::ContinueKeyword:
+        case SyntaxKind::ExitKeyword:
+        case SyntaxKind::GotoKeyword:
             return true;
     }
 

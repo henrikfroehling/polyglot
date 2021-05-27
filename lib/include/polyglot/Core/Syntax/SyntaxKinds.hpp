@@ -78,13 +78,14 @@ enum class SyntaxKind : unsigned short
     ElseKeyword, // else
     EndKeyword, // end
     ExceptKeyword, // except
+    ExitKeyword, // exit
     ExportsKeyword, // exports
     FileKeyword, // file
     FinalizationKeyword, // finalization
     FinallyKeyword, // finally
     ForKeyword, // for
     FunctionKeyword, // function
-    GoToKeyword, // goto
+    GotoKeyword, // goto
     IfKeyword, // if
     ImplementationKeyword, // implementation
     InKeyword, // in
@@ -333,6 +334,10 @@ enum class SyntaxKind : unsigned short
     TryStatement,
     RaiseStatement,
     AssemblerStatement,
+    BreakStatement,
+    ContinueStatement,
+    GotoStatement,
+    ExitStatement,
 
     // expressions
     LogicalNotExpression = 4000,

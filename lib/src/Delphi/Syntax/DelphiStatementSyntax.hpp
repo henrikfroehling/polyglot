@@ -27,6 +27,10 @@ public:
     inline virtual bool isRaiseStatement() const noexcept { return false; }
     inline virtual bool isAssemblerStatement() const noexcept { return false; }
     inline virtual bool isCompoundStatement() const noexcept { return false; }
+    inline virtual bool isBreakStatement() const noexcept { return false; }
+    inline virtual bool isContinueStatement() const noexcept { return false; }
+    inline virtual bool isExitStatement() const noexcept { return false; }
+    inline virtual bool isGotoStatement() const noexcept { return false; }
 };
 
 } // end namespace polyglot::Delphi::Syntax
