@@ -9,7 +9,6 @@ namespace polyglot::Core::Syntax
 {
 
 class ISyntaxToken;
-class NameExpressionSyntax;
 class SyntaxFactory;
 
 } // end namespace polyglot::Core::Syntax
@@ -17,18 +16,20 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
+class DelphiNameExpressionSyntax;
+
 class DelphiUnitHeadSyntax : public DelphiSyntaxNode
 {
 public:
     explicit DelphiUnitHeadSyntax(Core::Syntax::ISyntaxToken* unitKeyword,
-                                  Core::Syntax::NameExpressionSyntax* name,
+                                  DelphiNameExpressionSyntax* name,
                                   Core::Syntax::ISyntaxToken* semiColonToken,
                                   Core::Syntax::ISyntaxToken* inKeyword = nullptr,
                                   Core::Syntax::ISyntaxToken* filename = nullptr) noexcept;
 
     virtual ~DelphiUnitHeadSyntax() noexcept {}
     inline Core::Syntax::ISyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
-    inline Core::Syntax::NameExpressionSyntax* name() const noexcept { return _pName; }
+    inline DelphiNameExpressionSyntax* name() const noexcept { return _pName; }
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
     inline Core::Syntax::ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline Core::Syntax::ISyntaxToken* filename() const noexcept { return _pFilename; }
@@ -41,14 +42,14 @@ public:
 
     static DelphiUnitHeadSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                         Core::Syntax::ISyntaxToken* unitKeyword,
-                                        Core::Syntax::NameExpressionSyntax* name,
+                                        DelphiNameExpressionSyntax* name,
                                         Core::Syntax::ISyntaxToken* semiColonToken,
                                         Core::Syntax::ISyntaxToken* inKeyword = nullptr,
                                         Core::Syntax::ISyntaxToken* filename = nullptr) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pUnitKeyword;
-    Core::Syntax::NameExpressionSyntax* _pName;
+    DelphiNameExpressionSyntax* _pName;
     Core::Syntax::ISyntaxToken* _pSemiColonToken;
     Core::Syntax::ISyntaxToken* _pInKeyword; // optional
     Core::Syntax::ISyntaxToken* _pFilename; // optional

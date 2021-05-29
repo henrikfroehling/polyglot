@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiSimpleStatementSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -21,12 +21,12 @@ class DelphiExitStatementSyntax : public DelphiSimpleStatementSyntax
 {
 public:
     explicit DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken* exitKeyword,
-                                       Core::Syntax::ParenthesizedExpressionSyntax* expression = nullptr) noexcept;
+                                       DelphiParenthesizedExpressionSyntax* expression = nullptr) noexcept;
 
     virtual ~DelphiExitStatementSyntax() noexcept {}
 
     inline Core::Syntax::ISyntaxToken* exitKeyword() const noexcept { return _pExitKeyword; }
-    inline Core::Syntax::ParenthesizedExpressionSyntax* expression() const noexcept { return _pExpression; }
+    inline DelphiParenthesizedExpressionSyntax* expression() const noexcept { return _pExpression; }
 
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pExitKeyword); }
 
@@ -44,11 +44,11 @@ public:
 
     static DelphiExitStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              Core::Syntax::ISyntaxToken* exitKeyword,
-                                             Core::Syntax::ParenthesizedExpressionSyntax* expression = nullptr) noexcept;
+                                             DelphiParenthesizedExpressionSyntax* expression = nullptr) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pExitKeyword;
-    Core::Syntax::ParenthesizedExpressionSyntax* _pExpression; // optional
+    DelphiParenthesizedExpressionSyntax* _pExpression; // optional
 };
 
 } // end namespace polyglot::Delphi::Syntax

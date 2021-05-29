@@ -10,7 +10,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::SyntaxKind;
 
 DelphiExitStatementSyntax::DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken* exitKeyword,
-                                                     Core::Syntax::ParenthesizedExpressionSyntax* expression) noexcept
+                                                     DelphiParenthesizedExpressionSyntax* expression) noexcept
     : DelphiSimpleStatementSyntax{SyntaxKind::ExitStatement},
       _pExitKeyword{exitKeyword},
       _pExpression{expression}
@@ -18,7 +18,7 @@ DelphiExitStatementSyntax::DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken*
 
 DelphiExitStatementSyntax* DelphiExitStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                              Core::Syntax::ISyntaxToken* exitKeyword,
-                                                             Core::Syntax::ParenthesizedExpressionSyntax* expression) noexcept
+                                                             DelphiParenthesizedExpressionSyntax* expression) noexcept
 {
     assert(exitKeyword != nullptr);
     assert(exitKeyword->syntaxKind() == SyntaxKind::ExitKeyword);

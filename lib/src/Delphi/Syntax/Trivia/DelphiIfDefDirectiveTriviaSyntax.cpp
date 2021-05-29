@@ -18,7 +18,7 @@ DelphiIfDefDirectiveTriviaSyntax::DelphiIfDefDirectiveTriviaSyntax(SyntaxKind sy
                                                                    ISyntaxToken* endOfDirectiveToken,
                                                                    bool isActive,
                                                                    bool isBranchTaken) noexcept
-    : ConditionalDirectiveTriviaSyntax{syntaxKind},
+    : DelphiConditionalDirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pIfDefKeyword{ifDefKeyword},
       _pName{name},

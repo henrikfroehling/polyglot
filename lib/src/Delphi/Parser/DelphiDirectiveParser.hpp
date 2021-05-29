@@ -17,11 +17,17 @@ namespace polyglot::Core::Syntax
 {
 
 class DirectiveTriviaSyntax;
-class ExpressionSyntax;
 class ISyntaxToken;
 class ISyntaxTrivia;
 
 } // end namespace polyglot::Core::Syntax
+
+namespace polyglot::Delphi::Syntax
+{
+
+class DelphiExpressionSyntax;
+
+} // end namespace polyglot::Delphi::Syntax
 
 namespace polyglot::Delphi::Parser
 {
@@ -91,14 +97,14 @@ private:
                                                               Core::Syntax::ISyntaxToken* onOffToken) noexcept;
 
     Core::Syntax::ISyntaxToken* parseEndOfDirective() noexcept;
-    Core::Syntax::ExpressionSyntax* parseExpression() noexcept;
-    Core::Syntax::ExpressionSyntax* parseLogicalOr() noexcept;
-    Core::Syntax::ExpressionSyntax* parseLogicalAnd() noexcept;
-    Core::Syntax::ExpressionSyntax* parseEquality() noexcept;
-    Core::Syntax::ExpressionSyntax* parseLogicalNot() noexcept;
-    Core::Syntax::ExpressionSyntax* parsePrimary() noexcept;
-    Core::Syntax::ExpressionSyntax* parseCallExpression(Core::Syntax::ISyntaxToken* identifier) noexcept;
-    bool evaluateBool(Core::Syntax::ExpressionSyntax* expression) const noexcept;
+    Syntax::DelphiExpressionSyntax* parseExpression() noexcept;
+    Syntax::DelphiExpressionSyntax* parseLogicalOr() noexcept;
+    Syntax::DelphiExpressionSyntax* parseLogicalAnd() noexcept;
+    Syntax::DelphiExpressionSyntax* parseEquality() noexcept;
+    Syntax::DelphiExpressionSyntax* parseLogicalNot() noexcept;
+    Syntax::DelphiExpressionSyntax* parsePrimary() noexcept;
+    Syntax::DelphiExpressionSyntax* parseCallExpression(Core::Syntax::ISyntaxToken* identifier) noexcept;
+    bool evaluateBool(Syntax::DelphiExpressionSyntax* expression) const noexcept;
     bool isDefined(pg_string_view id) const noexcept;
 
 private:

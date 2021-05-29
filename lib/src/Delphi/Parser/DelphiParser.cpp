@@ -4,11 +4,11 @@
 #include "polyglot/Core/Syntax/ISyntaxNode.hpp"
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
-#include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
-#include "Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
-#include "Core/Syntax/Expressions/QualifiedNameExpressionSyntax.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
 #include "Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/Expressions/DelphiIdentifierNameExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiQualifiedNameExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiAssemblerStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiBreakStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseStatementSyntax.hpp"
@@ -121,7 +121,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
 DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
 {
     ISyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
-    NameExpressionSyntax* pName = parseQualifiedName();
+    DelphiNameExpressionSyntax* pName = parseQualifiedName();
     ISyntaxToken* pInKeyword{nullptr};
     ISyntaxToken* pFilename{nullptr};
 
@@ -203,7 +203,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     if (currentToken()->syntaxKind() != SyntaxKind::IdentifierToken)
         return nullptr; // TODO error handling
 
-    NameExpressionSyntax* pUnitName = parseQualifiedName();
+    DelphiNameExpressionSyntax* pUnitName = parseQualifiedName();
     ISyntaxToken* pInKeyword{nullptr};
     ISyntaxToken* pSourceFile{nullptr};
 
@@ -216,9 +216,9 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     return DelphiUnitReferenceDeclarationSyntax::create(_syntaxFactory, pUnitName, pInKeyword, pSourceFile);
 }
 
-NameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
+DelphiNameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
 {
-    NameExpressionSyntax* pName = parseIdentifierName();
+    DelphiNameExpressionSyntax* pName = parseIdentifierName();
 
     while (currentToken()->syntaxKind() == SyntaxKind::DotToken)
     {
@@ -229,28 +229,28 @@ NameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
     return pName;
 }
 
-NameExpressionSyntax* DelphiParser::parseQualifiedNameRight(NameExpressionSyntax* left,
-                                                            ISyntaxToken* dotToken) noexcept
+DelphiNameExpressionSyntax* DelphiParser::parseQualifiedNameRight(DelphiNameExpressionSyntax* left,
+                                                                  ISyntaxToken* dotToken) noexcept
 {
     assert(dotToken != nullptr);
     assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
-    SimpleNameExpressionSyntax* pRight = parseIdentifierName();
-    return QualifiedNameExpressionSyntax::create(_syntaxFactory, left, dotToken, pRight);
+    DelphiSimpleNameExpressionSyntax* pRight = parseIdentifierName();
+    return DelphiQualifiedNameExpressionSyntax::create(_syntaxFactory, left, dotToken, pRight);
 }
 
-IdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
+DelphiIdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
 {
     ISyntaxToken* pCurrentToken = currentToken();
 
     if (pCurrentToken->syntaxKind() == SyntaxKind::IdentifierToken)
     {
         ISyntaxToken* pIdentifier = takeToken();
-        return IdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
+        return DelphiIdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
     }
     else
     {
         ISyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
-        return IdentifierNameExpressionSyntax::create(_syntaxFactory, pMissingIdentifier);
+        return DelphiIdentifierNameExpressionSyntax::create(_syntaxFactory, pMissingIdentifier);
     }
 }
 
@@ -410,7 +410,7 @@ DelphiContinueStatementSyntax* DelphiParser::parseContinueStatement() noexcept
 DelphiExitStatementSyntax* DelphiParser::parseExitStatement() noexcept
 {
     ISyntaxToken* pExitKeyword = takeToken(SyntaxKind::ExitKeyword);
-    ParenthesizedExpressionSyntax* pExpression{nullptr};
+    DelphiParenthesizedExpressionSyntax* pExpression{nullptr};
 
     if (currentToken()->syntaxKind() == SyntaxKind::OpenParenthesisToken)
     {

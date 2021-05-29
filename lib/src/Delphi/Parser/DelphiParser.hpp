@@ -9,10 +9,8 @@
 namespace polyglot::Core::Syntax
 {
 
-class IdentifierNameExpressionSyntax;
 class ISyntaxNode;
 class ISyntaxToken;
-class NameExpressionSyntax;
 
 } // end namespace polyglot::Core::Syntax
 
@@ -29,7 +27,9 @@ class DelphiEndOfModuleSyntax;
 class DelphiExitStatementSyntax;
 class DelphiForStatementSyntax;
 class DelphiGotoStatementSyntax;
+class DelphiIdentifierNameExpressionSyntax;
 class DelphiIfStatementSyntax;
+class DelphiNameExpressionSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiRaiseStatementSyntax;
@@ -72,12 +72,12 @@ private:
     Syntax::DelphiProgramModuleSyntax* parseProgramModule() noexcept;
     Syntax::DelphiUsesClauseSyntax* parseUsesClause() noexcept;
     Syntax::DelphiUnitReferenceDeclarationSyntax* parseUnitReference() noexcept;
-    Core::Syntax::NameExpressionSyntax* parseQualifiedName() noexcept;
+    Syntax::DelphiNameExpressionSyntax* parseQualifiedName() noexcept;
 
-    Core::Syntax::NameExpressionSyntax* parseQualifiedNameRight(Core::Syntax::NameExpressionSyntax* left,
+    Syntax::DelphiNameExpressionSyntax* parseQualifiedNameRight(Syntax::DelphiNameExpressionSyntax* left,
                                                                 Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
-    Core::Syntax::IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
+    Syntax::DelphiIdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
     Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
 
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

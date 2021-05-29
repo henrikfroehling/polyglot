@@ -7,6 +7,7 @@
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Syntax/SyntaxNode.hpp"
 #include "Core/Syntax/SyntaxToken.hpp"
+#include "Delphi/Syntax/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -16,12 +17,12 @@ using namespace Core::Syntax;
 DelphiIfDirectiveTriviaSyntax::DelphiIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                              ISyntaxToken* startToken,
                                                              ISyntaxToken* ifKeyword,
-                                                             ExpressionSyntax* condition,
+                                                             DelphiExpressionSyntax* condition,
                                                              ISyntaxToken* endOfDirectiveToken,
                                                              bool isActive,
                                                              bool isBranchTaken,
                                                              bool conditionValue) noexcept
-    : ConditionalDirectiveTriviaSyntax{syntaxKind},
+    : DelphiConditionalDirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pIfKeyword{ifKeyword},
       _pCondition{condition},
@@ -59,7 +60,7 @@ SyntaxVariant DelphiIfDirectiveTriviaSyntax::child(pg_size index) const
 DelphiIfDirectiveTriviaSyntax* DelphiIfDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
                                                                      ISyntaxToken* startToken,
                                                                      ISyntaxToken* ifKeyword,
-                                                                     ExpressionSyntax* condition,
+                                                                     DelphiExpressionSyntax* condition,
                                                                      ISyntaxToken* endOfDirectiveToken,
                                                                      bool isActive,
                                                                      bool isBranchTaken,

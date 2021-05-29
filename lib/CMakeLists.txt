@@ -80,21 +80,8 @@ set(SOURCES_CORE_SYNTAX
   ${SOURCE_DIR}/Core/Syntax/SyntaxVariant.cpp
 )
 
-set(SOURCES_CORE_SYNTAX_EXPRESSIONS
-  ${SOURCE_DIR}/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/NameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/SimpleNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/TypeExpressionSyntax.cpp
-)
-
 set(SOURCES_CORE_SYNTAX_TRIVIA
   ${SOURCE_DIR}/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
@@ -162,11 +149,21 @@ set(SOURCES_DELPHI_SYNTAX
 )
 
 set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiIdentifierNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiQualifiedNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSimpleNameExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiTypeExpressionSyntax.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX_TRIVIA
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiBadDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiConditionalDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiDefineDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiElseDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiElseIfDirectiveTriviaSyntax.cpp
@@ -191,7 +188,6 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES_CORE}
   ${SOURCES_CORE_PARSER}
   ${SOURCES_CORE_SYNTAX}
-  ${SOURCES_CORE_SYNTAX_EXPRESSIONS}
   ${SOURCES_CORE_SYNTAX_TRIVIA}
   ${SOURCES_CORE_TEXT}
   ${SOURCES_DELPHI_PARSER}

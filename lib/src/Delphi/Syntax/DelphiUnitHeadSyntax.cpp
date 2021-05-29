@@ -3,20 +3,19 @@
 #include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
-#include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiNameExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
 using Core::Syntax::ISyntaxToken;
-using Core::Syntax::NameExpressionSyntax;
 using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
 using Core::Syntax::SyntaxVariant;
 
 DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
-                                           NameExpressionSyntax* name,
+                                           DelphiNameExpressionSyntax* name,
                                            ISyntaxToken* semiColonToken,
                                            ISyntaxToken* inKeyword,
                                            ISyntaxToken* filename) noexcept
@@ -74,7 +73,7 @@ SyntaxVariant DelphiUnitHeadSyntax::child(pg_size index) const
 
 DelphiUnitHeadSyntax* DelphiUnitHeadSyntax::create(SyntaxFactory& syntaxFactory,
                                                    ISyntaxToken* unitKeyword,
-                                                   NameExpressionSyntax* name,
+                                                   DelphiNameExpressionSyntax* name,
                                                    ISyntaxToken* semiColonToken,
                                                    ISyntaxToken* inKeyword,
                                                    ISyntaxToken* filename) noexcept
