@@ -352,6 +352,7 @@ enum class SyntaxKind : unsigned short
     FalseLiteralExpression,
     IdentifierNameExpression,
     QualifiedNameExpression,
+    PredefinedTypeExpression,
     CallExpression,
     EndOfModule
 };

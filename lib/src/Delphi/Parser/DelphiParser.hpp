@@ -31,6 +31,7 @@ class DelphiIdentifierNameSyntax;
 class DelphiIfStatementSyntax;
 class DelphiNameSyntax;
 class DelphiPackageModuleSyntax;
+class DelphiPredefinedTypeSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiRaiseStatementSyntax;
 class DelphiRepeatStatementSyntax;
@@ -78,6 +79,7 @@ private:
                                                       Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
     Syntax::DelphiIdentifierNameSyntax* parseIdentifierName() noexcept;
+    Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
     Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
 
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

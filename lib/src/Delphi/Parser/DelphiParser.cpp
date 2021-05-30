@@ -19,6 +19,7 @@
 #include "Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/DelphiIfStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiPredefinedTypeSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiQualifiedNameSyntax.hpp"
 #include "Delphi/Syntax/DelphiRaiseStatementSyntax.hpp"
@@ -252,6 +253,12 @@ DelphiIdentifierNameSyntax* DelphiParser::parseIdentifierName() noexcept
         ISyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
         return DelphiIdentifierNameSyntax::create(_syntaxFactory, pMissingIdentifier);
     }
+}
+
+DelphiPredefinedTypeSyntax* DelphiParser::parsePredefinedType() noexcept
+{
+    ISyntaxToken* typeKeyword = takeToken();
+    return DelphiPredefinedTypeSyntax::create(_syntaxFactory, typeKeyword);
 }
 
 DelphiEndOfModuleSyntax* DelphiParser::parseEndOfModule() noexcept

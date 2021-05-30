@@ -349,6 +349,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::FalseLiteralExpression: return L"FalseLiteralExpression";
         case SyntaxKind::IdentifierNameExpression: return L"IdentifierNameExpression";
         case SyntaxKind::QualifiedNameExpression: return L"QualifiedNameExpression";
+        case SyntaxKind::PredefinedTypeExpression: return L"PredefinedTypeExpression";
         case SyntaxKind::CallExpression: return L"CallExpression";
         case SyntaxKind::EndOfModule: return L"EndOfModule";
     }

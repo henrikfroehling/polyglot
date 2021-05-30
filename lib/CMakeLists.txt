@@ -126,6 +126,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiPredefinedTypeSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
