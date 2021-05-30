@@ -30,6 +30,7 @@ class DelphiForStatementSyntax;
 class DelphiGotoStatementSyntax;
 class DelphiIdentifierNameSyntax;
 class DelphiIfStatementSyntax;
+class DelphiLiteralExpressionSyntax;
 class DelphiNameSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiPredefinedTypeSyntax;
@@ -84,6 +85,7 @@ private:
     Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
     Syntax::DelphiEndOfModuleExpressionSyntax* parseEndOfModule() noexcept;
 
+    Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;
     Syntax::DelphiCompoundStatementSyntax* parseCompoundStatement() noexcept;
     Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;

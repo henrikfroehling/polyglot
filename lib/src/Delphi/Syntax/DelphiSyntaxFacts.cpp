@@ -213,7 +213,9 @@ static const std::unordered_map<pg_string, SyntaxKind> SYNTAXKEYWORDS =
     { L"region", SyntaxKind::RegionDirectiveKeyword },
     { L"endregion", SyntaxKind::EndRegionDirectiveKeyword },
     { L"on", SyntaxKind::OnDirectiveKeyword },
-    { L"off", SyntaxKind::OffDirectiveKeyword }
+    { L"off", SyntaxKind::OffDirectiveKeyword },
+    { L"true", SyntaxKind::TrueKeyword },
+    { L"false", SyntaxKind::FalseKeyword }
 };
 
 bool DelphiSyntaxFacts::isPunctuation(SyntaxKind syntaxKind) noexcept
@@ -299,10 +301,14 @@ SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexc
 {
     switch (syntaxKind)
     {
+        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
         case SyntaxKind::DoubleQuotationStringLiteralToken:
         case SyntaxKind::SingleQuotationStringLiteralToken:
             return SyntaxKind::StringLiteralExpression;
         case SyntaxKind::NumberLiteralToken:
+        case SyntaxKind::IntegerNumberLiteralToken:
+        case SyntaxKind::RealNumberLiteralToken:
+        case SyntaxKind::ControlCharacterLiteral:
             return SyntaxKind::NumericLiteralExpression;
         case SyntaxKind::TrueKeyword:
             return SyntaxKind::TrueLiteralExpression;
@@ -715,6 +721,25 @@ bool DelphiSyntaxFacts::isPredefinedType(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UTF8StringKeyword:
         case SyntaxKind::OleVariantKeyword:
         case SyntaxKind::OleVariantPointerKeyword:
+            return true;
+    }
+
+    return false;
+}
+
+bool DelphiSyntaxFacts::isLiteral(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
+        case SyntaxKind::NumberLiteralToken:
+        case SyntaxKind::IntegerNumberLiteralToken:
+        case SyntaxKind::RealNumberLiteralToken:
+        case SyntaxKind::ControlCharacterLiteral:
+        case SyntaxKind::TrueKeyword:
+        case SyntaxKind::FalseKeyword:
             return true;
     }
 

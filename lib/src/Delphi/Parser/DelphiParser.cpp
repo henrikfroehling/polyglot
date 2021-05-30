@@ -5,6 +5,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
+#include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiAssemblerStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiBreakStatementSyntax.hpp"
@@ -276,6 +277,13 @@ DelphiEndOfModuleExpressionSyntax* DelphiParser::parseEndOfModule() noexcept
     ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
     ISyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
     return DelphiEndOfModuleExpressionSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
+}
+
+DelphiLiteralExpressionSyntax* DelphiParser::parseLiteralExpression() noexcept
+{
+    assert(DelphiSyntaxFacts::isLiteral(currentToken()->syntaxKind()));
+    ISyntaxToken* pLiteralToken = takeToken();
+    return DelphiLiteralExpressionSyntax::create(_syntaxFactory, DelphiSyntaxFacts::literalExpressionKind(pLiteralToken->syntaxKind()), pLiteralToken);
 }
 
 DelphiStatementSyntax* DelphiParser::parseStatement() noexcept

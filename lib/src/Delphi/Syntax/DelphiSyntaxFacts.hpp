@@ -21,6 +21,7 @@ public:
     static bool isModuleStart(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isStatementStart(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isPredefinedType(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isLiteral(Core::Syntax::SyntaxKind syntaxKind) noexcept;
 
     static Core::Syntax::SyntaxKind keywordKind(pg_string_view text,
                                                 Core::Parser::LexerMode mode = Core::Parser::LexerMode::Syntax) noexcept;
