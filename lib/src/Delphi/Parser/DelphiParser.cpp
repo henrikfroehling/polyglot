@@ -127,7 +127,7 @@ DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
     ISyntaxToken* pInKeyword{nullptr};
     ISyntaxToken* pFilename{nullptr};
 
-    if (peekToken(1)->syntaxKind() == SyntaxKind::InKeyword)
+    if (currentToken()->syntaxKind() == SyntaxKind::InKeyword)
     {
         pInKeyword = takeToken();
         pFilename = takeToken(SyntaxKind::SingleQuotationStringLiteralToken);
@@ -142,7 +142,7 @@ DelphiUnitInterfaceSectionSyntax* DelphiParser::parseUnitInterfaceSection() noex
     ISyntaxToken* pInterfaceKeyword = takeToken(SyntaxKind::InterfaceKeyword);
     DelphiUsesClauseSyntax* pUses{nullptr};
 
-    if (peekToken(1)->syntaxKind() == SyntaxKind::UsesKeyword)
+    if (currentToken()->syntaxKind() == SyntaxKind::UsesKeyword)
         pUses = parseUsesClause();
 
     return DelphiUnitInterfaceSectionSyntax::create(_syntaxFactory, pInterfaceKeyword, pUses);
@@ -153,7 +153,7 @@ DelphiUnitImplementationSectionSyntax* DelphiParser::parseUnitImplementationSect
     ISyntaxToken* pImplementationKeyword = takeToken(SyntaxKind::ImplementationKeyword);
     DelphiUsesClauseSyntax* pUses{nullptr};
 
-    if (peekToken(1)->syntaxKind() == SyntaxKind::UsesKeyword)
+    if (currentToken()->syntaxKind() == SyntaxKind::UsesKeyword)
         pUses = parseUsesClause();
 
     return DelphiUnitImplementationSectionSyntax::create(_syntaxFactory, pImplementationKeyword, pUses);
