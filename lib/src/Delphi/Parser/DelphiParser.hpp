@@ -27,9 +27,9 @@ class DelphiEndOfModuleSyntax;
 class DelphiExitStatementSyntax;
 class DelphiForStatementSyntax;
 class DelphiGotoStatementSyntax;
-class DelphiIdentifierNameExpressionSyntax;
+class DelphiIdentifierNameSyntax;
 class DelphiIfStatementSyntax;
-class DelphiNameExpressionSyntax;
+class DelphiNameSyntax;
 class DelphiPackageModuleSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiRaiseStatementSyntax;
@@ -72,12 +72,12 @@ private:
     Syntax::DelphiProgramModuleSyntax* parseProgramModule() noexcept;
     Syntax::DelphiUsesClauseSyntax* parseUsesClause() noexcept;
     Syntax::DelphiUnitReferenceDeclarationSyntax* parseUnitReference() noexcept;
-    Syntax::DelphiNameExpressionSyntax* parseQualifiedName() noexcept;
+    Syntax::DelphiNameSyntax* parseQualifiedName() noexcept;
 
-    Syntax::DelphiNameExpressionSyntax* parseQualifiedNameRight(Syntax::DelphiNameExpressionSyntax* left,
-                                                                Core::Syntax::ISyntaxToken* dotToken) noexcept;
+    Syntax::DelphiNameSyntax* parseQualifiedNameRight(Syntax::DelphiNameSyntax* left,
+                                                      Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
-    Syntax::DelphiIdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
+    Syntax::DelphiIdentifierNameSyntax* parseIdentifierName() noexcept;
     Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
 
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

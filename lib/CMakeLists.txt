@@ -119,15 +119,19 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiForStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiGotoStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiIfStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiQualifiedNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiRaiseStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiRepeatStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSimpleNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSimpleStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiStatementListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiStatementSyntax.cpp
@@ -135,6 +139,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxTree.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiTryStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiTypeSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
@@ -151,14 +156,9 @@ set(SOURCES_DELPHI_SYNTAX
 set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiIdentifierNameExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiNameExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiQualifiedNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSimpleNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiTypeExpressionSyntax.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX_TRIVIA

@@ -9,7 +9,6 @@
 #include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 #include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.hpp"
-#include "Delphi/Syntax/Expressions/DelphiIdentifierNameExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.hpp"
@@ -27,6 +26,7 @@
 #include "Delphi/Syntax/Trivia/DelphiRegionDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiSwitchDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiUndefDirectiveTriviaSyntax.hpp"
+#include "Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
 
 namespace polyglot::Delphi::Parser
 {
@@ -426,7 +426,7 @@ DelphiExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
             if (peekToken(1)->syntaxKind() == SyntaxKind::OpenParenthesisToken)
                 return parseCallExpression(pIdentifier);
 
-            return DelphiIdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
+            return DelphiIdentifierNameSyntax::create(_syntaxFactory, pIdentifier);
         }
         case SyntaxKind::NumberLiteralToken:
             return DelphiLiteralExpressionSyntax::create(_syntaxFactory, SyntaxKind::NumericLiteralExpression, takeToken());
@@ -434,7 +434,7 @@ DelphiExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
         case SyntaxKind::FalseKeyword:
             return DelphiLiteralExpressionSyntax::create(_syntaxFactory, DelphiSyntaxFacts::literalExpressionKind(syntaxKind), takeToken());
         default:
-            return DelphiIdentifierNameExpressionSyntax::create(_syntaxFactory, takeToken(SyntaxKind::IdentifierToken));
+            return DelphiIdentifierNameSyntax::create(_syntaxFactory, takeToken(SyntaxKind::IdentifierToken));
     }
 
     return nullptr;
@@ -484,7 +484,7 @@ bool DelphiDirectiveParser::evaluateBool(DelphiExpressionSyntax* expression) con
         case SyntaxKind::FalseLiteralExpression:
             return static_cast<DelphiLiteralExpressionSyntax*>(expression)->token()->booleanValue();
         case SyntaxKind::IdentifierNameExpression:
-            return isDefined(static_cast<DelphiIdentifierNameExpressionSyntax*>(expression)->identifier()->text());
+            return isDefined(static_cast<DelphiIdentifierNameSyntax*>(expression)->identifier()->text());
     }
 
     return false;

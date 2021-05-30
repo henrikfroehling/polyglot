@@ -16,20 +16,20 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiNameExpressionSyntax;
+class DelphiNameSyntax;
 
 class DelphiUnitHeadSyntax : public DelphiSyntaxNode
 {
 public:
     explicit DelphiUnitHeadSyntax(Core::Syntax::ISyntaxToken* unitKeyword,
-                                  DelphiNameExpressionSyntax* name,
+                                  DelphiNameSyntax* name,
                                   Core::Syntax::ISyntaxToken* semiColonToken,
                                   Core::Syntax::ISyntaxToken* inKeyword = nullptr,
                                   Core::Syntax::ISyntaxToken* filename = nullptr) noexcept;
 
     virtual ~DelphiUnitHeadSyntax() noexcept {}
     inline Core::Syntax::ISyntaxToken* unitKeyword() const noexcept { return _pUnitKeyword; }
-    inline DelphiNameExpressionSyntax* name() const noexcept { return _pName; }
+    inline DelphiNameSyntax* name() const noexcept { return _pName; }
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
     inline Core::Syntax::ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline Core::Syntax::ISyntaxToken* filename() const noexcept { return _pFilename; }
@@ -42,14 +42,14 @@ public:
 
     static DelphiUnitHeadSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                         Core::Syntax::ISyntaxToken* unitKeyword,
-                                        DelphiNameExpressionSyntax* name,
+                                        DelphiNameSyntax* name,
                                         Core::Syntax::ISyntaxToken* semiColonToken,
                                         Core::Syntax::ISyntaxToken* inKeyword = nullptr,
                                         Core::Syntax::ISyntaxToken* filename = nullptr) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pUnitKeyword;
-    DelphiNameExpressionSyntax* _pName;
+    DelphiNameSyntax* _pName;
     Core::Syntax::ISyntaxToken* _pSemiColonToken;
     Core::Syntax::ISyntaxToken* _pInKeyword; // optional
     Core::Syntax::ISyntaxToken* _pFilename; // optional

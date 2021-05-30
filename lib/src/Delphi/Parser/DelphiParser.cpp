@@ -6,9 +6,7 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
 #include "Delphi/Parser/DelphiSyntaxFacts.hpp"
-#include "Delphi/Syntax/Expressions/DelphiIdentifierNameExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
-#include "Delphi/Syntax/Expressions/DelphiQualifiedNameExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiAssemblerStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiBreakStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseStatementSyntax.hpp"
@@ -18,9 +16,11 @@
 #include "Delphi/Syntax/DelphiExitStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiForStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiGotoStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/DelphiIfStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiQualifiedNameSyntax.hpp"
 #include "Delphi/Syntax/DelphiRaiseStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiRepeatStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiStatementListSyntax.hpp"
@@ -121,7 +121,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
 DelphiUnitHeadSyntax* DelphiParser::parseUnitHead() noexcept
 {
     ISyntaxToken* pUnitKeyword = takeToken(SyntaxKind::UnitKeyword);
-    DelphiNameExpressionSyntax* pName = parseQualifiedName();
+    DelphiNameSyntax* pName = parseQualifiedName();
     ISyntaxToken* pInKeyword{nullptr};
     ISyntaxToken* pFilename{nullptr};
 
@@ -203,7 +203,7 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     if (currentToken()->syntaxKind() != SyntaxKind::IdentifierToken)
         return nullptr; // TODO error handling
 
-    DelphiNameExpressionSyntax* pUnitName = parseQualifiedName();
+    DelphiNameSyntax* pUnitName = parseQualifiedName();
     ISyntaxToken* pInKeyword{nullptr};
     ISyntaxToken* pSourceFile{nullptr};
 
@@ -216,9 +216,9 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     return DelphiUnitReferenceDeclarationSyntax::create(_syntaxFactory, pUnitName, pInKeyword, pSourceFile);
 }
 
-DelphiNameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
+DelphiNameSyntax* DelphiParser::parseQualifiedName() noexcept
 {
-    DelphiNameExpressionSyntax* pName = parseIdentifierName();
+    DelphiNameSyntax* pName = parseIdentifierName();
 
     while (currentToken()->syntaxKind() == SyntaxKind::DotToken)
     {
@@ -229,28 +229,28 @@ DelphiNameExpressionSyntax* DelphiParser::parseQualifiedName() noexcept
     return pName;
 }
 
-DelphiNameExpressionSyntax* DelphiParser::parseQualifiedNameRight(DelphiNameExpressionSyntax* left,
-                                                                  ISyntaxToken* dotToken) noexcept
+DelphiNameSyntax* DelphiParser::parseQualifiedNameRight(DelphiNameSyntax* left,
+                                                        ISyntaxToken* dotToken) noexcept
 {
     assert(dotToken != nullptr);
     assert(dotToken->syntaxKind() == SyntaxKind::DotToken);
-    DelphiSimpleNameExpressionSyntax* pRight = parseIdentifierName();
-    return DelphiQualifiedNameExpressionSyntax::create(_syntaxFactory, left, dotToken, pRight);
+    DelphiSimpleNameSyntax* pRight = parseIdentifierName();
+    return DelphiQualifiedNameSyntax::create(_syntaxFactory, left, dotToken, pRight);
 }
 
-DelphiIdentifierNameExpressionSyntax* DelphiParser::parseIdentifierName() noexcept
+DelphiIdentifierNameSyntax* DelphiParser::parseIdentifierName() noexcept
 {
     ISyntaxToken* pCurrentToken = currentToken();
 
     if (pCurrentToken->syntaxKind() == SyntaxKind::IdentifierToken)
     {
         ISyntaxToken* pIdentifier = takeToken();
-        return DelphiIdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
+        return DelphiIdentifierNameSyntax::create(_syntaxFactory, pIdentifier);
     }
     else
     {
         ISyntaxToken* pMissingIdentifier = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, pCurrentToken->text(), pCurrentToken->position());
-        return DelphiIdentifierNameExpressionSyntax::create(_syntaxFactory, pMissingIdentifier);
+        return DelphiIdentifierNameSyntax::create(_syntaxFactory, pMissingIdentifier);
     }
 }
 

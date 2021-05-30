@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "Delphi/Syntax/Expressions/DelphiNameExpressionSyntax.hpp"
+#include "Delphi/Syntax//DelphiNameSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -15,7 +15,7 @@ using Core::Syntax::SyntaxKind;
 using Core::Syntax::SyntaxVariant;
 
 DelphiUnitHeadSyntax::DelphiUnitHeadSyntax(ISyntaxToken* unitKeyword,
-                                           DelphiNameExpressionSyntax* name,
+                                           DelphiNameSyntax* name,
                                            ISyntaxToken* semiColonToken,
                                            ISyntaxToken* inKeyword,
                                            ISyntaxToken* filename) noexcept
@@ -73,7 +73,7 @@ SyntaxVariant DelphiUnitHeadSyntax::child(pg_size index) const
 
 DelphiUnitHeadSyntax* DelphiUnitHeadSyntax::create(SyntaxFactory& syntaxFactory,
                                                    ISyntaxToken* unitKeyword,
-                                                   DelphiNameExpressionSyntax* name,
+                                                   DelphiNameSyntax* name,
                                                    ISyntaxToken* semiColonToken,
                                                    ISyntaxToken* inKeyword,
                                                    ISyntaxToken* filename) noexcept

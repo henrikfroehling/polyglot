@@ -13,7 +13,7 @@ using Core::Syntax::SyntaxFactory;
 using Core::Syntax::SyntaxKind;
 using Core::Syntax::SyntaxVariant;
 
-DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(DelphiNameExpressionSyntax* unitName,
+DelphiUnitReferenceDeclarationSyntax::DelphiUnitReferenceDeclarationSyntax(DelphiNameSyntax* unitName,
                                                                            ISyntaxToken* inKeyword,
                                                                            ISyntaxToken* sourceFile) noexcept
     : DelphiSyntaxNode{SyntaxKind::UnitReference},
@@ -60,7 +60,7 @@ SyntaxVariant DelphiUnitReferenceDeclarationSyntax::child(pg_size index) const
 }
 
 DelphiUnitReferenceDeclarationSyntax* DelphiUnitReferenceDeclarationSyntax::create(SyntaxFactory& syntaxFactory,
-                                                                                   DelphiNameExpressionSyntax* unitName,
+                                                                                   DelphiNameSyntax* unitName,
                                                                                    ISyntaxToken* inKeyword,
                                                                                    ISyntaxToken* sourceFile) noexcept
 {

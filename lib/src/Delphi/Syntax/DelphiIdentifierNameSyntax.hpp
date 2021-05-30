@@ -1,9 +1,9 @@
-#ifndef POLYGLOT_DELPHI_SYNTAX_EXPRESSIONS_DELPHIIDENTIFIERNAMEEXPRESSIONSYNTAX_H
-#define POLYGLOT_DELPHI_SYNTAX_EXPRESSIONS_DELPHIIDENTIFIERNAMEEXPRESSIONSYNTAX_H
+#ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIIDENTIFIERNAMESYNTAX_H
+#define POLYGLOT_DELPHI_SYNTAX_DELPHIIDENTIFIERNAMESYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Delphi/Syntax/Expressions/DelphiSimpleNameExpressionSyntax.hpp"
+#include "Delphi/Syntax/DelphiSimpleNameSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -16,21 +16,21 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiIdentifierNameExpressionSyntax : public DelphiSimpleNameExpressionSyntax
+class DelphiIdentifierNameSyntax : public DelphiSimpleNameSyntax
 {
 public:
-    explicit DelphiIdentifierNameExpressionSyntax(Core::Syntax::ISyntaxToken* identifier) noexcept;
-    virtual ~DelphiIdentifierNameExpressionSyntax() noexcept {}
+    explicit DelphiIdentifierNameSyntax(Core::Syntax::ISyntaxToken* identifier) noexcept;
+    virtual ~DelphiIdentifierNameSyntax() noexcept {}
     virtual Core::Syntax::ISyntaxToken* identifier() const noexcept override { return _pIdentifier; }
     inline pg_size childCount() const noexcept override final { return 1; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pIdentifier); }
     inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pIdentifier); }
 
-    inline virtual pg_string typeName() const noexcept override { return L"DelphiIdentifierNameExpressionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiIdentifierNameSyntax"; }
 
-    static DelphiIdentifierNameExpressionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                        Core::Syntax::ISyntaxToken* identifier) noexcept;
+    static DelphiIdentifierNameSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
+                                              Core::Syntax::ISyntaxToken* identifier) noexcept;
 
 protected:
     Core::Syntax::ISyntaxToken* _pIdentifier;
@@ -38,4 +38,4 @@ protected:
 
 } // end namespace polyglot::Delphi::Syntax
 
-#endif // POLYGLOT_DELPHI_SYNTAX_EXPRESSIONS_DELPHIIDENTIFIERNAMEEXPRESSIONSYNTAX_H
+#endif // POLYGLOT_DELPHI_SYNTAX_DELPHIIDENTIFIERNAMESYNTAX_H
