@@ -11,7 +11,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::SyntaxKind;
 
 DelphiPredefinedTypeSyntax::DelphiPredefinedTypeSyntax(Core::Syntax::ISyntaxToken* keyword) noexcept
-    : DelphiTypeSyntax{SyntaxKind::PredefinedTypeExpression},
+    : DelphiTypeSyntax{SyntaxKind::PredefinedType},
       _pKeyword{keyword}
 {}
 

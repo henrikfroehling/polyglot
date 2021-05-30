@@ -12,7 +12,7 @@
 #include "Delphi/Syntax/DelphiCaseStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiCompoundStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiContinueStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiEndOfModuleExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiExitStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiForStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiGotoStatementSyntax.hpp"
@@ -112,7 +112,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
             pFinalizationSection = parseUnitFinalizationSection();
     }
 
-    DelphiEndOfModuleSyntax* endOfModule = parseEndOfModule();
+    DelphiEndOfModuleExpressionSyntax* endOfModule = parseEndOfModule();
     ISyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
     return DelphiUnitModuleSyntax::create(_syntaxFactory, pHead, pInterfaceSection, pImplementationSection,
@@ -261,11 +261,11 @@ DelphiPredefinedTypeSyntax* DelphiParser::parsePredefinedType() noexcept
     return DelphiPredefinedTypeSyntax::create(_syntaxFactory, typeKeyword);
 }
 
-DelphiEndOfModuleSyntax* DelphiParser::parseEndOfModule() noexcept
+DelphiEndOfModuleExpressionSyntax* DelphiParser::parseEndOfModule() noexcept
 {
     ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
     ISyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
-    return DelphiEndOfModuleSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
+    return DelphiEndOfModuleExpressionSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
 DelphiStatementSyntax* DelphiParser::parseStatement() noexcept

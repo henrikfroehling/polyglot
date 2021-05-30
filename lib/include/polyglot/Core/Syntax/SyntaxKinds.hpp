@@ -323,6 +323,8 @@ enum class SyntaxKind : unsigned short
     PackageContainsClause,
     UsesClause,
     UnitReference,
+
+    // statements
     StatementList,
     CompoundStatement,
     IfStatement,
@@ -350,11 +352,12 @@ enum class SyntaxKind : unsigned short
     NumericLiteralExpression,
     TrueLiteralExpression,
     FalseLiteralExpression,
-    IdentifierNameExpression,
-    QualifiedNameExpression,
-    PredefinedTypeExpression,
     CallExpression,
-    EndOfModule
+    EndOfModuleExpression,
+
+    IdentifierName,
+    QualifiedName,
+    PredefinedType
 };
 
 pg_string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;

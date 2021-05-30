@@ -5,7 +5,6 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
@@ -23,7 +22,7 @@ using Core::Syntax::SyntaxVariant;
 DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
-                                               DelphiEndOfModuleSyntax* endOfModule,
+                                               DelphiEndOfModuleExpressionSyntax* endOfModule,
                                                ISyntaxToken* EOFToken,
                                                DelphiUnitInitializationSectionSyntax* initializationSection,
                                                DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
@@ -122,7 +121,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
                                                        DelphiUnitHeadSyntax* head,
                                                        DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                        DelphiUnitImplementationSectionSyntax* implementationSection,
-                                                       DelphiEndOfModuleSyntax* endOfModule,
+                                                       DelphiEndOfModuleExpressionSyntax* endOfModule,
                                                        ISyntaxToken* EOFToken,
                                                        DelphiUnitInitializationSectionSyntax* initializationSection,
                                                        DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
@@ -134,7 +133,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
     assert(implementationSection != nullptr);
     assert(implementationSection->syntaxKind() == SyntaxKind::UnitImplementationSection);
     assert(endOfModule != nullptr);
-    assert(endOfModule->syntaxKind() == SyntaxKind::EndOfModule);
+    assert(endOfModule->syntaxKind() == SyntaxKind::EndOfModuleExpression);
     assert(EOFToken != nullptr);
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 

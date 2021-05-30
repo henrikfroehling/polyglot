@@ -1,10 +1,10 @@
-#ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULESYNTAX_H
-#define POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULESYNTAX_H
+#ifndef POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULEEXPRESSIONSYNTAX_H
+#define POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULEEXPRESSIONSYNTAX_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Delphi/Syntax/DelphiSyntaxNode.hpp"
+#include "Delphi/Syntax/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -17,13 +17,13 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiEndOfModuleSyntax : public DelphiSyntaxNode
+class DelphiEndOfModuleExpressionSyntax : public DelphiExpressionSyntax
 {
 public:
-    explicit DelphiEndOfModuleSyntax(Core::Syntax::ISyntaxToken* endKeyword,
-                                     Core::Syntax::ISyntaxToken* dotToken) noexcept;
+    explicit DelphiEndOfModuleExpressionSyntax(Core::Syntax::ISyntaxToken* endKeyword,
+                                               Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
-    virtual ~DelphiEndOfModuleSyntax() noexcept {}
+    virtual ~DelphiEndOfModuleExpressionSyntax() noexcept {}
 
     inline Core::Syntax::ISyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
     inline Core::Syntax::ISyntaxToken* dotToken() const noexcept { return _pDotToken; }
@@ -32,11 +32,11 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pDotToken); }
 
-    inline virtual pg_string typeName() const noexcept override { return L"DelphiEndOfModuleSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiEndOfModuleExpressionSyntax"; }
 
-    static DelphiEndOfModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                           Core::Syntax::ISyntaxToken* endKeyword,
-                                           Core::Syntax::ISyntaxToken* dotToken) noexcept;
+    static DelphiEndOfModuleExpressionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
+                                                     Core::Syntax::ISyntaxToken* endKeyword,
+                                                     Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pEndKeyword;
@@ -45,4 +45,4 @@ private:
 
 } // end namespace polyglot::Delphi::Syntax
 
-#endif // POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULESYNTAX_H
+#endif // POLYGLOT_DELPHI_SYNTAX_DELPHIENDOFMODULEEXPRESSIONSYNTAX_H

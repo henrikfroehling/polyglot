@@ -114,7 +114,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompoundStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiContinueStatementSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiExitStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiForStatementSyntax.cpp

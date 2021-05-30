@@ -483,7 +483,7 @@ bool DelphiDirectiveParser::evaluateBool(DelphiExpressionSyntax* expression) con
         case SyntaxKind::TrueLiteralExpression:
         case SyntaxKind::FalseLiteralExpression:
             return static_cast<DelphiLiteralExpressionSyntax*>(expression)->token()->booleanValue();
-        case SyntaxKind::IdentifierNameExpression:
+        case SyntaxKind::IdentifierName:
             return isDefined(static_cast<DelphiIdentifierNameSyntax*>(expression)->identifier()->text());
     }
 

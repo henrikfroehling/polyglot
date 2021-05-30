@@ -14,7 +14,7 @@ using namespace Core::Syntax;
 DelphiQualifiedNameSyntax::DelphiQualifiedNameSyntax(DelphiNameSyntax* left,
                                                      ISyntaxToken* dotToken,
                                                      DelphiSimpleNameSyntax* right) noexcept
-    : DelphiNameSyntax{SyntaxKind::QualifiedNameExpression},
+    : DelphiNameSyntax{SyntaxKind::QualifiedName},
       _pLeft{left},
       _pDotToken{dotToken},
       _pRight{right}

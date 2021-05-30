@@ -12,7 +12,7 @@ namespace polyglot::Delphi::Syntax
 using namespace Core::Syntax;
 
 DelphiIdentifierNameSyntax::DelphiIdentifierNameSyntax(ISyntaxToken* identfier) noexcept
-    : DelphiSimpleNameSyntax{SyntaxKind::IdentifierNameExpression},
+    : DelphiSimpleNameSyntax{SyntaxKind::IdentifierName},
       _pIdentifier{identfier}
 {
     _position = _pIdentifier->position();
