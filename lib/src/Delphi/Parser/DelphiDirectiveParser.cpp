@@ -6,7 +6,6 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
-#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
 #include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
@@ -27,6 +26,7 @@
 #include "Delphi/Syntax/Trivia/DelphiSwitchDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiUndefDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
+#include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Parser
 {

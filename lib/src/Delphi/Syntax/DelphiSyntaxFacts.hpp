@@ -1,11 +1,11 @@
-#ifndef POLYGLOT_DELPHI_PARSER_DELPHISYNTAXFACTS_H
-#define POLYGLOT_DELPHI_PARSER_DELPHISYNTAXFACTS_H
+#ifndef POLYGLOT_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H
+#define POLYGLOT_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H
 
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Core/Parser/LexerMode.hpp"
 
-namespace polyglot::Delphi::Parser
+namespace polyglot::Delphi::Syntax
 {
 
 class DelphiSyntaxFacts
@@ -25,6 +25,6 @@ public:
                                                 Core::Parser::LexerMode mode = Core::Parser::LexerMode::Syntax) noexcept;
 };
 
-} // end namespace polyglot::Delphi::Parser
+} // end namespace polyglot::Delphi::Syntax
 
-#endif // POLYGLOT_DELPHI_PARSER_DELPHISYNTAXFACTS_H
+#endif // POLYGLOT_DELPHI_SYNTAX_DELPHISYNTAXFACTS_H

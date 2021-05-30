@@ -1,11 +1,11 @@
-#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
 #include <algorithm>
 #include <unordered_map>
 
-namespace polyglot::Delphi::Parser
+namespace polyglot::Delphi::Syntax
 {
 
-using polyglot::Core::Syntax::SyntaxKind;
+using Core::Syntax::SyntaxKind;
 
 static const std::unordered_map<pg_string, SyntaxKind> SYNTAXKEYWORDS =
 {
@@ -751,4 +751,4 @@ SyntaxKind DelphiSyntaxFacts::keywordKind(pg_string_view text,
     return SyntaxKind::None;
 }
 
-} // end namespace polyglot::Delphi::Parser
+} // end namespace polyglot::Delphi::Syntax

@@ -3,7 +3,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
-#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -19,7 +19,7 @@ DelphiPredefinedTypeSyntax* DelphiPredefinedTypeSyntax::create(Core::Syntax::Syn
                                                                Core::Syntax::ISyntaxToken* keyword) noexcept
 {
     assert(keyword != nullptr);
-    assert(Parser::DelphiSyntaxFacts::isPredefinedType(keyword->syntaxKind()));
+    assert(DelphiSyntaxFacts::isPredefinedType(keyword->syntaxKind()));
 
     auto ptrPredefinedTypeSyntax = std::make_unique<DelphiPredefinedTypeSyntax>(keyword);
     return static_cast<DelphiPredefinedTypeSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrPredefinedTypeSyntax)));

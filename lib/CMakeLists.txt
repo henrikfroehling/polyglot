@@ -104,7 +104,6 @@ set(SOURCES_DELPHI_PARSER
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerStates.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiParser.cpp
-  ${SOURCE_DIR}/Delphi/Parser/DelphiSyntaxFacts.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX
@@ -136,6 +135,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSimpleStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiStatementListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxFacts.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxList.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxTree.cpp
