@@ -22,7 +22,7 @@ using Core::Syntax::SyntaxVariant;
 DelphiUnitModuleSyntax::DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                                DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                DelphiUnitImplementationSectionSyntax* implementationSection,
-                                               DelphiEndOfModuleExpressionSyntax* endOfModule,
+                                               DelphiEndOfModuleDeclarationSyntax* endOfModule,
                                                ISyntaxToken* EOFToken,
                                                DelphiUnitInitializationSectionSyntax* initializationSection,
                                                DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
@@ -121,7 +121,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
                                                        DelphiUnitHeadSyntax* head,
                                                        DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                                        DelphiUnitImplementationSectionSyntax* implementationSection,
-                                                       DelphiEndOfModuleExpressionSyntax* endOfModule,
+                                                       DelphiEndOfModuleDeclarationSyntax* endOfModule,
                                                        ISyntaxToken* EOFToken,
                                                        DelphiUnitInitializationSectionSyntax* initializationSection,
                                                        DelphiUnitFinalizationSectionSyntax* finalizationSection) noexcept
@@ -133,7 +133,7 @@ DelphiUnitModuleSyntax* DelphiUnitModuleSyntax::create(SyntaxFactory& syntaxFact
     assert(implementationSection != nullptr);
     assert(implementationSection->syntaxKind() == SyntaxKind::UnitImplementationSection);
     assert(endOfModule != nullptr);
-    assert(endOfModule->syntaxKind() == SyntaxKind::EndOfModuleExpression);
+    assert(endOfModule->syntaxKind() == SyntaxKind::EndOfModuleDeclaration);
     assert(EOFToken != nullptr);
     assert(EOFToken->syntaxKind() == SyntaxKind::EndOfFileToken);
 

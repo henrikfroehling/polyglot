@@ -323,6 +323,7 @@ enum class SyntaxKind : unsigned short
     PackageContainsClause,
     UsesClause,
     UnitReference,
+    EndOfModuleDeclaration,
 
     // statements
     StatementList,
@@ -353,7 +354,6 @@ enum class SyntaxKind : unsigned short
     TrueLiteralExpression,
     FalseLiteralExpression,
     CallExpression,
-    EndOfModuleExpression,
 
     IdentifierName,
     ExtendedIdentifierName,

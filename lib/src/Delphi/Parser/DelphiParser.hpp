@@ -23,7 +23,7 @@ class DelphiCaseStatementSyntax;
 class DelphiCompilationUnitSyntax;
 class DelphiCompoundStatementSyntax;
 class DelphiContinueStatementSyntax;
-class DelphiEndOfModuleExpressionSyntax;
+class DelphiEndOfModuleDeclarationSyntax;
 class DelphiExitStatementSyntax;
 class DelphiExtendedIdentifierNameSyntax;
 class DelphiForStatementSyntax;
@@ -83,7 +83,7 @@ private:
     Syntax::DelphiIdentifierNameSyntax* parseIdentifierName() noexcept;
     Syntax::DelphiExtendedIdentifierNameSyntax* parseExtendedIdentifierName() noexcept;
     Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
-    Syntax::DelphiEndOfModuleExpressionSyntax* parseEndOfModule() noexcept;
+    Syntax::DelphiEndOfModuleDeclarationSyntax* parseEndOfModule() noexcept;
 
     Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

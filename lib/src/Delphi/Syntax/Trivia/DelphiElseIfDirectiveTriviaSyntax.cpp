@@ -7,7 +7,7 @@
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Syntax/SyntaxNode.hpp"
 #include "Core/Syntax/SyntaxToken.hpp"
-#include "Delphi/Syntax/DelphiExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {

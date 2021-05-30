@@ -5,30 +5,32 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
-#include "Delphi/Syntax/DelphiAssemblerStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiBreakStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiCaseStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiCompoundStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiContinueStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiEndOfModuleExpressionSyntax.hpp"
-#include "Delphi/Syntax/DelphiExitStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiExtendedIdentifierNameSyntax.hpp"
-#include "Delphi/Syntax/DelphiForStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiGotoStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
-#include "Delphi/Syntax/DelphiIfStatementSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiBreakStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiCaseStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiCompoundStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiContinueStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiExitStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiGotoStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiIfStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiRaiseStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiRepeatStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
-#include "Delphi/Syntax/DelphiPredefinedTypeSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
-#include "Delphi/Syntax/DelphiQualifiedNameSyntax.hpp"
-#include "Delphi/Syntax/DelphiRaiseStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiRepeatStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiStatementListSyntax.hpp"
-#include "Delphi/Syntax/DelphiStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
-#include "Delphi/Syntax/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
@@ -37,8 +39,6 @@
 #include "Delphi/Syntax/DelphiUnitModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitReferenceDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiUsesClauseSyntax.hpp"
-#include "Delphi/Syntax/DelphiWhileStatementSyntax.hpp"
-#include "Delphi/Syntax/DelphiWithStatementSyntax.hpp"
 
 namespace polyglot::Delphi::Parser
 {
@@ -114,7 +114,7 @@ DelphiUnitModuleSyntax* DelphiParser::parseUnitModule() noexcept
             pFinalizationSection = parseUnitFinalizationSection();
     }
 
-    DelphiEndOfModuleExpressionSyntax* endOfModule = parseEndOfModule();
+    DelphiEndOfModuleDeclarationSyntax* endOfModule = parseEndOfModule();
     ISyntaxToken* pEOFToken = takeToken(SyntaxKind::EndOfFileToken);
 
     return DelphiUnitModuleSyntax::create(_syntaxFactory, pHead, pInterfaceSection, pImplementationSection,
@@ -272,11 +272,11 @@ DelphiPredefinedTypeSyntax* DelphiParser::parsePredefinedType() noexcept
     return DelphiPredefinedTypeSyntax::create(_syntaxFactory, typeKeyword);
 }
 
-DelphiEndOfModuleExpressionSyntax* DelphiParser::parseEndOfModule() noexcept
+DelphiEndOfModuleDeclarationSyntax* DelphiParser::parseEndOfModule() noexcept
 {
     ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
     ISyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
-    return DelphiEndOfModuleExpressionSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
+    return DelphiEndOfModuleDeclarationSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
 DelphiLiteralExpressionSyntax* DelphiParser::parseLiteralExpression() noexcept

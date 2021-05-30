@@ -320,6 +320,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::PackageContainsClause: return L"PackageContainsClause";
         case SyntaxKind::UsesClause: return L"UsesClause";
         case SyntaxKind::UnitReference: return L"UnitReference";
+        case SyntaxKind::EndOfModuleDeclaration: return L"EndOfModuleDeclaration";
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::CompoundStatement: return L"CompoundStatement";
@@ -349,7 +350,6 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::TrueLiteralExpression: return L"TrueLiteralExpression";
         case SyntaxKind::FalseLiteralExpression: return L"FalseLiteralExpression";
         case SyntaxKind::CallExpression: return L"CallExpression";
-        case SyntaxKind::EndOfModuleExpression: return L"EndOfModule";
 
         case SyntaxKind::IdentifierName: return L"IdentifierName";
         case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";

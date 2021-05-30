@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Delphi/Syntax/DelphiExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
