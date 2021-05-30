@@ -356,6 +356,7 @@ enum class SyntaxKind : unsigned short
     EndOfModuleExpression,
 
     IdentifierName,
+    ExtendedIdentifierName,
     QualifiedName,
     PredefinedType
 };

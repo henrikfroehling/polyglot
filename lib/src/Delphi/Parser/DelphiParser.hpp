@@ -25,6 +25,7 @@ class DelphiCompoundStatementSyntax;
 class DelphiContinueStatementSyntax;
 class DelphiEndOfModuleExpressionSyntax;
 class DelphiExitStatementSyntax;
+class DelphiExtendedIdentifierNameSyntax;
 class DelphiForStatementSyntax;
 class DelphiGotoStatementSyntax;
 class DelphiIdentifierNameSyntax;
@@ -79,6 +80,7 @@ private:
                                                       Core::Syntax::ISyntaxToken* dotToken) noexcept;
 
     Syntax::DelphiIdentifierNameSyntax* parseIdentifierName() noexcept;
+    Syntax::DelphiExtendedIdentifierNameSyntax* parseExtendedIdentifierName() noexcept;
     Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
     Syntax::DelphiEndOfModuleExpressionSyntax* parseEndOfModule() noexcept;
 

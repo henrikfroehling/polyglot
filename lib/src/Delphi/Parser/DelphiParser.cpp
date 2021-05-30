@@ -13,6 +13,7 @@
 #include "Delphi/Syntax/DelphiContinueStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleExpressionSyntax.hpp"
 #include "Delphi/Syntax/DelphiExitStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiExtendedIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/DelphiForStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiGotoStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiIdentifierNameSyntax.hpp"
@@ -255,8 +256,17 @@ DelphiIdentifierNameSyntax* DelphiParser::parseIdentifierName() noexcept
     }
 }
 
+DelphiExtendedIdentifierNameSyntax* DelphiParser::parseExtendedIdentifierName() noexcept
+{
+    ISyntaxToken* pAmpersandToken = takeToken(SyntaxKind::AmpersandToken);
+    assert(DelphiSyntaxFacts::isReservedWord(currentToken()->syntaxKind()));
+    ISyntaxToken* pReservedKeyword = takeToken();
+    return DelphiExtendedIdentifierNameSyntax::create(_syntaxFactory, pAmpersandToken, pReservedKeyword);
+}
+
 DelphiPredefinedTypeSyntax* DelphiParser::parsePredefinedType() noexcept
 {
+    assert(DelphiSyntaxFacts::isPredefinedType(currentToken()->syntaxKind()));
     ISyntaxToken* typeKeyword = takeToken();
     return DelphiPredefinedTypeSyntax::create(_syntaxFactory, typeKeyword);
 }

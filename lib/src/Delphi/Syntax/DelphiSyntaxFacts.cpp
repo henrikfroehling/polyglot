@@ -531,6 +531,80 @@ bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
+bool DelphiSyntaxFacts::isReservedWord(Core::Syntax::SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::AndKeyword:
+        case SyntaxKind::ArrayKeyword:
+        case SyntaxKind::AsKeyword:
+        case SyntaxKind::AssemblerKeyword:
+        case SyntaxKind::BeginKeyword:
+        case SyntaxKind::CaseKeyword:
+        case SyntaxKind::ClassKeyword:
+        case SyntaxKind::ConstKeyword:
+        case SyntaxKind::ConstructorKeyword:
+        case SyntaxKind::DestructorKeyword:
+        case SyntaxKind::DispInterfaceKeyword:
+        case SyntaxKind::DivKeyword:
+        case SyntaxKind::DoKeyword:
+        case SyntaxKind::DownToKeyword:
+        case SyntaxKind::ElseKeyword:
+        case SyntaxKind::EndKeyword:
+        case SyntaxKind::ExceptKeyword:
+        case SyntaxKind::ExportsKeyword:
+        case SyntaxKind::FileKeyword:
+        case SyntaxKind::FinalizationKeyword:
+        case SyntaxKind::FinallyKeyword:
+        case SyntaxKind::ForKeyword:
+        case SyntaxKind::FunctionKeyword:
+        case SyntaxKind::GotoKeyword:
+        case SyntaxKind::IfKeyword:
+        case SyntaxKind::ImplementationKeyword:
+        case SyntaxKind::InKeyword:
+        case SyntaxKind::InheritedKeyword:
+        case SyntaxKind::InitializationKeyword:
+        case SyntaxKind::InlineKeyword:
+        case SyntaxKind::InterfaceKeyword:
+        case SyntaxKind::IsKeyword:
+        case SyntaxKind::LabelKeyword:
+        case SyntaxKind::LibraryKeyword:
+        case SyntaxKind::ModKeyword:
+        case SyntaxKind::NilKeyword:
+        case SyntaxKind::NotKeyword:
+        case SyntaxKind::ObjectKeyword:
+        case SyntaxKind::OfKeyword:
+        case SyntaxKind::OrKeyword:
+        case SyntaxKind::PackedKeyword:
+        case SyntaxKind::ProcedureKeyword:
+        case SyntaxKind::ProgramKeyword:
+        case SyntaxKind::PropertyKeyword:
+        case SyntaxKind::RaiseKeyword:
+        case SyntaxKind::RecordKeyword:
+        case SyntaxKind::RepeatKeyword:
+        case SyntaxKind::ResourceStringKeyword:
+        case SyntaxKind::SetKeyword:
+        case SyntaxKind::ShiftLeftKeyword:
+        case SyntaxKind::ShiftRightKeyword:
+        case SyntaxKind::StringKeyword:
+        case SyntaxKind::ThenKeyword:
+        case SyntaxKind::ThreadVarKeyword:
+        case SyntaxKind::ToKeyword:
+        case SyntaxKind::TryKeyword:
+        case SyntaxKind::TypeKeyword:
+        case SyntaxKind::UnitKeyword:
+        case SyntaxKind::UntilKeyword:
+        case SyntaxKind::UsesKeyword:
+        case SyntaxKind::VarKeyword:
+        case SyntaxKind::WhileKeyword:
+        case SyntaxKind::WithKeyword:
+        case SyntaxKind::XorKeyword:
+            return true;
+    }
+
+    return false;
+}
+
 bool DelphiSyntaxFacts::isModuleStart(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)

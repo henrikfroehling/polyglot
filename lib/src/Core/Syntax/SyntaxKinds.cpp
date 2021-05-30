@@ -352,6 +352,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::EndOfModuleExpression: return L"EndOfModule";
 
         case SyntaxKind::IdentifierName: return L"IdentifierName";
+        case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";
         case SyntaxKind::QualifiedName: return L"QualifiedName";
         case SyntaxKind::PredefinedType: return L"PredefinedType";
     }

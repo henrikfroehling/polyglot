@@ -17,6 +17,7 @@ public:
     static Core::Syntax::SyntaxKind literalExpressionKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isComparisonSyntaxKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isKeyword(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isReservedWord(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isModuleStart(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isStatementStart(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isPredefinedType(Core::Syntax::SyntaxKind syntaxKind) noexcept;

@@ -116,6 +116,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiExitStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExtendedIdentifierNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiForStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiGotoStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiIdentifierNameSyntax.cpp
