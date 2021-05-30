@@ -78,7 +78,10 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
         hashCode = (hashCode ^ c) * Hashing::FNV_PRIME;
     }
 
-    state = QuickScanState::Bad;
+    if (offset == _textWindow.content().length() && state != QuickScanState::Bad)
+        state = QuickScanState::Done;
+    else
+        state = QuickScanState::Bad;
 
 exitFor:
     _textWindow.advanceCharacter(offset - _textWindow.offset());
