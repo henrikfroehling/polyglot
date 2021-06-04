@@ -353,6 +353,7 @@ enum class SyntaxKind : unsigned short
     NumericLiteralExpression,
     TrueLiteralExpression,
     FalseLiteralExpression,
+    NilLiteralExpression,
     CallExpression,
 
     IdentifierName,

@@ -314,6 +314,8 @@ SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexc
             return SyntaxKind::TrueLiteralExpression;
         case SyntaxKind::FalseKeyword:
             return SyntaxKind::FalseLiteralExpression;
+        case SyntaxKind::NilKeyword:
+            return SyntaxKind::NilLiteralExpression;
     }
 
     return SyntaxKind::None;
@@ -740,6 +742,7 @@ bool DelphiSyntaxFacts::isLiteral(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ControlCharacterLiteral:
         case SyntaxKind::TrueKeyword:
         case SyntaxKind::FalseKeyword:
+        case SyntaxKind::NilKeyword:
             return true;
     }
 
