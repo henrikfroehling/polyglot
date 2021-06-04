@@ -20,6 +20,7 @@
 #include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiGotoStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiIfStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiLabeledStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiRaiseStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiRepeatStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
@@ -457,6 +458,16 @@ DelphiGotoStatementSyntax* DelphiParser::parseGotoStatement() noexcept
         pLabelToken = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, currentToken()->text(), currentToken()->position());
 
     return DelphiGotoStatementSyntax::create(_syntaxFactory, pGotoKeyword, pLabelToken);
+}
+
+DelphiLabeledStatementSyntax* DelphiParser::parseLabeledStatement() noexcept
+{
+    SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+    assert(currentSyntaxKind == SyntaxKind::IdentifierToken || currentSyntaxKind == SyntaxKind::IntegerNumberLiteralToken);
+    ISyntaxToken* pLabelIdentifier = takeToken(currentSyntaxKind);
+    ISyntaxToken* pColonToken = takeToken(SyntaxKind::ColonToken);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    return DelphiLabeledStatementSyntax::create(_syntaxFactory, pLabelIdentifier, pColonToken, pStatement);
 }
 
 } // end namespace polyglot::Delphi::Parser

@@ -337,6 +337,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ContinueStatement: return L"ContinueStatement";
         case SyntaxKind::GotoStatement: return L"GotoStatement";
         case SyntaxKind::ExitStatement: return L"ExitStatement";
+        case SyntaxKind::LabeledStatement: return L"LabeledStatement";
 
         // expressions
         case SyntaxKind::LogicalNotExpression: return L"LogicalNotExpression";

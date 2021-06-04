@@ -341,6 +341,7 @@ enum class SyntaxKind : unsigned short
     ContinueStatement,
     GotoStatement,
     ExitStatement,
+    LabeledStatement,
 
     // expressions
     LogicalNotExpression = 4000,

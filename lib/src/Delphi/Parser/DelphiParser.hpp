@@ -30,6 +30,7 @@ class DelphiForStatementSyntax;
 class DelphiGotoStatementSyntax;
 class DelphiIdentifierNameSyntax;
 class DelphiIfStatementSyntax;
+class DelphiLabeledStatementSyntax;
 class DelphiLiteralExpressionSyntax;
 class DelphiNameSyntax;
 class DelphiPackageModuleSyntax;
@@ -102,6 +103,7 @@ private:
     Syntax::DelphiContinueStatementSyntax* parseContinueStatement() noexcept;
     Syntax::DelphiExitStatementSyntax* parseExitStatement() noexcept;
     Syntax::DelphiGotoStatementSyntax* parseGotoStatement() noexcept;
+    Syntax::DelphiLabeledStatementSyntax* parseLabeledStatement() noexcept;
 
 private:
     Core::Syntax::SyntaxFactory _syntaxFactory;
