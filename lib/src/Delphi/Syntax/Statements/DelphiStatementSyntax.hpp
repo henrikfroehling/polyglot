@@ -17,6 +17,7 @@ public:
     inline bool isStatement() const noexcept override final { return true; }
     inline virtual pg_string typeName() const noexcept override { return L"DelphiStatementSyntax"; }
 
+    inline virtual bool isExpressionStatement() const noexcept { return false; }
     inline virtual bool isIfStatement() const noexcept { return false; }
     inline virtual bool isCaseStatement() const noexcept { return false; }
     inline virtual bool isRepeatStatement() const noexcept { return false; }

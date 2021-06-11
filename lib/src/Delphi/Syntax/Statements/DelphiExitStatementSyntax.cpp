@@ -11,7 +11,7 @@ using Core::Syntax::SyntaxKind;
 
 DelphiExitStatementSyntax::DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken* exitKeyword,
                                                      DelphiParenthesizedExpressionSyntax* expression) noexcept
-    : DelphiSimpleStatementSyntax{SyntaxKind::ExitStatement},
+    : DelphiStatementSyntax{SyntaxKind::ExitStatement},
       _pExitKeyword{exitKeyword},
       _pExpression{expression}
 {}

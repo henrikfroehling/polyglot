@@ -25,6 +25,7 @@ class DelphiCompoundStatementSyntax;
 class DelphiContinueStatementSyntax;
 class DelphiEndOfModuleDeclarationSyntax;
 class DelphiExitStatementSyntax;
+class DelphiExpressionStatementSyntax;
 class DelphiExtendedIdentifierNameSyntax;
 class DelphiForStatementSyntax;
 class DelphiGotoStatementSyntax;
@@ -90,6 +91,7 @@ private:
 
     Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;
+    Syntax::DelphiExpressionStatementSyntax* parseExpressionStatement() noexcept;
     Syntax::DelphiCompoundStatementSyntax* parseCompoundStatement() noexcept;
     Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
     Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;

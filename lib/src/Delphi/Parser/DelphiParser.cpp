@@ -18,6 +18,7 @@
 #include "Delphi/Syntax/Statements/DelphiCompoundStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiContinueStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExitStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiGotoStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiIfStatementSyntax.hpp"
@@ -311,7 +312,7 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
 {
     // statement => [identifier | int num literal | hex num literal ':'],
     //              If Statement | Case Statement | Repeat Statement | While Statement | For Statement | With Statement
-    //              | Try Statement | Raise Statement | Assembler Statement | Compound Statement | Simple Statement
+    //              | Try Statement | Raise Statement | Assembler Statement | Compound Statement | Expression Statement
 
     SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
 
@@ -348,7 +349,11 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
             return parseGotoStatement();
     }
 
-    // Simple Statement
+    return parseExpressionStatement();
+}
+
+DelphiExpressionStatementSyntax* DelphiParser::parseExpressionStatement() noexcept
+{
     return nullptr;
 }
 

@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Delphi/Syntax/Statements/DelphiSimpleStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiStatementSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -16,7 +16,7 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiGotoStatementSyntax : public DelphiSimpleStatementSyntax
+class DelphiGotoStatementSyntax : public DelphiStatementSyntax
 {
 public:
     explicit DelphiGotoStatementSyntax(Core::Syntax::ISyntaxToken* gotoKeyword,

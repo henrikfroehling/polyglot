@@ -10,7 +10,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::SyntaxKind;
 
 DelphiBreakStatementSyntax::DelphiBreakStatementSyntax(Core::Syntax::ISyntaxToken* breakKeyword) noexcept
-    : DelphiSimpleStatementSyntax{SyntaxKind::BreakStatement},
+    : DelphiStatementSyntax{SyntaxKind::BreakStatement},
       _pBreakKeyword{breakKeyword}
 {}
 

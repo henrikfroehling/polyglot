@@ -11,7 +11,7 @@ using Core::Syntax::SyntaxKind;
 
 DelphiGotoStatementSyntax::DelphiGotoStatementSyntax(Core::Syntax::ISyntaxToken* gotoKeyword,
                                                      Core::Syntax::ISyntaxToken* labelToken) noexcept
-    : DelphiSimpleStatementSyntax{SyntaxKind::GotoStatement},
+    : DelphiStatementSyntax{SyntaxKind::GotoStatement},
       _pGotoKeyword{gotoKeyword},
       _pLabelToken{labelToken}
 {}

@@ -154,13 +154,13 @@ set(SOURCES_DELPHI_SYNTAX_STATEMENTS
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiCompoundStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiContinueStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExitStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiGotoStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiIfStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiLabeledStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiRaiseStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiRepeatStatementSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiSimpleStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiStatementListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryStatementSyntax.cpp

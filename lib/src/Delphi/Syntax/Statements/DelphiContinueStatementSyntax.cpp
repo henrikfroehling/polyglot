@@ -10,7 +10,7 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::SyntaxKind;
 
 DelphiContinueStatementSyntax::DelphiContinueStatementSyntax(Core::Syntax::ISyntaxToken* continueKeyword) noexcept
-    : DelphiSimpleStatementSyntax{SyntaxKind::ContinueStatement},
+    : DelphiStatementSyntax{SyntaxKind::ContinueStatement},
       _pContinueKeyword{continueKeyword}
 {}
 
