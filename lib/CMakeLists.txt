@@ -139,6 +139,7 @@ set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPointerTypeSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.cpp

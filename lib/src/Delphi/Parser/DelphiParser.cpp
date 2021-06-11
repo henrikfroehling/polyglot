@@ -9,6 +9,7 @@
 #include "Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiPointerTypeSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.hpp"
@@ -269,8 +270,27 @@ DelphiExtendedIdentifierNameSyntax* DelphiParser::parseExtendedIdentifierName() 
 DelphiPredefinedTypeSyntax* DelphiParser::parsePredefinedType() noexcept
 {
     assert(DelphiSyntaxFacts::isPredefinedType(currentToken()->syntaxKind()));
-    ISyntaxToken* typeKeyword = takeToken();
-    return DelphiPredefinedTypeSyntax::create(_syntaxFactory, typeKeyword);
+    ISyntaxToken* pTypeKeyword = takeToken();
+    return DelphiPredefinedTypeSyntax::create(_syntaxFactory, pTypeKeyword);
+}
+
+DelphiPointerTypeSyntax* DelphiParser::parsePointerType() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::CaretToken);
+    ISyntaxToken* pCaretToken = takeToken();
+    DelphiTypeSyntax* pType{nullptr};
+
+    SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+    if (currentSyntaxKind == SyntaxKind::IdentifierToken)
+        pType = parseIdentifierName();
+    else if (DelphiSyntaxFacts::isPredefinedType(currentSyntaxKind))
+        pType = parsePredefinedType();
+    else if (currentSyntaxKind == SyntaxKind::AmpersandToken && DelphiSyntaxFacts::isReservedWord(peekToken(1)->syntaxKind()))
+        pType = parseExtendedIdentifierName();
+
+    assert(pType != nullptr);
+    return DelphiPointerTypeSyntax::create(_syntaxFactory, pCaretToken, pType);
 }
 
 DelphiEndOfModuleDeclarationSyntax* DelphiParser::parseEndOfModule() noexcept

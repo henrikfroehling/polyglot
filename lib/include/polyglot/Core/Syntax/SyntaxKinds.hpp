@@ -356,6 +356,7 @@ enum class SyntaxKind : unsigned short
     FalseLiteralExpression,
     NilLiteralExpression,
     CallExpression,
+    PointerTypeExpression,
 
     IdentifierName,
     ExtendedIdentifierName,

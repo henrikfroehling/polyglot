@@ -34,6 +34,7 @@ class DelphiLabeledStatementSyntax;
 class DelphiLiteralExpressionSyntax;
 class DelphiNameSyntax;
 class DelphiPackageModuleSyntax;
+class DelphiPointerTypeSyntax;
 class DelphiPredefinedTypeSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiRaiseStatementSyntax;
@@ -84,6 +85,7 @@ private:
     Syntax::DelphiIdentifierNameSyntax* parseIdentifierName() noexcept;
     Syntax::DelphiExtendedIdentifierNameSyntax* parseExtendedIdentifierName() noexcept;
     Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
+    Syntax::DelphiPointerTypeSyntax* parsePointerType() noexcept;
     Syntax::DelphiEndOfModuleDeclarationSyntax* parseEndOfModule() noexcept;
 
     Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
