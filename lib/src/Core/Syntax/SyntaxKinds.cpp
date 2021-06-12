@@ -324,7 +324,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
-        case SyntaxKind::CompoundStatement: return L"CompoundStatement";
+        case SyntaxKind::BlockStatement: return L"BlockStatement";
         case SyntaxKind::IfStatement: return L"IfStatement";
         case SyntaxKind::CaseStatement: return L"CaseStatement";
         case SyntaxKind::RepeatStatement: return L"RepeatStatement";

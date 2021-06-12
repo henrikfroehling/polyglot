@@ -150,9 +150,9 @@ set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
 
 set(SOURCES_DELPHI_SYNTAX_STATEMENTS
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiBlockStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiBreakStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiCaseStatementSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiCompoundStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiContinueStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExitStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.cpp

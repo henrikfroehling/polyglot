@@ -1,5 +1,5 @@
-#ifndef POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHICOMPOUNDSTATEMENTSYNTAX_H
-#define POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHICOMPOUNDSTATEMENTSYNTAX_H
+#ifndef POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHIBLOCKSTATEMENTSYNTAX_H
+#define POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHIBLOCKSTATEMENTSYNTAX_H
 
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementSyntax.hpp"
@@ -17,14 +17,14 @@ namespace polyglot::Delphi::Syntax
 
 class DelphiStatementListSyntax;
 
-class DelphiCompoundStatementSyntax : public DelphiStatementSyntax
+class DelphiBlockStatementSyntax : public DelphiStatementSyntax
 {
 public:
-    explicit DelphiCompoundStatementSyntax(Core::Syntax::ISyntaxToken* beginKeyword,
-                                           DelphiStatementListSyntax* statementList,
-                                           Core::Syntax::ISyntaxToken* endKeyword) noexcept;
+    explicit DelphiBlockStatementSyntax(Core::Syntax::ISyntaxToken* beginKeyword,
+                                        DelphiStatementListSyntax* statementList,
+                                        Core::Syntax::ISyntaxToken* endKeyword) noexcept;
 
-    virtual ~DelphiCompoundStatementSyntax() noexcept {}
+    virtual ~DelphiBlockStatementSyntax() noexcept {}
 
     inline Core::Syntax::ISyntaxToken* beginKeyword() const noexcept { return _pBeginKeyword; }
     inline DelphiStatementListSyntax* statementList() const noexcept { return _pStatementList; }
@@ -33,14 +33,14 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pBeginKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEndKeyword); }
 
-    inline pg_string typeName() const noexcept override final { return L"DelphiCompoundStatementSyntax"; }
+    inline pg_string typeName() const noexcept override final { return L"DelphiBlockStatementSyntax"; }
 
     inline bool isCompoundStatement() const noexcept override final { return true; }
 
-    static DelphiCompoundStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                 Core::Syntax::ISyntaxToken* beginKeyword,
-                                                 DelphiStatementListSyntax* statementList,
-                                                 Core::Syntax::ISyntaxToken* endKeyword) noexcept;
+    static DelphiBlockStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
+                                              Core::Syntax::ISyntaxToken* beginKeyword,
+                                              DelphiStatementListSyntax* statementList,
+                                              Core::Syntax::ISyntaxToken* endKeyword) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pBeginKeyword;
@@ -50,4 +50,4 @@ private:
 
 } // end namespace polyglot::Delphi::Syntax
 
-#endif // POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHICOMPOUNDSTATEMENTSYNTAX_H
+#endif // POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHIBLOCKSTATEMENTSYNTAX_H

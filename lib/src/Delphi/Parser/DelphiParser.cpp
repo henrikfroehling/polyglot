@@ -13,9 +13,9 @@
 #include "Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiBlockStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiBreakStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiCaseStatementSyntax.hpp"
-#include "Delphi/Syntax/Statements/DelphiCompoundStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiContinueStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExitStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.hpp"
@@ -343,7 +343,7 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
         case SyntaxKind::AssemblerKeyword:
             return parseAssemblerStatement();
         case SyntaxKind::BeginKeyword:
-            return parseCompoundStatement();
+            return parseBlockStatement();
         case SyntaxKind::BreakKeyword:
             return parseBreakStatement();
         case SyntaxKind::ContinueKeyword:
@@ -364,12 +364,13 @@ DelphiExpressionStatementSyntax* DelphiParser::parseExpressionStatement() noexce
     return DelphiExpressionStatementSyntax::create(_syntaxFactory, pExpression, pSemiColonToken);
 }
 
-DelphiCompoundStatementSyntax* DelphiParser::parseCompoundStatement() noexcept
+DelphiBlockStatementSyntax* DelphiParser::parseBlockStatement() noexcept
 {
-    ISyntaxToken* pBeginKeyword = takeToken(SyntaxKind::BeginKeyword);
+    assert(currentToken()->syntaxKind() == SyntaxKind::BeginKeyword);
+    ISyntaxToken* pBeginKeyword = takeToken();
     DelphiStatementListSyntax* pStatementList = parseStatementList();
     ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
-    return DelphiCompoundStatementSyntax::create(_syntaxFactory, pBeginKeyword, pStatementList, pEndKeyword);
+    return DelphiBlockStatementSyntax::create(_syntaxFactory, pBeginKeyword, pStatementList, pEndKeyword);
 }
 
 DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept

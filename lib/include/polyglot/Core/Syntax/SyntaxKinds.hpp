@@ -328,7 +328,7 @@ enum class SyntaxKind : unsigned short
     // statements
     StatementList,
     ExpressionStatement,
-    CompoundStatement,
+    BlockStatement,
     IfStatement,
     CaseStatement,
     RepeatStatement,

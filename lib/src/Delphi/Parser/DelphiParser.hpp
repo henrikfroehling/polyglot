@@ -17,11 +17,11 @@ class ISyntaxToken;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiAssemblerStatementSyntax;
+class DelphiAssemblerStatementSyntax;;
+class DelphiBlockStatementSyntax;
 class DelphiBreakStatementSyntax;
 class DelphiCaseStatementSyntax;
 class DelphiCompilationUnitSyntax;
-class DelphiCompoundStatementSyntax;
 class DelphiContinueStatementSyntax;
 class DelphiEndOfModuleDeclarationSyntax;
 class DelphiExitStatementSyntax;
@@ -97,7 +97,7 @@ private:
     // statements
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;
     Syntax::DelphiExpressionStatementSyntax* parseExpressionStatement() noexcept;
-    Syntax::DelphiCompoundStatementSyntax* parseCompoundStatement() noexcept;
+    Syntax::DelphiBlockStatementSyntax* parseBlockStatement() noexcept;
     Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
     Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;
     Syntax::DelphiCaseStatementSyntax* parseCaseStatement() noexcept;
