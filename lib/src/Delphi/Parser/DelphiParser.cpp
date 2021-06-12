@@ -222,6 +222,18 @@ DelphiUnitReferenceDeclarationSyntax* DelphiParser::parseUnitReference() noexcep
     return DelphiUnitReferenceDeclarationSyntax::create(_syntaxFactory, pUnitName, pInKeyword, pSourceFile);
 }
 
+DelphiEndOfModuleDeclarationSyntax* DelphiParser::parseEndOfModule() noexcept
+{
+    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    ISyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
+    return DelphiEndOfModuleDeclarationSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
+}
+
+DelphiExpressionSyntax* DelphiParser::parseExpression() noexcept
+{
+    return nullptr;
+}
+
 DelphiNameSyntax* DelphiParser::parseQualifiedName() noexcept
 {
     DelphiNameSyntax* pName = parseIdentifierName();
@@ -294,13 +306,6 @@ DelphiPointerTypeSyntax* DelphiParser::parsePointerType() noexcept
     return DelphiPointerTypeSyntax::create(_syntaxFactory, pCaretToken, pType);
 }
 
-DelphiEndOfModuleDeclarationSyntax* DelphiParser::parseEndOfModule() noexcept
-{
-    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
-    ISyntaxToken* pDotToken = takeToken(SyntaxKind::DotToken);
-    return DelphiEndOfModuleDeclarationSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
-}
-
 DelphiLiteralExpressionSyntax* DelphiParser::parseLiteralExpression() noexcept
 {
     assert(DelphiSyntaxFacts::isLiteral(currentToken()->syntaxKind()));
@@ -354,7 +359,9 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
 
 DelphiExpressionStatementSyntax* DelphiParser::parseExpressionStatement() noexcept
 {
-    return nullptr;
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiExpressionStatementSyntax::create(_syntaxFactory, pExpression, pSemiColonToken);
 }
 
 DelphiCompoundStatementSyntax* DelphiParser::parseCompoundStatement() noexcept

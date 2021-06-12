@@ -327,6 +327,7 @@ enum class SyntaxKind : unsigned short
 
     // statements
     StatementList,
+    ExpressionStatement,
     CompoundStatement,
     IfStatement,
     CaseStatement,
@@ -357,6 +358,7 @@ enum class SyntaxKind : unsigned short
     NilLiteralExpression,
     CallExpression,
     PointerTypeExpression,
+    AssignmentExpression,
 
     IdentifierName,
     ExtendedIdentifierName,

@@ -131,6 +131,7 @@ set(SOURCES_DELPHI_SYNTAX
 )
 
 set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExpressionSyntax.cpp

@@ -323,6 +323,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::EndOfModuleDeclaration: return L"EndOfModuleDeclaration";
 
         case SyntaxKind::StatementList: return L"StatementList";
+        case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
         case SyntaxKind::CompoundStatement: return L"CompoundStatement";
         case SyntaxKind::IfStatement: return L"IfStatement";
         case SyntaxKind::CaseStatement: return L"CaseStatement";
@@ -353,6 +354,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::NilLiteralExpression: return L"NilLiteralExpression";
         case SyntaxKind::CallExpression: return L"CallExpression";
         case SyntaxKind::PointerTypeExpression: return L"PointerTypeExpression";
+        case SyntaxKind::AssignmentExpression: return L"AssignmentExpression";
 
         case SyntaxKind::IdentifierName: return L"IdentifierName";
         case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";
