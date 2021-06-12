@@ -108,6 +108,7 @@ set(SOURCES_DELPHI_PARSER
 
 set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp

@@ -324,6 +324,7 @@ enum class SyntaxKind : unsigned short
     UsesClause,
     UnitReference,
     EndOfModuleDeclaration,
+    ElseClause,
 
     // statements
     StatementList,

@@ -13,29 +13,31 @@ using Core::Syntax::SyntaxKind;
 DelphiIfStatementSyntax::DelphiIfStatementSyntax(Core::Syntax::ISyntaxToken* ifKeyword,
                                                  DelphiExpressionSyntax* conditionExpression,
                                                  Core::Syntax::ISyntaxToken* thenKeyword,
-                                                 DelphiStatementListSyntax* statementList) noexcept
+                                                 DelphiStatementSyntax* statement,
+                                                 DelphiElseClauseSyntax* elseClause) noexcept
     : DelphiStatementSyntax{SyntaxKind::IfStatement},
       _pIfKeyword{ifKeyword},
       _pConditionExpression{conditionExpression},
       _pThenKeyword{thenKeyword},
-      _pStatementList{statementList}
+      _pStatement{statement},
+      _pElseClause{elseClause}
 {}
 
 DelphiIfStatementSyntax* DelphiIfStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                          Core::Syntax::ISyntaxToken* ifKeyword,
                                                          DelphiExpressionSyntax* conditionExpression,
                                                          Core::Syntax::ISyntaxToken* thenKeyword,
-                                                         DelphiStatementListSyntax* statementList) noexcept
+                                                         DelphiStatementSyntax* statement,
+                                                         DelphiElseClauseSyntax* elseClause) noexcept
 {
     assert(ifKeyword != nullptr);
     assert(ifKeyword->syntaxKind() == SyntaxKind::IfKeyword);
     assert(conditionExpression != nullptr);
     assert(thenKeyword != nullptr);
     assert(thenKeyword->syntaxKind() == SyntaxKind::ThenKeyword);
-    assert(statementList != nullptr);
-    assert(statementList->syntaxKind() == SyntaxKind::StatementList);
+    assert(statement != nullptr);
 
-    auto ptrIfStatementSyntax = std::make_unique<DelphiIfStatementSyntax>(ifKeyword, conditionExpression, thenKeyword, statementList);
+    auto ptrIfStatementSyntax = std::make_unique<DelphiIfStatementSyntax>(ifKeyword, conditionExpression, thenKeyword, statement, elseClause);
     return static_cast<DelphiIfStatementSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrIfStatementSyntax)));
 }
 

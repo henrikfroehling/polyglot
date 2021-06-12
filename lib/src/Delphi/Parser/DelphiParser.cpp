@@ -30,6 +30,7 @@
 #include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
@@ -393,24 +394,22 @@ DelphiIfStatementSyntax* DelphiParser::parseIfStatement() noexcept
 {
     assert(currentToken()->syntaxKind() == SyntaxKind::IfKeyword);
     ISyntaxToken* pIfKeyword = takeToken(SyntaxKind::IfKeyword);
-    // parse expression
+    DelphiExpressionSyntax* pConditionExpression = parseExpression();
     ISyntaxToken* pThenKeyword = takeToken(SyntaxKind::ThenKeyword);
-
-    std::vector<SyntaxVariant> statements{};
+    assert(DelphiSyntaxFacts::isStatementStart(currentToken()->syntaxKind()));
     DelphiStatementSyntax* pStatement = parseStatement();
-    statements.push_back(SyntaxVariant::asNode(pStatement));
+    DelphiElseClauseSyntax* pElseClause = parseElseClause();
+    return DelphiIfStatementSyntax::create(_syntaxFactory, pIfKeyword, pConditionExpression, pThenKeyword, pStatement, pElseClause);
+}
 
-    while (currentToken()->syntaxKind() == SyntaxKind::ElseKeyword && DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
-    {
-        ISyntaxToken* pElseKeyword = takeToken(SyntaxKind::ElseKeyword);
-        statements.push_back(SyntaxVariant::asToken(pElseKeyword));
+DelphiElseClauseSyntax* DelphiParser::parseElseClause() noexcept
+{
+    if (currentToken()->syntaxKind() != SyntaxKind::ElseKeyword)
+        return nullptr;
 
-        pStatement = parseStatement();
-        statements.push_back(SyntaxVariant::asNode(pStatement));
-    }
-
-    DelphiStatementListSyntax* pStatements = DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements));
-    return DelphiIfStatementSyntax::create(_syntaxFactory, pIfKeyword, nullptr, pThenKeyword, pStatements);
+    ISyntaxToken* pElseKeyword = takeToken(SyntaxKind::ElseKeyword);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    return DelphiElseClauseSyntax::create(_syntaxFactory, pElseKeyword, pStatement);
 }
 
 DelphiCaseStatementSyntax* DelphiParser::parseCaseStatement() noexcept

@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementSyntax.hpp"
-#include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
+#include "Delphi/Syntax/DelphiElseClauseSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -25,17 +25,25 @@ public:
     explicit DelphiIfStatementSyntax(Core::Syntax::ISyntaxToken* ifKeyword,
                                      DelphiExpressionSyntax* conditionExpression,
                                      Core::Syntax::ISyntaxToken* thenKeyword,
-                                     DelphiStatementListSyntax* statementList) noexcept;
+                                     DelphiStatementSyntax* statement,
+                                     DelphiElseClauseSyntax* elseClause = nullptr) noexcept;
 
     virtual ~DelphiIfStatementSyntax() noexcept {}
 
     inline Core::Syntax::ISyntaxToken* ifKeyword() const noexcept { return _pIfKeyword; }
     inline DelphiExpressionSyntax* conditionExpression() const noexcept { return _pConditionExpression; }
     inline Core::Syntax::ISyntaxToken* thenKeyword() const noexcept { return _pThenKeyword; }
-    inline DelphiStatementListSyntax* statementList() const noexcept { return _pStatementList; }
+    inline DelphiStatementSyntax* statement() const noexcept { return _pStatement; }
+    inline DelphiElseClauseSyntax* elseClause() const noexcept { return _pElseClause; }
 
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pIfKeyword); }
-    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asList(_pStatementList); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final
+    {
+        if (_pElseClause != nullptr)
+            return Core::Syntax::SyntaxVariant::asNode(_pElseClause);
+
+        return Core::Syntax::SyntaxVariant::asNode(_pStatement);
+    }
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiIfStatementSyntax"; }
 
@@ -45,13 +53,15 @@ public:
                                            Core::Syntax::ISyntaxToken* ifKeyword,
                                            DelphiExpressionSyntax* conditionExpression,
                                            Core::Syntax::ISyntaxToken* thenKeyword,
-                                           DelphiStatementListSyntax* statementList) noexcept;
+                                           DelphiStatementSyntax* statement,
+                                           DelphiElseClauseSyntax* elseClause = nullptr) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pIfKeyword;
     DelphiExpressionSyntax* _pConditionExpression;
     Core::Syntax::ISyntaxToken* _pThenKeyword;
-    DelphiStatementListSyntax* _pStatementList;
+    DelphiStatementSyntax* _pStatement;
+    DelphiElseClauseSyntax* _pElseClause; // optional
 };
 
 } // end namespace polyglot::Delphi::Syntax

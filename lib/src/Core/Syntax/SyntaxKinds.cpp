@@ -321,6 +321,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UsesClause: return L"UsesClause";
         case SyntaxKind::UnitReference: return L"UnitReference";
         case SyntaxKind::EndOfModuleDeclaration: return L"EndOfModuleDeclaration";
+        case SyntaxKind::ElseClause: return L"ElseClause";
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";

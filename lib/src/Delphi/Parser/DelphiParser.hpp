@@ -23,6 +23,7 @@ class DelphiBreakStatementSyntax;
 class DelphiCaseStatementSyntax;
 class DelphiCompilationUnitSyntax;
 class DelphiContinueStatementSyntax;
+class DelphiElseClauseSyntax;
 class DelphiEndOfModuleDeclarationSyntax;
 class DelphiExitStatementSyntax;
 class DelphiExpressionSyntax;
@@ -100,6 +101,7 @@ private:
     Syntax::DelphiBlockStatementSyntax* parseBlockStatement() noexcept;
     Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
     Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;
+    Syntax::DelphiElseClauseSyntax* parseElseClause() noexcept;
     Syntax::DelphiCaseStatementSyntax* parseCaseStatement() noexcept;
     Syntax::DelphiRepeatStatementSyntax* parseRepeatStatement() noexcept;
     Syntax::DelphiWhileStatementSyntax* parseWhileStatement() noexcept;
