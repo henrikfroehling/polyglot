@@ -10,26 +10,25 @@ namespace polyglot::Delphi::Syntax
 using Core::Syntax::SyntaxKind;
 
 DelphiRaiseStatementSyntax::DelphiRaiseStatementSyntax(Core::Syntax::ISyntaxToken* raiseKeyword,
-                                                       DelphiExpressionSyntax* expression,
-                                                       Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                       Core::Syntax::ISyntaxToken* semiColonToken,
+                                                       DelphiExpressionSyntax* expression) noexcept
     : DelphiStatementSyntax{SyntaxKind::RaiseStatement},
       _pRaiseKeyword{raiseKeyword},
-      _pExpression{expression},
-      _pSemiColonToken{semiColonToken}
+      _pSemiColonToken{semiColonToken},
+      _pExpression{expression}
 {}
 
 DelphiRaiseStatementSyntax* DelphiRaiseStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                                Core::Syntax::ISyntaxToken* raiseKeyword,
-                                                               DelphiExpressionSyntax* expression,
-                                                               Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                               Core::Syntax::ISyntaxToken* semiColonToken,
+                                                               DelphiExpressionSyntax* expression) noexcept
 {
     assert(raiseKeyword != nullptr);
     assert(raiseKeyword->syntaxKind() == SyntaxKind::RaiseKeyword);
-    assert(expression != nullptr);
     assert(semiColonToken != nullptr);
     assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
-    auto ptrRaiseStatementSyntax = std::make_unique<DelphiRaiseStatementSyntax>(raiseKeyword, expression, semiColonToken);
+    auto ptrRaiseStatementSyntax = std::make_unique<DelphiRaiseStatementSyntax>(raiseKeyword, semiColonToken, expression);
     return static_cast<DelphiRaiseStatementSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrRaiseStatementSyntax)));
 }
 

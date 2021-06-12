@@ -22,8 +22,8 @@ class DelphiRaiseStatementSyntax : public DelphiStatementSyntax
 {
 public:
     explicit DelphiRaiseStatementSyntax(Core::Syntax::ISyntaxToken* raiseKeyword,
-                                        DelphiExpressionSyntax* expression,
-                                        Core::Syntax::ISyntaxToken* semiColonToken) noexcept;
+                                        Core::Syntax::ISyntaxToken* semiColonToken,
+                                        DelphiExpressionSyntax* expression = nullptr) noexcept;
 
     virtual ~DelphiRaiseStatementSyntax() noexcept {}
 
@@ -40,13 +40,18 @@ public:
 
     static DelphiRaiseStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                               Core::Syntax::ISyntaxToken* raiseKeyword,
-                                              DelphiExpressionSyntax* expression,
-                                              Core::Syntax::ISyntaxToken* semiColonToken) noexcept;
+                                              Core::Syntax::ISyntaxToken* semiColonToken,
+                                              DelphiExpressionSyntax* expression = nullptr) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pRaiseKeyword;
-    DelphiExpressionSyntax* _pExpression;
     Core::Syntax::ISyntaxToken* _pSemiColonToken;
+
+    // might be optional; for example in an exception block
+    //
+    // except
+    //  raise; <-- re-raises the exception
+    DelphiExpressionSyntax* _pExpression;
 };
 
 } // end namespace polyglot::Delphi::Syntax

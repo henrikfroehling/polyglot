@@ -462,9 +462,19 @@ DelphiRaiseStatementSyntax* DelphiParser::parseRaiseStatement() noexcept
 {
     assert(currentToken()->syntaxKind() == SyntaxKind::RaiseKeyword);
     ISyntaxToken* pRaiseKeyword = takeToken(SyntaxKind::RaiseKeyword);
-    DelphiExpressionSyntax* pExpression = parseExpression();
-    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-    return DelphiRaiseStatementSyntax::create(_syntaxFactory, pRaiseKeyword, pExpression, pSemiColonToken);
+    DelphiExpressionSyntax* pExpression{nullptr};
+    ISyntaxToken* pSemiColonToken{nullptr};
+
+    if (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken)
+        pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    else
+    {
+        pExpression = parseExpression();
+        pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    }
+
+    assert(pSemiColonToken != nullptr);
+    return DelphiRaiseStatementSyntax::create(_syntaxFactory, pRaiseKeyword, pSemiColonToken, pExpression);
 }
 
 DelphiAssemblerStatementSyntax* DelphiParser::parseAssemblerStatement() noexcept
