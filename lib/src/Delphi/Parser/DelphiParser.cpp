@@ -419,7 +419,13 @@ DelphiCaseStatementSyntax* DelphiParser::parseCaseStatement() noexcept
 
 DelphiRepeatStatementSyntax* DelphiParser::parseRepeatStatement() noexcept
 {
-    return nullptr;
+    assert(currentToken()->syntaxKind() == SyntaxKind::RepeatKeyword);
+    ISyntaxToken* pRepeatKeyword = takeToken(SyntaxKind::RepeatKeyword);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    ISyntaxToken* pUntilKeyword = takeToken(SyntaxKind::UntilKeyword);
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiRepeatStatementSyntax::create(_syntaxFactory, pRepeatKeyword, pStatement, pUntilKeyword, pExpression, pSemiColonToken);
 }
 
 DelphiWhileStatementSyntax* DelphiParser::parseWhileStatement() noexcept
