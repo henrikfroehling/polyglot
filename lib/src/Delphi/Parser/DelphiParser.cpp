@@ -444,7 +444,11 @@ DelphiTryStatementSyntax* DelphiParser::parseTryStatement() noexcept
 
 DelphiRaiseStatementSyntax* DelphiParser::parseRaiseStatement() noexcept
 {
-    return nullptr;
+    assert(currentToken()->syntaxKind() == SyntaxKind::RaiseKeyword);
+    ISyntaxToken* pRaiseKeyword = takeToken(SyntaxKind::RaiseKeyword);
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiRaiseStatementSyntax::create(_syntaxFactory, pRaiseKeyword, pExpression, pSemiColonToken);
 }
 
 DelphiAssemblerStatementSyntax* DelphiParser::parseAssemblerStatement() noexcept
