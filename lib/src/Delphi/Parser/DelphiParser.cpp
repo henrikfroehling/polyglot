@@ -424,7 +424,12 @@ DelphiRepeatStatementSyntax* DelphiParser::parseRepeatStatement() noexcept
 
 DelphiWhileStatementSyntax* DelphiParser::parseWhileStatement() noexcept
 {
-    return nullptr;
+    assert(currentToken()->syntaxKind() == SyntaxKind::WhileKeyword);
+    ISyntaxToken* pWhileKeyword = takeToken(SyntaxKind::WhileKeyword);
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pDoKeyword = takeToken(SyntaxKind::DoKeyword);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    return DelphiWhileStatementSyntax::create(_syntaxFactory, pWhileKeyword, pExpression, pDoKeyword, pStatement);
 }
 
 DelphiForStatementSyntax* DelphiParser::parseForStatement() noexcept
