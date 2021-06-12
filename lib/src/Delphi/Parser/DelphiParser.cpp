@@ -274,6 +274,7 @@ DelphiIdentifierNameSyntax* DelphiParser::parseIdentifierName() noexcept
 
 DelphiExtendedIdentifierNameSyntax* DelphiParser::parseExtendedIdentifierName() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::AmpersandToken);
     ISyntaxToken* pAmpersandToken = takeToken(SyntaxKind::AmpersandToken);
     assert(DelphiSyntaxFacts::isReservedWord(currentToken()->syntaxKind()));
     ISyntaxToken* pReservedKeyword = takeToken();
@@ -290,7 +291,7 @@ DelphiPredefinedTypeSyntax* DelphiParser::parsePredefinedType() noexcept
 DelphiPointerTypeSyntax* DelphiParser::parsePointerType() noexcept
 {
     assert(currentToken()->syntaxKind() == SyntaxKind::CaretToken);
-    ISyntaxToken* pCaretToken = takeToken();
+    ISyntaxToken* pCaretToken = takeToken(SyntaxKind::CaretToken);
     DelphiTypeSyntax* pType{nullptr};
 
     SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
@@ -367,7 +368,7 @@ DelphiExpressionStatementSyntax* DelphiParser::parseExpressionStatement() noexce
 DelphiBlockStatementSyntax* DelphiParser::parseBlockStatement() noexcept
 {
     assert(currentToken()->syntaxKind() == SyntaxKind::BeginKeyword);
-    ISyntaxToken* pBeginKeyword = takeToken();
+    ISyntaxToken* pBeginKeyword = takeToken(SyntaxKind::BeginKeyword);
     DelphiStatementListSyntax* pStatementList = parseStatementList();
     ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
     return DelphiBlockStatementSyntax::create(_syntaxFactory, pBeginKeyword, pStatementList, pEndKeyword);
@@ -393,6 +394,7 @@ DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
 
 DelphiIfStatementSyntax* DelphiParser::parseIfStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::IfKeyword);
     ISyntaxToken* pIfKeyword = takeToken(SyntaxKind::IfKeyword);
     // parse expression
     ISyntaxToken* pThenKeyword = takeToken(SyntaxKind::ThenKeyword);
@@ -456,18 +458,21 @@ DelphiAssemblerStatementSyntax* DelphiParser::parseAssemblerStatement() noexcept
 
 DelphiBreakStatementSyntax* DelphiParser::parseBreakStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::BreakKeyword);
     ISyntaxToken* pBreakKeyword = takeToken(SyntaxKind::BreakKeyword);
     return DelphiBreakStatementSyntax::create(_syntaxFactory, pBreakKeyword);
 }
 
 DelphiContinueStatementSyntax* DelphiParser::parseContinueStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::ContinueKeyword);
     ISyntaxToken* pContinueKeyword = takeToken(SyntaxKind::ContinueKeyword);
     return DelphiContinueStatementSyntax::create(_syntaxFactory, pContinueKeyword);
 }
 
 DelphiExitStatementSyntax* DelphiParser::parseExitStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::ExitKeyword);
     ISyntaxToken* pExitKeyword = takeToken(SyntaxKind::ExitKeyword);
     DelphiParenthesizedExpressionSyntax* pExpression{nullptr};
 
@@ -481,6 +486,7 @@ DelphiExitStatementSyntax* DelphiParser::parseExitStatement() noexcept
 
 DelphiGotoStatementSyntax* DelphiParser::parseGotoStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::GotoKeyword);
     ISyntaxToken* pGotoKeyword = takeToken(SyntaxKind::GotoKeyword);
     const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
     ISyntaxToken* pLabelToken{nullptr};
