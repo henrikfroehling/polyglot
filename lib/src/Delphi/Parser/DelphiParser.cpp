@@ -434,7 +434,12 @@ DelphiForStatementSyntax* DelphiParser::parseForStatement() noexcept
 
 DelphiWithStatementSyntax* DelphiParser::parseWithStatement() noexcept
 {
-    return nullptr;
+    assert(currentToken()->syntaxKind() == SyntaxKind::WithKeyword);
+    ISyntaxToken* pWithKeyword = takeToken(SyntaxKind::WithKeyword);
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pDoKeyword = takeToken(SyntaxKind::DoKeyword);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    return DelphiWithStatementSyntax::create(_syntaxFactory, pWithKeyword, pExpression, pDoKeyword, pStatement);
 }
 
 DelphiTryStatementSyntax* DelphiParser::parseTryStatement() noexcept
