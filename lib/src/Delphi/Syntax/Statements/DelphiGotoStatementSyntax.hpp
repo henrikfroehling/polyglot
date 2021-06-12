@@ -20,15 +20,17 @@ class DelphiGotoStatementSyntax : public DelphiStatementSyntax
 {
 public:
     explicit DelphiGotoStatementSyntax(Core::Syntax::ISyntaxToken* gotoKeyword,
-                                       Core::Syntax::ISyntaxToken* labelToken) noexcept;
+                                       Core::Syntax::ISyntaxToken* labelToken,
+                                       Core::Syntax::ISyntaxToken* semiColonToken) noexcept;
 
     virtual ~DelphiGotoStatementSyntax() noexcept {}
 
     inline Core::Syntax::ISyntaxToken* gotoKeyword() const noexcept { return _pGotoKeyword; }
     inline Core::Syntax::ISyntaxToken* labelToken() const noexcept { return _pLabelToken; }
+    inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pGotoKeyword); }
-    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pLabelToken); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiGotoStatementSyntax"; }
 
@@ -36,11 +38,13 @@ public:
 
     static DelphiGotoStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              Core::Syntax::ISyntaxToken* gotoKeyword,
-                                             Core::Syntax::ISyntaxToken* labelToken) noexcept;
+                                             Core::Syntax::ISyntaxToken* labelToken,
+                                             Core::Syntax::ISyntaxToken* semiColonToken) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pGotoKeyword;
     Core::Syntax::ISyntaxToken* _pLabelToken; // identifier | int num literal | hex num literal
+    Core::Syntax::ISyntaxToken* _pSemiColonToken;
 };
 
 } // end namespace polyglot::Delphi::Syntax

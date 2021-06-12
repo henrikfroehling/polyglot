@@ -9,18 +9,23 @@ namespace polyglot::Delphi::Syntax
 
 using Core::Syntax::SyntaxKind;
 
-DelphiBreakStatementSyntax::DelphiBreakStatementSyntax(Core::Syntax::ISyntaxToken* breakKeyword) noexcept
+DelphiBreakStatementSyntax::DelphiBreakStatementSyntax(Core::Syntax::ISyntaxToken* breakKeyword,
+                                                       Core::Syntax::ISyntaxToken* semiColonToken) noexcept
     : DelphiStatementSyntax{SyntaxKind::BreakStatement},
-      _pBreakKeyword{breakKeyword}
+      _pBreakKeyword{breakKeyword},
+      _pSemiColonToken{semiColonToken}
 {}
 
 DelphiBreakStatementSyntax* DelphiBreakStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                               Core::Syntax::ISyntaxToken* breakKeyword) noexcept
+                                                               Core::Syntax::ISyntaxToken* breakKeyword,
+                                                               Core::Syntax::ISyntaxToken* semiColonToken) noexcept
 {
     assert(breakKeyword != nullptr);
     assert(breakKeyword->syntaxKind() == SyntaxKind::BreakKeyword);
+    assert(semiColonToken != nullptr);
+    assert(semiColonToken->syntaxKind() == SyntaxKind::SemiColonToken);
 
-    auto ptrBreakStatementSyntax = std::make_unique<DelphiBreakStatementSyntax>(breakKeyword);
+    auto ptrBreakStatementSyntax = std::make_unique<DelphiBreakStatementSyntax>(breakKeyword, semiColonToken);
     return static_cast<DelphiBreakStatementSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrBreakStatementSyntax)));
 }
 

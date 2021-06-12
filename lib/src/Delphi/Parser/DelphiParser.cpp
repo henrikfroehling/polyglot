@@ -380,11 +380,8 @@ DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
     DelphiStatementSyntax* pStatement = parseStatement();
     statements.push_back(SyntaxVariant::asNode(pStatement));
 
-    while (currentToken()->syntaxKind() == SyntaxKind::SemiColonToken && DelphiSyntaxFacts::isStatementStart(peekToken(1)->syntaxKind()))
+    while (DelphiSyntaxFacts::isStatementStart(currentToken()->syntaxKind()))
     {
-        ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
-        statements.push_back(SyntaxVariant::asToken(pSemiColonToken));
-
         pStatement = parseStatement();
         statements.push_back(SyntaxVariant::asNode(pStatement));
     }
@@ -460,14 +457,16 @@ DelphiBreakStatementSyntax* DelphiParser::parseBreakStatement() noexcept
 {
     assert(currentToken()->syntaxKind() == SyntaxKind::BreakKeyword);
     ISyntaxToken* pBreakKeyword = takeToken(SyntaxKind::BreakKeyword);
-    return DelphiBreakStatementSyntax::create(_syntaxFactory, pBreakKeyword);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiBreakStatementSyntax::create(_syntaxFactory, pBreakKeyword, pSemiColonToken);
 }
 
 DelphiContinueStatementSyntax* DelphiParser::parseContinueStatement() noexcept
 {
     assert(currentToken()->syntaxKind() == SyntaxKind::ContinueKeyword);
     ISyntaxToken* pContinueKeyword = takeToken(SyntaxKind::ContinueKeyword);
-    return DelphiContinueStatementSyntax::create(_syntaxFactory, pContinueKeyword);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiContinueStatementSyntax::create(_syntaxFactory, pContinueKeyword, pSemiColonToken);
 }
 
 DelphiExitStatementSyntax* DelphiParser::parseExitStatement() noexcept
@@ -481,7 +480,8 @@ DelphiExitStatementSyntax* DelphiParser::parseExitStatement() noexcept
         // TODO parseExpression
     }
 
-    return DelphiExitStatementSyntax::create(_syntaxFactory, pExitKeyword, pExpression);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiExitStatementSyntax::create(_syntaxFactory, pExitKeyword, pSemiColonToken, pExpression);
 }
 
 DelphiGotoStatementSyntax* DelphiParser::parseGotoStatement() noexcept
@@ -496,7 +496,8 @@ DelphiGotoStatementSyntax* DelphiParser::parseGotoStatement() noexcept
     else
         pLabelToken = _syntaxFactory.missingToken(SyntaxKind::IdentifierToken, currentToken()->text(), currentToken()->position());
 
-    return DelphiGotoStatementSyntax::create(_syntaxFactory, pGotoKeyword, pLabelToken);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiGotoStatementSyntax::create(_syntaxFactory, pGotoKeyword, pLabelToken, pSemiColonToken);
 }
 
 DelphiLabeledStatementSyntax* DelphiParser::parseLabeledStatement() noexcept

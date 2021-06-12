@@ -21,22 +21,17 @@ class DelphiExitStatementSyntax : public DelphiStatementSyntax
 {
 public:
     explicit DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken* exitKeyword,
+                                       Core::Syntax::ISyntaxToken* semiColonToken,
                                        DelphiParenthesizedExpressionSyntax* expression = nullptr) noexcept;
 
     virtual ~DelphiExitStatementSyntax() noexcept {}
 
     inline Core::Syntax::ISyntaxToken* exitKeyword() const noexcept { return _pExitKeyword; }
     inline DelphiParenthesizedExpressionSyntax* expression() const noexcept { return _pExpression; }
+    inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pExitKeyword); }
-
-    inline Core::Syntax::SyntaxVariant last() const noexcept override final
-    {
-        if (_pExpression != nullptr)
-            return Core::Syntax::SyntaxVariant::asNode(_pExpression);
-
-        return Core::Syntax::SyntaxVariant::asToken(_pExitKeyword);
-    }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiExitStatementSyntax"; }
 
@@ -44,10 +39,12 @@ public:
 
     static DelphiExitStatementSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              Core::Syntax::ISyntaxToken* exitKeyword,
+                                             Core::Syntax::ISyntaxToken* semiColonToken,
                                              DelphiParenthesizedExpressionSyntax* expression = nullptr) noexcept;
 
 private:
     Core::Syntax::ISyntaxToken* _pExitKeyword;
+    Core::Syntax::ISyntaxToken* _pSemiColonToken;
     DelphiParenthesizedExpressionSyntax* _pExpression; // optional
 };
 
