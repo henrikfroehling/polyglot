@@ -99,6 +99,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::NotKeyword: return L"NotKeyword";
         case SyntaxKind::ObjectKeyword: return L"ObjectKeyword";
         case SyntaxKind::OfKeyword: return L"OfKeyword";
+        case SyntaxKind::OnKeyword: return L"OnKeyword";
         case SyntaxKind::OrKeyword: return L"OrKeyword";
         case SyntaxKind::PackedKeyword: return L"PackedKeyword";
         case SyntaxKind::ProcedureKeyword: return L"ProcedureKeyword";
@@ -322,6 +323,10 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UnitReference: return L"UnitReference";
         case SyntaxKind::EndOfModuleDeclaration: return L"EndOfModuleDeclaration";
         case SyntaxKind::ElseClause: return L"ElseClause";
+        case SyntaxKind::ExceptionHandlerBlock: return L"ExceptionHandlerBlock";
+        case SyntaxKind::ExceptionStatementBlock: return L"ExceptionStatementBlock";
+        case SyntaxKind::ExceptClause: return L"ExceptClause";
+        case SyntaxKind::FinallyClause: return L"FinallyClause";
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
@@ -333,6 +338,8 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ForStatement: return L"ForStatement";
         case SyntaxKind::WithStatement: return L"WithStatement";
         case SyntaxKind::TryStatement: return L"TryStatement";
+        case SyntaxKind::TryExceptStatement: return L"TryExceptStatement";
+        case SyntaxKind::TryFinallyStatement: return L"TryFinallyStatement";
         case SyntaxKind::RaiseStatement: return L"RaiseStatement";
         case SyntaxKind::AssemblerStatement: return L"AssemblerStatement";
         case SyntaxKind::BreakStatement: return L"BreakStatement";
@@ -356,6 +363,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::CallExpression: return L"CallExpression";
         case SyntaxKind::PointerTypeExpression: return L"PointerTypeExpression";
         case SyntaxKind::AssignmentExpression: return L"AssignmentExpression";
+        case SyntaxKind::ExceptionHandlerExpression: return L"ExceptionHandlerExpression";
 
         case SyntaxKind::IdentifierName: return L"IdentifierName";
         case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";

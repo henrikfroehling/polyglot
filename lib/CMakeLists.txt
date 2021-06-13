@@ -110,6 +110,11 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptionBlockSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptionHandlerBlockSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptionStatementBlockSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiFinallyClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
@@ -155,6 +160,7 @@ set(SOURCES_DELPHI_SYNTAX_STATEMENTS
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiBreakStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiCaseStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiContinueStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExceptionHandlerStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExitStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForStatementSyntax.cpp
@@ -165,6 +171,8 @@ set(SOURCES_DELPHI_SYNTAX_STATEMENTS
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiRepeatStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiStatementListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryExceptStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryFinallyStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiWhileStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiWithStatementSyntax.cpp

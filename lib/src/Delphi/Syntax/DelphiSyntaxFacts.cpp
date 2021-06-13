@@ -48,6 +48,7 @@ static const std::unordered_map<pg_string, SyntaxKind> SYNTAXKEYWORDS =
     { L"not", SyntaxKind::NotKeyword },
     { L"object", SyntaxKind::ObjectKeyword },
     { L"of", SyntaxKind::OfKeyword },
+    { L"on", SyntaxKind::OnKeyword },
     { L"or", SyntaxKind::OrKeyword },
     { L"packed", SyntaxKind::PackedKeyword },
     { L"procedure", SyntaxKind::ProcedureKeyword },
@@ -379,6 +380,7 @@ bool DelphiSyntaxFacts::isKeyword(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::NotKeyword:
         case SyntaxKind::ObjectKeyword:
         case SyntaxKind::OfKeyword:
+        case SyntaxKind::OnKeyword:
         case SyntaxKind::OrKeyword:
         case SyntaxKind::PackedKeyword:
         case SyntaxKind::ProcedureKeyword:
@@ -582,6 +584,7 @@ bool DelphiSyntaxFacts::isReservedWord(Core::Syntax::SyntaxKind syntaxKind) noex
         case SyntaxKind::NotKeyword:
         case SyntaxKind::ObjectKeyword:
         case SyntaxKind::OfKeyword:
+        case SyntaxKind::OnKeyword:
         case SyntaxKind::OrKeyword:
         case SyntaxKind::PackedKeyword:
         case SyntaxKind::ProcedureKeyword:

@@ -17,6 +17,7 @@
 #include "Delphi/Syntax/Statements/DelphiBreakStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiCaseStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiContinueStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiExceptionHandlerStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExitStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
@@ -27,11 +28,18 @@
 #include "Delphi/Syntax/Statements/DelphiRepeatStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiTryExceptStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiTryFinallyStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
 #include "Delphi/Syntax/DelphiElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.hpp"
+#include "Delphi/Syntax/DelphiExceptionBlockSyntax.hpp"
+#include "Delphi/Syntax/DelphiExceptionHandlerBlockSyntax.hpp"
+#include "Delphi/Syntax/DelphiExceptionStatementBlockSyntax.hpp"
+#include "Delphi/Syntax/DelphiExceptClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiFinallyClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
@@ -455,7 +463,80 @@ DelphiWithStatementSyntax* DelphiParser::parseWithStatement() noexcept
 
 DelphiTryStatementSyntax* DelphiParser::parseTryStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::TryKeyword);
+    ISyntaxToken* pTryKeyword = takeToken(SyntaxKind::TryKeyword);
+    DelphiStatementListSyntax* pStatements = parseStatementList();
+    DelphiExceptClauseSyntax* pExceptClause{nullptr};
+    DelphiFinallyClauseSyntax* pFinallyClause{nullptr};
+
+    if (currentToken()->syntaxKind() == SyntaxKind::ExceptKeyword)
+        pExceptClause = parseExceptClause();
+    else if (currentToken()->syntaxKind() == SyntaxKind::FinallyKeyword)
+        pFinallyClause = parseFinallyClause();
+
+    assert(pExceptClause != nullptr || pFinallyClause != nullptr);
+    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+
+    if (pExceptClause != nullptr)
+        return DelphiTryExceptStatementSyntax::create(_syntaxFactory, pTryKeyword, pStatements, pExceptClause, pEndKeyword, pSemiColonToken);
+    else if (pFinallyClause != nullptr)
+        return DelphiTryFinallyStatementSyntax::create(_syntaxFactory, pTryKeyword, pStatements, pFinallyClause, pEndKeyword, pSemiColonToken);
+
     return nullptr;
+}
+
+DelphiExceptClauseSyntax* DelphiParser::parseExceptClause() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::ExceptKeyword);
+    ISyntaxToken* pExceptKeyword = takeToken(SyntaxKind::ExceptKeyword);
+    DelphiExceptionBlockSyntax* pExceptionBlock = parseExceptionBlock();
+    return DelphiExceptClauseSyntax::create(_syntaxFactory, pExceptKeyword, pExceptionBlock);
+}
+
+DelphiExceptionBlockSyntax* DelphiParser::parseExceptionBlock() noexcept
+{
+    if (currentToken()->syntaxKind() == SyntaxKind::OnKeyword)
+    {
+        std::vector<SyntaxVariant> statements{};
+        DelphiExceptionHandlerStatementSyntax* pExceptionHandlerStatement = parseExceptionHandlerStatement();
+        statements.push_back(SyntaxVariant::asNode(pExceptionHandlerStatement));
+
+        while (currentToken()->syntaxKind() == SyntaxKind::OnKeyword)
+        {
+            pExceptionHandlerStatement = parseExceptionHandlerStatement();
+            statements.push_back(SyntaxVariant::asNode(pExceptionHandlerStatement));
+        }
+
+        DelphiElseClauseSyntax* pElseClause{nullptr};
+
+        if (currentToken()->syntaxKind() == SyntaxKind::ElseKeyword)
+            pElseClause = parseElseClause();
+
+        return DelphiExceptionHandlerBlockSyntax::create(_syntaxFactory, DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements)), pElseClause);
+    }
+
+    DelphiStatementListSyntax* pStatements = parseStatementList();
+    return DelphiExceptionStatementBlockSyntax::create(_syntaxFactory, pStatements);
+}
+
+DelphiExceptionHandlerStatementSyntax* DelphiParser::parseExceptionHandlerStatement() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::OnKeyword);
+    ISyntaxToken* pOnKeyword = takeToken(SyntaxKind::OnKeyword);
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pDoKeyword = takeToken(SyntaxKind::DoKeyword);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiExceptionHandlerStatementSyntax::create(_syntaxFactory, pOnKeyword, pExpression, pDoKeyword, pStatement, pSemiColonToken);
+}
+
+DelphiFinallyClauseSyntax* DelphiParser::parseFinallyClause() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::FinallyKeyword);
+    ISyntaxToken* pFinallyKeyword = takeToken(SyntaxKind::FinallyKeyword);
+    DelphiStatementListSyntax* pStatements = parseStatementList();
+    return DelphiFinallyClauseSyntax::create(_syntaxFactory, pFinallyKeyword, pStatements);
 }
 
 DelphiRaiseStatementSyntax* DelphiParser::parseRaiseStatement() noexcept

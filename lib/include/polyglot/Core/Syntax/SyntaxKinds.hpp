@@ -101,6 +101,7 @@ enum class SyntaxKind : unsigned short
     NotKeyword, // not
     ObjectKeyword, // object
     OfKeyword, // of
+    OnKeyword, // on
     OrKeyword, // or
     PackedKeyword, // packed
     ProcedureKeyword, // procedure
@@ -325,6 +326,10 @@ enum class SyntaxKind : unsigned short
     UnitReference,
     EndOfModuleDeclaration,
     ElseClause,
+    ExceptionHandlerBlock,
+    ExceptionStatementBlock,
+    ExceptClause,
+    FinallyClause,
 
     // statements
     StatementList,
@@ -337,6 +342,8 @@ enum class SyntaxKind : unsigned short
     ForStatement,
     WithStatement,
     TryStatement,
+    TryExceptStatement,
+    TryFinallyStatement,
     RaiseStatement,
     AssemblerStatement,
     BreakStatement,
@@ -360,6 +367,7 @@ enum class SyntaxKind : unsigned short
     CallExpression,
     PointerTypeExpression,
     AssignmentExpression,
+    ExceptionHandlerExpression,
 
     IdentifierName,
     ExtendedIdentifierName,
