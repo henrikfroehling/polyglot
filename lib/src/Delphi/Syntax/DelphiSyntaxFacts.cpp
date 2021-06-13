@@ -641,7 +641,7 @@ bool DelphiSyntaxFacts::isStatementStart(Core::Syntax::SyntaxKind syntaxKind) no
         case SyntaxKind::WithKeyword:
         case SyntaxKind::TryKeyword:
         case SyntaxKind::RaiseKeyword:
-        case SyntaxKind::AssemblerKeyword:
+        case SyntaxKind::AsmKeyword:
         case SyntaxKind::BeginKeyword:
         case SyntaxKind::BreakKeyword:
         case SyntaxKind::ContinueKeyword:

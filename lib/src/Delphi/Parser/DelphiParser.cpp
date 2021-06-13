@@ -358,7 +358,7 @@ DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
             return parseTryStatement();
         case SyntaxKind::RaiseKeyword:
             return parseRaiseStatement();
-        case SyntaxKind::AssemblerKeyword:
+        case SyntaxKind::AsmKeyword:
             return parseAssemblerStatement();
         case SyntaxKind::BeginKeyword:
             return parseBlockStatement();
@@ -692,7 +692,12 @@ DelphiRaiseStatementSyntax* DelphiParser::parseRaiseStatement() noexcept
 
 DelphiAssemblerStatementSyntax* DelphiParser::parseAssemblerStatement() noexcept
 {
-    return nullptr;
+    assert(currentToken()->syntaxKind() == SyntaxKind::AsmKeyword);
+    ISyntaxToken* pAsmKeyword = takeToken(SyntaxKind::AsmKeyword);
+    // TODO parse assembler instructions
+    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiAssemblerStatementSyntax::create(_syntaxFactory, pAsmKeyword, pEndKeyword, pSemiColonToken);
 }
 
 DelphiBreakStatementSyntax* DelphiParser::parseBreakStatement() noexcept
