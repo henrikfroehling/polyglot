@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/DelphiFinallyClauseSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,17 +9,28 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiFinallyClauseSyntax::DelphiFinallyClauseSyntax(Core::Syntax::ISyntaxToken* finallyKeyword,
+DelphiFinallyClauseSyntax::DelphiFinallyClauseSyntax(ISyntaxToken* finallyKeyword,
                                                      DelphiStatementListSyntax* statements) noexcept
     : DelphiSyntaxNode{SyntaxKind::FinallyClause},
       _pFinallyKeyword{finallyKeyword},
       _pStatements{statements}
 {}
 
-DelphiFinallyClauseSyntax* DelphiFinallyClauseSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                             Core::Syntax::ISyntaxToken* finallyKeyword,
+SyntaxVariant DelphiFinallyClauseSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pFinallyKeyword);
+        case 1: return SyntaxVariant::asList(_pStatements);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiFinallyClauseSyntax* DelphiFinallyClauseSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             ISyntaxToken* finallyKeyword,
                                                              DelphiStatementListSyntax* statements) noexcept
 {
     assert(finallyKeyword != nullptr);

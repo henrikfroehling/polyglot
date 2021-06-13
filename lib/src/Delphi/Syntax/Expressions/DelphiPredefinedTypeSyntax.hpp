@@ -24,6 +24,9 @@ public:
 
     inline Core::Syntax::ISyntaxToken* keyword() const noexcept { return _pKeyword; }
 
+    inline pg_size childCount() const noexcept override final { return 1; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pKeyword); }
 

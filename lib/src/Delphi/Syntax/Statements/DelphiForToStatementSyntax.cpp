@@ -1,19 +1,22 @@
 #include "Delphi/Syntax/Statements/DelphiForToStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiForToStatementSyntax::DelphiForToStatementSyntax(Core::Syntax::ISyntaxToken* forKeyword,
+DelphiForToStatementSyntax::DelphiForToStatementSyntax(ISyntaxToken* forKeyword,
                                                        DelphiExpressionSyntax* initialValueExpression,
-                                                       Core::Syntax::ISyntaxToken* toOrDownToKeyword,
+                                                       ISyntaxToken* toOrDownToKeyword,
                                                        DelphiExpressionSyntax* finalValueExpression,
-                                                       Core::Syntax::ISyntaxToken* doKeyword,
+                                                       ISyntaxToken* doKeyword,
                                                        DelphiStatementSyntax* statement) noexcept
     : DelphiForStatementSyntax{SyntaxKind::ForToStatement, forKeyword, doKeyword, statement},
       _pInitialValueExpression{initialValueExpression},
@@ -21,12 +24,27 @@ DelphiForToStatementSyntax::DelphiForToStatementSyntax(Core::Syntax::ISyntaxToke
       _pFinalValueExpression{finalValueExpression}
 {}
 
-DelphiForToStatementSyntax* DelphiForToStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                               Core::Syntax::ISyntaxToken* forKeyword,
+SyntaxVariant DelphiForToStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pForKeyword);
+        case 1: return SyntaxVariant::asNode(_pInitialValueExpression);
+        case 2: return SyntaxVariant::asToken(_pToOrDownToKeyword);
+        case 3: return SyntaxVariant::asNode(_pFinalValueExpression);
+        case 4: return SyntaxVariant::asToken(_pDoKeyword);
+        case 5: return SyntaxVariant::asNode(_pStatement);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiForToStatementSyntax* DelphiForToStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               ISyntaxToken* forKeyword,
                                                                DelphiExpressionSyntax* initialValueExpression,
-                                                               Core::Syntax::ISyntaxToken* toOrDownToKeyword,
+                                                               ISyntaxToken* toOrDownToKeyword,
                                                                DelphiExpressionSyntax* finalValueExpression,
-                                                               Core::Syntax::ISyntaxToken* doKeyword,
+                                                               ISyntaxToken* doKeyword,
                                                                DelphiStatementSyntax* statement) noexcept
 {
     assert(forKeyword != nullptr);

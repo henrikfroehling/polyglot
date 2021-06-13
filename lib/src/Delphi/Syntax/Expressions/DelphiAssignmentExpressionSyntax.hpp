@@ -30,6 +30,9 @@ public:
     inline Core::Syntax::ISyntaxToken* colonEqualToken() const noexcept { return _pColonEqualToken; }
     inline DelphiExpressionSyntax* rightExpression() const noexcept { return _pRightExpression; }
 
+    inline pg_size childCount() const noexcept override final { return 3; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pLeftExpression); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pRightExpression); }
 

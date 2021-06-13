@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -8,18 +10,29 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiExtendedIdentifierNameSyntax::DelphiExtendedIdentifierNameSyntax(Core::Syntax::ISyntaxToken* ampersandToken,
-                                                                       Core::Syntax::ISyntaxToken* reservedKeyword) noexcept
+DelphiExtendedIdentifierNameSyntax::DelphiExtendedIdentifierNameSyntax(ISyntaxToken* ampersandToken,
+                                                                       ISyntaxToken* reservedKeyword) noexcept
     : DelphiSimpleNameSyntax{SyntaxKind::ExtendedIdentifierName},
       _pAmpersandToken{ampersandToken},
       _pReservedKeyword{reservedKeyword}
 {}
 
-DelphiExtendedIdentifierNameSyntax* DelphiExtendedIdentifierNameSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                               Core::Syntax::ISyntaxToken* ampersandToken,
-                                                                               Core::Syntax::ISyntaxToken* reservedKeyword) noexcept
+SyntaxVariant DelphiExtendedIdentifierNameSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pAmpersandToken);
+        case 1: return SyntaxVariant::asToken(_pReservedKeyword);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiExtendedIdentifierNameSyntax* DelphiExtendedIdentifierNameSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                               ISyntaxToken* ampersandToken,
+                                                                               ISyntaxToken* reservedKeyword) noexcept
 {
     assert(ampersandToken != nullptr);
     assert(ampersandToken->syntaxKind() == SyntaxKind::AmpersandToken);

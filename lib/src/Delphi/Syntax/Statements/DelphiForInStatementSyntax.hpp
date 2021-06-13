@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_STATEMENTS_FORINSTATEMENTSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_STATEMENTS_FORINSTATEMENTSYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
 
@@ -33,6 +34,9 @@ public:
     inline DelphiExpressionSyntax* elementExpression() const noexcept { return _pElementExpression; }
     inline Core::Syntax::ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline DelphiExpressionSyntax* collectionExpression() const noexcept { return _pCollectionExpression; }
+
+    inline pg_size childCount() const noexcept override final { return 6; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiForInStatementSyntax"; }
     inline bool isForInStatement() const noexcept override final { return true; }

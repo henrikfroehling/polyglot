@@ -1,29 +1,47 @@
 #include "Delphi/Syntax/Statements/DelphiTryExceptStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
+#include "Delphi/Syntax/DelphiExceptClauseSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiTryExceptStatementSyntax::DelphiTryExceptStatementSyntax(Core::Syntax::ISyntaxToken* tryKeyword,
+DelphiTryExceptStatementSyntax::DelphiTryExceptStatementSyntax(ISyntaxToken* tryKeyword,
                                                                DelphiStatementListSyntax* statements,
                                                                DelphiExceptClauseSyntax* exceptClause,
-                                                               Core::Syntax::ISyntaxToken* endKeyword,
-                                                               Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                               ISyntaxToken* endKeyword,
+                                                               ISyntaxToken* semiColonToken) noexcept
     : DelphiTryStatementSyntax{SyntaxKind::TryExceptStatement, tryKeyword, statements, endKeyword, semiColonToken},
       _pExceptClause{exceptClause}
 {}
 
-DelphiTryExceptStatementSyntax* DelphiTryExceptStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                       Core::Syntax::ISyntaxToken* tryKeyword,
+SyntaxVariant DelphiTryExceptStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pTryKeyword);
+        case 1: return SyntaxVariant::asList(_pStatements);
+        case 2: return SyntaxVariant::asNode(_pExceptClause);
+        case 3: return SyntaxVariant::asToken(_pEndKeyword);
+        case 4: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiTryExceptStatementSyntax* DelphiTryExceptStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                       ISyntaxToken* tryKeyword,
                                                                        DelphiStatementListSyntax* statements,
                                                                        DelphiExceptClauseSyntax* exceptClause,
-                                                                       Core::Syntax::ISyntaxToken* endKeyword,
-                                                                       Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                                       ISyntaxToken* endKeyword,
+                                                                       ISyntaxToken* semiColonToken) noexcept
 {
     assert(tryKeyword != nullptr);
     assert(tryKeyword->syntaxKind() == SyntaxKind::TryKeyword);

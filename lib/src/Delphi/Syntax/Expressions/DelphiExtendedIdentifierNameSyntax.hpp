@@ -27,6 +27,9 @@ public:
     inline Core::Syntax::ISyntaxToken* ampersandToken() const noexcept { return _pAmpersandToken; }
     inline Core::Syntax::ISyntaxToken* reservedKeyword() const noexcept { return _pReservedKeyword; }
 
+    inline pg_size childCount() const noexcept override final { return 2; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline virtual Core::Syntax::SyntaxVariant first() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pAmpersandToken); }
     inline virtual Core::Syntax::SyntaxVariant last() const noexcept override { return Core::Syntax::SyntaxVariant::asToken(_pReservedKeyword); }
 

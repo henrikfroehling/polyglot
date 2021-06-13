@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/DelphiCaseItemSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,10 +9,10 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
 DelphiCaseItemSyntax::DelphiCaseItemSyntax(DelphiCaseLabelListSyntax* caseLabels,
-                                           Core::Syntax::ISyntaxToken* colonToken,
+                                           ISyntaxToken* colonToken,
                                            DelphiStatementSyntax* statement) noexcept
     : DelphiSyntaxNode{SyntaxKind::CaseItem},
       _pCaseLabels{caseLabels},
@@ -18,9 +20,21 @@ DelphiCaseItemSyntax::DelphiCaseItemSyntax(DelphiCaseLabelListSyntax* caseLabels
       _pStatement{statement}
 {}
 
-DelphiCaseItemSyntax* DelphiCaseItemSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
+SyntaxVariant DelphiCaseItemSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asList(_pCaseLabels);
+        case 1: return SyntaxVariant::asToken(_pColonToken);
+        case 2: return SyntaxVariant::asNode(_pStatement);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiCaseItemSyntax* DelphiCaseItemSyntax::create(SyntaxFactory& syntaxFactory,
                                                    DelphiCaseLabelListSyntax* caseLabels,
-                                                   Core::Syntax::ISyntaxToken* colonToken,
+                                                   ISyntaxToken* colonToken,
                                                    DelphiStatementSyntax* statement) noexcept
 {
     assert(caseLabels != nullptr);

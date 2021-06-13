@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_STATEMENTS_TRYEXCEPTSTATEMENTSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_STATEMENTS_TRYEXCEPTSTATEMENTSYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
 
@@ -30,6 +31,9 @@ public:
     virtual ~DelphiTryExceptStatementSyntax() noexcept {}
 
     inline DelphiExceptClauseSyntax* exceptClause() const noexcept { return _pExceptClause; }
+
+    inline pg_size childCount() const noexcept override final { return 5; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiTryExceptStatementSyntax"; }
     inline bool isTryExceptStatement() const noexcept override final { return true; }

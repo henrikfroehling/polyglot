@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Expressions/DelphiPointerTypeSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,17 +9,28 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiPointerTypeSyntax::DelphiPointerTypeSyntax(Core::Syntax::ISyntaxToken* caretToken,
+DelphiPointerTypeSyntax::DelphiPointerTypeSyntax(ISyntaxToken* caretToken,
                                                  DelphiTypeSyntax* type) noexcept
     : DelphiTypeSyntax{SyntaxKind::PointerTypeExpression},
       _pCaretToken{caretToken},
       _pType{type}
 {}
 
-DelphiPointerTypeSyntax* DelphiPointerTypeSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                         Core::Syntax::ISyntaxToken* caretToken,
+SyntaxVariant DelphiPointerTypeSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pCaretToken);
+        case 1: return SyntaxVariant::asNode(_pType);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiPointerTypeSyntax* DelphiPointerTypeSyntax::create(SyntaxFactory& syntaxFactory,
+                                                         ISyntaxToken* caretToken,
                                                          DelphiTypeSyntax* type) noexcept
 {
     assert(caretToken != nullptr);

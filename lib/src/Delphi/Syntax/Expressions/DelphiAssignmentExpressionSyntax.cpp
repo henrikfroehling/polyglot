@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,10 +9,10 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
 DelphiAssignmentExpressionSyntax::DelphiAssignmentExpressionSyntax(DelphiExpressionSyntax* leftExpression,
-                                                                   Core::Syntax::ISyntaxToken* colonEqualToken,
+                                                                   ISyntaxToken* colonEqualToken,
                                                                    DelphiExpressionSyntax* rightExpression) noexcept
     : DelphiExpressionSyntax{SyntaxKind::AssignmentExpression},
       _pLeftExpression{leftExpression},
@@ -18,9 +20,21 @@ DelphiAssignmentExpressionSyntax::DelphiAssignmentExpressionSyntax(DelphiExpress
       _pRightExpression{rightExpression}
 {}
 
-DelphiAssignmentExpressionSyntax* DelphiAssignmentExpressionSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
+SyntaxVariant DelphiAssignmentExpressionSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asNode(_pLeftExpression);
+        case 1: return SyntaxVariant::asToken(_pColonEqualToken);
+        case 2: return SyntaxVariant::asNode(_pRightExpression);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiAssignmentExpressionSyntax* DelphiAssignmentExpressionSyntax::create(SyntaxFactory& syntaxFactory,
                                                                            DelphiExpressionSyntax* leftExpression,
-                                                                           Core::Syntax::ISyntaxToken* colonEqualToken,
+                                                                           ISyntaxToken* colonEqualToken,
                                                                            DelphiExpressionSyntax* rightExpression) noexcept
 {
     assert(leftExpression != nullptr);

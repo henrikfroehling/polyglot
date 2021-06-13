@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Statements/DelphiBlockStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -8,12 +10,12 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiBlockStatementSyntax::DelphiBlockStatementSyntax(Core::Syntax::ISyntaxToken* beginKeyword,
+DelphiBlockStatementSyntax::DelphiBlockStatementSyntax(ISyntaxToken* beginKeyword,
                                                        DelphiStatementListSyntax* statementList,
-                                                       Core::Syntax::ISyntaxToken* endKeyword,
-                                                       Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                       ISyntaxToken* endKeyword,
+                                                       ISyntaxToken* semiColonToken) noexcept
     : DelphiStatementSyntax{SyntaxKind::BlockStatement},
       _pBeginKeyword{beginKeyword},
       _pStatementList{statementList},
@@ -21,11 +23,24 @@ DelphiBlockStatementSyntax::DelphiBlockStatementSyntax(Core::Syntax::ISyntaxToke
       _pSemiColonToken{semiColonToken}
 {}
 
-DelphiBlockStatementSyntax* DelphiBlockStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                               Core::Syntax::ISyntaxToken* beginKeyword,
+SyntaxVariant DelphiBlockStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pBeginKeyword);
+        case 1: return SyntaxVariant::asList(_pStatementList);
+        case 2: return SyntaxVariant::asToken(_pEndKeyword);
+        case 3: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiBlockStatementSyntax* DelphiBlockStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               ISyntaxToken* beginKeyword,
                                                                DelphiStatementListSyntax* statementList,
-                                                               Core::Syntax::ISyntaxToken* endKeyword,
-                                                               Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                               ISyntaxToken* endKeyword,
+                                                               ISyntaxToken* semiColonToken) noexcept
 {
     assert(beginKeyword != nullptr);
     assert(beginKeyword->syntaxKind() == SyntaxKind::BeginKeyword);

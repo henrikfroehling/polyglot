@@ -1,20 +1,25 @@
 #include "Delphi/Syntax/Statements/DelphiCaseStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseElseClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseItemListSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiCaseStatementSyntax::DelphiCaseStatementSyntax(Core::Syntax::ISyntaxToken* caseKeyword,
+DelphiCaseStatementSyntax::DelphiCaseStatementSyntax(ISyntaxToken* caseKeyword,
                                                      DelphiExpressionSyntax* selectorExpression,
-                                                     Core::Syntax::ISyntaxToken* ofKeyword,
+                                                     ISyntaxToken* ofKeyword,
                                                      DelphiCaseItemListSyntax* caseItems,
-                                                     Core::Syntax::ISyntaxToken* endKeyword,
-                                                     Core::Syntax::ISyntaxToken* semiColonToken,
+                                                     ISyntaxToken* endKeyword,
+                                                     ISyntaxToken* semiColonToken,
                                                      DelphiCaseElseClauseSyntax* elseClause) noexcept
     : DelphiStatementSyntax{SyntaxKind::CaseStatement},
       _pCaseKeyword{caseKeyword},
@@ -26,13 +31,47 @@ DelphiCaseStatementSyntax::DelphiCaseStatementSyntax(Core::Syntax::ISyntaxToken*
       _pElseClause{elseClause}
 {}
 
-DelphiCaseStatementSyntax* DelphiCaseStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                             Core::Syntax::ISyntaxToken* caseKeyword,
+SyntaxVariant DelphiCaseStatementSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 6:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asToken(_pCaseKeyword);
+                case 1: return SyntaxVariant::asNode(_pSelectorExpression);
+                case 2: return SyntaxVariant::asToken(_pOfKeyword);
+                case 3: return SyntaxVariant::asList(_pCaseItems);
+                case 4: return SyntaxVariant::asToken(_pEndKeyword);
+                case 5: return SyntaxVariant::asToken(_pSemiColonToken);
+            }
+        }
+        case 7:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asToken(_pCaseKeyword);
+                case 1: return SyntaxVariant::asNode(_pSelectorExpression);
+                case 2: return SyntaxVariant::asToken(_pOfKeyword);
+                case 3: return SyntaxVariant::asList(_pCaseItems);
+                case 4: return SyntaxVariant::asNode(_pElseClause);
+                case 5: return SyntaxVariant::asToken(_pEndKeyword);
+                case 6: return SyntaxVariant::asToken(_pSemiColonToken);
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiCaseStatementSyntax* DelphiCaseStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             ISyntaxToken* caseKeyword,
                                                              DelphiExpressionSyntax* selectorExpression,
-                                                             Core::Syntax::ISyntaxToken* ofKeyword,
+                                                             ISyntaxToken* ofKeyword,
                                                              DelphiCaseItemListSyntax* caseItems,
-                                                             Core::Syntax::ISyntaxToken* endKeyword,
-                                                             Core::Syntax::ISyntaxToken* semiColonToken,
+                                                             ISyntaxToken* endKeyword,
+                                                             ISyntaxToken* semiColonToken,
                                                              DelphiCaseElseClauseSyntax* elseClause) noexcept
 {
     assert(caseKeyword != nullptr);

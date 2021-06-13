@@ -1,29 +1,47 @@
 #include "Delphi/Syntax/Statements/DelphiTryFinallyStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
+#include "Delphi/Syntax/DelphiFinallyClauseSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiTryFinallyStatementSyntax::DelphiTryFinallyStatementSyntax(Core::Syntax::ISyntaxToken* tryKeyword,
+DelphiTryFinallyStatementSyntax::DelphiTryFinallyStatementSyntax(ISyntaxToken* tryKeyword,
                                                                  DelphiStatementListSyntax* statements,
                                                                  DelphiFinallyClauseSyntax* finallyClause,
-                                                                 Core::Syntax::ISyntaxToken* endKeyword,
-                                                                 Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                                 ISyntaxToken* endKeyword,
+                                                                 ISyntaxToken* semiColonToken) noexcept
     : DelphiTryStatementSyntax{SyntaxKind::TryFinallyStatement, tryKeyword, statements, endKeyword, semiColonToken},
       _pFinallyClause{finallyClause}
 {}
 
-DelphiTryFinallyStatementSyntax* DelphiTryFinallyStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                         Core::Syntax::ISyntaxToken* tryKeyword,
+SyntaxVariant DelphiTryFinallyStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pTryKeyword);
+        case 1: return SyntaxVariant::asList(_pStatements);
+        case 2: return SyntaxVariant::asNode(_pFinallyClause);
+        case 3: return SyntaxVariant::asToken(_pEndKeyword);
+        case 4: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiTryFinallyStatementSyntax* DelphiTryFinallyStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                         ISyntaxToken* tryKeyword,
                                                                          DelphiStatementListSyntax* statements,
                                                                          DelphiFinallyClauseSyntax* finallyClause,
-                                                                         Core::Syntax::ISyntaxToken* endKeyword,
-                                                                         Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                                         ISyntaxToken* endKeyword,
+                                                                         ISyntaxToken* semiColonToken) noexcept
 {
     assert(tryKeyword != nullptr);
     assert(tryKeyword->syntaxKind() == SyntaxKind::TryKeyword);

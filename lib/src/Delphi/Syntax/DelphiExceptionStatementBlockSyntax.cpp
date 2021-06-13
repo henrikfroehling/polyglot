@@ -1,17 +1,31 @@
 #include "Delphi/Syntax/DelphiExceptionStatementBlockSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
+using namespace Core::Syntax;
+
 DelphiExceptionStatementBlockSyntax::DelphiExceptionStatementBlockSyntax(DelphiStatementListSyntax* statements) noexcept
-    : DelphiExceptionBlockSyntax{Core::Syntax::SyntaxKind::ExceptionStatementBlock},
+    : DelphiExceptionBlockSyntax{SyntaxKind::ExceptionStatementBlock},
       _pStatements{statements}
 {}
 
-DelphiExceptionStatementBlockSyntax* DelphiExceptionStatementBlockSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
+SyntaxVariant DelphiExceptionStatementBlockSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asList(_pStatements);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiExceptionStatementBlockSyntax* DelphiExceptionStatementBlockSyntax::create(SyntaxFactory& syntaxFactory,
                                                                                  DelphiStatementListSyntax* statements) noexcept
 {
     assert(statements != nullptr);

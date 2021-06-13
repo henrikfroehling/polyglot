@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_STATEMENTS_FORTOSTATEMENTSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_STATEMENTS_FORTOSTATEMENTSYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
 
@@ -33,6 +34,9 @@ public:
     inline DelphiExpressionSyntax* initialValueExpression() const noexcept { return _pInitialValueExpression; }
     inline Core::Syntax::ISyntaxToken* toOrDownToKeyword() const noexcept { return _pToOrDownToKeyword; }
     inline DelphiExpressionSyntax* finalValueExpression() const noexcept { return _pFinalValueExpression; }
+
+    inline pg_size childCount() const noexcept override final { return 6; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiForToStatementSyntax"; }
     inline bool isForToStatement() const noexcept override final { return true; }

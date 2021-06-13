@@ -1,19 +1,22 @@
 #include "Delphi/Syntax/Statements/DelphiExceptionHandlerStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiExceptionHandlerStatementSyntax::DelphiExceptionHandlerStatementSyntax(Core::Syntax::ISyntaxToken* onKeyword,
+DelphiExceptionHandlerStatementSyntax::DelphiExceptionHandlerStatementSyntax(ISyntaxToken* onKeyword,
                                                                              DelphiExpressionSyntax* expression,
-                                                                             Core::Syntax::ISyntaxToken* doKeyword,
+                                                                             ISyntaxToken* doKeyword,
                                                                              DelphiStatementSyntax* statement,
-                                                                             Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                                             ISyntaxToken* semiColonToken) noexcept
     : DelphiStatementSyntax{SyntaxKind::ExceptionHandlerExpression},
       _pOnKeyword{onKeyword},
       _pExpression{expression},
@@ -22,12 +25,26 @@ DelphiExceptionHandlerStatementSyntax::DelphiExceptionHandlerStatementSyntax(Cor
       _pSemiColonToken{semiColonToken}
 {}
 
-DelphiExceptionHandlerStatementSyntax* DelphiExceptionHandlerStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                                     Core::Syntax::ISyntaxToken* onKeyword,
+SyntaxVariant DelphiExceptionHandlerStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pOnKeyword);
+        case 1: return SyntaxVariant::asNode(_pExpression);
+        case 2: return SyntaxVariant::asToken(_pDoKeyword);
+        case 3: return SyntaxVariant::asNode(_pStatement);
+        case 4: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiExceptionHandlerStatementSyntax* DelphiExceptionHandlerStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                                     ISyntaxToken* onKeyword,
                                                                                      DelphiExpressionSyntax* expression,
-                                                                                     Core::Syntax::ISyntaxToken* doKeyword,
+                                                                                     ISyntaxToken* doKeyword,
                                                                                      DelphiStatementSyntax* statement,
-                                                                                     Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+                                                                                     ISyntaxToken* semiColonToken) noexcept
 {
     assert(onKeyword != nullptr);
     assert(onKeyword->syntaxKind() == SyntaxKind::OnKeyword);

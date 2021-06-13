@@ -30,6 +30,9 @@ public:
     inline Core::Syntax::ISyntaxToken* dotDotToken() const noexcept { return _pDotDotToken; }
     inline DelphiExpressionSyntax* secondExpression() const noexcept { return _pSecondExpression; }
 
+    inline pg_size childCount() const noexcept override final { return _pSecondExpression != nullptr ? 3 : 1; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pExpression); }
 
     inline Core::Syntax::SyntaxVariant last() const noexcept override final

@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/DelphiCaseLabelSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,10 +9,10 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
 DelphiCaseLabelSyntax::DelphiCaseLabelSyntax(DelphiExpressionSyntax* expression,
-                                             Core::Syntax::ISyntaxToken* dotDotToken,
+                                             ISyntaxToken* dotDotToken,
                                              DelphiExpressionSyntax* secondExpression) noexcept
     : DelphiSyntaxNode{SyntaxKind::CaseLabel},
       _pExpression{expression},
@@ -18,9 +20,34 @@ DelphiCaseLabelSyntax::DelphiCaseLabelSyntax(DelphiExpressionSyntax* expression,
       _pSecondExpression{secondExpression}
 {}
 
-DelphiCaseLabelSyntax* DelphiCaseLabelSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
+SyntaxVariant DelphiCaseLabelSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 2:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asNode(_pExpression);
+            }
+        }
+        case 3:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asNode(_pExpression);
+                case 1: return SyntaxVariant::asToken(_pDotDotToken);
+                case 2: return SyntaxVariant::asNode(_pSecondExpression);
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiCaseLabelSyntax* DelphiCaseLabelSyntax::create(SyntaxFactory& syntaxFactory,
                                                      DelphiExpressionSyntax* expression,
-                                                     Core::Syntax::ISyntaxToken* dotDotToken,
+                                                     ISyntaxToken* dotDotToken,
                                                      DelphiExpressionSyntax* secondExpression) noexcept
 {
     assert(expression != nullptr);

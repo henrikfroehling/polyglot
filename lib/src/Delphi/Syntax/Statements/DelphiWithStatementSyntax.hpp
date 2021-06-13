@@ -33,6 +33,9 @@ public:
     inline Core::Syntax::ISyntaxToken* doKeyword() const noexcept { return _pDoKeyword; }
     inline DelphiStatementSyntax* statement() const noexcept { return _pStatement; }
 
+    inline pg_size childCount() const noexcept override final { return 4; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pWithKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pStatement); }
 

@@ -30,6 +30,9 @@ public:
     inline DelphiParenthesizedExpressionSyntax* expression() const noexcept { return _pExpression; }
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
+    inline pg_size childCount() const noexcept override final { return _pExpression != nullptr ? 3 : 2; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pExitKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 

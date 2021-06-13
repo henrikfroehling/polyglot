@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/DelphiCaseElseClauseSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,17 +9,28 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiCaseElseClauseSyntax::DelphiCaseElseClauseSyntax(Core::Syntax::ISyntaxToken* elseKeyword,
+DelphiCaseElseClauseSyntax::DelphiCaseElseClauseSyntax(ISyntaxToken* elseKeyword,
                                                        DelphiStatementListSyntax* statements) noexcept
     : DelphiSyntaxNode{SyntaxKind::CaseElseClause},
       _pElseKeyword{elseKeyword},
       _pStatements{statements}
 {}
 
-DelphiCaseElseClauseSyntax* DelphiCaseElseClauseSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                               Core::Syntax::ISyntaxToken* elseKeyword,
+SyntaxVariant DelphiCaseElseClauseSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pElseKeyword);
+        case 1: return SyntaxVariant::asList(_pStatements);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiCaseElseClauseSyntax* DelphiCaseElseClauseSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               ISyntaxToken* elseKeyword,
                                                                DelphiStatementListSyntax* statements) noexcept
 {
     assert(elseKeyword != nullptr);

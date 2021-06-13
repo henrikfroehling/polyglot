@@ -1,18 +1,21 @@
 #include "Delphi/Syntax/Statements/DelphiIfStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiIfStatementSyntax::DelphiIfStatementSyntax(Core::Syntax::ISyntaxToken* ifKeyword,
+DelphiIfStatementSyntax::DelphiIfStatementSyntax(ISyntaxToken* ifKeyword,
                                                  DelphiExpressionSyntax* conditionExpression,
-                                                 Core::Syntax::ISyntaxToken* thenKeyword,
+                                                 ISyntaxToken* thenKeyword,
                                                  DelphiStatementSyntax* statement,
                                                  DelphiElseClauseSyntax* elseClause) noexcept
     : DelphiStatementSyntax{SyntaxKind::IfStatement},
@@ -23,10 +26,40 @@ DelphiIfStatementSyntax::DelphiIfStatementSyntax(Core::Syntax::ISyntaxToken* ifK
       _pElseClause{elseClause}
 {}
 
-DelphiIfStatementSyntax* DelphiIfStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                         Core::Syntax::ISyntaxToken* ifKeyword,
+SyntaxVariant DelphiIfStatementSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 4:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asToken(_pIfKeyword);
+                case 1: return SyntaxVariant::asNode(_pConditionExpression);
+                case 2: return SyntaxVariant::asToken(_pThenKeyword);
+                case 3: return SyntaxVariant::asNode(_pStatement);
+            }
+        }
+        case 5:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asToken(_pIfKeyword);
+                case 1: return SyntaxVariant::asNode(_pConditionExpression);
+                case 2: return SyntaxVariant::asToken(_pThenKeyword);
+                case 3: return SyntaxVariant::asNode(_pStatement);
+                case 4: return SyntaxVariant::asNode(_pElseClause);
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiIfStatementSyntax* DelphiIfStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                         ISyntaxToken* ifKeyword,
                                                          DelphiExpressionSyntax* conditionExpression,
-                                                         Core::Syntax::ISyntaxToken* thenKeyword,
+                                                         ISyntaxToken* thenKeyword,
                                                          DelphiStatementSyntax* statement,
                                                          DelphiElseClauseSyntax* elseClause) noexcept
 {

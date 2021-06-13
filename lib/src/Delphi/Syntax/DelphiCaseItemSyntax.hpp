@@ -31,6 +31,9 @@ public:
     inline Core::Syntax::ISyntaxToken* colonToken() const noexcept { return _pColonToken; }
     inline DelphiStatementSyntax* statement() const noexcept { return _pStatement; }
 
+    inline pg_size childCount() const noexcept override final { return 3; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asList(_pCaseLabels); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pStatement); }
 

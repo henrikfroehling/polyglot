@@ -28,6 +28,9 @@ public:
     inline DelphiStatementListSyntax* exceptionHandlers() const noexcept { return _pExceptionHandlers; }
     inline DelphiTryElseClauseSyntax* elseClause() const noexcept { return _pElseClause; }
 
+    inline pg_size childCount() const noexcept override final { return _pElseClause != nullptr ? 2 : 1; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asList(_pExceptionHandlers); }
 
     inline Core::Syntax::SyntaxVariant last() const noexcept override final

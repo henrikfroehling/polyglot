@@ -1,17 +1,20 @@
 #include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiWithStatementSyntax::DelphiWithStatementSyntax(Core::Syntax::ISyntaxToken* withKeyword,
+DelphiWithStatementSyntax::DelphiWithStatementSyntax(ISyntaxToken* withKeyword,
                                                      DelphiExpressionSyntax* expression,
-                                                     Core::Syntax::ISyntaxToken* doKeyword,
+                                                     ISyntaxToken* doKeyword,
                                                      DelphiStatementSyntax* statement) noexcept
     : DelphiStatementSyntax{SyntaxKind::WithStatement},
       _pWithKeyword{withKeyword},
@@ -20,10 +23,23 @@ DelphiWithStatementSyntax::DelphiWithStatementSyntax(Core::Syntax::ISyntaxToken*
       _pStatement{statement}
 {}
 
-DelphiWithStatementSyntax* DelphiWithStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                             Core::Syntax::ISyntaxToken* withKeyword,
+SyntaxVariant DelphiWithStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pWithKeyword);
+        case 1: return SyntaxVariant::asNode(_pExpression);
+        case 2: return SyntaxVariant::asToken(_pDoKeyword);
+        case 3: return SyntaxVariant::asNode(_pStatement);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiWithStatementSyntax* DelphiWithStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             ISyntaxToken* withKeyword,
                                                              DelphiExpressionSyntax* expression,
-                                                             Core::Syntax::ISyntaxToken* doKeyword,
+                                                             ISyntaxToken* doKeyword,
                                                              DelphiStatementSyntax* statement) noexcept
 {
     assert(withKeyword != nullptr);

@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Statements/DelphiGotoStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,21 +9,33 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiGotoStatementSyntax::DelphiGotoStatementSyntax(Core::Syntax::ISyntaxToken* gotoKeyword,
-                                                     Core::Syntax::ISyntaxToken* labelToken,
-                                                     Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+DelphiGotoStatementSyntax::DelphiGotoStatementSyntax(ISyntaxToken* gotoKeyword,
+                                                     ISyntaxToken* labelToken,
+                                                     ISyntaxToken* semiColonToken) noexcept
     : DelphiStatementSyntax{SyntaxKind::GotoStatement},
       _pGotoKeyword{gotoKeyword},
       _pLabelToken{labelToken},
       _pSemiColonToken{semiColonToken}
 {}
 
-DelphiGotoStatementSyntax* DelphiGotoStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                             Core::Syntax::ISyntaxToken* gotoKeyword,
-                                                             Core::Syntax::ISyntaxToken* labelToken,
-                                                             Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+SyntaxVariant DelphiGotoStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pGotoKeyword);
+        case 1: return SyntaxVariant::asToken(_pLabelToken);
+        case 2: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiGotoStatementSyntax* DelphiGotoStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             ISyntaxToken* gotoKeyword,
+                                                             ISyntaxToken* labelToken,
+                                                             ISyntaxToken* semiColonToken) noexcept
 {
     assert(gotoKeyword != nullptr);
     assert(gotoKeyword->syntaxKind() == SyntaxKind::GotoKeyword);

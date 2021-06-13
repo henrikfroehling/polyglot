@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Statements/DelphiExitStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,10 +9,10 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiExitStatementSyntax::DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken* exitKeyword,
-                                                     Core::Syntax::ISyntaxToken* semiColonToken,
+DelphiExitStatementSyntax::DelphiExitStatementSyntax(ISyntaxToken* exitKeyword,
+                                                     ISyntaxToken* semiColonToken,
                                                      DelphiParenthesizedExpressionSyntax* expression) noexcept
     : DelphiStatementSyntax{SyntaxKind::ExitStatement},
       _pExitKeyword{exitKeyword},
@@ -18,9 +20,35 @@ DelphiExitStatementSyntax::DelphiExitStatementSyntax(Core::Syntax::ISyntaxToken*
       _pExpression{expression}
 {}
 
-DelphiExitStatementSyntax* DelphiExitStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                             Core::Syntax::ISyntaxToken* exitKeyword,
-                                                             Core::Syntax::ISyntaxToken* semiColonToken,
+SyntaxVariant DelphiExitStatementSyntax::child(pg_size index) const
+{
+    switch (childCount())
+    {
+        case 2:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asToken(_pExitKeyword);
+                case 1: return SyntaxVariant::asToken(_pSemiColonToken);
+            }
+        }
+        case 3:
+        {
+            switch (index)
+            {
+                case 0: return SyntaxVariant::asToken(_pExitKeyword);
+                case 1: return SyntaxVariant::asNode(_pExpression);
+                case 2: return SyntaxVariant::asToken(_pSemiColonToken);
+            }
+        }
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiExitStatementSyntax* DelphiExitStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                             ISyntaxToken* exitKeyword,
+                                                             ISyntaxToken* semiColonToken,
                                                              DelphiParenthesizedExpressionSyntax* expression) noexcept
 {
     assert(exitKeyword != nullptr);

@@ -41,6 +41,9 @@ public:
     inline Core::Syntax::ISyntaxToken* endKeyword() const noexcept { return _pEndKeyword; }
     inline Core::Syntax::ISyntaxToken* semiColonToken() const noexcept { return _pSemiColonToken; }
 
+    inline pg_size childCount() const noexcept override final { return _pElseClause != nullptr ? 7 : 6; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pCaseKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pSemiColonToken); }
 

@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,21 +9,33 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiAssemblerStatementSyntax::DelphiAssemblerStatementSyntax(Core::Syntax::ISyntaxToken* asmKeyword,
-                                                               Core::Syntax::ISyntaxToken* endKeyword,
-                                                               Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+DelphiAssemblerStatementSyntax::DelphiAssemblerStatementSyntax(ISyntaxToken* asmKeyword,
+                                                               ISyntaxToken* endKeyword,
+                                                               ISyntaxToken* semiColonToken) noexcept
     : DelphiStatementSyntax{SyntaxKind::AssemblerStatement},
       _pAsmKeyword{asmKeyword},
       _pEndKeyword{endKeyword},
       _pSemiColonToken{semiColonToken}
 {}
 
-DelphiAssemblerStatementSyntax* DelphiAssemblerStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                       Core::Syntax::ISyntaxToken* asmKeyword,
-                                                                       Core::Syntax::ISyntaxToken* endKeyword,
-                                                                       Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+SyntaxVariant DelphiAssemblerStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pAsmKeyword);
+        case 1: return SyntaxVariant::asToken(_pEndKeyword);
+        case 2: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiAssemblerStatementSyntax* DelphiAssemblerStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                       ISyntaxToken* asmKeyword,
+                                                                       ISyntaxToken* endKeyword,
+                                                                       ISyntaxToken* semiColonToken) noexcept
 {
     assert(asmKeyword != nullptr);
     assert(asmKeyword->syntaxKind() == SyntaxKind::AsmKeyword);

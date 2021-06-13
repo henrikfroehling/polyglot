@@ -1,17 +1,20 @@
 #include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiWhileStatementSyntax::DelphiWhileStatementSyntax(Core::Syntax::ISyntaxToken* whileKeyword,
+DelphiWhileStatementSyntax::DelphiWhileStatementSyntax(ISyntaxToken* whileKeyword,
                                                        DelphiExpressionSyntax* expression,
-                                                       Core::Syntax::ISyntaxToken* doKeyword,
+                                                       ISyntaxToken* doKeyword,
                                                        DelphiStatementSyntax* statement) noexcept
     : DelphiStatementSyntax{SyntaxKind::WhileStatement},
       _pWhileKeyword{whileKeyword},
@@ -20,10 +23,23 @@ DelphiWhileStatementSyntax::DelphiWhileStatementSyntax(Core::Syntax::ISyntaxToke
       _pStatement{statement}
 {}
 
-DelphiWhileStatementSyntax* DelphiWhileStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                               Core::Syntax::ISyntaxToken* whileKeyword,
+SyntaxVariant DelphiWhileStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pWhileKeyword);
+        case 1: return SyntaxVariant::asNode(_pExpression);
+        case 2: return SyntaxVariant::asToken(_pDoKeyword);
+        case 3: return SyntaxVariant::asNode(_pStatement);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiWhileStatementSyntax* DelphiWhileStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               ISyntaxToken* whileKeyword,
                                                                DelphiExpressionSyntax* expression,
-                                                               Core::Syntax::ISyntaxToken* doKeyword,
+                                                               ISyntaxToken* doKeyword,
                                                                DelphiStatementSyntax* statement) noexcept
 {
     assert(whileKeyword != nullptr);

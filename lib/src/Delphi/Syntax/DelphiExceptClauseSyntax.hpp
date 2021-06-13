@@ -28,6 +28,9 @@ public:
     inline Core::Syntax::ISyntaxToken* exceptKeyword() const noexcept { return _pExceptKeyword; }
     inline DelphiExceptionBlockSyntax* exceptionBlock() const noexcept { return _pExceptionBlock; }
 
+    inline pg_size childCount() const noexcept override final { return 2; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pExceptKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pExceptionBlock); }
 

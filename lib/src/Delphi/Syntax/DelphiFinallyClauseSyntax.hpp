@@ -28,6 +28,9 @@ public:
     inline Core::Syntax::ISyntaxToken* finallyKeyword() const noexcept { return _pFinallyKeyword; }
     inline DelphiStatementListSyntax* statements() const noexcept { return _pStatements; }
 
+    inline pg_size childCount() const noexcept override final { return 2; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pFinallyKeyword); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asList(_pStatements); }
 

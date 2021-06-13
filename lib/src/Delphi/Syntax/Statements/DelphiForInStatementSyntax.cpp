@@ -1,19 +1,22 @@
 #include "Delphi/Syntax/Statements/DelphiForInStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiForInStatementSyntax::DelphiForInStatementSyntax(Core::Syntax::ISyntaxToken* forKeyword,
+DelphiForInStatementSyntax::DelphiForInStatementSyntax(ISyntaxToken* forKeyword,
                                                        DelphiExpressionSyntax* elementExpression,
-                                                       Core::Syntax::ISyntaxToken* inKeyword,
+                                                       ISyntaxToken* inKeyword,
                                                        DelphiExpressionSyntax* collectionExpression,
-                                                       Core::Syntax::ISyntaxToken* doKeyword,
+                                                       ISyntaxToken* doKeyword,
                                                        DelphiStatementSyntax* statement) noexcept
     : DelphiForStatementSyntax{SyntaxKind::ForInStatement, forKeyword, doKeyword, statement},
       _pElementExpression{elementExpression},
@@ -21,12 +24,27 @@ DelphiForInStatementSyntax::DelphiForInStatementSyntax(Core::Syntax::ISyntaxToke
       _pCollectionExpression{collectionExpression}
 {}
 
-DelphiForInStatementSyntax* DelphiForInStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                               Core::Syntax::ISyntaxToken* forKeyword,
+SyntaxVariant DelphiForInStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pForKeyword);
+        case 1: return SyntaxVariant::asNode(_pElementExpression);
+        case 2: return SyntaxVariant::asToken(_pInKeyword);
+        case 3: return SyntaxVariant::asNode(_pCollectionExpression);
+        case 4: return SyntaxVariant::asToken(_pDoKeyword);
+        case 5: return SyntaxVariant::asNode(_pStatement);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiForInStatementSyntax* DelphiForInStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                               ISyntaxToken* forKeyword,
                                                                DelphiExpressionSyntax* elementExpression,
-                                                               Core::Syntax::ISyntaxToken* inKeyword,
+                                                               ISyntaxToken* inKeyword,
                                                                DelphiExpressionSyntax* collectionExpression,
-                                                               Core::Syntax::ISyntaxToken* doKeyword,
+                                                               ISyntaxToken* doKeyword,
                                                                DelphiStatementSyntax* statement) noexcept
 {
     assert(forKeyword != nullptr);

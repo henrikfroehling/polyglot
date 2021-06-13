@@ -1,6 +1,7 @@
 #ifndef POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHILABELEDSTATEMENTSYNTAX_H
 #define POLYGLOT_DELPHI_SYNTAX_STATEMENTS_DELPHILABELEDSTATEMENTSYNTAX_H
 
+#include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementSyntax.hpp"
 
@@ -27,6 +28,12 @@ public:
     inline Core::Syntax::ISyntaxToken* labelIdentifier() const noexcept { return _pLabelIdentifier; }
     inline Core::Syntax::ISyntaxToken* colonToken() const noexcept { return _pColonToken; }
     inline DelphiStatementSyntax* statement() const noexcept { return _pStatement; }
+
+    inline pg_size childCount() const noexcept override final { return 3; }
+    Core::Syntax::SyntaxVariant child(pg_size index) const override final;
+
+    inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pLabelIdentifier); }
+    inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pStatement); }
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiLabeledStatementSyntax"; }
 

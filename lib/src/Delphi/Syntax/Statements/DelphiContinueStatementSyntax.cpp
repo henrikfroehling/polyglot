@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Statements/DelphiContinueStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,18 +9,29 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiContinueStatementSyntax::DelphiContinueStatementSyntax(Core::Syntax::ISyntaxToken* continueKeyword,
-                                                             Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+DelphiContinueStatementSyntax::DelphiContinueStatementSyntax(ISyntaxToken* continueKeyword,
+                                                             ISyntaxToken* semiColonToken) noexcept
     : DelphiStatementSyntax{SyntaxKind::ContinueStatement},
       _pContinueKeyword{continueKeyword},
       _pSemiColonToken{semiColonToken}
 {}
 
-DelphiContinueStatementSyntax* DelphiContinueStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                     Core::Syntax::ISyntaxToken* continueKeyword,
-                                                                     Core::Syntax::ISyntaxToken* semiColonToken) noexcept
+SyntaxVariant DelphiContinueStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pContinueKeyword);
+        case 1: return SyntaxVariant::asToken(_pSemiColonToken);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiContinueStatementSyntax* DelphiContinueStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                     ISyntaxToken* continueKeyword,
+                                                                     ISyntaxToken* semiColonToken) noexcept
 {
     assert(continueKeyword != nullptr);
     assert(continueKeyword->syntaxKind() == SyntaxKind::ContinueKeyword);

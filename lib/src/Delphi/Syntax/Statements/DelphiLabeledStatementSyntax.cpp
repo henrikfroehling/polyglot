@@ -1,5 +1,7 @@
 #include "Delphi/Syntax/Statements/DelphiLabeledStatementSyntax.hpp"
 #include <cassert>
+#include <memory>
+#include <stdexcept>
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
@@ -7,10 +9,10 @@
 namespace polyglot::Delphi::Syntax
 {
 
-using Core::Syntax::SyntaxKind;
+using namespace Core::Syntax;
 
-DelphiLabeledStatementSyntax::DelphiLabeledStatementSyntax(Core::Syntax::ISyntaxToken* labelIdentifier,
-                                                           Core::Syntax::ISyntaxToken* colonToken,
+DelphiLabeledStatementSyntax::DelphiLabeledStatementSyntax(ISyntaxToken* labelIdentifier,
+                                                           ISyntaxToken* colonToken,
                                                            DelphiStatementSyntax* statement) noexcept
     : DelphiStatementSyntax{SyntaxKind::LabeledStatement},
       _pLabelIdentifier{labelIdentifier},
@@ -18,9 +20,21 @@ DelphiLabeledStatementSyntax::DelphiLabeledStatementSyntax(Core::Syntax::ISyntax
       _pStatement{statement}
 {}
 
-DelphiLabeledStatementSyntax* DelphiLabeledStatementSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                                   Core::Syntax::ISyntaxToken* labelIdentifier,
-                                                                   Core::Syntax::ISyntaxToken* colonToken,
+SyntaxVariant DelphiLabeledStatementSyntax::child(pg_size index) const
+{
+    switch (index)
+    {
+        case 0: return SyntaxVariant::asToken(_pLabelIdentifier);
+        case 1: return SyntaxVariant::asToken(_pColonToken);
+        case 2: return SyntaxVariant::asNode(_pStatement);
+    }
+
+    throw std::out_of_range{"index out of range"};
+}
+
+DelphiLabeledStatementSyntax* DelphiLabeledStatementSyntax::create(SyntaxFactory& syntaxFactory,
+                                                                   ISyntaxToken* labelIdentifier,
+                                                                   ISyntaxToken* colonToken,
                                                                    DelphiStatementSyntax* statement) noexcept
 {
     assert(labelIdentifier != nullptr);
