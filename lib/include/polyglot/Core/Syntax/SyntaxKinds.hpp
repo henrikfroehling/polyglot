@@ -340,6 +340,8 @@ enum class SyntaxKind : unsigned short
     RepeatStatement,
     WhileStatement,
     ForStatement,
+    ForToStatement,
+    ForInStatement,
     WithStatement,
     TryStatement,
     TryExceptStatement,

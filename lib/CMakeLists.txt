@@ -163,7 +163,9 @@ set(SOURCES_DELPHI_SYNTAX_STATEMENTS
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExceptionHandlerStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExitStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForInStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForToStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiGotoStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiIfStatementSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiLabeledStatementSyntax.cpp

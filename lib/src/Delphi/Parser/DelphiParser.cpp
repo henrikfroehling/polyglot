@@ -20,7 +20,9 @@
 #include "Delphi/Syntax/Statements/DelphiExceptionHandlerStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExitStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiForInStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiForStatementSyntax.hpp"
+#include "Delphi/Syntax/Statements/DelphiForToStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiGotoStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiIfStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiLabeledStatementSyntax.hpp"
@@ -448,7 +450,31 @@ DelphiWhileStatementSyntax* DelphiParser::parseWhileStatement() noexcept
 
 DelphiForStatementSyntax* DelphiParser::parseForStatement() noexcept
 {
-    return nullptr;
+    assert(currentToken()->syntaxKind() == SyntaxKind::ForKeyword);
+    ISyntaxToken* pForKeyword = takeToken(SyntaxKind::ForKeyword);
+    DelphiExpressionSyntax* pInitialValueOrElementExpression = parseExpression();
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+    assert(currentSyntaxKind == SyntaxKind::ToKeyword
+           || currentSyntaxKind == SyntaxKind::DownToKeyword
+           || currentSyntaxKind == SyntaxKind::InKeyword);
+
+    ISyntaxToken* pToOrDownToOrInKeyword = takeToken(currentSyntaxKind);
+    DelphiExpressionSyntax* pFinalValueOrCollectionExpression = parseExpression();
+    ISyntaxToken* pDoKeyword = takeToken(SyntaxKind::DoKeyword);
+    DelphiStatementSyntax* pStatement = parseStatement();
+
+    if (pToOrDownToOrInKeyword->syntaxKind() == SyntaxKind::ToKeyword
+        || pToOrDownToOrInKeyword->syntaxKind() == SyntaxKind::DownToKeyword)
+    {
+        return DelphiForToStatementSyntax::create(_syntaxFactory, pForKeyword, pInitialValueOrElementExpression,
+                                                  pToOrDownToOrInKeyword, pFinalValueOrCollectionExpression,
+                                                  pDoKeyword, pStatement);
+    }
+
+    return DelphiForInStatementSyntax::create(_syntaxFactory, pForKeyword, pInitialValueOrElementExpression,
+                                              pToOrDownToOrInKeyword, pFinalValueOrCollectionExpression,
+                                              pDoKeyword, pStatement);
 }
 
 DelphiWithStatementSyntax* DelphiParser::parseWithStatement() noexcept

@@ -336,6 +336,8 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::RepeatStatement: return L"RepeatStatement";
         case SyntaxKind::WhileStatement: return L"WhileStatement";
         case SyntaxKind::ForStatement: return L"ForStatement";
+        case SyntaxKind::ForToStatement: return L"ForToStatement";
+        case SyntaxKind::ForInStatement: return L"ForInStatement";
         case SyntaxKind::WithStatement: return L"WithStatement";
         case SyntaxKind::TryStatement: return L"TryStatement";
         case SyntaxKind::TryExceptStatement: return L"TryExceptStatement";
