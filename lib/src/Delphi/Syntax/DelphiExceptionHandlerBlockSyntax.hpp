@@ -4,8 +4,8 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/Statements/DelphiStatementListSyntax.hpp"
-#include "Delphi/Syntax/DelphiElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiExceptionBlockSyntax.hpp"
+#include "Delphi/Syntax/DelphiTryElseClauseSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -21,12 +21,12 @@ class DelphiExceptionHandlerBlockSyntax : public DelphiExceptionBlockSyntax
 {
 public:
     explicit DelphiExceptionHandlerBlockSyntax(DelphiStatementListSyntax* exceptionHandlers,
-                                               DelphiElseClauseSyntax* elseClause = nullptr) noexcept;
+                                               DelphiTryElseClauseSyntax* elseClause = nullptr) noexcept;
 
     virtual ~DelphiExceptionHandlerBlockSyntax() noexcept {}
 
     inline DelphiStatementListSyntax* exceptionHandlers() const noexcept { return _pExceptionHandlers; }
-    inline DelphiElseClauseSyntax* elseClause() const noexcept { return _pElseClause; }
+    inline DelphiTryElseClauseSyntax* elseClause() const noexcept { return _pElseClause; }
 
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asList(_pExceptionHandlers); }
 
@@ -43,11 +43,11 @@ public:
 
     static DelphiExceptionHandlerBlockSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                      DelphiStatementListSyntax* exceptionHandlers,
-                                                     DelphiElseClauseSyntax* elseClause = nullptr) noexcept;
+                                                     DelphiTryElseClauseSyntax* elseClause = nullptr) noexcept;
 
 private:
     DelphiStatementListSyntax* _pExceptionHandlers;
-    DelphiElseClauseSyntax* _pElseClause; // optional
+    DelphiTryElseClauseSyntax* _pElseClause; // optional
 };
 
 } // end namespace polyglot::Delphi::Syntax

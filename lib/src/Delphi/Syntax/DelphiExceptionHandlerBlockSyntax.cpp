@@ -7,7 +7,7 @@ namespace polyglot::Delphi::Syntax
 {
 
 DelphiExceptionHandlerBlockSyntax::DelphiExceptionHandlerBlockSyntax(DelphiStatementListSyntax* exceptionHandlers,
-                                                                     DelphiElseClauseSyntax* elseClause) noexcept
+                                                                     DelphiTryElseClauseSyntax* elseClause) noexcept
     : DelphiExceptionBlockSyntax{Core::Syntax::SyntaxKind::ExceptionHandlerBlock},
       _pExceptionHandlers{exceptionHandlers},
       _pElseClause{elseClause}
@@ -15,7 +15,7 @@ DelphiExceptionHandlerBlockSyntax::DelphiExceptionHandlerBlockSyntax(DelphiState
 
 DelphiExceptionHandlerBlockSyntax* DelphiExceptionHandlerBlockSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                                              DelphiStatementListSyntax* exceptionHandlers,
-                                                                             DelphiElseClauseSyntax* elseClause) noexcept
+                                                                             DelphiTryElseClauseSyntax* elseClause) noexcept
 {
     assert(exceptionHandlers != nullptr);
 

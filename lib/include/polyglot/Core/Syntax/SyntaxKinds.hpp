@@ -326,6 +326,7 @@ enum class SyntaxKind : unsigned short
     UnitReference,
     EndOfModuleDeclaration,
     ElseClause,
+    TryElseClause,
     ExceptionHandlerBlock,
     ExceptionStatementBlock,
     ExceptClause,

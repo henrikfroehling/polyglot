@@ -48,6 +48,7 @@ class DelphiRaiseStatementSyntax;
 class DelphiRepeatStatementSyntax;
 class DelphiStatementListSyntax;
 class DelphiStatementSyntax;
+class DelphiTryElseClauseSyntax;
 class DelphiTryStatementSyntax;
 class DelphiUnitFinalizationSectionSyntax;
 class DelphiUnitHeadSyntax;
@@ -115,6 +116,7 @@ private:
     Syntax::DelphiExceptClauseSyntax* parseExceptClause() noexcept;
     Syntax::DelphiExceptionBlockSyntax* parseExceptionBlock() noexcept;
     Syntax::DelphiExceptionHandlerStatementSyntax* parseExceptionHandlerStatement() noexcept;
+    Syntax::DelphiTryElseClauseSyntax* parseTryElseClause() noexcept;
     Syntax::DelphiFinallyClauseSyntax* parseFinallyClause() noexcept;
     Syntax::DelphiRaiseStatementSyntax* parseRaiseStatement() noexcept;
     Syntax::DelphiAssemblerStatementSyntax* parseAssemblerStatement() noexcept;

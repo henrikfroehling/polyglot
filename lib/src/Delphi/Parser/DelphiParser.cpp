@@ -45,6 +45,7 @@
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/DelphiTryElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitImplementationSectionSyntax.hpp"
@@ -535,12 +536,12 @@ DelphiExceptionBlockSyntax* DelphiParser::parseExceptionBlock() noexcept
             statements.push_back(SyntaxVariant::asNode(pExceptionHandlerStatement));
         }
 
-        DelphiElseClauseSyntax* pElseClause{nullptr};
+        DelphiTryElseClauseSyntax* pTryElseClause{nullptr};
 
         if (currentToken()->syntaxKind() == SyntaxKind::ElseKeyword)
-            pElseClause = parseElseClause();
+            pTryElseClause = parseTryElseClause();
 
-        return DelphiExceptionHandlerBlockSyntax::create(_syntaxFactory, DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements)), pElseClause);
+        return DelphiExceptionHandlerBlockSyntax::create(_syntaxFactory, DelphiStatementListSyntax::create(_syntaxFactory, std::move(statements)), pTryElseClause);
     }
 
     DelphiStatementListSyntax* pStatements = parseStatementList();
@@ -556,6 +557,14 @@ DelphiExceptionHandlerStatementSyntax* DelphiParser::parseExceptionHandlerStatem
     DelphiStatementSyntax* pStatement = parseStatement();
     ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
     return DelphiExceptionHandlerStatementSyntax::create(_syntaxFactory, pOnKeyword, pExpression, pDoKeyword, pStatement, pSemiColonToken);
+}
+
+DelphiTryElseClauseSyntax* DelphiParser::parseTryElseClause() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::ElseKeyword);
+    ISyntaxToken* pElseKeyword = takeToken(SyntaxKind::ElseKeyword);
+    DelphiStatementListSyntax* pStatements = parseStatementList();
+    return DelphiTryElseClauseSyntax::create(_syntaxFactory, pElseKeyword, pStatements);
 }
 
 DelphiFinallyClauseSyntax* DelphiParser::parseFinallyClause() noexcept

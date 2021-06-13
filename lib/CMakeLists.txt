@@ -125,6 +125,7 @@ set(SOURCES_DELPHI_SYNTAX
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxList.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxTree.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiTryElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
