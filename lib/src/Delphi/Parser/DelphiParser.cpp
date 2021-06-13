@@ -382,7 +382,8 @@ DelphiBlockStatementSyntax* DelphiParser::parseBlockStatement() noexcept
     ISyntaxToken* pBeginKeyword = takeToken(SyntaxKind::BeginKeyword);
     DelphiStatementListSyntax* pStatementList = parseStatementList();
     ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
-    return DelphiBlockStatementSyntax::create(_syntaxFactory, pBeginKeyword, pStatementList, pEndKeyword);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiBlockStatementSyntax::create(_syntaxFactory, pBeginKeyword, pStatementList, pEndKeyword, pSemiColonToken);
 }
 
 DelphiStatementListSyntax* DelphiParser::parseStatementList() noexcept
