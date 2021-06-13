@@ -35,6 +35,11 @@
 #include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseElseClauseSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseItemListSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseItemSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseLabelListSyntax.hpp"
+#include "Delphi/Syntax/DelphiCaseLabelSyntax.hpp"
 #include "Delphi/Syntax/DelphiElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiExceptionBlockSyntax.hpp"
@@ -426,7 +431,98 @@ DelphiElseClauseSyntax* DelphiParser::parseElseClause() noexcept
 
 DelphiCaseStatementSyntax* DelphiParser::parseCaseStatement() noexcept
 {
+    assert(currentToken()->syntaxKind() == SyntaxKind::CaseKeyword);
+    ISyntaxToken* pCaseKeyword = takeToken(SyntaxKind::CaseKeyword);
+    DelphiExpressionSyntax* pSelectorExpression = parseExpression();
+    ISyntaxToken* pOfKeyword = takeToken(SyntaxKind::OfKeyword);
+    DelphiCaseItemListSyntax* pCaseItems = parseCaseItems();
+    DelphiCaseElseClauseSyntax* pElseClause{nullptr};
+
+    if (currentToken()->syntaxKind() == SyntaxKind::ElseKeyword)
+        pElseClause = parseCaseElseClause();
+
+    ISyntaxToken* pEndKeyword = takeToken(SyntaxKind::EndKeyword);
+    ISyntaxToken* pSemiColonToken = takeToken(SyntaxKind::SemiColonToken);
+    return DelphiCaseStatementSyntax::create(_syntaxFactory, pCaseKeyword, pSelectorExpression, pOfKeyword,
+                                             pCaseItems, pEndKeyword, pSemiColonToken, pElseClause);
+}
+
+DelphiCaseItemListSyntax* DelphiParser::parseCaseItems() noexcept
+{
+    SyntaxKind syntaxKind = currentToken()->syntaxKind();
+
+    if (syntaxKind != SyntaxKind::ElseKeyword && syntaxKind != SyntaxKind::EndKeyword)
+    {
+        std::vector<SyntaxVariant> caseItems{};
+        DelphiCaseItemSyntax* pCaseItem = parseCaseItem();
+        caseItems.push_back(SyntaxVariant::asNode(pCaseItem));
+        syntaxKind = currentToken()->syntaxKind();
+
+        while (syntaxKind != SyntaxKind::ElseKeyword && syntaxKind != SyntaxKind::EndKeyword)
+        {
+            pCaseItem = parseCaseItem();
+            caseItems.push_back(SyntaxVariant::asNode(pCaseItem));
+            syntaxKind = currentToken()->syntaxKind();
+        }
+
+        return DelphiCaseItemListSyntax::create(_syntaxFactory, std::move(caseItems));
+    }
+
     return nullptr;
+}
+
+DelphiCaseItemSyntax* DelphiParser::parseCaseItem() noexcept
+{
+    DelphiCaseLabelListSyntax* pCaseLabels = parseCaseLabels();
+    ISyntaxToken* pColonToken = takeToken(SyntaxKind::ColonToken);
+    DelphiStatementSyntax* pStatement = parseStatement();
+    return DelphiCaseItemSyntax::create(_syntaxFactory, pCaseLabels, pColonToken, pStatement);
+}
+
+DelphiCaseLabelListSyntax* DelphiParser::parseCaseLabels() noexcept
+{
+    if (currentToken()->syntaxKind() != SyntaxKind::ColonToken)
+    {
+        std::vector<SyntaxVariant> caseLabels{};
+        DelphiCaseLabelSyntax* pCaseLabel = parseCaseLabel();
+        caseLabels.push_back(SyntaxVariant::asNode(pCaseLabel));
+
+        while (currentToken()->syntaxKind() != SyntaxKind::ColonToken)
+        {
+            ISyntaxToken* pCommaToken = takeToken(SyntaxKind::CommaToken);
+            caseLabels.push_back(SyntaxVariant::asToken(pCommaToken));
+
+            pCaseLabel = parseCaseLabel();
+            caseLabels.push_back(SyntaxVariant::asNode(pCaseLabel));
+        }
+
+        return DelphiCaseLabelListSyntax::create(_syntaxFactory, std::move(caseLabels));
+    }
+
+    return nullptr;
+}
+
+DelphiCaseLabelSyntax* DelphiParser::parseCaseLabel() noexcept
+{
+    DelphiExpressionSyntax* pExpression = parseExpression();
+    ISyntaxToken* pDotDotToken{nullptr};
+    DelphiExpressionSyntax* pSecondExpression{nullptr};
+
+    if (currentToken()->syntaxKind() == SyntaxKind::DotDotToken)
+    {
+        pDotDotToken = takeToken();
+        pSecondExpression = parseExpression();
+    }
+
+    return DelphiCaseLabelSyntax::create(_syntaxFactory, pExpression, pDotDotToken, pSecondExpression);
+}
+
+DelphiCaseElseClauseSyntax* DelphiParser::parseCaseElseClause() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::ElseKeyword);
+    ISyntaxToken* pElseKeyword = takeToken(SyntaxKind::ElseKeyword);
+    DelphiStatementListSyntax* pStatements = parseStatementList();
+    return DelphiCaseElseClauseSyntax::create(_syntaxFactory, pElseKeyword, pStatements);
 }
 
 DelphiRepeatStatementSyntax* DelphiParser::parseRepeatStatement() noexcept

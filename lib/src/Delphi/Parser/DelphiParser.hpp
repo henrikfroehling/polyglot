@@ -20,6 +20,11 @@ namespace polyglot::Delphi::Syntax
 class DelphiAssemblerStatementSyntax;;
 class DelphiBlockStatementSyntax;
 class DelphiBreakStatementSyntax;
+class DelphiCaseElseClauseSyntax;
+class DelphiCaseItemListSyntax;
+class DelphiCaseItemSyntax;
+class DelphiCaseLabelListSyntax;
+class DelphiCaseLabelSyntax;
 class DelphiCaseStatementSyntax;
 class DelphiCompilationUnitSyntax;
 class DelphiContinueStatementSyntax;
@@ -108,6 +113,11 @@ private:
     Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;
     Syntax::DelphiElseClauseSyntax* parseElseClause() noexcept;
     Syntax::DelphiCaseStatementSyntax* parseCaseStatement() noexcept;
+    Syntax::DelphiCaseItemListSyntax* parseCaseItems() noexcept;
+    Syntax::DelphiCaseItemSyntax* parseCaseItem() noexcept;
+    Syntax::DelphiCaseLabelListSyntax* parseCaseLabels() noexcept;
+    Syntax::DelphiCaseLabelSyntax* parseCaseLabel() noexcept;
+    Syntax::DelphiCaseElseClauseSyntax* parseCaseElseClause() noexcept;
     Syntax::DelphiRepeatStatementSyntax* parseRepeatStatement() noexcept;
     Syntax::DelphiWhileStatementSyntax* parseWhileStatement() noexcept;
     Syntax::DelphiForStatementSyntax* parseForStatement() noexcept;

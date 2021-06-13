@@ -107,6 +107,11 @@ set(SOURCES_DELPHI_PARSER
 )
 
 set(SOURCES_DELPHI_SYNTAX
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseElseClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemListSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseLabelListSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseLabelSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.cpp

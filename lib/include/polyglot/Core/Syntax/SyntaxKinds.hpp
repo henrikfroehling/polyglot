@@ -331,6 +331,11 @@ enum class SyntaxKind : unsigned short
     ExceptionStatementBlock,
     ExceptClause,
     FinallyClause,
+    CaseElseClause,
+    CaseLabel,
+    CaseLabelList,
+    CaseItem,
+    CaseItemList,
 
     // statements
     StatementList,
