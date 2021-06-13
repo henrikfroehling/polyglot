@@ -80,7 +80,7 @@ public:
                                       pg_size position = 0) noexcept;
 
     ISyntaxList* syntaxList(SyntaxKind syntaxKind,
-                            std::vector<SyntaxVariant>&& syntaxNodes) noexcept;
+                            std::vector<SyntaxVariant>&& children) noexcept;
 
     ISyntaxTriviaList* syntaxTriviaList(std::initializer_list<ISyntaxTrivia*> trivia,
                                         ISyntaxToken* token = nullptr) noexcept;

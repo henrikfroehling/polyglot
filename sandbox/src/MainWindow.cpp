@@ -45,19 +45,19 @@ MainWindow::MainWindow(QWidget* parent) noexcept
     QMenu* menu = menuBar()->addMenu(QStringLiteral("File"));
 
     QAction* action = menu->addAction(QStringLiteral("Open File..."));
-    action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_O});
+    action->setShortcut(QKeySequence{QStringLiteral("Ctrl+O")});
     connect(action, &QAction::triggered, this, &MainWindow::openFile);
 
     menu->addSeparator();
 
     action = menu->addAction(QStringLiteral("Quit"));
-    action->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_Q});
+    action->setShortcut(QKeySequence{QStringLiteral("Ctrl+Q")});
     connect(action, &QAction::triggered, this, &MainWindow::quitApplication);
 
     menu = menuBar()->addMenu(QStringLiteral("polyglot"));
 
     action = menu->addAction(QStringLiteral("Analyze"));
-    action->setShortcut(QKeySequence{Qt::CTRL | Qt::SHIFT | Qt::Key_A});
+    action->setShortcut(QKeySequence{QStringLiteral("Ctrl+Shift+A")});
     connect(action, &QAction::triggered, this, &MainWindow::analyzeSourceCode);
 
     setCentralWidget(_pTxtEditor);
@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget* parent) noexcept
 
 void MainWindow::openFile() noexcept
 {
-    const QString filename = QFileDialog::getOpenFileName(this, QStringLiteral("Open File"), QStringLiteral(""),
+    const QString filename = QFileDialog::getOpenFileName(this, QStringLiteral("Open File"), QLatin1String{},
                                                           QStringLiteral("Delphi Files (*.pas)"));
 
     QFile file{filename};

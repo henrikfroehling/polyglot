@@ -78,13 +78,14 @@ enum class SyntaxKind : unsigned short
     ElseKeyword, // else
     EndKeyword, // end
     ExceptKeyword, // except
+    ExitKeyword, // exit
     ExportsKeyword, // exports
     FileKeyword, // file
     FinalizationKeyword, // finalization
     FinallyKeyword, // finally
     ForKeyword, // for
     FunctionKeyword, // function
-    GoToKeyword, // goto
+    GotoKeyword, // goto
     IfKeyword, // if
     ImplementationKeyword, // implementation
     InKeyword, // in
@@ -100,6 +101,7 @@ enum class SyntaxKind : unsigned short
     NotKeyword, // not
     ObjectKeyword, // object
     OfKeyword, // of
+    OnKeyword, // on
     OrKeyword, // or
     PackedKeyword, // packed
     ProcedureKeyword, // procedure
@@ -318,11 +320,45 @@ enum class SyntaxKind : unsigned short
     PackageHead,
     ProgramModule,
     ProgramHead,
-
     PackageRequiresClause,
     PackageContainsClause,
     UsesClause,
     UnitReference,
+    EndOfModuleDeclaration,
+    ElseClause,
+    TryElseClause,
+    ExceptionHandlerBlock,
+    ExceptionStatementBlock,
+    ExceptClause,
+    FinallyClause,
+    CaseElseClause,
+    CaseLabel,
+    CaseLabelList,
+    CaseItem,
+    CaseItemList,
+
+    // statements
+    StatementList,
+    ExpressionStatement,
+    BlockStatement,
+    IfStatement,
+    CaseStatement,
+    RepeatStatement,
+    WhileStatement,
+    ForStatement,
+    ForToStatement,
+    ForInStatement,
+    WithStatement,
+    TryStatement,
+    TryExceptStatement,
+    TryFinallyStatement,
+    RaiseStatement,
+    AssemblerStatement,
+    BreakStatement,
+    ContinueStatement,
+    GotoStatement,
+    ExitStatement,
+    LabeledStatement,
 
     // expressions
     LogicalNotExpression = 4000,
@@ -335,10 +371,16 @@ enum class SyntaxKind : unsigned short
     NumericLiteralExpression,
     TrueLiteralExpression,
     FalseLiteralExpression,
-    IdentifierNameExpression,
-    QualifiedNameExpression,
+    NilLiteralExpression,
     CallExpression,
-    EndOfModule
+    PointerTypeExpression,
+    AssignmentExpression,
+    ExceptionHandlerExpression,
+
+    IdentifierName,
+    ExtendedIdentifierName,
+    QualifiedName,
+    PredefinedType
 };
 
 pg_string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;

@@ -64,7 +64,7 @@ public:
 
     pg_string toString() const noexcept override;
     pg_string toShortString() const noexcept override;
-    virtual pg_string typeName() const noexcept override { return L"SyntaxList"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SyntaxList"; }
 
 protected:
     void adjustWidthAndFlags(ISyntaxList* list) noexcept;

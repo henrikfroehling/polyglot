@@ -9,20 +9,52 @@
 namespace polyglot::Core::Syntax
 {
 
-class IdentifierNameExpressionSyntax;
 class ISyntaxNode;
 class ISyntaxToken;
-class NameExpressionSyntax;
 
 } // end namespace polyglot::Core::Syntax
 
 namespace polyglot::Delphi::Syntax
 {
 
+class DelphiAssemblerStatementSyntax;;
+class DelphiBlockStatementSyntax;
+class DelphiBreakStatementSyntax;
+class DelphiCaseElseClauseSyntax;
+class DelphiCaseItemListSyntax;
+class DelphiCaseItemSyntax;
+class DelphiCaseLabelListSyntax;
+class DelphiCaseLabelSyntax;
+class DelphiCaseStatementSyntax;
 class DelphiCompilationUnitSyntax;
-class DelphiEndOfModuleSyntax;
+class DelphiContinueStatementSyntax;
+class DelphiElseClauseSyntax;
+class DelphiExceptionBlockSyntax;
+class DelphiExceptionHandlerStatementSyntax;
+class DelphiExceptClauseSyntax;
+class DelphiEndOfModuleDeclarationSyntax;
+class DelphiExitStatementSyntax;
+class DelphiExpressionSyntax;
+class DelphiExpressionStatementSyntax;
+class DelphiExtendedIdentifierNameSyntax;
+class DelphiFinallyClauseSyntax;
+class DelphiForStatementSyntax;
+class DelphiGotoStatementSyntax;
+class DelphiIdentifierNameSyntax;
+class DelphiIfStatementSyntax;
+class DelphiLabeledStatementSyntax;
+class DelphiLiteralExpressionSyntax;
+class DelphiNameSyntax;
 class DelphiPackageModuleSyntax;
+class DelphiPointerTypeSyntax;
+class DelphiPredefinedTypeSyntax;
 class DelphiProgramModuleSyntax;
+class DelphiRaiseStatementSyntax;
+class DelphiRepeatStatementSyntax;
+class DelphiStatementListSyntax;
+class DelphiStatementSyntax;
+class DelphiTryElseClauseSyntax;
+class DelphiTryStatementSyntax;
 class DelphiUnitFinalizationSectionSyntax;
 class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
@@ -31,6 +63,8 @@ class DelphiUnitInterfaceSectionSyntax;
 class DelphiUnitModuleSyntax;
 class DelphiUnitReferenceDeclarationSyntax;
 class DelphiUsesClauseSyntax;
+class DelphiWhileStatementSyntax;
+class DelphiWithStatementSyntax;
 
 } // end namespace polyglot::Delphi::Syntax
 
@@ -56,13 +90,51 @@ private:
     Syntax::DelphiProgramModuleSyntax* parseProgramModule() noexcept;
     Syntax::DelphiUsesClauseSyntax* parseUsesClause() noexcept;
     Syntax::DelphiUnitReferenceDeclarationSyntax* parseUnitReference() noexcept;
-    Core::Syntax::NameExpressionSyntax* parseQualifiedName() noexcept;
+    Syntax::DelphiEndOfModuleDeclarationSyntax* parseEndOfModule() noexcept;
 
-    Core::Syntax::NameExpressionSyntax* parseQualifiedNameRight(Core::Syntax::NameExpressionSyntax* left,
-                                                                Core::Syntax::ISyntaxToken* dotToken) noexcept;
+    // expressions
+    Syntax::DelphiExpressionSyntax* parseExpression() noexcept;
+    Syntax::DelphiNameSyntax* parseQualifiedName() noexcept;
 
-    Core::Syntax::IdentifierNameExpressionSyntax* parseIdentifierName() noexcept;
-    Syntax::DelphiEndOfModuleSyntax* parseEndOfModule() noexcept;
+    Syntax::DelphiNameSyntax* parseQualifiedNameRight(Syntax::DelphiNameSyntax* left,
+                                                      Core::Syntax::ISyntaxToken* dotToken) noexcept;
+
+    Syntax::DelphiIdentifierNameSyntax* parseIdentifierName() noexcept;
+    Syntax::DelphiExtendedIdentifierNameSyntax* parseExtendedIdentifierName() noexcept;
+    Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
+    Syntax::DelphiPointerTypeSyntax* parsePointerType() noexcept;
+    Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
+
+    // statements
+    Syntax::DelphiStatementSyntax* parseStatement() noexcept;
+    Syntax::DelphiExpressionStatementSyntax* parseExpressionStatement() noexcept;
+    Syntax::DelphiBlockStatementSyntax* parseBlockStatement() noexcept;
+    Syntax::DelphiStatementListSyntax* parseStatementList() noexcept;
+    Syntax::DelphiIfStatementSyntax* parseIfStatement() noexcept;
+    Syntax::DelphiElseClauseSyntax* parseElseClause() noexcept;
+    Syntax::DelphiCaseStatementSyntax* parseCaseStatement() noexcept;
+    Syntax::DelphiCaseItemListSyntax* parseCaseItems() noexcept;
+    Syntax::DelphiCaseItemSyntax* parseCaseItem() noexcept;
+    Syntax::DelphiCaseLabelListSyntax* parseCaseLabels() noexcept;
+    Syntax::DelphiCaseLabelSyntax* parseCaseLabel() noexcept;
+    Syntax::DelphiCaseElseClauseSyntax* parseCaseElseClause() noexcept;
+    Syntax::DelphiRepeatStatementSyntax* parseRepeatStatement() noexcept;
+    Syntax::DelphiWhileStatementSyntax* parseWhileStatement() noexcept;
+    Syntax::DelphiForStatementSyntax* parseForStatement() noexcept;
+    Syntax::DelphiWithStatementSyntax* parseWithStatement() noexcept;
+    Syntax::DelphiTryStatementSyntax* parseTryStatement() noexcept;
+    Syntax::DelphiExceptClauseSyntax* parseExceptClause() noexcept;
+    Syntax::DelphiExceptionBlockSyntax* parseExceptionBlock() noexcept;
+    Syntax::DelphiExceptionHandlerStatementSyntax* parseExceptionHandlerStatement() noexcept;
+    Syntax::DelphiTryElseClauseSyntax* parseTryElseClause() noexcept;
+    Syntax::DelphiFinallyClauseSyntax* parseFinallyClause() noexcept;
+    Syntax::DelphiRaiseStatementSyntax* parseRaiseStatement() noexcept;
+    Syntax::DelphiAssemblerStatementSyntax* parseAssemblerStatement() noexcept;
+    Syntax::DelphiBreakStatementSyntax* parseBreakStatement() noexcept;
+    Syntax::DelphiContinueStatementSyntax* parseContinueStatement() noexcept;
+    Syntax::DelphiExitStatementSyntax* parseExitStatement() noexcept;
+    Syntax::DelphiGotoStatementSyntax* parseGotoStatement() noexcept;
+    Syntax::DelphiLabeledStatementSyntax* parseLabeledStatement() noexcept;
 
 private:
     Core::Syntax::SyntaxFactory _syntaxFactory;

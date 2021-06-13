@@ -5,14 +5,13 @@
 #include "polyglot/Core/Syntax/ISyntaxTrivia.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
-#include "Core/Syntax/Expressions/BinaryExpressionSyntax.hpp"
-#include "Core/Syntax/Expressions/IdentifierNameExpressionSyntax.hpp"
-#include "Core/Syntax/Expressions/LiteralExpressionSyntax.hpp"
-#include "Core/Syntax/Expressions/ParenthesizedExpressionSyntax.hpp"
-#include "Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.hpp"
 #include "Core/Syntax/Trivia/SkippedTokensTriviaSyntax.hpp"
-#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiBadDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiDefineDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiElseDirectiveTriviaSyntax.hpp"
@@ -27,6 +26,7 @@
 #include "Delphi/Syntax/Trivia/DelphiRegionDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiSwitchDirectiveTriviaSyntax.hpp"
 #include "Delphi/Syntax/Trivia/DelphiUndefDirectiveTriviaSyntax.hpp"
+#include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Parser
 {
@@ -120,7 +120,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseIfDirective(ISyntaxToken* ope
                                                                ISyntaxToken* keyword,
                                                                bool isActive) noexcept
 {
-    ExpressionSyntax* pExpression = parseExpression();
+    DelphiExpressionSyntax* pExpression = parseExpression();
     ISyntaxToken* pEndOfDirective = parseEndOfDirective();
     const bool isTrue = evaluateBool(pExpression);
     const bool isBranchTaken = isActive && isTrue;
@@ -189,7 +189,7 @@ DirectiveTriviaSyntax* DelphiDirectiveParser::parseElseIfDirective(ISyntaxToken*
                                                                    bool isActive,
                                                                    bool endIsActive) noexcept
 {
-    ExpressionSyntax* pExpression = parseExpression();
+    DelphiExpressionSyntax* pExpression = parseExpression();
     ISyntaxToken* pEndOfDirective = parseEndOfDirective();
 
     if (_context.hasPreviousIfOrIfNOrElseIf())
@@ -345,68 +345,68 @@ ISyntaxToken* DelphiDirectiveParser::parseEndOfDirective() noexcept
     return pEndOfDirective;
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseExpression() noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parseExpression() noexcept
 {
     return parseLogicalOr();
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseLogicalOr() noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parseLogicalOr() noexcept
 {
-    ExpressionSyntax* pLeftExpression = parseLogicalAnd();
+    DelphiExpressionSyntax* pLeftExpression = parseLogicalAnd();
 
     while (currentToken()->syntaxKind() == SyntaxKind::OrKeyword)
     {
         ISyntaxToken* pOperatorToken = takeToken();
-        ExpressionSyntax* pRightExpression = parseLogicalAnd();
-        pLeftExpression = BinaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalOrExpression, pLeftExpression, pOperatorToken, pRightExpression);
+        DelphiExpressionSyntax* pRightExpression = parseLogicalAnd();
+        pLeftExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalOrExpression, pLeftExpression, pOperatorToken, pRightExpression);
     }
 
     return pLeftExpression;
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseLogicalAnd() noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parseLogicalAnd() noexcept
 {
-    ExpressionSyntax* pLeftExpression = parseEquality();
+    DelphiExpressionSyntax* pLeftExpression = parseEquality();
 
     while (currentToken()->syntaxKind() == SyntaxKind::AndKeyword)
     {
         ISyntaxToken* pOperatorToken = takeToken();
-        ExpressionSyntax* pRightExpression = parseEquality();
-        pLeftExpression = BinaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalAndExpression, pLeftExpression, pOperatorToken, pRightExpression);
+        DelphiExpressionSyntax* pRightExpression = parseEquality();
+        pLeftExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalAndExpression, pLeftExpression, pOperatorToken, pRightExpression);
     }
 
     return pLeftExpression;
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseEquality() noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parseEquality() noexcept
 {
-    ExpressionSyntax* pLeftExpression = parseLogicalNot();
+    DelphiExpressionSyntax* pLeftExpression = parseLogicalNot();
     SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
 
     while (DelphiSyntaxFacts::isComparisonSyntaxKind(currentSyntaxKind))
     {
         ISyntaxToken* pOperatorToken = takeToken();
-        ExpressionSyntax* pRightExpression = parseEquality();
+        DelphiExpressionSyntax* pRightExpression = parseEquality();
         SyntaxKind expressionKind = DelphiSyntaxFacts::binaryExpressionKind(pOperatorToken->syntaxKind());
-        pLeftExpression = BinaryExpressionSyntax::create(_syntaxFactory, expressionKind, pLeftExpression, pOperatorToken, pRightExpression);
+        pLeftExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, expressionKind, pLeftExpression, pOperatorToken, pRightExpression);
         currentSyntaxKind = currentToken()->syntaxKind();
     }
 
     return pLeftExpression;
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseLogicalNot() noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parseLogicalNot() noexcept
 {
     if (currentToken()->syntaxKind() == SyntaxKind::NotKeyword)
     {
         ISyntaxToken* pOperatorToken = takeToken();
-        return PrefixUnaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalNotExpression, pOperatorToken, parseLogicalNot());
+        return DelphiPrefixUnaryExpressionSyntax::create(_syntaxFactory, SyntaxKind::LogicalNotExpression, pOperatorToken, parseLogicalNot());
     }
 
     return parsePrimary();
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
 {
     SyntaxKind syntaxKind = currentToken()->syntaxKind();
 
@@ -415,9 +415,9 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
         case SyntaxKind::OpenParenthesisToken:
         {
             ISyntaxToken* pOpenParenthesisToken = takeToken();
-            ExpressionSyntax* pExpression = parseExpression();
+            DelphiExpressionSyntax* pExpression = parseExpression();
             ISyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
-            return ParenthesizedExpressionSyntax::create(_syntaxFactory, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
+            return DelphiParenthesizedExpressionSyntax::create(_syntaxFactory, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
         }
         case SyntaxKind::IdentifierToken:
         {
@@ -426,42 +426,42 @@ ExpressionSyntax* DelphiDirectiveParser::parsePrimary() noexcept
             if (peekToken(1)->syntaxKind() == SyntaxKind::OpenParenthesisToken)
                 return parseCallExpression(pIdentifier);
 
-            return IdentifierNameExpressionSyntax::create(_syntaxFactory, pIdentifier);
+            return DelphiIdentifierNameSyntax::create(_syntaxFactory, pIdentifier);
         }
         case SyntaxKind::NumberLiteralToken:
-            return LiteralExpressionSyntax::create(_syntaxFactory, SyntaxKind::NumericLiteralExpression, takeToken());
+            return DelphiLiteralExpressionSyntax::create(_syntaxFactory, SyntaxKind::NumericLiteralExpression, takeToken());
         case SyntaxKind::TrueKeyword:
         case SyntaxKind::FalseKeyword:
-            return LiteralExpressionSyntax::create(_syntaxFactory, DelphiSyntaxFacts::literalExpressionKind(syntaxKind), takeToken());
+            return DelphiLiteralExpressionSyntax::create(_syntaxFactory, DelphiSyntaxFacts::literalExpressionKind(syntaxKind), takeToken());
         default:
-            return IdentifierNameExpressionSyntax::create(_syntaxFactory, takeToken(SyntaxKind::IdentifierToken));
+            return DelphiIdentifierNameSyntax::create(_syntaxFactory, takeToken(SyntaxKind::IdentifierToken));
     }
 
     return nullptr;
 }
 
-ExpressionSyntax* DelphiDirectiveParser::parseCallExpression(ISyntaxToken* identifier) noexcept
+DelphiExpressionSyntax* DelphiDirectiveParser::parseCallExpression(ISyntaxToken* identifier) noexcept
 {
     ISyntaxToken* pOpenParenthesisToken = takeToken(SyntaxKind::OpenParenthesisToken);
-    ExpressionSyntax* pExpression = parseExpression();
+    DelphiExpressionSyntax* pExpression = parseExpression();
     ISyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
     return DelphiCallExpressionSyntax::create(_syntaxFactory, SyntaxKind::CallExpression, identifier, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
 }
 
-bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noexcept
+bool DelphiDirectiveParser::evaluateBool(DelphiExpressionSyntax* expression) const noexcept
 {
     switch (expression->syntaxKind())
     {
         case SyntaxKind::CallExpression:
             return evaluateBool(static_cast<DelphiCallExpressionSyntax*>(expression)->argumentExpression());
         case SyntaxKind::LogicalNotExpression:
-            return !evaluateBool(static_cast<PrefixUnaryExpressionSyntax*>(expression)->operandExpression());
+            return !evaluateBool(static_cast<DelphiPrefixUnaryExpressionSyntax*>(expression)->operandExpression());
         case SyntaxKind::LogicalOrExpression:
         case SyntaxKind::LogicalAndExpression:
         case SyntaxKind::EqualsExpression:
         case SyntaxKind::NotEqualsExpression:
         {
-            BinaryExpressionSyntax* pBinaryExpression = static_cast<BinaryExpressionSyntax*>(expression);
+            DelphiBinaryExpressionSyntax* pBinaryExpression = static_cast<DelphiBinaryExpressionSyntax*>(expression);
             assert(pBinaryExpression != nullptr);
 
             switch (pBinaryExpression->syntaxKind())
@@ -479,12 +479,12 @@ bool DelphiDirectiveParser::evaluateBool(ExpressionSyntax* expression) const noe
             break;
         }
         case SyntaxKind::ParenthesizedExpression:
-            return evaluateBool(static_cast<ParenthesizedExpressionSyntax*>(expression)->expression());
+            return evaluateBool(static_cast<DelphiParenthesizedExpressionSyntax*>(expression)->expression());
         case SyntaxKind::TrueLiteralExpression:
         case SyntaxKind::FalseLiteralExpression:
-            return static_cast<LiteralExpressionSyntax*>(expression)->token()->booleanValue();
-        case SyntaxKind::IdentifierNameExpression:
-            return isDefined(static_cast<IdentifierNameExpressionSyntax*>(expression)->identifier()->text());
+            return static_cast<DelphiLiteralExpressionSyntax*>(expression)->token()->booleanValue();
+        case SyntaxKind::IdentifierName:
+            return isDefined(static_cast<DelphiIdentifierNameSyntax*>(expression)->identifier()->text());
     }
 
     return false;

@@ -7,6 +7,7 @@
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Syntax/SyntaxNode.hpp"
 #include "Core/Syntax/SyntaxToken.hpp"
+#include "Delphi/Syntax/Expressions/DelphiExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -16,12 +17,12 @@ using namespace Core::Syntax;
 DelphiElseIfDirectiveTriviaSyntax::DelphiElseIfDirectiveTriviaSyntax(SyntaxKind syntaxKind,
                                                                      ISyntaxToken* startToken,
                                                                      ISyntaxToken* elseIfKeyword,
-                                                                     ExpressionSyntax* condition,
+                                                                     DelphiExpressionSyntax* condition,
                                                                      ISyntaxToken* endOfDirectiveToken,
                                                                      bool isActive,
                                                                      bool isBranchTaken,
                                                                      bool conditionValue) noexcept
-    : ConditionalDirectiveTriviaSyntax{syntaxKind},
+    : DelphiConditionalDirectiveTriviaSyntax{syntaxKind},
       _pStartToken{startToken},
       _pElseIfKeyword{elseIfKeyword},
       _pCondition{condition},
@@ -59,7 +60,7 @@ SyntaxVariant DelphiElseIfDirectiveTriviaSyntax::child(pg_size index) const
 DelphiElseIfDirectiveTriviaSyntax* DelphiElseIfDirectiveTriviaSyntax::create(SyntaxFactory& syntaxFactory,
                                                                              ISyntaxToken* startToken,
                                                                              ISyntaxToken* elseIfKeyword,
-                                                                             ExpressionSyntax* condition,
+                                                                             DelphiExpressionSyntax* condition,
                                                                              ISyntaxToken* endOfDirectiveToken,
                                                                              bool isActive,
                                                                              bool isBranchTaken,

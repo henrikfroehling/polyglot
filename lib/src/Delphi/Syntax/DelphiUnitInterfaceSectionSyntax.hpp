@@ -38,7 +38,7 @@ public:
         return Core::Syntax::SyntaxVariant::asToken(_pInterfaceKeyword);
     }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUnitInterfaceSectionSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUnitInterfaceSectionSyntax"; }
 
     static DelphiUnitInterfaceSectionSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* interfaceKeyword,

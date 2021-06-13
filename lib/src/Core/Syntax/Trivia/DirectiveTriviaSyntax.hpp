@@ -22,7 +22,7 @@ public:
     virtual Parser::DirectiveStack applyDirectives(Parser::DirectiveStack stack) const noexcept override;
     inline bool isDirective() const noexcept override final { return true; }
 
-    virtual pg_string typeName() const noexcept override { return L"DirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DirectiveTriviaSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

@@ -12,10 +12,14 @@ class DelphiSyntaxList : public Core::Syntax::SyntaxList
 {
 public:
     explicit DelphiSyntaxList(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+
+    explicit DelphiSyntaxList(Core::Syntax::SyntaxKind syntaxKind,
+                              std::vector<Core::Syntax::SyntaxVariant>&& children) noexcept;
+
     virtual ~DelphiSyntaxList() noexcept {}
     inline Core::LanguageKind languageKind() const noexcept override { return Core::LanguageKind::Delphi; }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiSyntaxList"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiSyntaxList"; }
 };
 
 } // end namespace polyglot::Delphi::Syntax

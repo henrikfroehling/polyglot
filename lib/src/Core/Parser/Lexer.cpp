@@ -148,14 +148,14 @@ ISyntaxToken* Lexer::peekToken(pg_size n) noexcept
             while (_tokenOffset + n > _tokenCount)
                 addLexedToken(lex());
 
-            return _lexedTokens[_tokenOffset + n - 1];
+            return _lexedTokens[_tokenOffset + n];
         }
         case LexerMode::Directive:
         {
             while (_directiveTriviaTokenOffset + n > _directiveTriviaTokenCount)
                 addLexedToken(lex());
 
-            return _lexedDirectiveTriviaTokens[_directiveTriviaTokenOffset + n - 1];
+            return _lexedDirectiveTriviaTokens[_directiveTriviaTokenOffset + n];
         }
     }
 

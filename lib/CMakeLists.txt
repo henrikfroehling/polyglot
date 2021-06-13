@@ -80,21 +80,8 @@ set(SOURCES_CORE_SYNTAX
   ${SOURCE_DIR}/Core/Syntax/SyntaxVariant.cpp
 )
 
-set(SOURCES_CORE_SYNTAX_EXPRESSIONS
-  ${SOURCE_DIR}/Core/Syntax/Expressions/BinaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/IdentifierNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/LiteralExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/NameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/ParenthesizedExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/PrefixUnaryExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/QualifiedNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/SimpleNameExpressionSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Expressions/TypeExpressionSyntax.cpp
-)
-
 set(SOURCES_CORE_SYNTAX_TRIVIA
   ${SOURCE_DIR}/Core/Syntax/Trivia/BranchingDirectiveTriviaSyntax.cpp
-  ${SOURCE_DIR}/Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/DefineDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/DirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Core/Syntax/Trivia/SkippedTokensTriviaSyntax.cpp
@@ -117,21 +104,33 @@ set(SOURCES_DELPHI_PARSER
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerStates.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiParser.cpp
-  ${SOURCE_DIR}/Delphi/Parser/DelphiSyntaxFacts.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseElseClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemListSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseLabelListSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseLabelSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCompilationUnitSyntax.cpp
-  ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiElseClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptClauseSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptionBlockSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptionHandlerBlockSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiExceptionStatementBlockSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiFinallyClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageContainsClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageModuleSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiPackageRequiresClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiProgramModuleSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxFacts.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxList.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxNode.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiSyntaxTree.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiTryElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitHeadSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiUnitImplementationSectionSyntax.cpp
@@ -144,11 +143,52 @@ set(SOURCES_DELPHI_SYNTAX
 )
 
 set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPointerTypeSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSimpleNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiTypeSyntax.cpp
+)
+
+set(SOURCES_DELPHI_SYNTAX_STATEMENTS
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiBlockStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiBreakStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiCaseStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiContinueStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExceptionHandlerStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExitStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiExpressionStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForInStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiForToStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiGotoStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiIfStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiLabeledStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiRaiseStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiRepeatStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiStatementListSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryExceptStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryFinallyStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiTryStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiWhileStatementSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Statements/DelphiWithStatementSyntax.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX_TRIVIA
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiBadDirectiveTriviaSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiConditionalDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiDefineDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiElseDirectiveTriviaSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Trivia/DelphiElseIfDirectiveTriviaSyntax.cpp
@@ -173,12 +213,12 @@ target_sources(${PROJECT_NAME} PRIVATE
   ${SOURCES_CORE}
   ${SOURCES_CORE_PARSER}
   ${SOURCES_CORE_SYNTAX}
-  ${SOURCES_CORE_SYNTAX_EXPRESSIONS}
   ${SOURCES_CORE_SYNTAX_TRIVIA}
   ${SOURCES_CORE_TEXT}
   ${SOURCES_DELPHI_PARSER}
   ${SOURCES_DELPHI_SYNTAX}
   ${SOURCES_DELPHI_SYNTAX_EXPRESSIONS}
+  ${SOURCES_DELPHI_SYNTAX_STATEMENTS}
   ${SOURCES_DELPHI_SYNTAX_TRIVIA}
 )
 

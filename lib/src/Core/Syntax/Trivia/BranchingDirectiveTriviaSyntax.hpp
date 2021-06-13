@@ -15,7 +15,7 @@ public:
     virtual ~BranchingDirectiveTriviaSyntax() noexcept {}
     virtual bool isBranchTaken() const noexcept = 0;
 
-    virtual pg_string typeName() const noexcept override { return L"BranchingDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"BranchingDirectiveTriviaSyntax"; }
 };
 
 } // end namespace polyglot::Core::Syntax

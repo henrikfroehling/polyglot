@@ -76,13 +76,14 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::ElseKeyword: return L"ElseKeyword";
         case SyntaxKind::EndKeyword: return L"EndKeyword";
         case SyntaxKind::ExceptKeyword: return L"ExceptKeyword";
+        case SyntaxKind::ExitKeyword: return L"ExitKeyword";
         case SyntaxKind::ExportsKeyword: return L"ExportsKeyword";
         case SyntaxKind::FileKeyword: return L"FileKeyword";
         case SyntaxKind::FinalizationKeyword: return L"FinalizationKeyword";
         case SyntaxKind::FinallyKeyword: return L"FinallyKeyword";
         case SyntaxKind::ForKeyword: return L"ForKeyword";
         case SyntaxKind::FunctionKeyword: return L"FunctionKeyword";
-        case SyntaxKind::GoToKeyword: return L"GoToKeyword";
+        case SyntaxKind::GotoKeyword: return L"GotoKeyword";
         case SyntaxKind::IfKeyword: return L"IfKeyword";
         case SyntaxKind::ImplementationKeyword: return L"ImplementationKeyword";
         case SyntaxKind::InKeyword: return L"InKeyword";
@@ -98,6 +99,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::NotKeyword: return L"NotKeyword";
         case SyntaxKind::ObjectKeyword: return L"ObjectKeyword";
         case SyntaxKind::OfKeyword: return L"OfKeyword";
+        case SyntaxKind::OnKeyword: return L"OnKeyword";
         case SyntaxKind::OrKeyword: return L"OrKeyword";
         case SyntaxKind::PackedKeyword: return L"PackedKeyword";
         case SyntaxKind::ProcedureKeyword: return L"ProcedureKeyword";
@@ -315,11 +317,44 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::PackageHead: return L"PackageHead";
         case SyntaxKind::ProgramModule: return L"ProgramModule";
         case SyntaxKind::ProgramHead: return L"ProgramHead";
-
         case SyntaxKind::PackageRequiresClause: return L"PackageRequiresClause";
         case SyntaxKind::PackageContainsClause: return L"PackageContainsClause";
         case SyntaxKind::UsesClause: return L"UsesClause";
         case SyntaxKind::UnitReference: return L"UnitReference";
+        case SyntaxKind::EndOfModuleDeclaration: return L"EndOfModuleDeclaration";
+        case SyntaxKind::ElseClause: return L"ElseClause";
+        case SyntaxKind::TryElseClause: return L"TryElseClause";
+        case SyntaxKind::ExceptionHandlerBlock: return L"ExceptionHandlerBlock";
+        case SyntaxKind::ExceptionStatementBlock: return L"ExceptionStatementBlock";
+        case SyntaxKind::ExceptClause: return L"ExceptClause";
+        case SyntaxKind::FinallyClause: return L"FinallyClause";
+        case SyntaxKind::CaseElseClause: return L"CaseElseClause";
+        case SyntaxKind::CaseLabel: return L"CaseLabel";
+        case SyntaxKind::CaseLabelList: return L"CaseLabelList";
+        case SyntaxKind::CaseItem: return L"CaseItem";
+        case SyntaxKind::CaseItemList: return L"CaseItemList";
+
+        case SyntaxKind::StatementList: return L"StatementList";
+        case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
+        case SyntaxKind::BlockStatement: return L"BlockStatement";
+        case SyntaxKind::IfStatement: return L"IfStatement";
+        case SyntaxKind::CaseStatement: return L"CaseStatement";
+        case SyntaxKind::RepeatStatement: return L"RepeatStatement";
+        case SyntaxKind::WhileStatement: return L"WhileStatement";
+        case SyntaxKind::ForStatement: return L"ForStatement";
+        case SyntaxKind::ForToStatement: return L"ForToStatement";
+        case SyntaxKind::ForInStatement: return L"ForInStatement";
+        case SyntaxKind::WithStatement: return L"WithStatement";
+        case SyntaxKind::TryStatement: return L"TryStatement";
+        case SyntaxKind::TryExceptStatement: return L"TryExceptStatement";
+        case SyntaxKind::TryFinallyStatement: return L"TryFinallyStatement";
+        case SyntaxKind::RaiseStatement: return L"RaiseStatement";
+        case SyntaxKind::AssemblerStatement: return L"AssemblerStatement";
+        case SyntaxKind::BreakStatement: return L"BreakStatement";
+        case SyntaxKind::ContinueStatement: return L"ContinueStatement";
+        case SyntaxKind::GotoStatement: return L"GotoStatement";
+        case SyntaxKind::ExitStatement: return L"ExitStatement";
+        case SyntaxKind::LabeledStatement: return L"LabeledStatement";
 
         // expressions
         case SyntaxKind::LogicalNotExpression: return L"LogicalNotExpression";
@@ -332,10 +367,16 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::NumericLiteralExpression: return L"NumericLiteralExpression";
         case SyntaxKind::TrueLiteralExpression: return L"TrueLiteralExpression";
         case SyntaxKind::FalseLiteralExpression: return L"FalseLiteralExpression";
-        case SyntaxKind::IdentifierNameExpression: return L"IdentifierNameExpression";
-        case SyntaxKind::QualifiedNameExpression: return L"QualifiedNameExpression";
+        case SyntaxKind::NilLiteralExpression: return L"NilLiteralExpression";
         case SyntaxKind::CallExpression: return L"CallExpression";
-        case SyntaxKind::EndOfModule: return L"EndOfModule";
+        case SyntaxKind::PointerTypeExpression: return L"PointerTypeExpression";
+        case SyntaxKind::AssignmentExpression: return L"AssignmentExpression";
+        case SyntaxKind::ExceptionHandlerExpression: return L"ExceptionHandlerExpression";
+
+        case SyntaxKind::IdentifierName: return L"IdentifierName";
+        case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";
+        case SyntaxKind::QualifiedName: return L"QualifiedName";
+        case SyntaxKind::PredefinedType: return L"PredefinedType";
     }
 
     return L"";

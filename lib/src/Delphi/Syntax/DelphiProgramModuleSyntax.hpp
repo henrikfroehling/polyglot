@@ -35,7 +35,7 @@ public:
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pHead); }
     inline Core::Syntax::SyntaxVariant last() const noexcept override final { return Core::Syntax::SyntaxVariant::asToken(_pEOFToken); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiProgramModuleSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiProgramModuleSyntax"; }
 
     static DelphiProgramModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                              DelphiProgramHeadSyntax* head,

@@ -37,7 +37,7 @@ public:
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline pg_string_view definitionName() const noexcept override final { return name()->text(); }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUndefDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUndefDirectiveTriviaSyntax"; }
 
     static DelphiUndefDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* startToken,

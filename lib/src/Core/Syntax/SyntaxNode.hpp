@@ -55,6 +55,9 @@ public:
     inline virtual pg_size childCount() const noexcept override { return 0; }
     inline virtual SyntaxVariant child(pg_size index) const override { return SyntaxVariant::empty(); }
 
+    inline virtual SyntaxVariant first() const noexcept override { return SyntaxVariant::empty(); }
+    inline virtual SyntaxVariant last() const noexcept override { return SyntaxVariant::empty(); }
+
     inline bool hasLeadingTrivia() const noexcept override final { return leadingTriviaWidth() != 0; }
     inline bool hasTrailingTrivia() const noexcept override final { return trailingTriviaWidth() != 0; }
     pg_size leadingTriviaWidth() const noexcept override final;
@@ -73,7 +76,7 @@ public:
 
     virtual pg_string toString() const noexcept override;
     virtual pg_string toShortString() const noexcept override;
-    virtual pg_string typeName() const noexcept override { return L"SyntaxNode"; }
+    inline virtual pg_string typeName() const noexcept override { return L"SyntaxNode"; }
 
 protected:
     void adjustWidthAndFlags(ISyntaxNode* node) noexcept;

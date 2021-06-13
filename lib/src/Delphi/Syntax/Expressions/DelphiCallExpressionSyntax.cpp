@@ -13,9 +13,9 @@ using namespace Core::Syntax;
 DelphiCallExpressionSyntax::DelphiCallExpressionSyntax(SyntaxKind syntaxKind,
                                                        ISyntaxToken* identifier,
                                                        ISyntaxToken* openParenthesisToken,
-                                                       ExpressionSyntax* argumentExpression,
+                                                       DelphiExpressionSyntax* argumentExpression,
                                                        ISyntaxToken* closeParenthesisToken) noexcept
-    : ExpressionSyntax{syntaxKind},
+    : DelphiExpressionSyntax{syntaxKind},
       _pIdentifier{identifier},
       _pOpenParenthesisToken{openParenthesisToken},
       _pArgumentExpression{argumentExpression},
@@ -45,7 +45,7 @@ DelphiCallExpressionSyntax* DelphiCallExpressionSyntax::create(SyntaxFactory& sy
                                                                SyntaxKind syntaxKind,
                                                                ISyntaxToken* identifier,
                                                                ISyntaxToken* openParenthesisToken,
-                                                               ExpressionSyntax* argumentExpression,
+                                                               DelphiExpressionSyntax* argumentExpression,
                                                                ISyntaxToken* closeParenthesisToken) noexcept
 {
     assert(identifier != nullptr);

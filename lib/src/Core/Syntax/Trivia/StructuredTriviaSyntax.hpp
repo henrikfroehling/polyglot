@@ -22,7 +22,7 @@ public:
     inline virtual pg_size childCount() const noexcept { return 0; }
     inline virtual SyntaxVariant child(pg_size index) const { return SyntaxVariant::empty(); }
 
-    virtual pg_string typeName() const noexcept override { return L"StructuredTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"StructuredTriviaSyntax"; }
 
 protected:
     void adjustWidth(ISyntaxNode* node) noexcept;

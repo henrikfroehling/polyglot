@@ -4,12 +4,11 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.hpp"
+#include "Delphi/Syntax/Trivia/DelphiConditionalDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
 
-class ExpressionSyntax;
 class ISyntaxToken;
 class SyntaxFactory;
 
@@ -18,13 +17,15 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiIfDirectiveTriviaSyntax : public Core::Syntax::ConditionalDirectiveTriviaSyntax
+class DelphiExpressionSyntax;
+
+class DelphiIfDirectiveTriviaSyntax : public DelphiConditionalDirectiveTriviaSyntax
 {
 public:
     explicit DelphiIfDirectiveTriviaSyntax(Core::Syntax::SyntaxKind syntaxKind,
                                            Core::Syntax::ISyntaxToken* startToken,
                                            Core::Syntax::ISyntaxToken* ifKeyword,
-                                           Core::Syntax::ExpressionSyntax* condition,
+                                           DelphiExpressionSyntax* condition,
                                            Core::Syntax::ISyntaxToken* endOfDirectiveToken,
                                            bool isActive,
                                            bool isBranchTaken,
@@ -33,7 +34,7 @@ public:
     virtual ~DelphiIfDirectiveTriviaSyntax() noexcept {}
     inline virtual Core::Syntax::ISyntaxToken* startToken() const noexcept override { return _pStartToken; }
     inline virtual Core::Syntax::ISyntaxToken* ifKeywword() const noexcept { return _pIfKeyword; }
-    inline virtual Core::Syntax::ExpressionSyntax* condition() const noexcept override { return _pCondition; }
+    inline virtual DelphiExpressionSyntax* condition() const noexcept override { return _pCondition; }
     inline virtual Core::Syntax::ISyntaxToken* endOfDirectiveToken() const noexcept override { return _pEndOfDirectiveToken; }
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
@@ -41,12 +42,12 @@ public:
     inline pg_size childCount() const noexcept override final { return 4; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiIfDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiIfDirectiveTriviaSyntax"; }
 
     static DelphiIfDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                  Core::Syntax::ISyntaxToken* startToken,
                                                  Core::Syntax::ISyntaxToken* ifKeyword,
-                                                 Core::Syntax::ExpressionSyntax* condition,
+                                                 DelphiExpressionSyntax* condition,
                                                  Core::Syntax::ISyntaxToken* endOfDirectiveToken,
                                                  bool isActive,
                                                  bool isBranchTaken,
@@ -55,7 +56,7 @@ public:
 private:
     Core::Syntax::ISyntaxToken* _pStartToken;
     Core::Syntax::ISyntaxToken* _pIfKeyword;
-    Core::Syntax::ExpressionSyntax* _pCondition;
+    DelphiExpressionSyntax* _pCondition;
     Core::Syntax::ISyntaxToken* _pEndOfDirectiveToken;
     bool _isActive;
     bool _isBranchTaken;

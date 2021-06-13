@@ -8,7 +8,7 @@
 #include "Delphi/Parser/DelphiDirectiveParser.hpp"
 #include "Delphi/Parser/DelphiLexerFlags.hpp"
 #include "Delphi/Parser/DelphiLexerStates.hpp"
-#include "Delphi/Parser/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
 
 namespace polyglot::Delphi::Parser
 {
@@ -78,7 +78,10 @@ TokenInfo DelphiLexer::quickScanSyntaxToken() noexcept
         hashCode = (hashCode ^ c) * Hashing::FNV_PRIME;
     }
 
-    state = QuickScanState::Bad;
+    if (offset == _textWindow.content().length() && state != QuickScanState::Bad)
+        state = QuickScanState::Done;
+    else
+        state = QuickScanState::Bad;
 
 exitFor:
     _textWindow.advanceCharacter(offset - _textWindow.offset());
@@ -547,7 +550,7 @@ void DelphiLexer::scanIdentifierOrKeyword(pg_string_view chars,
         tokenInfo.kind = SyntaxKind::IdentifierToken;
     else
     {
-        const SyntaxKind syntaxKind = DelphiSyntaxFacts::keywordKind(chars, _mode);
+        const SyntaxKind syntaxKind = Syntax::DelphiSyntaxFacts::keywordKind(chars, _mode);
 
         if (syntaxKind == SyntaxKind::None)
             tokenInfo.kind = SyntaxKind::IdentifierToken;

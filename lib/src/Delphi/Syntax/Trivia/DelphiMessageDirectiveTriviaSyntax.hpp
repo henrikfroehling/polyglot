@@ -37,7 +37,7 @@ public:
     inline pg_size childCount() const noexcept override final { return _pMessageTypeToken != nullptr ? 5 : 4; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiMessageDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiMessageDirectiveTriviaSyntax"; }
 
     static DelphiMessageDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                       Core::Syntax::ISyntaxToken* startToken,

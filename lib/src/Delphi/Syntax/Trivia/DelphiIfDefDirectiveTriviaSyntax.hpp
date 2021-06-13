@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Core/Syntax/Trivia/ConditionalDirectiveTriviaSyntax.hpp"
+#include "Delphi/Syntax/Trivia/DelphiConditionalDirectiveTriviaSyntax.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -17,7 +17,7 @@ class SyntaxFactory;
 namespace polyglot::Delphi::Syntax
 {
 
-class DelphiIfDefDirectiveTriviaSyntax : public Core::Syntax::ConditionalDirectiveTriviaSyntax
+class DelphiIfDefDirectiveTriviaSyntax : public DelphiConditionalDirectiveTriviaSyntax
 {
 public:
     explicit DelphiIfDefDirectiveTriviaSyntax(Core::Syntax::SyntaxKind syntaxKind,
@@ -36,11 +36,11 @@ public:
     inline virtual bool isActive() const noexcept override { return _isActive; }
     inline virtual bool isBranchTaken() const noexcept override { return _isBranchTaken; }
     inline virtual bool conditionValue() const noexcept override { return false; }
-    inline virtual Core::Syntax::ExpressionSyntax* condition() const noexcept override { return nullptr; }
+    inline virtual DelphiExpressionSyntax* condition() const noexcept override { return nullptr; }
     inline pg_size childCount() const noexcept override final { return 4; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiIfDefDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiIfDefDirectiveTriviaSyntax"; }
 
     static DelphiIfDefDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                     Core::Syntax::ISyntaxToken* startToken,

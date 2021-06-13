@@ -34,7 +34,7 @@ public:
     inline pg_size childCount() const noexcept override final { return 3; }
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiBadDirectiveTriviaSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiBadDirectiveTriviaSyntax"; }
 
     static DelphiBadDirectiveTriviaSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                   Core::Syntax::ISyntaxToken* startToken,

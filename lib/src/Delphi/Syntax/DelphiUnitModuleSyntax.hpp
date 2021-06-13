@@ -4,7 +4,7 @@
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
 #include "Delphi/Syntax/DelphiCompilationUnitSyntax.hpp"
-#include "Delphi/Syntax/DelphiEndOfModuleSyntax.hpp"
+#include "Delphi/Syntax/DelphiEndOfModuleDeclarationSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
 
 namespace polyglot::Core::Syntax
@@ -29,7 +29,7 @@ public:
     explicit DelphiUnitModuleSyntax(DelphiUnitHeadSyntax* head,
                                     DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                     DelphiUnitImplementationSectionSyntax* implementationSection,
-                                    DelphiEndOfModuleSyntax* endOfModule,
+                                    DelphiEndOfModuleDeclarationSyntax* endOfModule,
                                     Core::Syntax::ISyntaxToken* EOFToken,
                                     DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
                                     DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
@@ -43,7 +43,7 @@ public:
     inline DelphiUnitFinalizationSectionSyntax* finalizationSection() const noexcept { return _pFinalizationSection; }
     inline bool hasInitializationSection() const noexcept { return _pInitializationSection != nullptr; }
     inline bool hasFinalizationSection() const noexcept { return _pFinalizationSection != nullptr; }
-    inline DelphiEndOfModuleSyntax* endOfModule() const noexcept { return _pEndOfModule; }
+    inline DelphiEndOfModuleDeclarationSyntax* endOfModule() const noexcept { return _pEndOfModule; }
     pg_size childCount() const noexcept override final;
     Core::Syntax::SyntaxVariant child(pg_size index) const override final;
     inline Core::Syntax::SyntaxVariant first() const noexcept override final { return Core::Syntax::SyntaxVariant::asNode(_pHead); }
@@ -51,13 +51,13 @@ public:
 
     virtual pg_string toString() const noexcept override;
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUnitModuleSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUnitModuleSyntax"; }
 
     static DelphiUnitModuleSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                           DelphiUnitHeadSyntax* head,
                                           DelphiUnitInterfaceSectionSyntax* interfaceSection,
                                           DelphiUnitImplementationSectionSyntax* implementationSection,
-                                          DelphiEndOfModuleSyntax* endOfModule,
+                                          DelphiEndOfModuleDeclarationSyntax* endOfModule,
                                           Core::Syntax::ISyntaxToken* EOFToken,
                                           DelphiUnitInitializationSectionSyntax* initializationSection = nullptr,
                                           DelphiUnitFinalizationSectionSyntax* finalizationSection = nullptr) noexcept;
@@ -68,7 +68,7 @@ private:
     DelphiUnitImplementationSectionSyntax* _pImplementationSection;
     DelphiUnitInitializationSectionSyntax* _pInitializationSection; // optional
     DelphiUnitFinalizationSectionSyntax* _pFinalizationSection; // optional
-    DelphiEndOfModuleSyntax* _pEndOfModule;
+    DelphiEndOfModuleDeclarationSyntax* _pEndOfModule;
 };
 
 } // end namespace polyglot::Delphi::Syntax

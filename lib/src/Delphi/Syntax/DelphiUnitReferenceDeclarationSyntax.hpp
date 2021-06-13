@@ -3,7 +3,7 @@
 
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "polyglot/Core/Types.hpp"
-#include "Core/Syntax/Expressions/NameExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiNameSyntax.hpp"
 #include "Delphi/Syntax/DelphiSyntaxNode.hpp"
 
 namespace polyglot::Core::Syntax
@@ -20,12 +20,12 @@ namespace polyglot::Delphi::Syntax
 class DelphiUnitReferenceDeclarationSyntax : public DelphiSyntaxNode
 {
 public:
-    explicit DelphiUnitReferenceDeclarationSyntax(Core::Syntax::NameExpressionSyntax* unitName,
+    explicit DelphiUnitReferenceDeclarationSyntax(DelphiNameSyntax* unitName,
                                                   Core::Syntax::ISyntaxToken* inKeyword = nullptr,
                                                   Core::Syntax::ISyntaxToken* sourceFile = nullptr) noexcept;
 
     virtual ~DelphiUnitReferenceDeclarationSyntax() noexcept {}
-    inline Core::Syntax::NameExpressionSyntax* unitName() const noexcept { return _pUnitName; }
+    inline DelphiNameSyntax* unitName() const noexcept { return _pUnitName; }
     inline Core::Syntax::ISyntaxToken* inKeyword() const noexcept { return _pInKeyword; }
     inline Core::Syntax::ISyntaxToken* sourceFile() const noexcept { return _pSourceFile; }
     inline pg_size childCount() const noexcept override final { return _pSourceFile != nullptr ? 3 : 1; }
@@ -40,15 +40,15 @@ public:
         return Core::Syntax::SyntaxVariant::asNode(_pUnitName);
     }
 
-    virtual pg_string typeName() const noexcept override { return L"DelphiUnitReferenceDeclarationSyntax"; }
+    inline virtual pg_string typeName() const noexcept override { return L"DelphiUnitReferenceDeclarationSyntax"; }
 
     static DelphiUnitReferenceDeclarationSyntax* create(Core::Syntax::SyntaxFactory& syntaxFactory,
-                                                        Core::Syntax::NameExpressionSyntax* unitName,
+                                                        DelphiNameSyntax* unitName,
                                                         Core::Syntax::ISyntaxToken* inKeyword = nullptr,
                                                         Core::Syntax::ISyntaxToken* sourceFile = nullptr) noexcept;
 
 private:
-    Core::Syntax::NameExpressionSyntax* _pUnitName;
+    DelphiNameSyntax* _pUnitName;
     Core::Syntax::ISyntaxToken* _pInKeyword; // optional
     Core::Syntax::ISyntaxToken* _pSourceFile; // optional, but needs _pInKeyword
 };
