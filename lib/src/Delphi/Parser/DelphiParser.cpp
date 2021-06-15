@@ -246,8 +246,46 @@ DelphiEndOfModuleDeclarationSyntax* DelphiParser::parseEndOfModule() noexcept
     return DelphiEndOfModuleDeclarationSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
+// ----------------------------------
+// Expressions
+// ----------------------------------
+
 DelphiExpressionSyntax* DelphiParser::parseExpression() noexcept
 {
+    return nullptr;
+}
+
+DelphiExpressionSyntax* DelphiParser::parseTerm() noexcept
+{
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+    switch (currentSyntaxKind)
+    {
+        case SyntaxKind::IdentifierToken:
+            return parseQualifiedName();
+        case SyntaxKind::NilKeyword:
+        case SyntaxKind::TrueKeyword:
+        case SyntaxKind::FalseKeyword:
+        case SyntaxKind::NumberLiteralToken:
+        case SyntaxKind::IntegerNumberLiteralToken:
+        case SyntaxKind::RealNumberLiteralToken:
+        case SyntaxKind::ControlCharacterLiteral:
+        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+            return parseLiteralExpression();
+        case SyntaxKind::AmpersandToken:
+            if (DelphiSyntaxFacts::isPredefinedType(peekToken(1)->syntaxKind()))
+                return parseExtendedIdentifierName();
+
+            break;
+        default:
+            if (DelphiSyntaxFacts::isPredefinedType(currentSyntaxKind))
+                return parsePredefinedType();
+
+            break;
+    }
+
     return nullptr;
 }
 
@@ -330,6 +368,10 @@ DelphiLiteralExpressionSyntax* DelphiParser::parseLiteralExpression() noexcept
     ISyntaxToken* pLiteralToken = takeToken();
     return DelphiLiteralExpressionSyntax::create(_syntaxFactory, DelphiSyntaxFacts::literalExpressionKind(pLiteralToken->syntaxKind()), pLiteralToken);
 }
+
+// ----------------------------------
+// Statements
+// ----------------------------------
 
 DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
 {

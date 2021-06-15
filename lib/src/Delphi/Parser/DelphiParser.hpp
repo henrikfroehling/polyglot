@@ -94,6 +94,7 @@ private:
 
     // expressions
     Syntax::DelphiExpressionSyntax* parseExpression() noexcept;
+    Syntax::DelphiExpressionSyntax* parseTerm() noexcept;
     Syntax::DelphiNameSyntax* parseQualifiedName() noexcept;
 
     Syntax::DelphiNameSyntax* parseQualifiedNameRight(Syntax::DelphiNameSyntax* left,
