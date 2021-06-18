@@ -333,6 +333,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::CaseLabelList: return L"CaseLabelList";
         case SyntaxKind::CaseItem: return L"CaseItem";
         case SyntaxKind::CaseItemList: return L"CaseItemList";
+        case SyntaxKind::SetElementsList: return L"SetElementsList";
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
@@ -391,11 +392,12 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::UnaryMinusExpression: return L"UnaryMinusExpression";
         case SyntaxKind::AddressOfExpression: return L"AddressOfExpression";
         case SyntaxKind::AddressOfProceduralVariableExpression: return L"AddressOfProceduralVariableExpression";
-
         case SyntaxKind::IdentifierName: return L"IdentifierName";
         case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";
         case SyntaxKind::QualifiedName: return L"QualifiedName";
         case SyntaxKind::PredefinedType: return L"PredefinedType";
+        case SyntaxKind::SetRangeConstructor: return L"SetRangeConstructor";
+        case SyntaxKind::SetElementsConstructor: return L"SetElementsConstructor";
     }
 
     return L"";

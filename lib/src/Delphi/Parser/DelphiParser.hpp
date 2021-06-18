@@ -51,6 +51,7 @@ class DelphiPredefinedTypeSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiRaiseStatementSyntax;
 class DelphiRepeatStatementSyntax;
+class DelphiSetConstructorSyntax;
 class DelphiStatementListSyntax;
 class DelphiStatementSyntax;
 class DelphiTryElseClauseSyntax;
@@ -107,6 +108,7 @@ private:
     Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
     Syntax::DelphiPointerTypeSyntax* parsePointerType() noexcept;
     Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
+    Syntax::DelphiSetConstructorSyntax* parseSetConstructor() noexcept;
 
     // statements
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

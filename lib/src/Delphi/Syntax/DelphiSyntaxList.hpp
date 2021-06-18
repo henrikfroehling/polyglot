@@ -5,6 +5,13 @@
 #include "polyglot/Core/Types.hpp"
 #include "Core/Syntax/SyntaxList.hpp"
 
+namespace polyglot::Core::Syntax
+{
+
+class SyntaxFactory;
+
+} // end namespace polyglot::Core::Syntax
+
 namespace polyglot::Delphi::Syntax
 {
 
@@ -20,6 +27,10 @@ public:
     inline Core::LanguageKind languageKind() const noexcept override { return Core::LanguageKind::Delphi; }
 
     inline virtual pg_string typeName() const noexcept override { return L"DelphiSyntaxList"; }
+
+    static DelphiSyntaxList* create(Core::Syntax::SyntaxFactory& syntaxFactory,
+                                    Core::Syntax::SyntaxKind syntaxKind,
+                                    std::vector<Core::Syntax::SyntaxVariant>&& children) noexcept;
 };
 
 } // end namespace polyglot::Delphi::Syntax

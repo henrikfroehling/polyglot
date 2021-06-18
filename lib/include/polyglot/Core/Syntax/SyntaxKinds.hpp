@@ -336,6 +336,7 @@ enum class SyntaxKind : unsigned short
     CaseLabelList,
     CaseItem,
     CaseItemList,
+    SetElementsList,
 
     // statements
     StatementList,
@@ -398,7 +399,9 @@ enum class SyntaxKind : unsigned short
     IdentifierName,
     ExtendedIdentifierName,
     QualifiedName,
-    PredefinedType
+    PredefinedType,
+    SetRangeConstructor,
+    SetElementsConstructor
 };
 
 pg_string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;
