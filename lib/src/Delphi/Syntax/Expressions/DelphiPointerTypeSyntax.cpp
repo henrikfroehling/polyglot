@@ -13,7 +13,7 @@ using namespace Core::Syntax;
 
 DelphiPointerTypeSyntax::DelphiPointerTypeSyntax(ISyntaxToken* caretToken,
                                                  DelphiTypeSyntax* type) noexcept
-    : DelphiTypeSyntax{SyntaxKind::PointerTypeExpression},
+    : DelphiTypeSyntax{SyntaxKind::PointerType},
       _pCaretToken{caretToken},
       _pType{type}
 {}

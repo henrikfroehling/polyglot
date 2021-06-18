@@ -564,11 +564,21 @@ bool DelphiLexer::scanIdentifier(TokenInfo& tokenInfo) noexcept
     pg_size currentOffset = _textWindow.offset();
     const pg_string_view content = _textWindow.content();
     pg_size startOffset = currentOffset;
+    bool hasLetters{false};
 
     while (true)
     {
         if (currentOffset == content.size())
+        {
+            if (hasLetters)
+            {
+                _textWindow.advanceCharacter(currentOffset - startOffset);
+                tokenInfo.text = _textWindow.lexemeText();
+                return true;
+            }
+
             return false;
+        }
 
         switch (content[currentOffset])
         {
@@ -627,6 +637,7 @@ bool DelphiLexer::scanIdentifier(TokenInfo& tokenInfo) noexcept
             case L'_':
 letter:
                 currentOffset++;
+                hasLetters = true;
                 continue;
             default:
                 return false;

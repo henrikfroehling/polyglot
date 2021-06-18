@@ -714,6 +714,47 @@ bool DelphiSyntaxFacts::isPrefixUnaryExpression(SyntaxKind syntaxKind) noexcept
     return prefixUnaryExpressionKind(syntaxKind) != SyntaxKind::None;
 }
 
+bool DelphiSyntaxFacts::isBinaryExpression(SyntaxKind syntaxKind) noexcept
+{
+    return binaryExpressionKind(syntaxKind) != SyntaxKind::None;
+}
+
+bool DelphiSyntaxFacts::isInvalidSubExpression(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::IfKeyword:
+        case SyntaxKind::ElseKeyword:
+        case SyntaxKind::ThenKeyword:
+        case SyntaxKind::CaseKeyword:
+        case SyntaxKind::RepeatKeyword:
+        case SyntaxKind::UntilKeyword:
+        case SyntaxKind::WhileKeyword:
+        case SyntaxKind::ForKeyword:
+        case SyntaxKind::ToKeyword:
+        case SyntaxKind::DownToKeyword:
+        case SyntaxKind::InKeyword:
+        case SyntaxKind::DoKeyword:
+        case SyntaxKind::WithKeyword:
+        case SyntaxKind::TryKeyword:
+        case SyntaxKind::ExceptKeyword:
+        case SyntaxKind::FinallyKeyword:
+        case SyntaxKind::RaiseKeyword:
+        case SyntaxKind::AsmKeyword:
+        case SyntaxKind::BeginKeyword:
+        case SyntaxKind::EndKeyword:
+        case SyntaxKind::BreakKeyword:
+        case SyntaxKind::ContinueKeyword:
+        case SyntaxKind::ExitKeyword:
+        case SyntaxKind::GotoKeyword:
+        case SyntaxKind::ConstKeyword:
+        case SyntaxKind::OfKeyword:
+            return true;
+    }
+
+    return false;
+}
+
 SyntaxKind DelphiSyntaxFacts::prefixUnaryExpressionKind(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
@@ -723,7 +764,6 @@ SyntaxKind DelphiSyntaxFacts::prefixUnaryExpressionKind(SyntaxKind syntaxKind) n
         case SyntaxKind::NotKeyword: return SyntaxKind::LogicalNotExpression;
         case SyntaxKind::AtToken: return SyntaxKind::AddressOfExpression;
         case SyntaxKind::AtAtToken: return SyntaxKind::AddressOfProceduralVariableExpression;
-        case SyntaxKind::CaretToken: return SyntaxKind::PointerTypeExpression;
     }
 
     return SyntaxKind::None;

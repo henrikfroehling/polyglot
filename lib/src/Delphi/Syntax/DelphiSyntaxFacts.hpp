@@ -21,6 +21,8 @@ public:
     static bool isPredefinedType(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isLiteral(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static bool isPrefixUnaryExpression(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isBinaryExpression(Core::Syntax::SyntaxKind syntaxKind) noexcept;
+    static bool isInvalidSubExpression(Core::Syntax::SyntaxKind syntaxKind) noexcept;
 
     static Core::Syntax::SyntaxKind prefixUnaryExpressionKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
     static Core::Syntax::SyntaxKind binaryExpressionKind(Core::Syntax::SyntaxKind syntaxKind) noexcept;
