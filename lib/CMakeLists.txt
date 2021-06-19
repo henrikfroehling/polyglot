@@ -156,6 +156,7 @@ set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiRangeExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSetConstructorSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSetElementsConstructorSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSetRangeConstructorSyntax.cpp

@@ -401,7 +401,8 @@ enum class SyntaxKind : unsigned short
     QualifiedName,
     PredefinedType,
     SetRangeConstructor,
-    SetElementsConstructor
+    SetElementsConstructor,
+    RangeExpression
 };
 
 pg_string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;

@@ -398,6 +398,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::PredefinedType: return L"PredefinedType";
         case SyntaxKind::SetRangeConstructor: return L"SetRangeConstructor";
         case SyntaxKind::SetElementsConstructor: return L"SetElementsConstructor";
+        case SyntaxKind::RangeExpression: return L"RangeExpression";
     }
 
     return L"";

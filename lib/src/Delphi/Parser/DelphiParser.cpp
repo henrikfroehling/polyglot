@@ -14,6 +14,7 @@
 #include "Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiRangeExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiSetConstructorSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiSetElementsConstructorSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiSetRangeConstructorSyntax.hpp"
@@ -295,6 +296,10 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
         {
             operatorKind = DelphiSyntaxFacts::binaryExpressionKind(currentSyntaxKind);
         }
+        else if (currentSyntaxKind == SyntaxKind::DotDotToken)
+        {
+            operatorKind = SyntaxKind::RangeExpression;
+        }
         else
         {
             break;
@@ -307,6 +312,12 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
             DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
             leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
                                                                          pOperatorToken, pRightOperandExpression);
+        }
+        else if (currentSyntaxKind == SyntaxKind::DotDotToken)
+        {
+            assert(operatorKind == SyntaxKind::RangeExpression);
+            DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
+            leftOperandExpression = DelphiRangeExpressionSyntax::create(_syntaxFactory, leftOperandExpression, pOperatorToken, pRightOperandExpression);
         }
     }
 
