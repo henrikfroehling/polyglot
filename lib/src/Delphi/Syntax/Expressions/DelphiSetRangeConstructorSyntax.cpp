@@ -5,6 +5,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxKinds.hpp"
 #include "Core/Syntax/SyntaxFactory.hpp"
+#include "Delphi/Syntax/Expressions/DelphiRangeExpressionSyntax.hpp"
 
 namespace polyglot::Delphi::Syntax
 {
@@ -12,14 +13,10 @@ namespace polyglot::Delphi::Syntax
 using namespace Core::Syntax;
 
 DelphiSetRangeConstructorSyntax::DelphiSetRangeConstructorSyntax(Core::Syntax::ISyntaxToken* openBracketToken,
-                                                                 DelphiExpressionSyntax* firstElement,
-                                                                 Core::Syntax::ISyntaxToken* dotDotToken,
-                                                                 DelphiExpressionSyntax* lastElement,
+                                                                 DelphiRangeExpressionSyntax* setRange,
                                                                  Core::Syntax::ISyntaxToken* closeBracketToken) noexcept
     : DelphiSetConstructorSyntax{SyntaxKind::SetRangeConstructor, openBracketToken, closeBracketToken},
-      _pFirstElement{firstElement},
-      _pDotDotToken{dotDotToken},
-      _pLastElement{lastElement}
+      _pSetRange{setRange}
 {}
 
 SyntaxVariant DelphiSetRangeConstructorSyntax::child(pg_size index) const
@@ -27,10 +24,8 @@ SyntaxVariant DelphiSetRangeConstructorSyntax::child(pg_size index) const
     switch (index)
     {
         case 0: return SyntaxVariant::asToken(_pOpenBracketToken);
-        case 1: return SyntaxVariant::asNode(_pFirstElement);
-        case 2: return SyntaxVariant::asToken(_pDotDotToken);
-        case 3: return SyntaxVariant::asNode(_pLastElement);
-        case 4: return SyntaxVariant::asToken(_pCloseBracketToken);
+        case 1: return SyntaxVariant::asNode(_pSetRange);
+        case 2: return SyntaxVariant::asToken(_pCloseBracketToken);
     }
 
     throw std::out_of_range{"index out of range"};
@@ -38,23 +33,16 @@ SyntaxVariant DelphiSetRangeConstructorSyntax::child(pg_size index) const
 
 DelphiSetRangeConstructorSyntax* DelphiSetRangeConstructorSyntax::create(Core::Syntax::SyntaxFactory& syntaxFactory,
                                                                          Core::Syntax::ISyntaxToken* openBracketToken,
-                                                                         DelphiExpressionSyntax* firstElement,
-                                                                         Core::Syntax::ISyntaxToken* dotDotToken,
-                                                                         DelphiExpressionSyntax* lastElement,
+                                                                         DelphiRangeExpressionSyntax* setRange,
                                                                          Core::Syntax::ISyntaxToken* closeBracketToken) noexcept
 {
     assert(openBracketToken != nullptr);
     assert(openBracketToken->syntaxKind() == SyntaxKind::OpenBracketToken);
-    assert(firstElement != nullptr);
-    assert(dotDotToken != nullptr);
-    assert(dotDotToken->syntaxKind() == SyntaxKind::DotDotToken);
-    assert(lastElement != nullptr);
+    assert(setRange != nullptr);
     assert(closeBracketToken != nullptr);
     assert(closeBracketToken->syntaxKind() == SyntaxKind::CloseBracketToken);
 
-    auto ptrSetRangeConstructorSyntax = std::make_unique<DelphiSetRangeConstructorSyntax>(openBracketToken, firstElement, dotDotToken,
-                                                                                          lastElement, closeBracketToken);
-
+    auto ptrSetRangeConstructorSyntax = std::make_unique<DelphiSetRangeConstructorSyntax>(openBracketToken, setRange, closeBracketToken);
     return static_cast<DelphiSetRangeConstructorSyntax*>(syntaxFactory.addSyntaxNode(std::move(ptrSetRangeConstructorSyntax)));
 }
 

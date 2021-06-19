@@ -489,7 +489,13 @@ DelphiSetConstructorSyntax* DelphiParser::parseSetConstructor() noexcept
     ISyntaxToken* pOpenBracketToken = takeToken(SyntaxKind::OpenBracketToken);
     DelphiExpressionSyntax* pFirstElement = parseExpression();
 
-    if (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
+    if (pFirstElement->syntaxKind() == SyntaxKind::RangeExpression)
+    {
+        ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
+        return DelphiSetRangeConstructorSyntax::create(_syntaxFactory, pOpenBracketToken,
+                                                       static_cast<DelphiRangeExpressionSyntax*>(pFirstElement), pCloseBracketToken);
+    }
+    else if (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
     {
         std::vector<SyntaxVariant> elements{};
         elements.push_back(SyntaxVariant::asNode(pFirstElement));
@@ -505,13 +511,6 @@ DelphiSetConstructorSyntax* DelphiParser::parseSetConstructor() noexcept
         ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
         DelphiSyntaxList* pElements = DelphiSyntaxList::create(_syntaxFactory, SyntaxKind::SetElementsList, std::move(elements));
         return DelphiSetElementsConstructorSyntax::create(_syntaxFactory, pOpenBracketToken, pElements, pCloseBracketToken);
-    }
-    else
-    {
-        ISyntaxToken* pDotDotToken = takeToken(SyntaxKind::DotDotToken);
-        DelphiExpressionSyntax* pLastElement = parseExpression();
-        ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
-        return DelphiSetRangeConstructorSyntax::create(_syntaxFactory, pOpenBracketToken, pFirstElement, pDotDotToken, pLastElement, pCloseBracketToken);
     }
 
     // TODO error handling
