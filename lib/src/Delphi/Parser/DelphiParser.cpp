@@ -5,6 +5,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
+#include "Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.hpp"
@@ -292,13 +293,21 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
         const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
         SyntaxKind operatorKind;
 
-        if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
+        if (currentSyntaxKind == SyntaxKind::ColonEqualToken)
         {
-            operatorKind = DelphiSyntaxFacts::binaryExpressionKind(currentSyntaxKind);
+            operatorKind = SyntaxKind::AssignmentExpression;
         }
         else if (currentSyntaxKind == SyntaxKind::DotDotToken)
         {
             operatorKind = SyntaxKind::RangeExpression;
+        }
+        else if (currentSyntaxKind == SyntaxKind::AsKeyword)
+        {
+            operatorKind = SyntaxKind::AsExpression;
+        }
+        else if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
+        {
+            operatorKind = DelphiSyntaxFacts::binaryExpressionKind(currentSyntaxKind);
         }
         else
         {
@@ -307,17 +316,35 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
 
         ISyntaxToken* pOperatorToken = takeToken();
 
-        if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
+        if (operatorKind == SyntaxKind::AssignmentExpression)
         {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::ColonEqualToken);
             DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
-            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
-                                                                         pOperatorToken, pRightOperandExpression);
+            leftOperandExpression = DelphiAssignmentExpressionSyntax::create(_syntaxFactory, leftOperandExpression,
+                                                                             pOperatorToken, pRightOperandExpression);
         }
         else if (currentSyntaxKind == SyntaxKind::DotDotToken)
         {
             assert(operatorKind == SyntaxKind::RangeExpression);
             DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
-            leftOperandExpression = DelphiRangeExpressionSyntax::create(_syntaxFactory, leftOperandExpression, pOperatorToken, pRightOperandExpression);
+            leftOperandExpression = DelphiRangeExpressionSyntax::create(_syntaxFactory, leftOperandExpression,
+                                                                        pOperatorToken, pRightOperandExpression);
+        }
+        else if (operatorKind == SyntaxKind::AsExpression)
+        {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::AsKeyword);
+            // special case of binary expression
+            // TODO parse type as right operand
+            DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
+            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
+                                                                         pOperatorToken, pRightOperandExpression);
+        }
+        else
+        {
+            assert(DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind));
+            DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
+            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
+                                                                         pOperatorToken, pRightOperandExpression);
         }
     }
 
