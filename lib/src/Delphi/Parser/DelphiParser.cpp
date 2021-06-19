@@ -323,9 +323,9 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
             leftOperandExpression = DelphiAssignmentExpressionSyntax::create(_syntaxFactory, leftOperandExpression,
                                                                              pOperatorToken, pRightOperandExpression);
         }
-        else if (currentSyntaxKind == SyntaxKind::DotDotToken)
+        else if (operatorKind == SyntaxKind::RangeExpression)
         {
-            assert(operatorKind == SyntaxKind::RangeExpression);
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::DotDotToken);
             DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
             leftOperandExpression = DelphiRangeExpressionSyntax::create(_syntaxFactory, leftOperandExpression,
                                                                         pOperatorToken, pRightOperandExpression);
