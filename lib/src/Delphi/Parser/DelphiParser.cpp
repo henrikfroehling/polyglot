@@ -307,7 +307,7 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
 
         ISyntaxToken* pOperatorToken = takeToken();
 
-        if (DelphiSyntaxFacts::isBinaryExpression(operatorKind))
+        if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
         {
             DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
             leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
