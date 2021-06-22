@@ -19,6 +19,7 @@
 #include "Delphi/Syntax/Expressions/DelphiSetConstructorSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiSetElementsConstructorSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiSetRangeConstructorSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiTypeSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiBlockStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiBreakStatementSyntax.hpp"
@@ -305,6 +306,10 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
         {
             operatorKind = SyntaxKind::AsExpression;
         }
+        else if (currentSyntaxKind == SyntaxKind::IsKeyword)
+        {
+            operatorKind = SyntaxKind::IsExpression;
+        }
         else if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
         {
             operatorKind = DelphiSyntaxFacts::binaryExpressionKind(currentSyntaxKind);
@@ -333,11 +338,16 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
         else if (operatorKind == SyntaxKind::AsExpression)
         {
             assert(pOperatorToken->syntaxKind() == SyntaxKind::AsKeyword);
-            // special case of binary expression
-            // TODO parse type as right operand
-            DelphiExpressionSyntax* pRightOperandExpression = parseExpression();
+            DelphiTypeSyntax* pRightOperandType = parseType();
             leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
-                                                                         pOperatorToken, pRightOperandExpression);
+                                                                         pOperatorToken, pRightOperandType);
+        }
+        else if (operatorKind == SyntaxKind::IsExpression)
+        {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::IsKeyword);
+            DelphiTypeSyntax* pRightOperandType = parseType();
+            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
+                                                                         pOperatorToken, pRightOperandType);
         }
         else
         {
@@ -427,6 +437,23 @@ DelphiExpressionSyntax* DelphiParser::parsePostFixExpression(DelphiExpressionSyn
         }
     }
 
+    return nullptr;
+}
+
+DelphiTypeSyntax* DelphiParser::parseType() noexcept
+{
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+    if (DelphiSyntaxFacts::isPredefinedType(currentSyntaxKind))
+    {
+        ISyntaxToken* pPredefinedTypeToken = takeToken();
+        return DelphiPredefinedTypeSyntax::create(_syntaxFactory, pPredefinedTypeToken);
+    }
+
+    if (currentSyntaxKind == SyntaxKind::IdentifierToken)
+        return parseQualifiedName();
+
+    // TODO error handling
     return nullptr;
 }
 
