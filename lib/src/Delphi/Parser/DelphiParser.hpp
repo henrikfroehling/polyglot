@@ -19,6 +19,7 @@ namespace polyglot::Delphi::Syntax
 
 class DelphiAssemblerStatementSyntax;;
 class DelphiBlockStatementSyntax;
+class DelphiBracketArgumentListSyntax;
 class DelphiBreakStatementSyntax;
 class DelphiCaseElseClauseSyntax;
 class DelphiCaseItemListSyntax;
@@ -111,6 +112,7 @@ private:
     Syntax::DelphiPointerTypeSyntax* parsePointerType() noexcept;
     Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
     Syntax::DelphiSetConstructorSyntax* parseSetConstructor() noexcept;
+    Syntax::DelphiBracketArgumentListSyntax* parseBracketArguments() noexcept;
 
     // statements
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

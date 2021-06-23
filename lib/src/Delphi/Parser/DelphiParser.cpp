@@ -7,6 +7,7 @@
 #include "Delphi/Parser/DelphiLexer.hpp"
 #include "Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiElementAccessExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
@@ -43,6 +44,7 @@
 #include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiBracketArgumentListSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseItemListSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseItemSyntax.hpp"
@@ -427,7 +429,12 @@ DelphiExpressionSyntax* DelphiParser::parsePostFixExpression(DelphiExpressionSyn
                 // TODO parse invocation expression
                 break;
             case SyntaxKind::OpenBracketToken:
-                // TODO parse element access expression
+            {
+                DelphiBracketArgumentListSyntax* pArguments = parseBracketArguments();
+                return DelphiElementAccessExpressionSyntax::create(_syntaxFactory, termExpression, pArguments);
+            }
+            case SyntaxKind::CaretDotToken:
+                // TODO parse pointer member access expression
                 break;
             case SyntaxKind::DotToken:
                 // TODO parse member access expression
@@ -570,6 +577,27 @@ DelphiSetConstructorSyntax* DelphiParser::parseSetConstructor() noexcept
     // TODO error handling
     // , or .. expected
     return nullptr;
+}
+
+DelphiBracketArgumentListSyntax* DelphiParser::parseBracketArguments() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::OpenBracketToken);
+    ISyntaxToken* pOpenBracketToken = takeToken(SyntaxKind::OpenBracketToken);
+    DelphiExpressionSyntax* pFirstArgument = parseExpression();
+    std::vector<SyntaxVariant> arguments{};
+    arguments.push_back(SyntaxVariant::asNode(pFirstArgument));
+
+    while (currentToken()->syntaxKind() != SyntaxKind::CloseBracketToken)
+    {
+        ISyntaxToken* pCommaToken = takeToken();
+        arguments.push_back(SyntaxVariant::asToken(pCommaToken));
+        DelphiExpressionSyntax* pArgument = parseExpression();
+        arguments.push_back(SyntaxVariant::asNode(pArgument));
+    }
+
+    ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
+    DelphiSyntaxList* pArguments = DelphiSyntaxList::create(_syntaxFactory, SyntaxKind::SetElementsList, std::move(arguments));
+    return DelphiBracketArgumentListSyntax::create(_syntaxFactory, pOpenBracketToken, pArguments, pCloseBracketToken);
 }
 
 // ----------------------------------

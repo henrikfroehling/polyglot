@@ -107,6 +107,7 @@ set(SOURCES_DELPHI_PARSER
 )
 
 set(SOURCES_DELPHI_SYNTAX
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiBracketArgumentListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemSyntax.cpp
@@ -146,6 +147,7 @@ set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiElementAccessExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.cpp

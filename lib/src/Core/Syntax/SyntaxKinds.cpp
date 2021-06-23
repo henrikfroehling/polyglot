@@ -334,6 +334,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::CaseItem: return L"CaseItem";
         case SyntaxKind::CaseItemList: return L"CaseItemList";
         case SyntaxKind::SetElementsList: return L"SetElementsList";
+        case SyntaxKind::BracketArgumentList: return L"BracketArgumentList";
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
@@ -399,6 +400,7 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::SetRangeConstructor: return L"SetRangeConstructor";
         case SyntaxKind::SetElementsConstructor: return L"SetElementsConstructor";
         case SyntaxKind::RangeExpression: return L"RangeExpression";
+        case SyntaxKind::ElementAccessExpression: return L"ElementAccessExpression";
     }
 
     return L"";
