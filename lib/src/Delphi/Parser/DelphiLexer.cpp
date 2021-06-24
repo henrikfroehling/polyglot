@@ -851,7 +851,7 @@ void DelphiLexer::lexSyntaxTrivia(bool afterFirstToken,
                     break;
                 }
                 else
-                    _textWindow.reset(_textWindow.position() - 1);
+                    _textWindow.resetToLastPosition();
 
                 return;
             case L'\r':
