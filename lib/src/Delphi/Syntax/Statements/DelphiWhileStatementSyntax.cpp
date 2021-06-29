@@ -21,7 +21,13 @@ DelphiWhileStatementSyntax::DelphiWhileStatementSyntax(ISyntaxToken* whileKeywor
       _pExpression{expression},
       _pDoKeyword{doKeyword},
       _pStatement{statement}
-{}
+{
+    _position = _pWhileKeyword->position();
+    adjustWidthAndFlags(_pWhileKeyword);
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pDoKeyword);
+    adjustWidthAndFlags(_pStatement);
+}
 
 SyntaxVariant DelphiWhileStatementSyntax::child(pg_size index) const
 {

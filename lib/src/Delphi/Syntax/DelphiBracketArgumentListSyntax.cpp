@@ -19,7 +19,12 @@ DelphiBracketArgumentListSyntax::DelphiBracketArgumentListSyntax(Core::Syntax::I
       _pOpenBracketToken{openBracket},
       _pArguments{arguments},
       _pCloseBracketToken{closeBracket}
-{}
+{
+    _position = _pOpenBracketToken->position();
+    adjustWidthAndFlags(_pOpenBracketToken);
+    adjustWidthAndFlags(_pArguments);
+    adjustWidthAndFlags(_pCloseBracketToken);
+}
 
 SyntaxVariant DelphiBracketArgumentListSyntax::child(pg_size index) const
 {

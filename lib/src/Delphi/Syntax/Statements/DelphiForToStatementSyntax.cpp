@@ -22,7 +22,15 @@ DelphiForToStatementSyntax::DelphiForToStatementSyntax(ISyntaxToken* forKeyword,
       _pInitialValueExpression{initialValueExpression},
       _pToOrDownToKeyword{toOrDownToKeyword},
       _pFinalValueExpression{finalValueExpression}
-{}
+{
+    _position = _pForKeyword->position();
+    adjustWidthAndFlags(_pForKeyword);
+    adjustWidthAndFlags(_pInitialValueExpression);
+    adjustWidthAndFlags(_pToOrDownToKeyword);
+    adjustWidthAndFlags(_pFinalValueExpression);
+    adjustWidthAndFlags(_pDoKeyword);
+    adjustWidthAndFlags(_pStatement);
+}
 
 SyntaxVariant DelphiForToStatementSyntax::child(pg_size index) const
 {

@@ -18,7 +18,12 @@ DelphiGotoStatementSyntax::DelphiGotoStatementSyntax(ISyntaxToken* gotoKeyword,
       _pGotoKeyword{gotoKeyword},
       _pLabelToken{labelToken},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pGotoKeyword->position();
+    adjustWidthAndFlags(_pGotoKeyword);
+    adjustWidthAndFlags(_pLabelToken);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiGotoStatementSyntax::child(pg_size index) const
 {

@@ -17,7 +17,11 @@ DelphiExtendedIdentifierNameSyntax::DelphiExtendedIdentifierNameSyntax(ISyntaxTo
     : DelphiSimpleNameSyntax{SyntaxKind::ExtendedIdentifierName},
       _pAmpersandToken{ampersandToken},
       _pReservedKeyword{reservedKeyword}
-{}
+{
+    _position = _pAmpersandToken->position();
+    adjustWidthAndFlags(_pAmpersandToken);
+    adjustWidthAndFlags(_pReservedKeyword);
+}
 
 SyntaxVariant DelphiExtendedIdentifierNameSyntax::child(pg_size index) const
 {

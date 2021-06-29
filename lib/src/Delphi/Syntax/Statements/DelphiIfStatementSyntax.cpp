@@ -24,7 +24,16 @@ DelphiIfStatementSyntax::DelphiIfStatementSyntax(ISyntaxToken* ifKeyword,
       _pThenKeyword{thenKeyword},
       _pStatement{statement},
       _pElseClause{elseClause}
-{}
+{
+    _position = _pIfKeyword->position();
+    adjustWidthAndFlags(_pIfKeyword);
+    adjustWidthAndFlags(_pConditionExpression);
+    adjustWidthAndFlags(_pThenKeyword);
+    adjustWidthAndFlags(_pStatement);
+
+    if (_pElseClause != nullptr)
+        adjustWidthAndFlags(_pElseClause);
+}
 
 SyntaxVariant DelphiIfStatementSyntax::child(pg_size index) const
 {

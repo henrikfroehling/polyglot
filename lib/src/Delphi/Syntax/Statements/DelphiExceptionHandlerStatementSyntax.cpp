@@ -23,7 +23,14 @@ DelphiExceptionHandlerStatementSyntax::DelphiExceptionHandlerStatementSyntax(ISy
       _pDoKeyword{doKeyword},
       _pStatement{statement},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pOnKeyword->position();
+    adjustWidthAndFlags(_pOnKeyword);
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pDoKeyword);
+    adjustWidthAndFlags(_pStatement);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiExceptionHandlerStatementSyntax::child(pg_size index) const
 {

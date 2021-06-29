@@ -22,7 +22,15 @@ DelphiForInStatementSyntax::DelphiForInStatementSyntax(ISyntaxToken* forKeyword,
       _pElementExpression{elementExpression},
       _pInKeyword{inKeyword},
       _pCollectionExpression{collectionExpression}
-{}
+{
+    _position = _pForKeyword->position();
+    adjustWidthAndFlags(_pForKeyword);
+    adjustWidthAndFlags(_pElementExpression);
+    adjustWidthAndFlags(_pInKeyword);
+    adjustWidthAndFlags(_pCollectionExpression);
+    adjustWidthAndFlags(_pDoKeyword);
+    adjustWidthAndFlags(_pStatement);
+}
 
 SyntaxVariant DelphiForInStatementSyntax::child(pg_size index) const
 {

@@ -17,7 +17,12 @@ DelphiSetElementsConstructorSyntax::DelphiSetElementsConstructorSyntax(Core::Syn
                                                                        Core::Syntax::ISyntaxToken* closeBracketToken) noexcept
     : DelphiSetConstructorSyntax{SyntaxKind::SetElementsConstructor, openBracketToken, closeBracketToken},
       _pElements{elements}
-{}
+{
+    _position = _pOpenBracketToken->position();
+    adjustWidthAndFlags(_pOpenBracketToken);
+    adjustWidthAndFlags(_pElements);
+    adjustWidthAndFlags(_pCloseBracketToken);
+}
 
 SyntaxVariant DelphiSetElementsConstructorSyntax::child(pg_size index) const
 {

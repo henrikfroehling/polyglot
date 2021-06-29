@@ -29,7 +29,19 @@ DelphiCaseStatementSyntax::DelphiCaseStatementSyntax(ISyntaxToken* caseKeyword,
       _pEndKeyword{endKeyword},
       _pSemiColonToken{semiColonToken},
       _pElseClause{elseClause}
-{}
+{
+    _position = _pCaseKeyword->position();
+    adjustWidthAndFlags(_pCaseKeyword);
+    adjustWidthAndFlags(_pSelectorExpression);
+    adjustWidthAndFlags(_pOfKeyword);
+    adjustWidthAndFlags(_pCaseItems);
+
+    if (_pElseClause != nullptr)
+        adjustWidthAndFlags(_pElseClause);
+
+    adjustWidthAndFlags(_pEndKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiCaseStatementSyntax::child(pg_size index) const
 {

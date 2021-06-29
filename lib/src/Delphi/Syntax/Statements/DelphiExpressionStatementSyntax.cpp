@@ -16,7 +16,11 @@ DelphiExpressionStatementSyntax::DelphiExpressionStatementSyntax(DelphiExpressio
     : DelphiStatementSyntax{SyntaxKind::ExpressionStatement},
       _pExpression{expression},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pExpression->position();
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiExpressionStatementSyntax::child(pg_size index) const
 {

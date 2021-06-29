@@ -13,7 +13,10 @@ using namespace Core::Syntax;
 DelphiExceptionStatementBlockSyntax::DelphiExceptionStatementBlockSyntax(DelphiStatementListSyntax* statements) noexcept
     : DelphiExceptionBlockSyntax{SyntaxKind::ExceptionStatementBlock},
       _pStatements{statements}
-{}
+{
+    _position = _pStatements->position();
+    adjustWidthAndFlags(_pStatements);
+}
 
 SyntaxVariant DelphiExceptionStatementBlockSyntax::child(pg_size index) const
 {

@@ -16,7 +16,11 @@ DelphiCaseElseClauseSyntax::DelphiCaseElseClauseSyntax(ISyntaxToken* elseKeyword
     : DelphiSyntaxNode{SyntaxKind::CaseElseClause},
       _pElseKeyword{elseKeyword},
       _pStatements{statements}
-{}
+{
+    _position = _pElseKeyword->position();
+    adjustWidthAndFlags(_pElseKeyword);
+    adjustWidthAndFlags(_pStatements);
+}
 
 SyntaxVariant DelphiCaseElseClauseSyntax::child(pg_size index) const
 {

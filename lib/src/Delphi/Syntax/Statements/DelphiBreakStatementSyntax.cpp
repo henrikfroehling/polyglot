@@ -16,7 +16,11 @@ DelphiBreakStatementSyntax::DelphiBreakStatementSyntax(ISyntaxToken* breakKeywor
     : DelphiStatementSyntax{SyntaxKind::BreakStatement},
       _pBreakKeyword{breakKeyword},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pBreakKeyword->position();
+    adjustWidthAndFlags(_pBreakKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiBreakStatementSyntax::child(pg_size index) const
 {

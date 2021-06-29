@@ -17,7 +17,12 @@ DelphiSetRangeConstructorSyntax::DelphiSetRangeConstructorSyntax(Core::Syntax::I
                                                                  Core::Syntax::ISyntaxToken* closeBracketToken) noexcept
     : DelphiSetConstructorSyntax{SyntaxKind::SetRangeConstructor, openBracketToken, closeBracketToken},
       _pSetRange{setRange}
-{}
+{
+    _position = _pOpenBracketToken->position();
+    adjustWidthAndFlags(_pOpenBracketToken);
+    adjustWidthAndFlags(_pSetRange);
+    adjustWidthAndFlags(_pCloseBracketToken);
+}
 
 SyntaxVariant DelphiSetRangeConstructorSyntax::child(pg_size index) const
 {

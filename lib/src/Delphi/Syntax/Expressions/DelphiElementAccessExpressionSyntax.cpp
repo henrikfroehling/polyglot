@@ -15,7 +15,11 @@ DelphiElementAccessExpressionSyntax::DelphiElementAccessExpressionSyntax(DelphiE
     : DelphiExpressionSyntax{SyntaxKind::ElementAccessExpression},
       _pElement{element},
       _pArguments{arguments}
-{}
+{
+    _position = _pElement->position();
+    adjustWidthAndFlags(_pElement);
+    adjustWidthAndFlags(_pArguments);
+}
 
 SyntaxVariant DelphiElementAccessExpressionSyntax::child(pg_size index) const
 {

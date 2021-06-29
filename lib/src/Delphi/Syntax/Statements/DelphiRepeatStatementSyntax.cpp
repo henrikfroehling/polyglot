@@ -23,7 +23,14 @@ DelphiRepeatStatementSyntax::DelphiRepeatStatementSyntax(ISyntaxToken* repeatKey
       _pUntilKeyword{untilKeyword},
       _pExpression{expression},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pRepeatKeyword->position();
+    adjustWidthAndFlags(_pRepeatKeyword);
+    adjustWidthAndFlags(_pStatement);
+    adjustWidthAndFlags(_pUntilKeyword);
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiRepeatStatementSyntax::child(pg_size index) const
 {

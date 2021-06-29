@@ -16,7 +16,11 @@ DelphiFinallyClauseSyntax::DelphiFinallyClauseSyntax(ISyntaxToken* finallyKeywor
     : DelphiSyntaxNode{SyntaxKind::FinallyClause},
       _pFinallyKeyword{finallyKeyword},
       _pStatements{statements}
-{}
+{
+    _position = _pFinallyKeyword->position();
+    adjustWidthAndFlags(_pFinallyKeyword);
+    adjustWidthAndFlags(_pStatements);
+}
 
 SyntaxVariant DelphiFinallyClauseSyntax::child(pg_size index) const
 {

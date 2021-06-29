@@ -21,7 +21,13 @@ DelphiBlockStatementSyntax::DelphiBlockStatementSyntax(ISyntaxToken* beginKeywor
       _pStatementList{statementList},
       _pEndKeyword{endKeyword},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pBeginKeyword->position();
+    adjustWidthAndFlags(_pBeginKeyword);
+    adjustWidthAndFlags(_pStatementList);
+    adjustWidthAndFlags(_pEndKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiBlockStatementSyntax::child(pg_size index) const
 {

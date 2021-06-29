@@ -21,7 +21,13 @@ DelphiWithStatementSyntax::DelphiWithStatementSyntax(ISyntaxToken* withKeyword,
       _pExpression{expression},
       _pDoKeyword{doKeyword},
       _pStatement{statement}
-{}
+{
+    _position = _pWithKeyword->position();
+    adjustWidthAndFlags(_pWithKeyword);
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pDoKeyword);
+    adjustWidthAndFlags(_pStatement);
+}
 
 SyntaxVariant DelphiWithStatementSyntax::child(pg_size index) const
 {

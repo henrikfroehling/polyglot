@@ -18,7 +18,12 @@ DelphiRangeExpressionSyntax::DelphiRangeExpressionSyntax(DelphiExpressionSyntax*
       _pLeftExpression{leftExpression},
       _pDotDotToken{dotDotToken},
       _pRightExpression{rightExpression}
-{}
+{
+    _position = _pLeftExpression->position();
+    adjustWidthAndFlags(_pLeftExpression);
+    adjustWidthAndFlags(_pDotDotToken);
+    adjustWidthAndFlags(_pRightExpression);
+}
 
 SyntaxVariant DelphiRangeExpressionSyntax::child(pg_size index) const
 {

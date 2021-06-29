@@ -18,7 +18,12 @@ DelphiCaseItemSyntax::DelphiCaseItemSyntax(DelphiCaseLabelListSyntax* caseLabels
       _pCaseLabels{caseLabels},
       _pColonToken{colonToken},
       _pStatement{statement}
-{}
+{
+    _position = _pCaseLabels->position();
+    adjustWidthAndFlags(_pCaseLabels);
+    adjustWidthAndFlags(_pColonToken);
+    adjustWidthAndFlags(_pStatement);
+}
 
 SyntaxVariant DelphiCaseItemSyntax::child(pg_size index) const
 {
