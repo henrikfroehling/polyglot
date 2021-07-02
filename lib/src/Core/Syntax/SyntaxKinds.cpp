@@ -372,13 +372,14 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::AddExpression: return L"AddExpression";
         case SyntaxKind::SubtractExpression: return L"SubtractExpression";
         case SyntaxKind::MultiplyExpression: return L"MultiplyExpression";
-        case SyntaxKind::DivideIntegerExpression: return L"DivideIntegerExpression";
-        case SyntaxKind::DivideRealExpression: return L"DivideRealExpression";
-        case SyntaxKind::ModuleExpression: return L"ModuleExpression";
+        case SyntaxKind::IntegerDivisionExpression: return L"IntegerDivisionExpression";
+        case SyntaxKind::RealDivisionExpression: return L"RealDivisionExpression";
+        case SyntaxKind::RemainderExpression: return L"RemainderExpression";
         case SyntaxKind::LeftShiftExpression: return L"LeftShiftExpression";
         case SyntaxKind::RightShiftExpression: return L"RightShiftExpression";
         case SyntaxKind::AsExpression: return L"AsExpression";
         case SyntaxKind::IsExpression: return L"IsExpression";
+        case SyntaxKind::InExpression: return L"InExpression";
         case SyntaxKind::ParenthesizedExpression: return L"ParenthesizedExpression";
         case SyntaxKind::StringLiteralExpression: return L"StringLiteralExpression";
         case SyntaxKind::NumericLiteralExpression: return L"NumericLiteralExpression";

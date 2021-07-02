@@ -104,6 +104,7 @@ set(SOURCES_DELPHI_PARSER
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerStates.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiParser.cpp
+  ${SOURCE_DIR}/Delphi/Parser/Precedence.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX

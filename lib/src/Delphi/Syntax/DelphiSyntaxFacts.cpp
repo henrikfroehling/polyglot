@@ -785,9 +785,9 @@ SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) noexce
         case SyntaxKind::PlusToken: return SyntaxKind::AddExpression;
         case SyntaxKind::MinusToken: return SyntaxKind::SubtractExpression;
         case SyntaxKind::AsteriskToken: return SyntaxKind::MultiplyExpression;
-        case SyntaxKind::DivKeyword: return SyntaxKind::DivideIntegerExpression;
-        case SyntaxKind::SlashToken: return SyntaxKind::DivideRealExpression;
-        case SyntaxKind::ModKeyword: return SyntaxKind::ModuleExpression;
+        case SyntaxKind::DivKeyword: return SyntaxKind::IntegerDivisionExpression;
+        case SyntaxKind::SlashToken: return SyntaxKind::RealDivisionExpression;
+        case SyntaxKind::ModKeyword: return SyntaxKind::RemainderExpression;
         case SyntaxKind::ShiftLeftKeyword: return SyntaxKind::LeftShiftExpression;
         case SyntaxKind::ShiftRightKeyword: return SyntaxKind::RightShiftExpression;
         case SyntaxKind::AsKeyword: return SyntaxKind::AsExpression;

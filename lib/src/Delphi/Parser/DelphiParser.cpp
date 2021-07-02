@@ -5,6 +5,7 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
+#include "Delphi/Parser/Precedence.hpp"
 #include "Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiElementAccessExpressionSyntax.hpp"
@@ -76,6 +77,68 @@ namespace polyglot::Delphi::Parser
 
 using namespace Core::Syntax;
 using namespace Delphi::Syntax;
+
+Precedence precedenceOf(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::AssignmentExpression:
+            return Precedence::Assignment;
+        case SyntaxKind::EqualsExpression:
+        case SyntaxKind::NotEqualsExpression:
+            return Precedence::Equality;
+        case SyntaxKind::LessThanExpression:
+        case SyntaxKind::GreaterThanExpression:
+        case SyntaxKind::LessThanOrEqualExpression:
+        case SyntaxKind::GreaterThanOrEqualExpression:
+        case SyntaxKind::InExpression:
+        case SyntaxKind::IsExpression:
+            return Precedence::Relational;
+        case SyntaxKind::AddExpression:
+        case SyntaxKind::SubtractExpression:
+            return Precedence::Additive;
+        case SyntaxKind::LogicalOrExpression:
+            return Precedence::ConditionalOr;
+        case SyntaxKind::ExclusiveOrExpression:
+            return Precedence::ConditionalXor;
+        case SyntaxKind::MultiplyExpression:
+        case SyntaxKind::IntegerDivisionExpression:
+        case SyntaxKind::RealDivisionExpression:
+        case SyntaxKind::RemainderExpression:
+            return Precedence::Multiplicative;
+        case SyntaxKind::LogicalAndExpression:
+            return Precedence::ConditionalAnd;
+        case SyntaxKind::LeftShiftExpression:
+        case SyntaxKind::RightShiftExpression:
+            return Precedence::Shift;
+        case SyntaxKind::AsExpression:
+            return Precedence::As;
+        case SyntaxKind::AddressOfExpression:
+        case SyntaxKind::AddressOfProceduralVariableExpression:
+        case SyntaxKind::LogicalNotExpression:
+        case SyntaxKind::UnaryPlusExpression:
+        case SyntaxKind::UnaryMinusExpression:
+            return Precedence::Unary;
+        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+        case SyntaxKind::NumberLiteralToken:
+        case SyntaxKind::IntegerNumberLiteralToken:
+        case SyntaxKind::RealNumberLiteralToken:
+        case SyntaxKind::ControlCharacterLiteral:
+        case SyntaxKind::TrueKeyword:
+        case SyntaxKind::FalseKeyword:
+        case SyntaxKind::NilKeyword:
+        case SyntaxKind::ParenthesizedExpression:
+        case SyntaxKind::PredefinedType:
+        case SyntaxKind::PointerType:
+        case SyntaxKind::IdentifierName:
+        case SyntaxKind::ExtendedIdentifierName:
+            return Precedence::Primary;
+    }
+
+    return Precedence::Expression;
+}
 
 DelphiParser::DelphiParser(SharedPtr<Core::Text::SourceText> sourceText) noexcept
     : Core::Parser::Parser{std::make_shared<DelphiLexer>(sourceText)},
