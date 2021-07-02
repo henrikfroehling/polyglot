@@ -4,9 +4,8 @@
 ---
 ##### `switch` Statement
 ###### **EBNF:** `"case" , Expression , "of" , { CaseItem } , [ "else" , StatementList , [ ";" ] ] , "end"`
-
-**_CaseItem_ -> EBNF:**: `CaseLabel , { "," , CaseLabel } , ":" , Statement , [ ";" ]`
-**_CaseLabel_ -> EBNF:** `Expression , [ ".." , Expression ]`
+###### **_CaseItem_ -> EBNF:**: `CaseLabel , { "," , CaseLabel } , ":" , Statement , [ ";" ]`
+###### **_CaseLabel_ -> EBNF:** `Expression , [ ".." , Expression ]`
 ---
 ##### `for` Statement
 ###### **EBNF:** 
@@ -47,9 +46,8 @@
   "try" , StatementList , "except" , HandlerList , "end"
 | "try" , StatementList , "finally" , StatementList , "end"
 ```
-
-**_HandlerList_ -> EBNF:** `{ Handler } , [ "else" , StatementList ] | StatementList`
-**_Handler_ -> EBNF:** `"on" , Ident , ":" , TypeID , "do" , Statement , ";"`
+###### **_HandlerList_ -> EBNF:** `{ Handler } , [ "else" , StatementList ] | StatementList`
+###### **_Handler_ -> EBNF:** `"on" , Ident , ":" , TypeID , "do" , Statement , ";"`
 ---
 ##### `raise` Statement
 ###### **EBNF:** `"raise" , [ Designator ] , [ "at" , Designator ]`
@@ -68,15 +66,14 @@
 ---
 ##### `asm` Statement
 ###### **EBNF:** `"asm" , { AssemblyStatement } , "end"`
-
-**_AssemblyStatement_ -> EBNF:** `[ AssemblyLabel , ":" ] , [ AssemblyPrefix ] , AssemblyOpcode , [ AssemblyOperand , { "," , AssemblyOperand } ]`
-**_AssemblyLabel_ -> EBNF:** `Label | LocalLabelPart , { LocalLabelPart }`
-**_LocalLabelPart_ -> EBNF:** `"@" , Label | tkAsmHexLabel`
-**_AssemblyPrefix_ -> EBNF:** `LockAndRepeatPrefix , [ SegmentOverridePrefix ] | SegmentOverridePrefix , [ LockAndRepeatPrefix ]`
-**_LockAndRepeatPrefix_ -> EBNF:** `"lock" | "repne" | "repnz" | "rep" | "repe" | "repz"`
-**_SegmentOverridePrefix_ -> EBNF:** `"cs" | "ds" | "es" | "fs" | "gs" | "ss"`
-**_AssemblyOpcode_ -> EBNF:** `PentiumOpcode | [ Ident ] , AssemblyDirective`
-**_AssemblyOperand_ -> EBNF:**
+###### **_AssemblyStatement_ -> EBNF:** `[ AssemblyLabel , ":" ] , [ AssemblyPrefix ] , AssemblyOpcode , [ AssemblyOperand , { "," , AssemblyOperand } ]`
+###### **_AssemblyLabel_ -> EBNF:** `Label | LocalLabelPart , { LocalLabelPart }`
+###### **_LocalLabelPart_ -> EBNF:** `"@" , Label | tkAsmHexLabel`
+###### **_AssemblyPrefix_ -> EBNF:** `LockAndRepeatPrefix , [ SegmentOverridePrefix ] | SegmentOverridePrefix , [ LockAndRepeatPrefix ]`
+###### **_LockAndRepeatPrefix_ -> EBNF:** `"lock" | "repne" | "repnz" | "rep" | "repe" | "repz"`
+###### **_SegmentOverridePrefix_ -> EBNF:** `"cs" | "ds" | "es" | "fs" | "gs" | "ss"`
+###### **_AssemblyOpcode_ -> EBNF:** `PentiumOpcode | [ Ident ] , AssemblyDirective`
+###### **_AssemblyOperand_ -> EBNF:**
 ```
   "[" , Idx16Offset , "]" , [ "+" , ( Disp8 | Disp16 ) ]
 | "[" , "bx" , "]" , [ "+" , ( Disp8 | Disp16 ) ]
@@ -87,24 +84,24 @@
 | "[" , "ebp" , "*" , RegMul , "]"
 | Reg32 | Reg16 | Reg8H | Reg8L | RegMM | RegXMM | FloatReg | Disp16
 ```
-**_AssemblyDirective_ -> EBNF:** `"db" | "dw" | "dd" | "dq"`
-**_Idx16Offset_ -> EBNF:** `[ ( "bx" | "bp" ) , "+" ] , ( "si" | "di" )`
-**_IdxReg32_ -> EBNF:** `"eax" | "ebx" | "ecx" | "edx" | "esi" | "edi"`
-**_Disp8_ -> EBNF:** `ConstExpression`
-**_Disp16_ -> EBNF:** `ConstExpression`
-**_Disp32_ -> EBNF:** `ConstExpression`
-**_RegMul_ -> EBNF:** `"2" | "4" | "8"`
-**_Reg8L_ -> EBNF:** `"al" | "bl" | "cl" | "dl"`
-**_Reg8H_ -> EBNF:** `"ah" | "bh" | "ch" | "dh"`
-**_Reg16_ -> EBNF:** `"ax" | "bx" | "cx" | "dx" | "si" | "di" | "sp" | "bp"`
-**_Reg32_ -> EBNF:** `IdxReg32 | RegDebug | RegControl | "esp" | "ebp"`
-**_RegMM_ -> EBNF:** `"mm0" | "mm1" | "mm2" | "mm3" | "mm4" | "mm5" | "mm6" | "mm7"`
-**_RegXMM_ -> EBNF:** `"xmm0" | "xmm1" | "xmm2" | "xmm3" | "xmm4" | "xmm5" | "xmm6" | "xmm7"`
-**_FloatReg_ -> EBNF:** `"st" , [ "(" , FloatRegIndex , ")" ]`
-**_FloatRegIndex_ -> EBNF:** `"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7"`
-**_RegDebug_ -> EBNF:** `"dr0" | "dr1" | "dr2" | "dr3" | "dr4" | "dr5" | "dr6" | "dr7"`
-**_RegControl_ -> EBNF:** `"cr0" | "cr1" | "cr2" | "cr3" | "cr4"`
-**_PentiumOpcode_ -> EBNF:**
+###### **_AssemblyDirective_ -> EBNF:** `"db" | "dw" | "dd" | "dq"`
+###### **_Idx16Offset_ -> EBNF:** `[ ( "bx" | "bp" ) , "+" ] , ( "si" | "di" )`
+###### **_IdxReg32_ -> EBNF:** `"eax" | "ebx" | "ecx" | "edx" | "esi" | "edi"`
+###### **_Disp8_ -> EBNF:** `ConstExpression`
+###### **_Disp16_ -> EBNF:** `ConstExpression`
+###### **_Disp32_ -> EBNF:** `ConstExpression`
+###### **_RegMul_ -> EBNF:** `"2" | "4" | "8"`
+###### **_Reg8L_ -> EBNF:** `"al" | "bl" | "cl" | "dl"`
+###### **_Reg8H_ -> EBNF:** `"ah" | "bh" | "ch" | "dh"`
+###### **_Reg16_ -> EBNF:** `"ax" | "bx" | "cx" | "dx" | "si" | "di" | "sp" | "bp"`
+###### **_Reg32_ -> EBNF:** `IdxReg32 | RegDebug | RegControl | "esp" | "ebp"`
+###### **_RegMM_ -> EBNF:** `"mm0" | "mm1" | "mm2" | "mm3" | "mm4" | "mm5" | "mm6" | "mm7"`
+###### **_RegXMM_ -> EBNF:** `"xmm0" | "xmm1" | "xmm2" | "xmm3" | "xmm4" | "xmm5" | "xmm6" | "xmm7"`
+###### **_FloatReg_ -> EBNF:** `"st" , [ "(" , FloatRegIndex , ")" ]`
+###### **_FloatRegIndex_ -> EBNF:** `"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7"`
+###### **_RegDebug_ -> EBNF:** `"dr0" | "dr1" | "dr2" | "dr3" | "dr4" | "dr5" | "dr6" | "dr7"`
+###### **_RegControl_ -> EBNF:** `"cr0" | "cr1" | "cr2" | "cr3" | "cr4"`
+###### **_PentiumOpcode_ -> EBNF:**
 ```
   "aaa" | "aad" | "aam" | "aas" | "adc" | "add" | "addps" | "addss" | "and" | "andnps" | "andps" | "arpl"
 | "bound" | "bsf" | "bsr" | "bswap" | "bt" | "btc" | "btr" | "bts"
