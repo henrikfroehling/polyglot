@@ -1,13 +1,20 @@
 ### Delphi - Statements
-##### `if` Statement
+##### **_Statement_ -> EBNF:** `[ Label , ":" ] , StatementPart`
+###### **StatementPart_ -> EBNF:**
+```
+  IfStatement | CaseStatement | RepeatStatement | WhileStatement | ForStatement | WithStatement
+| TryStatement | RaiseStatement | AssemblerStatement | CompoundStatement | SimpleStatement
+```
+---
+##### **_IfStatement_**
 ###### **EBNF:** `"if" , Expression , "then" , Statement , [ "else" , Statement ]`
 ---
-##### `switch` Statement
+##### **_CaseStatement_**
 ###### **EBNF:** `"case" , Expression , "of" , { CaseItem } , [ "else" , StatementList , [ ";" ] ] , "end"`
 ###### **_CaseItem_ -> EBNF:**: `CaseLabel , { "," , CaseLabel } , ":" , Statement , [ ";" ]`
 ###### **_CaseLabel_ -> EBNF:** `Expression , [ ".." , Expression ]`
 ---
-##### `for` Statement
+##### **_ForStatement_**
 ###### **EBNF:** 
 ```
   "for" , Designator , ":=" , Expression , "to" , Expression , "do" , Statement
@@ -15,32 +22,16 @@
 | "for" , Designator , "in" , Expression , "do" , Statement
 ```
 ---
-##### `for-to` Statement
-###### **EBNF:**
-```
-  "for" , Designator , ":=" , Expression , "to" , Expression , "do" , Statement
-| "for" , Designator , ":=" , Expression , "downto" , Expression , "do" , Statement
-```
----
-##### `for-in` Statement
-###### **EBNF:** `"for" , Designator , "in" , Expression , "do" , Statement`
----
-##### `while` Statement
+##### **_WhileStatement_**
 ###### **EBNF:** `"while" , Expression , "do" , Statement`
 ---
-##### `repeat` Statement
+##### **_RepeatStatement_**
 ###### **EBNF:** `"repeat" , [ StatementList ] , "until" , Expression`
 ---
-##### `continue` Statement
-###### **EBNF:** `"continue"`
----
-##### `break` Statement
-###### **EBNF:** `"break"`
----
-##### `with` Statement
+##### **_WithStatement_**
 ###### **EBNF:** `"with" , Designator , { "," , Designator } , "do" , Statement`
 ---
-##### `try` Statement
+##### **_TryStatement_**
 ###### **EBNF:** 
 ```
   "try" , StatementList , "except" , HandlerList , "end"
@@ -49,8 +40,28 @@
 ###### **_HandlerList_ -> EBNF:** `{ Handler } , [ "else" , StatementList ] | StatementList`
 ###### **_Handler_ -> EBNF:** `"on" , Ident , ":" , TypeID , "do" , Statement , ";"`
 ---
-##### `raise` Statement
+##### **_RaiseStatement_**
 ###### **EBNF:** `"raise" , [ Designator ] , [ "at" , Designator ]`
+---
+##### **_CompoundStatement_**
+###### **EBNF:** `"begin" , [ StatementList ] , "end"`
+###### **_StatementList_ -> EBNF:** `[ Statement ] , { ";" , [ Statement ] }`
+---
+##### **_SimpleStatement_**
+###### **EBNF:** `GotoStatement | Designator , ":=" , Expression | Designator | Designator , ":=" , NewStatement`
+###### **_GotoStatement_ -> EBNF:**
+```
+  "goto" , Label
+| "exit" , [ "(" , Expression , ")" ]
+| "break"
+| "continue"
+```
+###### **_NewStatement_ -> EBNF:** `"New" , "(" , [ Expression ] , { "," , [ Expression ] } , [ "," , ConstExpression ] , ")"`
+##### `continue` Statement
+###### **EBNF:** `"continue"`
+---
+##### `break` Statement
+###### **EBNF:** `"break"`
 ---
 ##### `exit` Statement
 ###### **EBNF:** `"exit" , [ "(" , Expression , ")" ]`
@@ -58,13 +69,7 @@
 ##### `goto` Statement
 ###### **EBNF:** `"goto" , Label`
 ---
-##### Block Statement
-###### **EBNF:** `"begin" , [ StatementList ] , "end"`
----
-##### Statement List
-###### **EBNF:** `[ Statement ] , { ";" , [ Statement ] }`
----
-##### `asm` Statement
+##### **_AssemblerStatement_**
 ###### **EBNF:** `"asm" , { AssemblyStatement } , "end"`
 ###### **_AssemblyStatement_ -> EBNF:** `[ AssemblyLabel , ":" ] , [ AssemblyPrefix ] , AssemblyOpcode , [ AssemblyOperand , { "," , AssemblyOperand } ]`
 ###### **_AssemblyLabel_ -> EBNF:** `Label | LocalLabelPart , { LocalLabelPart }`
@@ -105,40 +110,54 @@
 ```
   "aaa" | "aad" | "aam" | "aas" | "adc" | "add" | "addps" | "addss" | "and" | "andnps" | "andps" | "arpl"
 | "bound" | "bsf" | "bsr" | "bswap" | "bt" | "btc" | "btr" | "bts"
-| "call" | "cbw" | "cdq" | "clc" | "cld" | "cli" | "clts" | "cmc" | "cmova" | "cmovae" | "cmovb" | "cmovbe" | "cmovc" | "cmove" | "cmovg" | "cmovge"
-| "cmovl" | "cmovle" | "cmovna" | "cmovnae" | "cmovnb" | "cmovnbe" | "cmovnc" | "cmovne" | "cmovng" | "cmovnge" | "cmovnl" | "cmovnle" | "cmp"
-| "cmpps" | "cmps" | "cmpsd" | "cmpsb" | "cmpsw" | "cmpss" | "cmpxchg" | "cmpxchg8b" | "comiss" | "cpuid" | "cvtpi2ps" | "cvtsi2ss" | "cvtss2si"
-| "cvttps2pi" | "cvttss2si" | "cwd" | "cwde"
+| "call" | "cbw" | "cdq" | "clc" | "cld" | "cli" | "clts" | "cmc" | "cmova" | "cmovae" | "cmovb" | "cmovbe"
+| "cmovc" | "cmove" | "cmovg" | "cmovge" | "cmovl" | "cmovle" | "cmovna" | "cmovnae" | "cmovnb" | "cmovnbe"
+| "cmovnc" | "cmovne" | "cmovng" | "cmovnge" | "cmovnl" | "cmovnle" | "cmp" | "cmpps" | "cmps" | "cmpsd"
+| "cmpsb" | "cmpsw" | "cmpss" | "cmpxchg" | "cmpxchg8b" | "comiss" | "cpuid" | "cvtpi2ps" | "cvtsi2ss"
+| "cvtss2si" | "cvttps2pi" | "cvttss2si" | "cwd" | "cwde"
 | "daa" | "das" | "dec" | "div" | "divps" | "divss"
 | "emms" | "enter"
-| "f2xm1" | "fabs" | "fadd" | "faddp" | "fbld" | "fbstp" | "fchs" | "fclex" | "fcmovb" | "fcmovbe" | "fcmove" | "fcmovnb" | "fcmovnbe" | "fcmovne"
-| "fcmovnu" | "fcmovu" | "fcom" | "fcomi" | "fcomip" | "fcomp" | "fcompp" | "fcos" | "fdecstp" | "fdiv" | "fdivp" | "fdivr" | "fdivrp" | "ffree"
-| "fiadd" | "ficom" | "ficomp" | "fidiv" | "fidivr" | "fild" | "fimul" | "fincstp" | "finit" | "fist" | "fistp" | "fisub" | "fisubr" | "fld"
-| "fld1" | "fldcw" | "fldenv" | "fldl2e" | "fldl2t" | "fldlg2" | "fldln2" | "fldpi" | "fldz" | "fmul" | "fmulp" | "fnclex" | "fninit" | "fnop"
-| "fnsave" | "fnstcw" | "fnstenv" | "fnstsw" | "fpatan" | "fprem" | "fprem1" | "fptan" | "frndint" | "frstor" | "fsave" | "fscale" | "fsin"
-| "fsincos" | "fsqrt" | "fst" | "fstcw" | "fstenv" | "fstp" | "fstsw" | "fsub" | "fsubp" | "fsubr" | "fsubrp" | "ftst" | "fucom" | "fucomi"
-| "fucomip" | "fucomp" | "fucompp" | "fwait" | "fxam" | "fxch" | "fxrstor" | "fxsave" | "fxtract" | "fyl2x" | "fyl2xp1"
+| "f2xm1" | "fabs" | "fadd" | "faddp" | "fbld" | "fbstp" | "fchs" | "fclex" | "fcmovb" | "fcmovbe"
+| "fcmove" | "fcmovnb" | "fcmovnbe" | "fcmovne" | "fcmovnu" | "fcmovu" | "fcom" | "fcomi" | "fcomip"
+| "fcomp" | "fcompp" | "fcos" | "fdecstp" | "fdiv" | "fdivp" | "fdivr" | "fdivrp" | "ffree" | "fiadd"
+| "ficom" | "ficomp" | "fidiv" | "fidivr" | "fild" | "fimul" | "fincstp" | "finit" | "fist" | "fistp"
+| "fisub" | "fisubr" | "fld" | "fld1" | "fldcw" | "fldenv" | "fldl2e" | "fldl2t" | "fldlg2" | "fldln2"
+| "fldpi" | "fldz" | "fmul" | "fmulp" | "fnclex" | "fninit" | "fnop" | "fnsave" | "fnstcw" | "fnstenv"
+| "fnstsw" | "fpatan" | "fprem" | "fprem1" | "fptan" | "frndint" | "frstor" | "fsave" | "fscale"
+| "fsin" | "fsincos" | "fsqrt" | "fst" | "fstcw" | "fstenv" | "fstp" | "fstsw" | "fsub" | "fsubp"
+| "fsubr" | "fsubrp" | "ftst" | "fucom" | "fucomi" | "fucomip" | "fucomp" | "fucompp" | "fwait"
+| "fxam" | "fxch" | "fxrstor" | "fxsave" | "fxtract" | "fyl2x" | "fyl2xp1"
 | "hlt"
-| "idiv" | "imul" | "in" | "inc" | "ins" | "insd" | "insb" | "insw" | "int" | "into" | "invd" | "invlpg" | "iret" | "iretd"
-| "ja" | "jae" | "jb" | "jbe" | "jc" | "jcxz" | "je" | "jecxz" | "jg" | "jge" | "jl" | "jle" | "jmp" | "jna" | "jnae" | "jn" | "jnbe" | "jnc"
-| "jne" | "jng" | "jnge" | "jnl" | "jnle" | "jno" | "jnp" | "jns" | "jnz" | "jo" | "jp" | "jpe" | "jpo" | "js" | "jz"
-| "lahf" | "lar" | "ldmxcsr" | "lds" | "les" | "lfs" | "lgs" | "lss" | "lea" | "leave" | "lgdt" | "lidt" | "lldt" | "lmsw" | "lods" | "lodsb"
-| "lodsd" | "lodsw" | "loop" | "loope" | "loopne" | "loopnz" | "loopz" | "lsl" | "ltr"
-| "maskmovq" | "maxps" | "maxss" | "minps" | "minss" | "mov" | "movaps" | "movd" | "movhlps" | "movhps" | "movlhps" | "movlps" | "movmskps"
-| "movntps" | "movntq" | "movq" | "movs" | "movsb" | "movsd" | "movss" | "movsw" | "movsx" | "movups" | "movzx" | "mul" | "mulps" | "mulss"
+| "idiv" | "imul" | "in" | "inc" | "ins" | "insd" | "insb" | "insw" | "int" | "into" | "invd"
+| "invlpg" | "iret" | "iretd"
+| "ja" | "jae" | "jb" | "jbe" | "jc" | "jcxz" | "je" | "jecxz" | "jg" | "jge" | "jl" | "jle"
+| "jmp" | "jna" | "jnae" | "jn" | "jnbe" | "jnc" | "jne" | "jng" | "jnge" | "jnl" | "jnle"
+| "jno" | "jnp" | "jns" | "jnz" | "jo" | "jp" | "jpe" | "jpo" | "js" | "jz"
+| "lahf" | "lar" | "ldmxcsr" | "lds" | "les" | "lfs" | "lgs" | "lss" | "lea" | "leave" | "lgdt"
+| "lidt" | "lldt" | "lmsw" | "lods" | "lodsb" | "lodsd" | "lodsw" | "loop" | "loope" | "loopne"
+| "loopnz" | "loopz" | "lsl" | "ltr"
+| "maskmovq" | "maxps" | "maxss" | "minps" | "minss" | "mov" | "movaps" | "movd" | "movhlps"
+| "movhps" | "movlhps" | "movlps" | "movmskps" | "movntps" | "movntq" | "movq" | "movs" | "movsb"
+| "movsd" | "movss" | "movsw" | "movsx" | "movups" | "movzx" | "mul" | "mulps" | "mulss"
 | "neg" | "nop" | "not"
 | "or" | "orps" | "out" | "outs" | "outsb" | "outsd" | "outsw"
-| "packssdw" | "packsswb" | "packuswb" | "paddb" | "paddd" | "paddsb" | "paddusb" | "passusw" | "paddsw" | "paddw" | "pand" | "pandn"
-| "pavgb" | "pavgw" | "pcmpeqb" | "pcmpeqd" | "pcmpeqw" | "pcmpgtb" | "pcmpgtd" | "pcmpgtw" | "pextrw" | "pinsrw" | "pmaddwd" | "pmaxsw"
-| "pmaxub" | "pminsw" | "pminub" | "pmovmskb" | "pmulhuw" | "pmulhw" | "pmullw" | "pop" | "popa" | "popad" | "popf" | "popfd" | "por"
-| "prefetch" | "psadbw" | "pshufw" | "pslld" | "psllq" | "psllw" | "psrad" | "psraw" | "psrld" | "psrlq" | "psrlw" | "psubb" | "psubd"
-| "psubw" | "psubsb" | "psubsw" | "psubusb" | "psubusw" | "punpcklbw" | "push" | "pusha" | "pushad" | "pushf" | "pushfd" | "pxor"
-| "rcl" | "rcpps" | "rcpss" | "rcr" | "rdmsr" | "rdpmc" | "rdtsc" | "ret" | "rol" | "ror" | "rsm" | "rsqrtps" | "rsqrtss"
-| "sahf" | "sal" | "sar" | "sbb" | "scas" | "scasb" | "scasd" | "scasw" | "seta" | "setae" | "setb" | "setbe" | "setc" | "sete" | "setg"
-| "setge" | "setl" | "setle" | "setna" | "setnae" | "setnb" | "setnbe" | "setnc" | "setne" | "setng" | "setnge" | "setnl" | "setnle"
-| "setno" | "setnp" | "setns" | "setnz" | "seto" | "setp" | "setpe" | "setpo" | "sets" | "setz" | "sfence" | "sgdt" | "shl" | "shld"
-| "shr" | "shrd" | "shufps" | "sidt" | "sldt" | "smsw" | "sqrtps" | "sqrtss" | "stc" | "std" | "sti" | "stmxcsr" | "stos" | "stosb"
-| "stosd" | "stosw" | "str" | "sub" | "subps" | "subss" | "sysenter" | "sysexit"
+| "packssdw" | "packsswb" | "packuswb" | "paddb" | "paddd" | "paddsb" | "paddusb" | "passusw"
+| "paddsw" | "paddw" | "pand" | "pandn" | "pavgb" | "pavgw" | "pcmpeqb" | "pcmpeqd" | "pcmpeqw"
+| "pcmpgtb" | "pcmpgtd" | "pcmpgtw" | "pextrw" | "pinsrw" | "pmaddwd" | "pmaxsw" | "pmaxub"
+| "pminsw" | "pminub" | "pmovmskb" | "pmulhuw" | "pmulhw" | "pmullw" | "pop" | "popa" | "popad"
+| "popf" | "popfd" | "por" | "prefetch" | "psadbw" | "pshufw" | "pslld" | "psllq" | "psllw"
+| "psrad" | "psraw" | "psrld" | "psrlq" | "psrlw" | "psubb" | "psubd" | "psubw" | "psubsb"
+| "psubsw" | "psubusb" | "psubusw" | "punpcklbw" | "push" | "pusha" | "pushad" | "pushf"
+| "pushfd" | "pxor"
+| "rcl" | "rcpps" | "rcpss" | "rcr" | "rdmsr" | "rdpmc" | "rdtsc" | "ret" | "rol" | "ror" | "rsm"
+| "rsqrtps" | "rsqrtss"
+| "sahf" | "sal" | "sar" | "sbb" | "scas" | "scasb" | "scasd" | "scasw" | "seta" | "setae" | "setb"
+| "setbe" | "setc" | "sete" | "setg" | "setge" | "setl" | "setle" | "setna" | "setnae" | "setnb"
+| "setnbe" | "setnc" | "setne" | "setng" | "setnge" | "setnl" | "setnle" | "setno" | "setnp"
+| "setns" | "setnz" | "seto" | "setp" | "setpe" | "setpo" | "sets" | "setz" | "sfence" | "sgdt"
+| "shl" | "shld" | "shr" | "shrd" | "shufps" | "sidt" | "sldt" | "smsw" | "sqrtps" | "sqrtss"
+| "stc" | "std" | "sti" | "stmxcsr" | "stos" | "stosb" | "stosd" | "stosw" | "str" | "sub"
+| "subps" | "subss" | "sysenter" | "sysexit"
 | "test"
 | "ucomiss" | "ud2" | "unpckhps" | "unpcklps"
 | "verr" | "verw"
