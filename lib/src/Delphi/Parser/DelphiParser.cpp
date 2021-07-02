@@ -279,6 +279,10 @@ DelphiExpressionSyntax* DelphiParser::parseExpression() noexcept
         DelphiExpressionSyntax* pOperandExpression = parseExpression();
         pLeftOperandExpression = DelphiPrefixUnaryExpressionSyntax::create(_syntaxFactory, operatorKind, pOperatorToken, pOperandExpression);
     }
+    else if (currentSyntaxKind == SyntaxKind::VarKeyword)
+    {
+        // TODO parse variable declaration
+    }
     else
     {
         pLeftOperandExpression = parseTerm();
@@ -371,12 +375,17 @@ DelphiExpressionSyntax* DelphiParser::parseTerm() noexcept
         case SyntaxKind::SingleQuotationSingleCharLiteralToken:
         case SyntaxKind::DoubleQuotationStringLiteralToken:
         case SyntaxKind::SingleQuotationStringLiteralToken:
+            // TODO lookup string factors (e.g. a combination of quoted strings and control chars
             pTermExpression = parseLiteralExpression();
             break;
         case SyntaxKind::OpenParenthesisToken:
-            // parse type cast
-            // or parse parenthesized expression
+        {
+            ISyntaxToken* pOpenParenthesisToken = takeToken();
+            DelphiExpressionSyntax* pExpression = parseExpression();
+            ISyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
+            pTermExpression = DelphiParenthesizedExpressionSyntax::create(_syntaxFactory, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
             break;
+        }
         case SyntaxKind::OpenBracketToken:
             pTermExpression = parseSetConstructor();
             break;
@@ -414,7 +423,7 @@ DelphiExpressionSyntax* DelphiParser::parsePostFixExpression(DelphiExpressionSyn
         switch (currentSyntaxKind)
         {
             case SyntaxKind::OpenParenthesisToken:
-                // TODO parse invocation expression
+                // TODO parse type cast or invocation expression
                 break;
             case SyntaxKind::OpenBracketToken:
             {
