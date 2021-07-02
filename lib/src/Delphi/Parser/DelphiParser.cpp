@@ -297,29 +297,17 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
         SyntaxKind operatorKind;
 
         if (currentSyntaxKind == SyntaxKind::ColonEqualToken)
-        {
             operatorKind = SyntaxKind::AssignmentExpression;
-        }
         else if (currentSyntaxKind == SyntaxKind::DotDotToken)
-        {
             operatorKind = SyntaxKind::RangeExpression;
-        }
         else if (currentSyntaxKind == SyntaxKind::AsKeyword)
-        {
             operatorKind = SyntaxKind::AsExpression;
-        }
         else if (currentSyntaxKind == SyntaxKind::IsKeyword)
-        {
             operatorKind = SyntaxKind::IsExpression;
-        }
         else if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
-        {
             operatorKind = DelphiSyntaxFacts::binaryExpressionKind(currentSyntaxKind);
-        }
         else
-        {
             break;
-        }
 
         ISyntaxToken* pOperatorToken = takeToken();
 
