@@ -1,4 +1,4 @@
-### Delphi-Statements
+### Delphi - Statements
 ##### `if` Statement
 ###### **EBNF:** `"if" , Expression , "then" , Statement , [ "else" , Statement ]`
 ---

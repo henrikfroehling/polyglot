@@ -1,4 +1,4 @@
-### Delphi-Tokens
+### Delphi - Keywords and Tokens
 
 #### Keywords
 `absolute`, `abstract`, `add`, `and`, `ansichar`, `ansistring`, `array`, `as`, `asm`, `assembler`, `assembly`, `automated`,
