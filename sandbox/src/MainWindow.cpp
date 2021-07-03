@@ -4,7 +4,13 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtGui/QScreen>
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QtGui/QAction>
+#else
 #include <QtWidgets/QAction>
+#endif
+
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QFileDialog>
