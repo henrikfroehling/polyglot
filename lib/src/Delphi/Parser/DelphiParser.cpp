@@ -381,7 +381,7 @@ DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressi
             break;
 
         // right-associativity with same precedence
-        if (operatorPrecedence == precedence && operatorKind == SyntaxKind::AssignmentExpression)
+        if (leftExpressionPrecedence == precedence && operatorKind == SyntaxKind::AssignmentExpression)
             break;
 
         ISyntaxToken* pOperatorToken = takeToken();
