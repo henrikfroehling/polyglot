@@ -5,13 +5,22 @@
 #include "polyglot/Core/Syntax/ISyntaxToken.hpp"
 #include "polyglot/Core/Syntax/SyntaxVariant.hpp"
 #include "Delphi/Parser/DelphiLexer.hpp"
+#include "Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiElementAccessExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiLiteralExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiParenthesizedExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiPointerTypeSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.hpp"
 #include "Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiRangeExpressionSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiSetConstructorSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiSetElementsConstructorSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiSetRangeConstructorSyntax.hpp"
+#include "Delphi/Syntax/Expressions/DelphiTypeSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiAssemblerStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiBlockStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiBreakStatementSyntax.hpp"
@@ -35,6 +44,7 @@
 #include "Delphi/Syntax/Statements/DelphiTryStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWhileStatementSyntax.hpp"
 #include "Delphi/Syntax/Statements/DelphiWithStatementSyntax.hpp"
+#include "Delphi/Syntax/DelphiBracketArgumentListSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseItemListSyntax.hpp"
 #include "Delphi/Syntax/DelphiCaseItemSyntax.hpp"
@@ -50,6 +60,7 @@
 #include "Delphi/Syntax/DelphiPackageModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiProgramModuleSyntax.hpp"
 #include "Delphi/Syntax/DelphiSyntaxFacts.hpp"
+#include "Delphi/Syntax/DelphiSyntaxList.hpp"
 #include "Delphi/Syntax/DelphiTryElseClauseSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitFinalizationSectionSyntax.hpp"
 #include "Delphi/Syntax/DelphiUnitHeadSyntax.hpp"
@@ -65,6 +76,63 @@ namespace polyglot::Delphi::Parser
 
 using namespace Core::Syntax;
 using namespace Delphi::Syntax;
+
+Precedence precedenceOf(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::AssignmentExpression:
+            return Precedence::Assignment;
+        case SyntaxKind::EqualsExpression:
+        case SyntaxKind::NotEqualsExpression:
+            return Precedence::Equality;
+        case SyntaxKind::LessThanExpression:
+        case SyntaxKind::GreaterThanExpression:
+        case SyntaxKind::LessThanOrEqualExpression:
+        case SyntaxKind::GreaterThanOrEqualExpression:
+        case SyntaxKind::InExpression:
+        case SyntaxKind::IsExpression:
+            return Precedence::Relational;
+        case SyntaxKind::AddExpression:
+        case SyntaxKind::SubtractExpression:
+            return Precedence::Additive;
+        case SyntaxKind::LogicalOrExpression:
+            return Precedence::ConditionalOr;
+        case SyntaxKind::ExclusiveOrExpression:
+            return Precedence::ConditionalXor;
+        case SyntaxKind::MultiplyExpression:
+        case SyntaxKind::IntegerDivisionExpression:
+        case SyntaxKind::RealDivisionExpression:
+        case SyntaxKind::RemainderExpression:
+            return Precedence::Multiplicative;
+        case SyntaxKind::LogicalAndExpression:
+            return Precedence::ConditionalAnd;
+        case SyntaxKind::LeftShiftExpression:
+        case SyntaxKind::RightShiftExpression:
+            return Precedence::Shift;
+        case SyntaxKind::AsExpression:
+            return Precedence::As;
+        case SyntaxKind::AddressOfExpression:
+        case SyntaxKind::AddressOfProceduralVariableExpression:
+        case SyntaxKind::LogicalNotExpression:
+        case SyntaxKind::UnaryPlusExpression:
+        case SyntaxKind::UnaryMinusExpression:
+            return Precedence::Unary;
+        case SyntaxKind::StringLiteralExpression:
+        case SyntaxKind::NumericLiteralExpression:
+        case SyntaxKind::TrueLiteralExpression:
+        case SyntaxKind::FalseLiteralExpression:
+        case SyntaxKind::NilLiteralExpression:
+        case SyntaxKind::ParenthesizedExpression:
+        case SyntaxKind::PredefinedType:
+        case SyntaxKind::PointerType:
+        case SyntaxKind::IdentifierName:
+        case SyntaxKind::ExtendedIdentifierName:
+            return Precedence::Primary;
+    }
+
+    return Precedence::Expression;
+}
 
 DelphiParser::DelphiParser(SharedPtr<Core::Text::SourceText> sourceText) noexcept
     : Core::Parser::Parser{std::make_shared<DelphiLexer>(sourceText)},
@@ -246,8 +314,221 @@ DelphiEndOfModuleDeclarationSyntax* DelphiParser::parseEndOfModule() noexcept
     return DelphiEndOfModuleDeclarationSyntax::create(_syntaxFactory, pEndKeyword, pDotToken);
 }
 
-DelphiExpressionSyntax* DelphiParser::parseExpression() noexcept
+// ----------------------------------
+// Expressions
+// ----------------------------------
+
+DelphiExpressionSyntax* DelphiParser::parseExpression(Precedence precedence) noexcept
 {
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+    DelphiExpressionSyntax* pLeftOperandExpression{nullptr};
+
+    if (DelphiSyntaxFacts::isInvalidSubExpression(currentSyntaxKind))
+    {
+        // error handling
+        return nullptr;
+    }
+
+    Precedence newPrecedence = Precedence::Expression;
+
+    if (DelphiSyntaxFacts::isPrefixUnaryExpression(currentSyntaxKind))
+    {
+        const SyntaxKind operatorKind = DelphiSyntaxFacts::prefixUnaryExpressionKind(currentSyntaxKind);
+        newPrecedence = precedenceOf(operatorKind);
+        ISyntaxToken* pOperatorToken = takeToken();
+        DelphiExpressionSyntax* pOperandExpression = parseExpression(newPrecedence);
+        pLeftOperandExpression = DelphiPrefixUnaryExpressionSyntax::create(_syntaxFactory, operatorKind, pOperatorToken, pOperandExpression);
+    }
+    else if (currentSyntaxKind == SyntaxKind::VarKeyword)
+    {
+        // TODO parse variable declaration
+    }
+    else
+    {
+        pLeftOperandExpression = parseTerm(precedence);
+    }
+
+    return parseRightOperandExpression(pLeftOperandExpression, precedence);
+}
+
+DelphiExpressionSyntax* DelphiParser::parseRightOperandExpression(DelphiExpressionSyntax* leftOperandExpression,
+                                                                  Precedence precedence) noexcept
+{
+    assert(leftOperandExpression != nullptr);
+
+    while (true)
+    {
+        const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+        SyntaxKind operatorKind;
+
+        if (currentSyntaxKind == SyntaxKind::ColonEqualToken)
+            operatorKind = SyntaxKind::AssignmentExpression;
+        else if (currentSyntaxKind == SyntaxKind::DotDotToken)
+            operatorKind = SyntaxKind::RangeExpression;
+        else if (currentSyntaxKind == SyntaxKind::AsKeyword)
+            operatorKind = SyntaxKind::AsExpression;
+        else if (currentSyntaxKind == SyntaxKind::IsKeyword)
+            operatorKind = SyntaxKind::IsExpression;
+        else if (DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind))
+            operatorKind = DelphiSyntaxFacts::binaryExpressionKind(currentSyntaxKind);
+        else
+            break;
+
+        Precedence operatorPrecedence = precedenceOf(operatorKind);
+        Precedence leftExpressionPrecedence = precedenceOf(leftOperandExpression->syntaxKind());
+
+        if (operatorPrecedence < precedence && leftExpressionPrecedence < precedence)
+            break;
+
+        // right-associativity with same precedence
+        if (leftExpressionPrecedence == precedence && operatorKind == SyntaxKind::AssignmentExpression)
+            break;
+
+        ISyntaxToken* pOperatorToken = takeToken();
+
+        if (operatorKind == SyntaxKind::AssignmentExpression)
+        {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::ColonEqualToken);
+            DelphiExpressionSyntax* pRightOperandExpression = parseExpression(operatorPrecedence);
+            leftOperandExpression = DelphiAssignmentExpressionSyntax::create(_syntaxFactory, leftOperandExpression,
+                                                                             pOperatorToken, pRightOperandExpression);
+        }
+        else if (operatorKind == SyntaxKind::RangeExpression)
+        {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::DotDotToken);
+            DelphiExpressionSyntax* pRightOperandExpression = parseExpression(operatorPrecedence);
+            leftOperandExpression = DelphiRangeExpressionSyntax::create(_syntaxFactory, leftOperandExpression,
+                                                                        pOperatorToken, pRightOperandExpression);
+        }
+        else if (operatorKind == SyntaxKind::AsExpression)
+        {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::AsKeyword);
+            DelphiTypeSyntax* pRightOperandType = parseType();
+            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
+                                                                         pOperatorToken, pRightOperandType);
+        }
+        else if (operatorKind == SyntaxKind::IsExpression)
+        {
+            assert(pOperatorToken->syntaxKind() == SyntaxKind::IsKeyword);
+            DelphiTypeSyntax* pRightOperandType = parseType();
+            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
+                                                                         pOperatorToken, pRightOperandType);
+        }
+        else
+        {
+            assert(DelphiSyntaxFacts::isBinaryExpression(currentSyntaxKind));
+            DelphiExpressionSyntax* pRightOperandExpression = parseExpression(operatorPrecedence);
+            leftOperandExpression = DelphiBinaryExpressionSyntax::create(_syntaxFactory, operatorKind, leftOperandExpression,
+                                                                         pOperatorToken, pRightOperandExpression);
+        }
+    }
+
+    return leftOperandExpression;
+}
+
+DelphiExpressionSyntax* DelphiParser::parseTerm(Precedence precedence) noexcept
+{
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+    DelphiExpressionSyntax* pTermExpression{nullptr};
+
+    switch (currentSyntaxKind)
+    {
+        case SyntaxKind::IdentifierToken:
+            pTermExpression = parseQualifiedName();
+            break;
+        case SyntaxKind::NilKeyword:
+        case SyntaxKind::TrueKeyword:
+        case SyntaxKind::FalseKeyword:
+        case SyntaxKind::NumberLiteralToken:
+        case SyntaxKind::IntegerNumberLiteralToken:
+        case SyntaxKind::RealNumberLiteralToken:
+        case SyntaxKind::ControlCharacterLiteral:
+        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+            // TODO lookup string factors (e.g. a combination of quoted strings and control chars
+            pTermExpression = parseLiteralExpression();
+            break;
+        case SyntaxKind::OpenParenthesisToken:
+        {
+            ISyntaxToken* pOpenParenthesisToken = takeToken();
+            DelphiExpressionSyntax* pExpression = parseExpression(precedence);
+            ISyntaxToken* pCloseParenthesisToken = takeToken(SyntaxKind::CloseParenthesisToken);
+            pTermExpression = DelphiParenthesizedExpressionSyntax::create(_syntaxFactory, pOpenParenthesisToken, pExpression, pCloseParenthesisToken);
+            break;
+        }
+        case SyntaxKind::OpenBracketToken:
+            pTermExpression = parseSetConstructor();
+            break;
+        case SyntaxKind::AmpersandToken:
+            if (DelphiSyntaxFacts::isPredefinedType(peekToken(1)->syntaxKind()))
+                pTermExpression = parseExtendedIdentifierName();
+
+            break;
+        case SyntaxKind::CaretToken:
+            pTermExpression = parsePointerType();
+            break;
+        default:
+            if (DelphiSyntaxFacts::isPredefinedType(currentSyntaxKind))
+                pTermExpression = parsePredefinedType();
+            else
+            {
+                // TODO error handling
+            }
+
+            break;
+    }
+
+    assert(pTermExpression != nullptr);
+    return parsePostFixExpression(pTermExpression);
+}
+
+DelphiExpressionSyntax* DelphiParser::parsePostFixExpression(DelphiExpressionSyntax* termExpression) noexcept
+{
+    assert(termExpression != nullptr);
+
+    while (true)
+    {
+        const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+        switch (currentSyntaxKind)
+        {
+            case SyntaxKind::OpenParenthesisToken:
+                // TODO parse type cast or invocation expression
+                break;
+            case SyntaxKind::OpenBracketToken:
+            {
+                DelphiBracketArgumentListSyntax* pArguments = parseBracketArguments();
+                return DelphiElementAccessExpressionSyntax::create(_syntaxFactory, termExpression, pArguments);
+            }
+            case SyntaxKind::CaretDotToken:
+                // TODO parse pointer member access expression
+                break;
+            case SyntaxKind::DotToken:
+                // TODO parse member access expression
+                break;
+            default:
+                return termExpression;
+        }
+    }
+
+    return nullptr;
+}
+
+DelphiTypeSyntax* DelphiParser::parseType() noexcept
+{
+    const SyntaxKind currentSyntaxKind = currentToken()->syntaxKind();
+
+    if (DelphiSyntaxFacts::isPredefinedType(currentSyntaxKind))
+    {
+        ISyntaxToken* pPredefinedTypeToken = takeToken();
+        return DelphiPredefinedTypeSyntax::create(_syntaxFactory, pPredefinedTypeToken);
+    }
+
+    if (currentSyntaxKind == SyntaxKind::IdentifierToken)
+        return parseQualifiedName();
+
+    // TODO error handling
     return nullptr;
 }
 
@@ -330,6 +611,66 @@ DelphiLiteralExpressionSyntax* DelphiParser::parseLiteralExpression() noexcept
     ISyntaxToken* pLiteralToken = takeToken();
     return DelphiLiteralExpressionSyntax::create(_syntaxFactory, DelphiSyntaxFacts::literalExpressionKind(pLiteralToken->syntaxKind()), pLiteralToken);
 }
+
+DelphiSetConstructorSyntax* DelphiParser::parseSetConstructor() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::OpenBracketToken);
+    ISyntaxToken* pOpenBracketToken = takeToken(SyntaxKind::OpenBracketToken);
+    DelphiExpressionSyntax* pFirstElement = parseExpression();
+
+    if (pFirstElement->syntaxKind() == SyntaxKind::RangeExpression)
+    {
+        ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
+        return DelphiSetRangeConstructorSyntax::create(_syntaxFactory, pOpenBracketToken,
+                                                       static_cast<DelphiRangeExpressionSyntax*>(pFirstElement), pCloseBracketToken);
+    }
+    else if (currentToken()->syntaxKind() == SyntaxKind::CommaToken)
+    {
+        std::vector<SyntaxVariant> elements{};
+        elements.push_back(SyntaxVariant::asNode(pFirstElement));
+
+        while (currentToken()->syntaxKind() != SyntaxKind::CloseBracketToken)
+        {
+            ISyntaxToken* pCommaToken = takeToken();
+            elements.push_back(SyntaxVariant::asToken(pCommaToken));
+            DelphiExpressionSyntax* pElement = parseExpression();
+            elements.push_back(SyntaxVariant::asNode(pElement));
+        }
+
+        ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
+        DelphiSyntaxList* pElements = DelphiSyntaxList::create(_syntaxFactory, SyntaxKind::SetElementsList, std::move(elements));
+        return DelphiSetElementsConstructorSyntax::create(_syntaxFactory, pOpenBracketToken, pElements, pCloseBracketToken);
+    }
+
+    // TODO error handling
+    // , or .. expected
+    return nullptr;
+}
+
+DelphiBracketArgumentListSyntax* DelphiParser::parseBracketArguments() noexcept
+{
+    assert(currentToken()->syntaxKind() == SyntaxKind::OpenBracketToken);
+    ISyntaxToken* pOpenBracketToken = takeToken(SyntaxKind::OpenBracketToken);
+    DelphiExpressionSyntax* pFirstArgument = parseExpression();
+    std::vector<SyntaxVariant> arguments{};
+    arguments.push_back(SyntaxVariant::asNode(pFirstArgument));
+
+    while (currentToken()->syntaxKind() != SyntaxKind::CloseBracketToken)
+    {
+        ISyntaxToken* pCommaToken = takeToken();
+        arguments.push_back(SyntaxVariant::asToken(pCommaToken));
+        DelphiExpressionSyntax* pArgument = parseExpression();
+        arguments.push_back(SyntaxVariant::asNode(pArgument));
+    }
+
+    ISyntaxToken* pCloseBracketToken = takeToken(SyntaxKind::CloseBracketToken);
+    DelphiSyntaxList* pArguments = DelphiSyntaxList::create(_syntaxFactory, SyntaxKind::SetElementsList, std::move(arguments));
+    return DelphiBracketArgumentListSyntax::create(_syntaxFactory, pOpenBracketToken, pArguments, pCloseBracketToken);
+}
+
+// ----------------------------------
+// Statements
+// ----------------------------------
 
 DelphiStatementSyntax* DelphiParser::parseStatement() noexcept
 {

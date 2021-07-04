@@ -18,7 +18,15 @@ DelphiExitStatementSyntax::DelphiExitStatementSyntax(ISyntaxToken* exitKeyword,
       _pExitKeyword{exitKeyword},
       _pSemiColonToken{semiColonToken},
       _pExpression{expression}
-{}
+{
+    _position = _pExitKeyword->position();
+    adjustWidthAndFlags(_pExitKeyword);
+
+    if (_pExpression != nullptr)
+        adjustWidthAndFlags(_pExpression);
+
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiExitStatementSyntax::child(pg_size index) const
 {

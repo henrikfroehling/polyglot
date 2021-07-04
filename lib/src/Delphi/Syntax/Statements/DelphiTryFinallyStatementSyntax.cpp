@@ -20,7 +20,14 @@ DelphiTryFinallyStatementSyntax::DelphiTryFinallyStatementSyntax(ISyntaxToken* t
                                                                  ISyntaxToken* semiColonToken) noexcept
     : DelphiTryStatementSyntax{SyntaxKind::TryFinallyStatement, tryKeyword, statements, endKeyword, semiColonToken},
       _pFinallyClause{finallyClause}
-{}
+{
+    _position = _pTryKeyword->position();
+    adjustWidthAndFlags(_pTryKeyword);
+    adjustWidthAndFlags(_pStatements);
+    adjustWidthAndFlags(_pFinallyClause);
+    adjustWidthAndFlags(_pEndKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiTryFinallyStatementSyntax::child(pg_size index) const
 {

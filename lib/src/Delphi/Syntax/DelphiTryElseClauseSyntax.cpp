@@ -16,7 +16,11 @@ DelphiTryElseClauseSyntax::DelphiTryElseClauseSyntax(ISyntaxToken* elseKeyword,
     : DelphiSyntaxNode{SyntaxKind::TryElseClause},
       _pElseKeyword{elseKeyword},
       _pStatements{statements}
-{}
+{
+    _position = _pElseKeyword->position();
+    adjustWidthAndFlags(_pElseKeyword);
+    adjustWidthAndFlags(_pStatements);
+}
 
 SyntaxVariant DelphiTryElseClauseSyntax::child(pg_size index) const
 {

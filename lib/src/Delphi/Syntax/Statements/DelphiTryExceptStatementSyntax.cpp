@@ -20,7 +20,14 @@ DelphiTryExceptStatementSyntax::DelphiTryExceptStatementSyntax(ISyntaxToken* try
                                                                ISyntaxToken* semiColonToken) noexcept
     : DelphiTryStatementSyntax{SyntaxKind::TryExceptStatement, tryKeyword, statements, endKeyword, semiColonToken},
       _pExceptClause{exceptClause}
-{}
+{
+    _position = _pTryKeyword->position();
+    adjustWidthAndFlags(_pTryKeyword);
+    adjustWidthAndFlags(_pStatements);
+    adjustWidthAndFlags(_pExceptClause);
+    adjustWidthAndFlags(_pEndKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiTryExceptStatementSyntax::child(pg_size index) const
 {

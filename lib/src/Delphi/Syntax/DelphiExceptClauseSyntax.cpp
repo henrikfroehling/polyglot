@@ -16,7 +16,11 @@ DelphiExceptClauseSyntax::DelphiExceptClauseSyntax(ISyntaxToken* exceptKeyword,
     : DelphiSyntaxNode{SyntaxKind::ExceptClause},
       _pExceptKeyword{exceptKeyword},
       _pExceptionBlock{exceptionBlock}
-{}
+{
+    _position = _pExceptKeyword->position();
+    adjustWidthAndFlags(_pExceptKeyword);
+    adjustWidthAndFlags(_pExceptionBlock);
+}
 
 SyntaxVariant DelphiExceptClauseSyntax::child(pg_size index) const
 {

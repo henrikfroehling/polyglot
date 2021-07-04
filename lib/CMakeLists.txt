@@ -104,9 +104,11 @@ set(SOURCES_DELPHI_PARSER
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerFlags.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiLexerStates.cpp
   ${SOURCE_DIR}/Delphi/Parser/DelphiParser.cpp
+  ${SOURCE_DIR}/Delphi/Parser/Precedence.cpp
 )
 
 set(SOURCES_DELPHI_SYNTAX
+  ${SOURCE_DIR}/Delphi/Syntax/DelphiBracketArgumentListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseElseClauseSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemListSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/DelphiCaseItemSyntax.cpp
@@ -146,6 +148,7 @@ set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiAssignmentExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiBinaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiCallExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiElementAccessExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiExtendedIdentifierNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiIdentifierNameSyntax.cpp
@@ -156,6 +159,10 @@ set(SOURCES_DELPHI_SYNTAX_EXPRESSIONS
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPredefinedTypeSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiPrefixUnaryExpressionSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiQualifiedNameSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiRangeExpressionSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSetConstructorSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSetElementsConstructorSyntax.cpp
+  ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSetRangeConstructorSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiSimpleNameSyntax.cpp
   ${SOURCE_DIR}/Delphi/Syntax/Expressions/DelphiTypeSyntax.cpp
 )

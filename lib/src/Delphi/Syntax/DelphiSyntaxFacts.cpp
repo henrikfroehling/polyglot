@@ -279,49 +279,6 @@ bool DelphiSyntaxFacts::isCompoundPunctuation(SyntaxKind syntaxKind) noexcept
     return false;
 }
 
-SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) noexcept
-{
-    switch (syntaxKind)
-    {
-        case SyntaxKind::AndKeyword:
-            return SyntaxKind::LogicalAndExpression;
-        case SyntaxKind::OrKeyword:
-            return SyntaxKind::LogicalOrExpression;
-        case SyntaxKind::EqualToken:
-            return SyntaxKind::EqualsExpression;
-        case SyntaxKind::LessThanEqualToken:
-        case SyntaxKind::GreaterThanEqualToken:
-        case SyntaxKind::LessThanGreaterThanToken:
-            return SyntaxKind::NotEqualsExpression;
-    }
-
-    return SyntaxKind::None;
-}
-
-SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexcept
-{
-    switch (syntaxKind)
-    {
-        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
-        case SyntaxKind::DoubleQuotationStringLiteralToken:
-        case SyntaxKind::SingleQuotationStringLiteralToken:
-            return SyntaxKind::StringLiteralExpression;
-        case SyntaxKind::NumberLiteralToken:
-        case SyntaxKind::IntegerNumberLiteralToken:
-        case SyntaxKind::RealNumberLiteralToken:
-        case SyntaxKind::ControlCharacterLiteral:
-            return SyntaxKind::NumericLiteralExpression;
-        case SyntaxKind::TrueKeyword:
-            return SyntaxKind::TrueLiteralExpression;
-        case SyntaxKind::FalseKeyword:
-            return SyntaxKind::FalseLiteralExpression;
-        case SyntaxKind::NilKeyword:
-            return SyntaxKind::NilLiteralExpression;
-    }
-
-    return SyntaxKind::None;
-}
-
 bool DelphiSyntaxFacts::isComparisonSyntaxKind(SyntaxKind syntaxKind) noexcept
 {
     switch (syntaxKind)
@@ -750,6 +707,118 @@ bool DelphiSyntaxFacts::isLiteral(SyntaxKind syntaxKind) noexcept
     }
 
     return false;
+}
+
+bool DelphiSyntaxFacts::isPrefixUnaryExpression(SyntaxKind syntaxKind) noexcept
+{
+    return prefixUnaryExpressionKind(syntaxKind) != SyntaxKind::None;
+}
+
+bool DelphiSyntaxFacts::isBinaryExpression(SyntaxKind syntaxKind) noexcept
+{
+    return binaryExpressionKind(syntaxKind) != SyntaxKind::None;
+}
+
+bool DelphiSyntaxFacts::isInvalidSubExpression(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::IfKeyword:
+        case SyntaxKind::ElseKeyword:
+        case SyntaxKind::ThenKeyword:
+        case SyntaxKind::CaseKeyword:
+        case SyntaxKind::RepeatKeyword:
+        case SyntaxKind::UntilKeyword:
+        case SyntaxKind::WhileKeyword:
+        case SyntaxKind::ForKeyword:
+        case SyntaxKind::ToKeyword:
+        case SyntaxKind::DownToKeyword:
+        case SyntaxKind::InKeyword:
+        case SyntaxKind::DoKeyword:
+        case SyntaxKind::WithKeyword:
+        case SyntaxKind::TryKeyword:
+        case SyntaxKind::ExceptKeyword:
+        case SyntaxKind::FinallyKeyword:
+        case SyntaxKind::RaiseKeyword:
+        case SyntaxKind::AsmKeyword:
+        case SyntaxKind::BeginKeyword:
+        case SyntaxKind::EndKeyword:
+        case SyntaxKind::BreakKeyword:
+        case SyntaxKind::ContinueKeyword:
+        case SyntaxKind::ExitKeyword:
+        case SyntaxKind::GotoKeyword:
+        case SyntaxKind::ConstKeyword:
+        case SyntaxKind::OfKeyword:
+            return true;
+    }
+
+    return false;
+}
+
+SyntaxKind DelphiSyntaxFacts::prefixUnaryExpressionKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::PlusToken: return SyntaxKind::UnaryPlusExpression;
+        case SyntaxKind::MinusToken: return SyntaxKind::UnaryMinusExpression;
+        case SyntaxKind::NotKeyword: return SyntaxKind::LogicalNotExpression;
+        case SyntaxKind::AtToken: return SyntaxKind::AddressOfExpression;
+        case SyntaxKind::AtAtToken: return SyntaxKind::AddressOfProceduralVariableExpression;
+    }
+
+    return SyntaxKind::None;
+}
+
+SyntaxKind DelphiSyntaxFacts::binaryExpressionKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::AndKeyword: return SyntaxKind::LogicalAndExpression;
+        case SyntaxKind::OrKeyword: return SyntaxKind::LogicalOrExpression;
+        case SyntaxKind::XorKeyword: return SyntaxKind::ExclusiveOrExpression;
+        case SyntaxKind::EqualToken: return SyntaxKind::EqualsExpression;
+        case SyntaxKind::LessThanGreaterThanToken: return SyntaxKind::NotEqualsExpression;
+        case SyntaxKind::LessThanToken: return SyntaxKind::LessThanExpression;
+        case SyntaxKind::GreaterThanToken: return SyntaxKind::GreaterThanExpression;
+        case SyntaxKind::LessThanEqualToken: return SyntaxKind::LessThanOrEqualExpression;
+        case SyntaxKind::GreaterThanEqualToken: return SyntaxKind::GreaterThanOrEqualExpression;
+        case SyntaxKind::PlusToken: return SyntaxKind::AddExpression;
+        case SyntaxKind::MinusToken: return SyntaxKind::SubtractExpression;
+        case SyntaxKind::AsteriskToken: return SyntaxKind::MultiplyExpression;
+        case SyntaxKind::DivKeyword: return SyntaxKind::IntegerDivisionExpression;
+        case SyntaxKind::SlashToken: return SyntaxKind::RealDivisionExpression;
+        case SyntaxKind::ModKeyword: return SyntaxKind::RemainderExpression;
+        case SyntaxKind::ShiftLeftKeyword: return SyntaxKind::LeftShiftExpression;
+        case SyntaxKind::ShiftRightKeyword: return SyntaxKind::RightShiftExpression;
+        case SyntaxKind::AsKeyword: return SyntaxKind::AsExpression;
+        case SyntaxKind::IsKeyword: return SyntaxKind::IsExpression;
+    }
+
+    return SyntaxKind::None;
+}
+
+SyntaxKind DelphiSyntaxFacts::literalExpressionKind(SyntaxKind syntaxKind) noexcept
+{
+    switch (syntaxKind)
+    {
+        case SyntaxKind::SingleQuotationSingleCharLiteralToken:
+        case SyntaxKind::DoubleQuotationStringLiteralToken:
+        case SyntaxKind::SingleQuotationStringLiteralToken:
+            return SyntaxKind::StringLiteralExpression;
+        case SyntaxKind::NumberLiteralToken:
+        case SyntaxKind::IntegerNumberLiteralToken:
+        case SyntaxKind::RealNumberLiteralToken:
+        case SyntaxKind::ControlCharacterLiteral:
+            return SyntaxKind::NumericLiteralExpression;
+        case SyntaxKind::TrueKeyword:
+            return SyntaxKind::TrueLiteralExpression;
+        case SyntaxKind::FalseKeyword:
+            return SyntaxKind::FalseLiteralExpression;
+        case SyntaxKind::NilKeyword:
+            return SyntaxKind::NilLiteralExpression;
+    }
+
+    return SyntaxKind::None;
 }
 
 SyntaxKind DelphiSyntaxFacts::keywordKind(pg_string_view text,

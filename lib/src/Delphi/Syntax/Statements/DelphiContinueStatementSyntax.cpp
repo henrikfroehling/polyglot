@@ -16,7 +16,11 @@ DelphiContinueStatementSyntax::DelphiContinueStatementSyntax(ISyntaxToken* conti
     : DelphiStatementSyntax{SyntaxKind::ContinueStatement},
       _pContinueKeyword{continueKeyword},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pContinueKeyword->position();
+    adjustWidthAndFlags(_pContinueKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiContinueStatementSyntax::child(pg_size index) const
 {

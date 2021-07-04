@@ -5,6 +5,7 @@
 #include "Core/Syntax/SyntaxFactory.hpp"
 #include "Core/Parser/Parser.hpp"
 #include "Core/Text/SourceText.hpp"
+#include "Delphi/Parser/Precedence.hpp"
 
 namespace polyglot::Core::Syntax
 {
@@ -19,6 +20,7 @@ namespace polyglot::Delphi::Syntax
 
 class DelphiAssemblerStatementSyntax;;
 class DelphiBlockStatementSyntax;
+class DelphiBracketArgumentListSyntax;
 class DelphiBreakStatementSyntax;
 class DelphiCaseElseClauseSyntax;
 class DelphiCaseItemListSyntax;
@@ -51,10 +53,12 @@ class DelphiPredefinedTypeSyntax;
 class DelphiProgramModuleSyntax;
 class DelphiRaiseStatementSyntax;
 class DelphiRepeatStatementSyntax;
+class DelphiSetConstructorSyntax;
 class DelphiStatementListSyntax;
 class DelphiStatementSyntax;
 class DelphiTryElseClauseSyntax;
 class DelphiTryStatementSyntax;
+class DelphiTypeSyntax;
 class DelphiUnitFinalizationSectionSyntax;
 class DelphiUnitHeadSyntax;
 class DelphiUnitImplementationSectionSyntax;
@@ -93,7 +97,14 @@ private:
     Syntax::DelphiEndOfModuleDeclarationSyntax* parseEndOfModule() noexcept;
 
     // expressions
-    Syntax::DelphiExpressionSyntax* parseExpression() noexcept;
+    Syntax::DelphiExpressionSyntax* parseExpression(Precedence precedence = Precedence::Expression) noexcept;
+
+    Syntax::DelphiExpressionSyntax* parseRightOperandExpression(Syntax::DelphiExpressionSyntax* leftOperandExpression,
+                                                                Precedence precedence) noexcept;
+
+    Syntax::DelphiExpressionSyntax* parseTerm(Precedence precedence) noexcept;
+    Syntax::DelphiExpressionSyntax* parsePostFixExpression(Syntax::DelphiExpressionSyntax* termExpression) noexcept;
+    Syntax::DelphiTypeSyntax* parseType() noexcept;
     Syntax::DelphiNameSyntax* parseQualifiedName() noexcept;
 
     Syntax::DelphiNameSyntax* parseQualifiedNameRight(Syntax::DelphiNameSyntax* left,
@@ -104,6 +115,8 @@ private:
     Syntax::DelphiPredefinedTypeSyntax* parsePredefinedType() noexcept;
     Syntax::DelphiPointerTypeSyntax* parsePointerType() noexcept;
     Syntax::DelphiLiteralExpressionSyntax* parseLiteralExpression() noexcept;
+    Syntax::DelphiSetConstructorSyntax* parseSetConstructor() noexcept;
+    Syntax::DelphiBracketArgumentListSyntax* parseBracketArguments() noexcept;
 
     // statements
     Syntax::DelphiStatementSyntax* parseStatement() noexcept;

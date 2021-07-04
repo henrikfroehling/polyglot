@@ -18,7 +18,12 @@ DelphiAssignmentExpressionSyntax::DelphiAssignmentExpressionSyntax(DelphiExpress
       _pLeftExpression{leftExpression},
       _pColonEqualToken{colonEqualToken},
       _pRightExpression{rightExpression}
-{}
+{
+    _position = _pLeftExpression->position();
+    adjustWidthAndFlags(_pLeftExpression);
+    adjustWidthAndFlags(_pColonEqualToken);
+    adjustWidthAndFlags(_pRightExpression);
+}
 
 SyntaxVariant DelphiAssignmentExpressionSyntax::child(pg_size index) const
 {

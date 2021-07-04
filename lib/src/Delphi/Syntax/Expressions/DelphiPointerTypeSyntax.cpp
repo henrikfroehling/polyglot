@@ -13,10 +13,14 @@ using namespace Core::Syntax;
 
 DelphiPointerTypeSyntax::DelphiPointerTypeSyntax(ISyntaxToken* caretToken,
                                                  DelphiTypeSyntax* type) noexcept
-    : DelphiTypeSyntax{SyntaxKind::PointerTypeExpression},
+    : DelphiTypeSyntax{SyntaxKind::PointerType},
       _pCaretToken{caretToken},
       _pType{type}
-{}
+{
+    _position = _pCaretToken->position();
+    adjustWidthAndFlags(_pCaretToken);
+    adjustWidthAndFlags(_pType);
+}
 
 SyntaxVariant DelphiPointerTypeSyntax::child(pg_size index) const
 {

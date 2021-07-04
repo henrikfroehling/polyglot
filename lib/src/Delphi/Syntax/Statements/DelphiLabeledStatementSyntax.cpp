@@ -18,7 +18,12 @@ DelphiLabeledStatementSyntax::DelphiLabeledStatementSyntax(ISyntaxToken* labelId
       _pLabelIdentifier{labelIdentifier},
       _pColonToken{colonToken},
       _pStatement{statement}
-{}
+{
+    _position = _pLabelIdentifier->position();
+    adjustWidthAndFlags(_pLabelIdentifier);
+    adjustWidthAndFlags(_pColonToken);
+    adjustWidthAndFlags(_pStatement);
+}
 
 SyntaxVariant DelphiLabeledStatementSyntax::child(pg_size index) const
 {

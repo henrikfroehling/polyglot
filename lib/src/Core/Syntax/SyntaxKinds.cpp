@@ -333,6 +333,8 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::CaseLabelList: return L"CaseLabelList";
         case SyntaxKind::CaseItem: return L"CaseItem";
         case SyntaxKind::CaseItemList: return L"CaseItemList";
+        case SyntaxKind::SetElementsList: return L"SetElementsList";
+        case SyntaxKind::BracketArgumentList: return L"BracketArgumentList";
 
         case SyntaxKind::StatementList: return L"StatementList";
         case SyntaxKind::ExpressionStatement: return L"ExpressionStatement";
@@ -358,10 +360,26 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
 
         // expressions
         case SyntaxKind::LogicalNotExpression: return L"LogicalNotExpression";
-        case SyntaxKind::LogicalOrExpression: return L"LogicalOrExpression";
         case SyntaxKind::LogicalAndExpression: return L"LogicalAndExpression";
+        case SyntaxKind::LogicalOrExpression: return L"LogicalOrExpression";
+        case SyntaxKind::ExclusiveOrExpression: return L"ExclusiveOrExpression";
         case SyntaxKind::EqualsExpression: return L"EqualsExpression";
         case SyntaxKind::NotEqualsExpression: return L"NotEqualsExpression";
+        case SyntaxKind::LessThanExpression: return L"LessThanExpression";
+        case SyntaxKind::GreaterThanExpression: return L"GreaterThanExpression";
+        case SyntaxKind::LessThanOrEqualExpression: return L"LessThanOrEqualExpression";
+        case SyntaxKind::GreaterThanOrEqualExpression: return L"GreaterThanOrEqualExpression";
+        case SyntaxKind::AddExpression: return L"AddExpression";
+        case SyntaxKind::SubtractExpression: return L"SubtractExpression";
+        case SyntaxKind::MultiplyExpression: return L"MultiplyExpression";
+        case SyntaxKind::IntegerDivisionExpression: return L"IntegerDivisionExpression";
+        case SyntaxKind::RealDivisionExpression: return L"RealDivisionExpression";
+        case SyntaxKind::RemainderExpression: return L"RemainderExpression";
+        case SyntaxKind::LeftShiftExpression: return L"LeftShiftExpression";
+        case SyntaxKind::RightShiftExpression: return L"RightShiftExpression";
+        case SyntaxKind::AsExpression: return L"AsExpression";
+        case SyntaxKind::IsExpression: return L"IsExpression";
+        case SyntaxKind::InExpression: return L"InExpression";
         case SyntaxKind::ParenthesizedExpression: return L"ParenthesizedExpression";
         case SyntaxKind::StringLiteralExpression: return L"StringLiteralExpression";
         case SyntaxKind::NumericLiteralExpression: return L"NumericLiteralExpression";
@@ -369,14 +387,21 @@ pg_string syntaxKindName(SyntaxKind syntaxKind) noexcept
         case SyntaxKind::FalseLiteralExpression: return L"FalseLiteralExpression";
         case SyntaxKind::NilLiteralExpression: return L"NilLiteralExpression";
         case SyntaxKind::CallExpression: return L"CallExpression";
-        case SyntaxKind::PointerTypeExpression: return L"PointerTypeExpression";
+        case SyntaxKind::PointerType: return L"PointerType";
         case SyntaxKind::AssignmentExpression: return L"AssignmentExpression";
         case SyntaxKind::ExceptionHandlerExpression: return L"ExceptionHandlerExpression";
-
+        case SyntaxKind::UnaryPlusExpression: return L"UnaryPlusExpression";
+        case SyntaxKind::UnaryMinusExpression: return L"UnaryMinusExpression";
+        case SyntaxKind::AddressOfExpression: return L"AddressOfExpression";
+        case SyntaxKind::AddressOfProceduralVariableExpression: return L"AddressOfProceduralVariableExpression";
         case SyntaxKind::IdentifierName: return L"IdentifierName";
         case SyntaxKind::ExtendedIdentifierName: return L"ExtendedIdentifierName";
         case SyntaxKind::QualifiedName: return L"QualifiedName";
         case SyntaxKind::PredefinedType: return L"PredefinedType";
+        case SyntaxKind::SetRangeConstructor: return L"SetRangeConstructor";
+        case SyntaxKind::SetElementsConstructor: return L"SetElementsConstructor";
+        case SyntaxKind::RangeExpression: return L"RangeExpression";
+        case SyntaxKind::ElementAccessExpression: return L"ElementAccessExpression";
     }
 
     return L"";

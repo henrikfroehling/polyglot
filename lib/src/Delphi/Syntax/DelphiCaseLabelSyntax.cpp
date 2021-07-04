@@ -18,7 +18,12 @@ DelphiCaseLabelSyntax::DelphiCaseLabelSyntax(DelphiExpressionSyntax* expression,
       _pExpression{expression},
       _pDotDotToken{dotDotToken},
       _pSecondExpression{secondExpression}
-{}
+{
+    _position = _pExpression->position();
+    adjustWidthAndFlags(_pExpression);
+    adjustWidthAndFlags(_pDotDotToken);
+    adjustWidthAndFlags(_pSecondExpression);
+}
 
 SyntaxVariant DelphiCaseLabelSyntax::child(pg_size index) const
 {

@@ -33,6 +33,12 @@ void TextWindow::reset(const pg_size position) noexcept
     }
 }
 
+void TextWindow::resetToLastPosition() noexcept
+{
+    if (position() > 0)
+        reset(position() - 1);
+}
+
 bool TextWindow::isAtEnd() const noexcept
 {
     return position() >= _textEnd;

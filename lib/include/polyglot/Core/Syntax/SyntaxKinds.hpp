@@ -336,6 +336,8 @@ enum class SyntaxKind : unsigned short
     CaseLabelList,
     CaseItem,
     CaseItemList,
+    SetElementsList,
+    BracketArgumentList,
 
     // statements
     StatementList,
@@ -362,10 +364,26 @@ enum class SyntaxKind : unsigned short
 
     // expressions
     LogicalNotExpression = 4000,
-    LogicalOrExpression,
     LogicalAndExpression,
+    LogicalOrExpression,
+    ExclusiveOrExpression,
     EqualsExpression,
     NotEqualsExpression,
+    LessThanExpression,
+    GreaterThanExpression,
+    LessThanOrEqualExpression,
+    GreaterThanOrEqualExpression,
+    AddExpression,
+    SubtractExpression,
+    MultiplyExpression,
+    IntegerDivisionExpression,
+    RealDivisionExpression,
+    RemainderExpression,
+    LeftShiftExpression,
+    RightShiftExpression,
+    AsExpression,
+    IsExpression,
+    InExpression,
     ParenthesizedExpression,
     StringLiteralExpression,
     NumericLiteralExpression,
@@ -373,14 +391,21 @@ enum class SyntaxKind : unsigned short
     FalseLiteralExpression,
     NilLiteralExpression,
     CallExpression,
-    PointerTypeExpression,
+    PointerType,
     AssignmentExpression,
     ExceptionHandlerExpression,
-
+    UnaryPlusExpression,
+    UnaryMinusExpression,
+    AddressOfExpression,
+    AddressOfProceduralVariableExpression,
     IdentifierName,
     ExtendedIdentifierName,
     QualifiedName,
-    PredefinedType
+    PredefinedType,
+    SetRangeConstructor,
+    SetElementsConstructor,
+    RangeExpression,
+    ElementAccessExpression
 };
 
 pg_string POLYGLOT_API syntaxKindName(SyntaxKind syntaxKind) noexcept;

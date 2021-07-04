@@ -24,6 +24,7 @@ public:
     inline pg_size width() const noexcept { return _offset - _lexemeStart; }
     inline void start() noexcept { _lexemeStart = _offset; }
     void reset(const pg_size position) noexcept;
+    void resetToLastPosition() noexcept;
     bool isAtEnd() const noexcept;
     inline pg_string_view content() const noexcept { return _ptrSourceText->content(); }
 

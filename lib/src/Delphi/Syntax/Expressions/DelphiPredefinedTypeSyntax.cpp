@@ -15,7 +15,10 @@ using namespace Core::Syntax;
 DelphiPredefinedTypeSyntax::DelphiPredefinedTypeSyntax(ISyntaxToken* keyword) noexcept
     : DelphiTypeSyntax{SyntaxKind::PredefinedType},
       _pKeyword{keyword}
-{}
+{
+    _position = _pKeyword->position();
+    adjustWidthAndFlags(_pKeyword);
+}
 
 SyntaxVariant DelphiPredefinedTypeSyntax::child(pg_size index) const
 {

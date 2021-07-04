@@ -18,7 +18,12 @@ DelphiAssemblerStatementSyntax::DelphiAssemblerStatementSyntax(ISyntaxToken* asm
       _pAsmKeyword{asmKeyword},
       _pEndKeyword{endKeyword},
       _pSemiColonToken{semiColonToken}
-{}
+{
+    _position = _pAsmKeyword->position();
+    adjustWidthAndFlags(_pAsmKeyword);
+    adjustWidthAndFlags(_pEndKeyword);
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiAssemblerStatementSyntax::child(pg_size index) const
 {

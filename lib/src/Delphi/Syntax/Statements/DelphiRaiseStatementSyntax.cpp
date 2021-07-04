@@ -19,7 +19,15 @@ DelphiRaiseStatementSyntax::DelphiRaiseStatementSyntax(ISyntaxToken* raiseKeywor
       _pRaiseKeyword{raiseKeyword},
       _pSemiColonToken{semiColonToken},
       _pExpression{expression}
-{}
+{
+    _position = _pRaiseKeyword->position();
+    adjustWidthAndFlags(_pRaiseKeyword);
+
+    if (_pExpression != nullptr)
+        adjustWidthAndFlags(_pExpression);
+
+    adjustWidthAndFlags(_pSemiColonToken);
+}
 
 SyntaxVariant DelphiRaiseStatementSyntax::child(pg_size index) const
 {

@@ -15,7 +15,11 @@ DelphiExceptionHandlerBlockSyntax::DelphiExceptionHandlerBlockSyntax(DelphiState
     : DelphiExceptionBlockSyntax{SyntaxKind::ExceptionHandlerBlock},
       _pExceptionHandlers{exceptionHandlers},
       _pElseClause{elseClause}
-{}
+{
+    _position = _pExceptionHandlers->position();
+    adjustWidthAndFlags(_pExceptionHandlers);
+    adjustWidthAndFlags(_pElseClause);
+}
 
 SyntaxVariant DelphiExceptionHandlerBlockSyntax::child(pg_size index) const
 {
