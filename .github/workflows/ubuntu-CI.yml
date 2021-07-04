@@ -4,6 +4,9 @@ on:
   push
     paths-ignore:
       - 'docs/**'
+      - 'screenshots/**'
+      - 'LICENSE.md'
+      - 'README.md'
 
 env:
   BUILD_TYPE: Release
