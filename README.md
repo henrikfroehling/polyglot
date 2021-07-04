@@ -10,6 +10,8 @@ Currently **work in progress** and **not ready for production usage**.
 
 First supported language will be Object Pascal / Delphi.
 
+#### [Roadmap](https://github.com/henrikfroehling/polyglot/blob/develop/docs/Roadmap.md)
+
 #### [Documentation](https://github.com/henrikfroehling/polyglot/blob/develop/docs/Documentation.md)
 
 ### License
