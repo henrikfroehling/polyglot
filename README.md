@@ -3,6 +3,7 @@
 [![windows-CI](https://github.com/henrikfroehling/polyglot/workflows/windows-CI/badge.svg)](https://github.com/henrikfroehling/polyglot/actions?query=workflow%3Awindows-CI)
 [![ubuntu-CI](https://github.com/henrikfroehling/polyglot/workflows/ubuntu-CI/badge.svg)](https://github.com/henrikfroehling/polyglot/actions?query=workflow%3Aubuntu-CI)
 [![macOS-CI](https://github.com/henrikfroehling/polyglot/workflows/macOS-CI/badge.svg)](https://github.com/henrikfroehling/polyglot/actions?query=workflow%3AmacOS-CI)
+[![CodeQL Analysis](https://github.com/henrikfroehling/polyglot/actions/workflows/codeql-analysis.yml/badge.svg?branch=develop)](https://github.com/henrikfroehling/polyglot/actions/workflows/codeql-analysis.yml)
 
 A multi language static analysis library.
 
